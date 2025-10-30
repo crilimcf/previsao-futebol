@@ -5,6 +5,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 from src.api_routes import health, predict
 from src import config
+from src.fetch_matches import fetch_today_matches  # 👈 Importa a função que busca os jogos
 import os
 import json
 import threading
@@ -92,27 +93,34 @@ async def lifespan(app: FastAPI):
     logger.info("🛑 API encerrada.")
     send_telegram_message("🛑 <b>API encerrada.</b>")
 
-
 # ======================================
 # Atualização automática diária (00:30)
 # ======================================
-scheduler = BackgroundScheduler()
+scheduler = BackgroundScheduler(timezone="Europe/Lisbon")
 
 def daily_update_job():
-    """Executa atualização automática no Redis às 00:30."""
+    """Executa atualização automática no Redis + fetch dos jogos às 00:30."""
     try:
-        if not config.redis_client:
-            msg = "⚠️ <b>Redis desativado</b> — atualização diária ignorada."
-            logger.warning(msg)
-            send_telegram_message(msg)
-            return
+        # 1️⃣ Buscar jogos reais
+        result = fetch_today_matches()
+        total = result.get("total", 0)
+        
+        # 2️⃣ Atualizar timestamp no Redis
+        if config.redis_client:
+            now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
+            msg = (
+                f"🌙 <b>Atualização automática concluída</b>\n"
+                f"🕒 <code>{now_str}</code>\n"
+                f"⚽ <b>{total} jogos</b> atualizados com sucesso!"
+            )
+        else:
+            msg = "⚠️ <b>Redis desativado</b> — atualização automática ignorada."
 
-        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
-        msg = f"🌙 <b>Atualização automática executada</b>\n🕒 <code>{now_str}</code>\n✅ Redis atualizado com sucesso."
         print(msg)
         logger.info(msg)
         send_telegram_message(msg)
+
     except Exception as e:
         msg = f"⚠️ <b>Erro ao executar atualização automática:</b>\n<i>{e}</i>"
         print(msg)
@@ -123,7 +131,6 @@ def daily_update_job():
 scheduler.add_job(daily_update_job, "cron", hour=0, minute=30)
 scheduler.start()
 logger.info("🕒 Agendamento diário configurado para 00:30.")
-
 
 # ======================================
 # Monitor automático de ficheiros
@@ -154,7 +161,6 @@ def watch_files():
 threading.Thread(target=watch_files, daemon=True).start()
 logger.info("👀 Monitor de ficheiros iniciado.")
 
-
 # ======================================
 # Criação da aplicação FastAPI
 # ======================================
@@ -170,14 +176,13 @@ app = FastAPI(
     openapi_url="/openapi.json" if is_dev else None,
 )
 
-
 # ======================================
 # Configuração CORS
 # ======================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://football-prediction-murex.vercel.app",
+        "https://previsao-futebol.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST"],
@@ -185,13 +190,11 @@ app.add_middleware(
     max_age=3600,
 )
 
-
 # ======================================
 # Inclusão das rotas
 # ======================================
 app.include_router(health.router)
 app.include_router(predict.router)
-
 
 # ======================================
 # Rota raiz opcional
