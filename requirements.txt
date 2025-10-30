@@ -118,4 +118,8 @@ websocket-client==1.8.0
 websockets==15.0.1
 wsproto==1.2.0
 yarg==0.1.10
+fastapi==0.116.1
+uvicorn==0.35.0
 apscheduler==3.10.4
+upstash-redis==1.5.0
+python-dotenv==1.0.1
