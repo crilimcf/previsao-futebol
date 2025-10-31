@@ -7,34 +7,43 @@ from datetime import datetime
 # ==============================
 # CONFIGURAÇÕES
 # ==============================
-# O teu backend no Render:
+# URL do backend (Render)
 API_URL = "https://previsao-futebol.onrender.com/meta/update"
 
-# A mesma chave que já usaste no curl:
+# Chave de autenticação (do .env, GitHub Secrets ou Render Env)
 API_KEY = os.getenv("ENDPOINT_API_KEY", "d110d6f22b446c54deadcadef7b234f6966af678")
 
-# (Opcional) Telegram
+# Telegram (opcional)
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("CHAT_ID")
 
 # ==============================
-# LOGGING
+# LOGGING (compatível com GitHub Actions)
 # ==============================
 LOG_DIR = "logs"
-os.makedirs(LOG_DIR, exist_ok=True)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-    handlers=[
+try:
+    os.makedirs(LOG_DIR, exist_ok=True)
+    log_handlers = [
         logging.FileHandler(os.path.join(LOG_DIR, "run_daily.log"), encoding="utf-8"),
         logging.StreamHandler()
     ]
+except Exception:
+    # Caso não haja permissão (ex: GitHub Actions), só envia para stdout
+    log_handlers = [logging.StreamHandler()]
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    handlers=log_handlers
 )
 logger = logging.getLogger("run_daily")
 
 
+# ==============================
+# FUNÇÕES AUXILIARES
+# ==============================
 def send_telegram_message(msg: str):
-    """Envia mensagem formatada para o Telegram (HTML)."""
+    """Envia mensagem para o Telegram (HTML)."""
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         return
     try:
@@ -46,43 +55,49 @@ def send_telegram_message(msg: str):
             "disable_web_page_preview": True,
         }
         requests.post(url, data=payload, timeout=10)
-        logger.info(f"📤 Notificação Telegram enviada.")
+        logger.info("📤 Notificação Telegram enviada.")
     except Exception as e:
         logger.error(f"⚠️ Falha ao enviar notificação Telegram: {e}")
 
 
+# ==============================
+# EXECUÇÃO PRINCIPAL
+# ==============================
 def main():
-    logging.info("🚀 Daily prediction update started...")
+    logger.info("🚀 Atualização diária iniciada...")
     send_telegram_message("🚀 <b>Atualização diária iniciada.</b>")
 
-    # 1️⃣ Corre o pipeline principal
+    # 1️⃣ Executa o pipeline principal
     cmd = "python main.py --mode full"
-    logging.info(f"🔧 Executando comando: {cmd}")
+    logger.info(f"🔧 Executando: {cmd}")
     result = subprocess.run(cmd, shell=True)
 
     if result.returncode != 0:
-        logging.error("❌ Daily pipeline failed!")
+        logger.error("❌ Pipeline diário falhou!")
         send_telegram_message("❌ <b>Falha na atualização diária!</b>")
         return
 
-    logging.info("✅ Daily pipeline completed successfully.")
+    logger.info("✅ Pipeline diário concluído com sucesso.")
     send_telegram_message("✅ <b>Pipeline diário concluído com sucesso.</b>")
 
-    # 2️⃣ Atualiza o Redis via endpoint do backend
+    # 2️⃣ Atualiza Redis via endpoint backend
     try:
         headers = {"Authorization": f"Bearer {API_KEY}"}
         r = requests.post(API_URL, headers=headers, timeout=15)
         if r.status_code == 200:
             ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            logging.info(f"🕒 Last update timestamp saved ({ts})")
+            logger.info(f"🕒 Última atualização salva ({ts})")
             send_telegram_message(f"🕒 <b>Última atualização:</b> {ts}")
         else:
-            logging.warning(f"⚠️ Falha ao salvar update ({r.status_code}) → {r.text}")
+            logger.warning(f"⚠️ Falha ao chamar /meta/update ({r.status_code}) → {r.text}")
             send_telegram_message(f"⚠️ <b>Falha ao chamar /meta/update</b>: {r.status_code}")
     except Exception as e:
-        logging.error(f"Erro ao chamar API: {e}")
+        logger.error(f"❌ Erro ao chamar API: {e}")
         send_telegram_message(f"❌ <b>Erro ao chamar API:</b> {e}")
 
 
+# ==============================
+# ENTRY POINT
+# ==============================
 if __name__ == "__main__":
     main()
