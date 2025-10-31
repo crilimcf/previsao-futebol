@@ -1,18 +1,18 @@
 import React from "react";
 
-const appStage = process.env.NEXT_PUBLIC_APP_STAGE || "BETA";
-const appVersion = process.env.NEXT_PUBLIC_APP_VERSION || "0.9.0";
+const appStage = process.env.NEXT_PUBLIC_APP_STAGE || "Aceder ao flashscore";
+const appVersion = process.env.NEXT_PUBLIC_APP_VERSION || "V.FINAL";
 
 export default function Footer() {
   return (
     <footer className="w-full border-t border-gray-800 bg-gray-900 text-gray-300 py-6 mt-12">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-xs md:text-sm text-center md:text-left">
-          <span className="font-semibold text-yellow-400">Notice:</span> This site uses artificial intelligence to generate predictions. It is not a betting recommendation. Use at your own risk.
+          <span className="font-semibold text-yellow-400">Informação:</span> Este site utiliza inteligência artificial para gerar previsões. Não se trata de uma recomendação de apostas. Utilize por sua conta e risco..
         </div>
         <div className="flex items-center gap-2">
           <a
-            href="https://github.com/fernandosc14/football-prediction"
+            href="https://www.flashscore.pt/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center px-3 py-1 bg-gray-800 text-white rounded-full hover:bg-white/80 hover:text-gray-900 transition-colors duration-300 text-xs font-semibold"
@@ -33,12 +33,11 @@ export default function Footer() {
                 21.796 24 17.298 24 12c0-6.627-5.373-12-12-12z"
               />
             </svg>
-            GitHub
             <span className="ml-2 inline-block rounded-full px-2 py-0.5 text-xs font-semibold bg-yellow-400 text-gray-900">
               {appStage}
             </span>
             <span className="ml-2 inline-block rounded-full px-2 py-0.5 text-xs font-semibold text-white border bg-blue-700 border-blue-700">
-              v{appVersion}
+              {appVersion}
             </span>
           </a>
         </div>
