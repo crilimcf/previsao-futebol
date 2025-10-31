@@ -6,55 +6,36 @@ import random
 import logging
 from datetime import date, timedelta
 from src import config
-from upstash_redis import Redis
 
 # ============================================
 # CONFIGURAÇÕES GERAIS
 # ============================================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
-BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/")
-SEASON = os.getenv("API_FOOTBALL_SEASON")
+BASE_URL = "https://v3.football.api-sports.io/"
 PRED_PATH = "data/predict/predictions.json"
 
 HEADERS = {"x-apisports-key": API_KEY}
 logger = logging.getLogger("football_api")
-redis = config.redis_client  # Redis partilhado
 
-# ============================================
-# DETEÇÃO INTELIGENTE DE ÉPOCA
-# ============================================
-def get_current_season():
-    """Determina automaticamente a época atual baseada na data."""
-    today = date.today()
-    current_year = today.year
-    # A época começa normalmente em Agosto (8)
-    if today.month >= 8:
-        return str(current_year)
-    else:
-        return str(current_year - 1)
-
-
-if not SEASON:
-    SEASON = get_current_season()
-
-logger.info(f"⚙️ Usando época {SEASON}")
+# Redis partilhado do projeto
+redis = config.redis_client
 
 
 # ============================================
 # FUNÇÕES DE CACHE (Redis)
 # ============================================
-def redis_cache_get(key):
+def redis_get(key):
     try:
         if redis:
-            cached = redis.get(key)
-            if cached:
-                return json.loads(cached)
+            val = redis.get(key)
+            if val:
+                return json.loads(val)
     except Exception:
         pass
     return None
 
 
-def redis_cache_set(key, data, expire=3600):
+def redis_set(key, data, expire=3600):
     try:
         if redis:
             redis.set(key, json.dumps(data), ex=expire)
@@ -63,68 +44,52 @@ def redis_cache_set(key, data, expire=3600):
 
 
 # ============================================
-# FUNÇÃO DE REQUEST COM CACHE E TIMEOUT
+# REQUISIÇÃO SEGURA COM CACHE
 # ============================================
-def safe_request(url, params=None):
-    """Executa pedidos HTTP com cache Redis e timeout curto."""
+def safe_request(url, params=None, cache_ttl=7200):
     key = f"cache:{url}:{json.dumps(params, sort_keys=True)}"
-    cached = redis_cache_get(key)
+    cached = redis_get(key)
     if cached:
         return cached
 
     try:
-        r = requests.get(url, headers=HEADERS, params=params, timeout=3)
+        r = requests.get(url, headers=HEADERS, params=params, timeout=10)
         if r.status_code == 200:
             data = r.json().get("response", [])
-            redis_cache_set(key, data)
+            redis_set(key, data, cache_ttl)
             return data
         else:
-            logger.warning(f"⚠️ Erro {r.status_code} em {url}")
+            logger.warning(f"⚠️ HTTP {r.status_code} → {url}")
             return []
     except Exception as e:
-        logger.error(f"❌ Timeout/API error em {url}: {e}")
+        logger.error(f"❌ Erro em {url}: {e}")
         return []
 
 
 # ============================================
-# OBTÉM TODAS AS LIGAS DISPONÍVEIS (com fallback)
+# ÉPOCA ATIVA
 # ============================================
-def get_all_leagues():
-    """Obtém automaticamente todas as ligas disponíveis da API-Football, com fallback garantido."""
-    cache_key = "cache:all_leagues"
-    cached = redis_cache_get(cache_key)
-    if cached and len(cached) > 0:
-        logger.info(f"📦 {len(cached)} ligas carregadas da cache Redis.")
-        return cached
+def get_active_season():
+    data = safe_request(f"{BASE_URL}leagues/seasons")
+    if data and isinstance(data, list):
+        return max(data)
+    return date.today().year
 
-    try:
-        url = f"{BASE_URL}leagues"
-        data = safe_request(url, {"season": SEASON})
-        league_ids = []
 
-        if not data or len(data) == 0:
-            # tenta época anterior (fallback automático)
-            prev_season = str(int(SEASON) - 1)
-            logger.warning(f"⚠️ Nenhuma liga encontrada na época {SEASON}, tentando {prev_season}")
-            data = safe_request(url, {"season": prev_season})
-
-        for l in data:
-            league = l.get("league", {})
-            if league.get("id") and l.get("country", {}).get("name"):
-                league_ids.append(league["id"])
-
-        if not league_ids:
-            logger.warning("⚠️ Nenhuma liga retornada — usando fallback fixo.")
-            league_ids = [39, 140, 135, 78, 61, 94, 88, 2]
-
-        league_ids = list(set(league_ids))
-        redis_cache_set(cache_key, league_ids, expire=43200)
-        logger.info(f"✅ {len(league_ids)} ligas carregadas e guardadas em cache.")
-        return league_ids
-
-    except Exception as e:
-        logger.error(f"⚠️ Erro ao obter ligas: {e}")
-        return [39, 140, 135, 78, 61, 94, 88, 2]
+# ============================================
+# LISTA DE LIGAS
+# ============================================
+def get_main_leagues():
+    return [
+        39,   # Premier League
+        140,  # La Liga
+        135,  # Serie A
+        78,   # Bundesliga
+        61,   # Ligue 1
+        94,   # Primeira Liga
+        88,   # Eredivisie
+        2,    # UEFA Champions League
+    ]
 
 
 # ============================================
@@ -132,25 +97,22 @@ def get_all_leagues():
 # ============================================
 def calculate_prediction(stats_home, stats_away):
     try:
-        avg_goals_home = float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2))
-        avg_goals_away = float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1))
-        avg_concede_home = float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0))
-        avg_concede_away = float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0))
+        avg_goals_home = float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.4))
+        avg_goals_away = float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.2))
+        concede_home = float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0))
+        concede_away = float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0))
 
-        home_score = (avg_goals_home + avg_concede_away) / 2
-        away_score = (avg_goals_away + avg_concede_home) / 2
+        h_score = (avg_goals_home + concede_away) / 2
+        a_score = (avg_goals_away + concede_home) / 2
 
-        predicted_home = max(0, round(home_score + random.uniform(-0.4, 0.4)))
-        predicted_away = max(0, round(away_score + random.uniform(-0.4, 0.4)))
+        pred_home = max(0, round(h_score + random.uniform(-0.4, 0.4)))
+        pred_away = max(0, round(a_score + random.uniform(-0.4, 0.4)))
 
-        confidence = round(
-            0.55 + abs(predicted_home - predicted_away) * 0.1 + random.uniform(0.05, 0.15),
-            2
-        )
+        confidence = round(0.55 + abs(pred_home - pred_away) * 0.1 + random.uniform(0.05, 0.1), 2)
         confidence = min(confidence, 0.95)
 
         return {
-            "predicted_score": {"home": predicted_home, "away": predicted_away},
+            "predicted_score": {"home": pred_home, "away": pred_away},
             "confidence": confidence,
         }
 
@@ -162,55 +124,49 @@ def calculate_prediction(stats_home, stats_away):
 
 
 # ============================================
-# TOP MARCADORES
+# MELHORES MARCADORES
 # ============================================
-def get_top_scorers(league_id):
-    try:
-        url = f"{BASE_URL}players/topscorers"
-        scorers = safe_request(url, {"league": league_id, "season": SEASON})
-        result = []
-        for s in scorers[:25]:
-            player = s.get("player", {}).get("name")
-            team = s.get("statistics", [{}])[0].get("team", {}).get("name")
-            goals = s.get("statistics", [{}])[0].get("goals", {}).get("total", 0)
-            result.append({
-                "player": player,
-                "team": team,
-                "goals": goals,
-                "probability": round(0.4 + goals * 0.03 + random.uniform(0.05, 0.1), 2)
-            })
-        return result
-    except Exception as e:
-        logger.warning(f"⚠️ Erro ao buscar marcadores: {e}")
-        return []
+def get_top_scorers(league_id, season):
+    url = f"{BASE_URL}players/topscorers"
+    data = safe_request(url, {"league": league_id, "season": season})
+    players = []
+    for s in data[:5]:
+        player = s.get("player", {}).get("name")
+        team = s.get("statistics", [{}])[0].get("team", {}).get("name")
+        goals = s.get("statistics", [{}])[0].get("goals", {}).get("total", 0)
+        players.append({
+            "player": player,
+            "team": team,
+            "goals": goals,
+            "probability": round(0.4 + goals * 0.04 + random.uniform(0.05, 0.1), 2),
+        })
+    return players
 
 
 # ============================================
 # FUNÇÃO PRINCIPAL
 # ============================================
-def fetch_today_matches():
+def fetch_matches():
     if not API_KEY:
-        msg = "❌ API_FOOTBALL_KEY não definida."
-        print(msg)
-        logger.error(msg)
-        return {"status": "error", "detail": "API key missing"}
+        print("❌ API_FOOTBALL_KEY não definida.")
+        return {"status": "error", "detail": "missing key"}
 
-    league_ids = get_all_leagues()
+    season = get_active_season()
+    leagues = get_main_leagues()
+    print(f"⚙️ Época ativa: {season}")
+    print(f"🔢 Ligas configuradas: {len(leagues)}")
+
     matches = []
     total = 0
 
-    for day_offset in range(3):
-        match_date = (date.today() + timedelta(days=day_offset)).strftime("%Y-%m-%d")
-        print(f"\n📅 Buscando jogos de {match_date}... ({len(league_ids)} ligas)")
+    for offset in range(3):
+        match_date = (date.today() + timedelta(days=offset)).strftime("%Y-%m-%d")
+        print(f"\n📅 Buscando jogos de {match_date}...")
 
-        for league_id in league_ids:
-            fixtures_url = f"{BASE_URL}fixtures"
-            data = safe_request(fixtures_url, {"league": league_id, "season": SEASON, "date": match_date})
-
-            # fallback: se nada encontrado, tenta época anterior
-            if not data:
-                alt_season = str(int(SEASON) - 1)
-                data = safe_request(fixtures_url, {"league": league_id, "season": alt_season, "date": match_date})
+        found = 0
+        for league_id in leagues:
+            url = f"{BASE_URL}fixtures"
+            data = safe_request(url, {"league": league_id, "season": season, "date": match_date})
 
             if not data:
                 continue
@@ -219,23 +175,24 @@ def fetch_today_matches():
                 fixture = f.get("fixture", {})
                 league = f.get("league", {})
                 teams = f.get("teams", {})
-
                 home_id = teams.get("home", {}).get("id")
                 away_id = teams.get("away", {}).get("id")
 
                 if not home_id or not away_id:
                     continue
 
-                stats_home = safe_request(f"{BASE_URL}teams/statistics", {"team": home_id, "league": league_id, "season": SEASON})
-                stats_away = safe_request(f"{BASE_URL}teams/statistics", {"team": away_id, "league": league_id, "season": SEASON})
+                stats_home = safe_request(f"{BASE_URL}teams/statistics",
+                                          {"team": home_id, "league": league_id, "season": season})
+                stats_away = safe_request(f"{BASE_URL}teams/statistics",
+                                          {"team": away_id, "league": league_id, "season": season})
 
                 stats_home_data = stats_home if isinstance(stats_home, dict) else (stats_home[0] if stats_home else {})
                 stats_away_data = stats_away if isinstance(stats_away, dict) else (stats_away[0] if stats_away else {})
 
                 pred = calculate_prediction(stats_home_data, stats_away_data)
-                top_scorers = get_top_scorers(league_id)
+                scorers = get_top_scorers(league_id, season)
 
-                match = {
+                matches.append({
                     "match_id": fixture.get("id"),
                     "league": league.get("name"),
                     "league_id": league_id,
@@ -244,23 +201,40 @@ def fetch_today_matches():
                     "date": fixture.get("date"),
                     "predicted_score": pred["predicted_score"],
                     "confidence": pred["confidence"],
-                    "top_scorers": top_scorers,
-                }
-                matches.append(match)
+                    "top_scorers": scorers,
+                })
+                found += 1
                 total += 1
 
-                print(f"⚽ {match['home_team']} vs {match['away_team']} → "
+                print(f"⚽ {teams.get('home', {}).get('name')} vs {teams.get('away', {}).get('name')} → "
                       f"{pred['predicted_score']['home']}-{pred['predicted_score']['away']} "
                       f"(confiança {pred['confidence']*100:.0f}%)")
+
+        print(f"📊 Total de jogos encontrados para {match_date}: {found}")
+
+    if total == 0:
+        print("\n⚠️ Nenhum jogo encontrado — buscando próximos jogos (modo NEXT)...")
+        for league_id in leagues:
+            data = safe_request(f"{BASE_URL}fixtures", {"league": league_id, "season": season, "next": 10})
+            for f in data:
+                fixture = f.get("fixture", {})
+                league = f.get("league", {})
+                teams = f.get("teams", {})
+
+                matches.append({
+                    "match_id": fixture.get("id"),
+                    "league": league.get("name"),
+                    "home_team": teams.get("home", {}).get("name"),
+                    "away_team": teams.get("away", {}).get("name"),
+                    "date": fixture.get("date"),
+                })
+                total += 1
 
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
     with open(PRED_PATH, "w", encoding="utf-8") as f:
         json.dump(matches, f, ensure_ascii=False, indent=2)
 
-    msg = f"\n✅ {total} previsões salvas em {PRED_PATH}"
-    print(msg)
-    logger.info(msg)
-
+    print(f"\n✅ {total} previsões salvas em {PRED_PATH}")
     try:
         config.update_last_update()
     except Exception as e:
@@ -269,6 +243,9 @@ def fetch_today_matches():
     return {"status": "ok", "total": total}
 
 
+# ============================================
+# EXECUÇÃO LOCAL
+# ============================================
 if __name__ == "__main__":
-    result = fetch_today_matches()
+    result = fetch_matches()
     print(result)
