@@ -57,7 +57,7 @@ def safe_request(url, params=None):
 
     start = time.time()
     try:
-        r = requests.get(url, headers=HEADERS, params=params, timeout=2)
+        r = requests.get(url, headers=HEADERS, params=params, timeout=3)
         if r.status_code == 200:
             data = r.json().get("response", [])
             redis_cache_set(key, data)
@@ -73,13 +73,13 @@ def safe_request(url, params=None):
 
 
 # ============================================
-# OBTÉM TODAS AS LIGAS DISPONÍVEIS
+# OBTÉM TODAS AS LIGAS DISPONÍVEIS (CORRIGIDO)
 # ============================================
 def get_all_leagues():
-    """Obtém automaticamente todas as ligas disponíveis da API-Football."""
+    """Obtém automaticamente todas as ligas disponíveis da API-Football, com fallback garantido."""
     cache_key = "cache:all_leagues"
     cached = redis_cache_get(cache_key)
-    if cached:
+    if cached and len(cached) > 0:
         logger.info(f"📦 {len(cached)} ligas carregadas da cache Redis.")
         return cached
 
@@ -87,18 +87,21 @@ def get_all_leagues():
         url = f"{BASE_URL}leagues"
         data = safe_request(url, {"season": SEASON})
         league_ids = []
-        for l in data:
-            league = l.get("league", {})
-            if league.get("id") and l.get("country", {}).get("name"):
-                league_ids.append(league["id"])
 
-        # Remove duplicados
+        if data and isinstance(data, list):
+            for l in data:
+                league = l.get("league", {})
+                if league.get("id") and l.get("country", {}).get("name"):
+                    league_ids.append(league["id"])
+
+        # fallback — se a API falhar ou retornar vazio
+        if not league_ids:
+            logger.warning("⚠️ Nenhuma liga retornada pela API — usando fallback padrão.")
+            league_ids = [39, 140, 135, 78, 61, 94, 88, 2]
+
         league_ids = list(set(league_ids))
-
-        # Cache por 12 horas
         redis_cache_set(cache_key, league_ids, expire=43200)
-
-        logger.info(f"✅ {len(league_ids)} ligas carregadas da API e guardadas em cache.")
+        logger.info(f"✅ {len(league_ids)} ligas carregadas e guardadas em cache.")
         return league_ids
 
     except Exception as e:
@@ -151,7 +154,7 @@ def get_top_scorers(league_id):
         url = f"{BASE_URL}players/topscorers"
         scorers = safe_request(url, {"league": league_id, "season": SEASON})
         result = []
-        for s in scorers[:5]:
+        for s in scorers[:25]:  # até 25 principais
             player = s.get("player", {}).get("name")
             team = s.get("statistics", [{}])[0].get("team", {}).get("name")
             goals = s.get("statistics", [{}])[0].get("goals", {}).get("total", 0)
@@ -159,7 +162,7 @@ def get_top_scorers(league_id):
                 "player": player,
                 "team": team,
                 "goals": goals,
-                "probability": round(0.4 + goals * 0.05 + random.uniform(0.05, 0.1), 2)
+                "probability": round(0.4 + goals * 0.03 + random.uniform(0.05, 0.1), 2)
             })
         return result
     except Exception as e:
@@ -230,12 +233,10 @@ def fetch_today_matches():
                 matches.append(match)
                 total += 1
 
-                # Verbose log
                 print(f"⚽ {match['home_team']} vs {match['away_team']} → "
                       f"{pred['predicted_score']['home']}-{pred['predicted_score']['away']} "
                       f"(confiança {pred['confidence']*100:.0f}%)")
 
-    # Guarda previsões no disco
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
     with open(PRED_PATH, "w", encoding="utf-8") as f:
         json.dump(matches, f, ensure_ascii=False, indent=2)
@@ -244,7 +245,6 @@ def fetch_today_matches():
     print(msg)
     logger.info(msg)
 
-    # Atualiza Redis
     try:
         config.update_last_update()
     except Exception as e:
@@ -253,9 +253,6 @@ def fetch_today_matches():
     return {"status": "ok", "total": total}
 
 
-# ============================================
-# EXECUÇÃO DIRETA (TESTE LOCAL)
-# ============================================
 if __name__ == "__main__":
     result = fetch_today_matches()
     print(result)
