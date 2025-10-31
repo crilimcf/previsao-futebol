@@ -13,19 +13,37 @@ from upstash_redis import Redis
 # ============================================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
 BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/")
-SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
+SEASON = os.getenv("API_FOOTBALL_SEASON")
 PRED_PATH = "data/predict/predictions.json"
 
 HEADERS = {"x-apisports-key": API_KEY}
-
 logger = logging.getLogger("football_api")
-redis = config.redis_client  # Redis partilhado do projeto
+redis = config.redis_client  # Redis partilhado
+
+# ============================================
+# DETEÇÃO INTELIGENTE DE ÉPOCA
+# ============================================
+def get_current_season():
+    """Determina automaticamente a época atual baseada na data."""
+    today = date.today()
+    current_year = today.year
+    # A época começa normalmente em Agosto (8)
+    if today.month >= 8:
+        return str(current_year)
+    else:
+        return str(current_year - 1)
+
+
+if not SEASON:
+    SEASON = get_current_season()
+
+logger.info(f"⚙️ Usando época {SEASON}")
+
 
 # ============================================
 # FUNÇÕES DE CACHE (Redis)
 # ============================================
 def redis_cache_get(key):
-    """Obtém dados da cache Redis se existir."""
     try:
         if redis:
             cached = redis.get(key)
@@ -37,7 +55,6 @@ def redis_cache_get(key):
 
 
 def redis_cache_set(key, data, expire=3600):
-    """Grava dados em cache Redis (1h por defeito)."""
     try:
         if redis:
             redis.set(key, json.dumps(data), ex=expire)
@@ -55,14 +72,11 @@ def safe_request(url, params=None):
     if cached:
         return cached
 
-    start = time.time()
     try:
         r = requests.get(url, headers=HEADERS, params=params, timeout=3)
         if r.status_code == 200:
             data = r.json().get("response", [])
             redis_cache_set(key, data)
-            elapsed = round(time.time() - start, 2)
-            logger.info(f"✅ {url} OK ({elapsed}s)")
             return data
         else:
             logger.warning(f"⚠️ Erro {r.status_code} em {url}")
@@ -73,7 +87,7 @@ def safe_request(url, params=None):
 
 
 # ============================================
-# OBTÉM TODAS AS LIGAS DISPONÍVEIS (CORRIGIDO)
+# OBTÉM TODAS AS LIGAS DISPONÍVEIS (com fallback)
 # ============================================
 def get_all_leagues():
     """Obtém automaticamente todas as ligas disponíveis da API-Football, com fallback garantido."""
@@ -88,15 +102,19 @@ def get_all_leagues():
         data = safe_request(url, {"season": SEASON})
         league_ids = []
 
-        if data and isinstance(data, list):
-            for l in data:
-                league = l.get("league", {})
-                if league.get("id") and l.get("country", {}).get("name"):
-                    league_ids.append(league["id"])
+        if not data or len(data) == 0:
+            # tenta época anterior (fallback automático)
+            prev_season = str(int(SEASON) - 1)
+            logger.warning(f"⚠️ Nenhuma liga encontrada na época {SEASON}, tentando {prev_season}")
+            data = safe_request(url, {"season": prev_season})
 
-        # fallback — se a API falhar ou retornar vazio
+        for l in data:
+            league = l.get("league", {})
+            if league.get("id") and l.get("country", {}).get("name"):
+                league_ids.append(league["id"])
+
         if not league_ids:
-            logger.warning("⚠️ Nenhuma liga retornada pela API — usando fallback padrão.")
+            logger.warning("⚠️ Nenhuma liga retornada — usando fallback fixo.")
             league_ids = [39, 140, 135, 78, 61, 94, 88, 2]
 
         league_ids = list(set(league_ids))
@@ -106,15 +124,13 @@ def get_all_leagues():
 
     except Exception as e:
         logger.error(f"⚠️ Erro ao obter ligas: {e}")
-        # fallback mínimo
         return [39, 140, 135, 78, 61, 94, 88, 2]
 
 
 # ============================================
-# FUNÇÃO DE PREVISÃO DE RESULTADO
+# PREVISÃO DE RESULTADO
 # ============================================
 def calculate_prediction(stats_home, stats_away):
-    """Calcula resultado provável e confiança."""
     try:
         avg_goals_home = float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2))
         avg_goals_away = float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1))
@@ -146,15 +162,14 @@ def calculate_prediction(stats_home, stats_away):
 
 
 # ============================================
-# TOP MARCADORES (REAL API-FOOTBALL)
+# TOP MARCADORES
 # ============================================
 def get_top_scorers(league_id):
-    """Obtém os principais marcadores da liga."""
     try:
         url = f"{BASE_URL}players/topscorers"
         scorers = safe_request(url, {"league": league_id, "season": SEASON})
         result = []
-        for s in scorers[:25]:  # até 25 principais
+        for s in scorers[:25]:
             player = s.get("player", {}).get("name")
             team = s.get("statistics", [{}])[0].get("team", {}).get("name")
             goals = s.get("statistics", [{}])[0].get("goals", {}).get("total", 0)
@@ -171,10 +186,9 @@ def get_top_scorers(league_id):
 
 
 # ============================================
-# FUNÇÃO PRINCIPAL — BUSCAR JOGOS E GERAR PREVISÕES
+# FUNÇÃO PRINCIPAL
 # ============================================
 def fetch_today_matches():
-    """Obtém jogos de hoje, amanhã e depois de amanhã e gera previsões completas."""
     if not API_KEY:
         msg = "❌ API_FOOTBALL_KEY não definida."
         print(msg)
@@ -185,13 +199,18 @@ def fetch_today_matches():
     matches = []
     total = 0
 
-    for day_offset in range(3):  # hoje + 2 dias seguintes
+    for day_offset in range(3):
         match_date = (date.today() + timedelta(days=day_offset)).strftime("%Y-%m-%d")
         print(f"\n📅 Buscando jogos de {match_date}... ({len(league_ids)} ligas)")
 
         for league_id in league_ids:
             fixtures_url = f"{BASE_URL}fixtures"
             data = safe_request(fixtures_url, {"league": league_id, "season": SEASON, "date": match_date})
+
+            # fallback: se nada encontrado, tenta época anterior
+            if not data:
+                alt_season = str(int(SEASON) - 1)
+                data = safe_request(fixtures_url, {"league": league_id, "season": alt_season, "date": match_date})
 
             if not data:
                 continue
@@ -207,18 +226,15 @@ def fetch_today_matches():
                 if not home_id or not away_id:
                     continue
 
-                # Busca estatísticas (com cache)
                 stats_home = safe_request(f"{BASE_URL}teams/statistics", {"team": home_id, "league": league_id, "season": SEASON})
                 stats_away = safe_request(f"{BASE_URL}teams/statistics", {"team": away_id, "league": league_id, "season": SEASON})
 
                 stats_home_data = stats_home if isinstance(stats_home, dict) else (stats_home[0] if stats_home else {})
                 stats_away_data = stats_away if isinstance(stats_away, dict) else (stats_away[0] if stats_away else {})
 
-                # Calcula previsão e obtém marcadores
                 pred = calculate_prediction(stats_home_data, stats_away_data)
                 top_scorers = get_top_scorers(league_id)
 
-                # Cria registo
                 match = {
                     "match_id": fixture.get("id"),
                     "league": league.get("name"),
