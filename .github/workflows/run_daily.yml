@@ -1,33 +1,51 @@
-name: Run Daily Script
+name: ⚽ Daily Football Predictions
 
 on:
   schedule:
-    - cron: '30 0 * * *'
-  workflow_dispatch:
+    - cron: '30 0 * * *'  # todos os dias às 06h00 UTC
+  workflow_dispatch:      # também pode ser executado manualmente
 
 jobs:
   run-daily:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: 🧩 Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install dependencies
+      - name: ⚙️ Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run daily update
-        env:
-          ENDPOINT_API_KEY: ${{ secrets.ENDPOINT_API_KEY }}
-          SOCCERDATA_API_KEY: ${{ secrets.SOCCERDATA_API_KEY }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
-          SOCCERDATA_BASE_URL: https://api.soccerdataapi.com
-        run: python run_daily.py
+      - name: 🔍 Check backend health
+        id: health
+        run: |
+          echo "🩺 Checking backend health endpoint..."
+          STATUS=$(curl -s https://previsao-futebol.onrender.com/healthz || echo "fail")
+          echo "Healthz response: $STATUS"
+
+          if echo "$STATUS" | grep -q '"status": "ok"'; then
+            echo "✅ Backend saudável, prosseguindo..."
+            echo "ok" > health.txt
+          else
+            echo "❌ Backend não está saudável."
+            echo "fail" > health.txt
+          fi
+
+      - name: 🚀 Run daily update
+        if: ${{ hashFiles('health.txt') == 'ok' }}
+        run: |
+          echo "Running daily prediction update..."
+          python run_daily.py
+
+      - name: 🚨 Send Telegram alert if backend down
+        if: ${{ hashFiles('health.txt') != 'ok' }}
+        run: |
+          echo "Backend offline — enviando alerta Telegram..."
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=⚠️ O backend está offline! O cron não foi executado. (healthz falhou)"
