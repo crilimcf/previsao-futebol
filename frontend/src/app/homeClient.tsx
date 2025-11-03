@@ -1,13 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "@/components/header";
 import InfoCard from "@/components/infoCards";
 import StatsAverage, { StatsType } from "@/components/StatsAverage";
 import CardSkeleton from "@/components/CardSkeleton";
 import StatsSkeleton from "@/components/StatsSkeleton";
 import { getPredictions, getStats, getLastUpdate } from "@/services/api";
+import { getFixturesByLeague } from "@/services/proxy";
+
+// 🕒 Helper de tempo decorrido
+function timeSince(date: number) {
+  const seconds = Math.floor((Date.now() - date) / 1000);
+  if (seconds < 60) return `${seconds}s atrás`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m atrás`;
+  const hours = Math.floor(minutes / 60);
+  return `${hours}h atrás`;
+}
 
 export default function HomeClient() {
+  // -------------------------------
+  // Estados principais
+  // -------------------------------
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
   const [predictions, setPredictions] = useState<any[]>([]);
@@ -16,6 +30,16 @@ export default function HomeClient() {
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDate, setSelectedDate] = useState<string>("today");
 
+  // Jogos Reais
+  const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
+  const [loadingFixtures, setLoadingFixtures] = useState(false);
+  const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
+
+  const isManualRefresh = useRef(false);
+
+  // -------------------------------
+  // Ligas disponíveis
+  // -------------------------------
   const leagues = [
     { id: "all", name: "🌍 Todas as Ligas" },
     { id: 39, name: "🇬🇧 Premier League" },
@@ -33,17 +57,16 @@ export default function HomeClient() {
     return league ? league.name : "🏳️ Liga Desconhecida";
   };
 
-  // Calcular datas (hoje, amanhã, depois)
   const dates = {
     today: new Date(),
     tomorrow: new Date(Date.now() + 86400000),
     after: new Date(Date.now() + 2 * 86400000),
   };
+  const formatDate = (d: Date) => d.toISOString().split("T")[0];
 
-  const formatDate = (d: Date) =>
-    d.toISOString().split("T")[0]; // yyyy-mm-dd
-
-  // Filtros guardados
+  // -------------------------------
+  // Guarda filtros
+  // -------------------------------
   useEffect(() => {
     const savedLeague = localStorage.getItem("selectedLeague");
     const savedDate = localStorage.getItem("selectedDate");
@@ -56,7 +79,9 @@ export default function HomeClient() {
     if (selectedDate) localStorage.setItem("selectedDate", selectedDate);
   }, [selectedLeague, selectedDate]);
 
-  // Fetch de dados
+  // -------------------------------
+  // Fetch dados principais (predictions + stats)
+  // -------------------------------
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -99,7 +124,33 @@ export default function HomeClient() {
     fetchData();
   }, []);
 
-  // Filtrar por liga e data
+  // -------------------------------
+  // Fetch jogos reais (via proxy)
+  // -------------------------------
+  async function loadFixtures(ignoreCache = false) {
+    try {
+      if (selectedLeague === "all") return;
+      setLoadingFixtures(true);
+      console.log(`🔄 Carregando jogos da liga ${selectedLeague}...`);
+      const data = await getFixturesByLeague(Number(selectedLeague), ignoreCache ? 0 : 5);
+      setLiveFixtures(data.response || []);
+      setLastFixturesUpdate(Date.now());
+      console.log(`✅ ${data.response?.length || 0} jogos carregados.`);
+    } catch (err) {
+      console.error("Erro ao carregar fixtures:", err);
+    } finally {
+      setLoadingFixtures(false);
+      isManualRefresh.current = false;
+    }
+  }
+
+  useEffect(() => {
+    loadFixtures();
+  }, [selectedLeague]);
+
+  // -------------------------------
+  // Filtro de previsões
+  // -------------------------------
   const filteredPredictions = predictions.filter((p) => {
     const matchDate = p.date ? p.date.split("T")[0] : "";
     const targetDate = formatDate(dates[selectedDate as keyof typeof dates]);
@@ -107,7 +158,9 @@ export default function HomeClient() {
     return leagueMatch && matchDate === targetDate;
   });
 
-  // ====== LOADING / ERRO ======
+  // -------------------------------
+  // UI: LOADING / ERRO
+  // -------------------------------
   if (loading) {
     return (
       <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -134,7 +187,9 @@ export default function HomeClient() {
     );
   }
 
-  // ====== UI PRINCIPAL ======
+  // -------------------------------
+  // UI: PRINCIPAL
+  // -------------------------------
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
       <Header />
@@ -144,7 +199,7 @@ export default function HomeClient() {
 
         {/* FILTROS */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-          {/* Filtro de Ligas */}
+          {/* Ligas */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -157,7 +212,7 @@ export default function HomeClient() {
             ))}
           </select>
 
-          {/* Filtro de Datas */}
+          {/* Datas */}
           <div className="flex gap-2">
             {[
               { key: "today", label: "Hoje" },
@@ -179,107 +234,77 @@ export default function HomeClient() {
           </div>
         </div>
 
-        {/* 🏆 Jogo em destaque */}
-        {filteredPredictions.length > 0 ? (
-          <>
-            <div className="bg-gray-900 p-6 rounded-2xl shadow-lg border border-gray-800 hover:border-green-500 transition">
-              {/* Liga + logótipo */}
-              <div className="flex items-center justify-center mb-2 space-x-2">
-                {filteredPredictions[0].league_logo && (
-                  <img
-                    src={filteredPredictions[0].league_logo}
-                    alt="liga"
-                    className="w-6 h-6 rounded-full border border-gray-700"
-                  />
-                )}
-                <p className="text-sm text-gray-400 text-center">
-                  {getLeagueName(filteredPredictions[0].league_id)}
-                </p>
-              </div>
+        {/* ⚽ BLOCO: JOGOS REAIS */}
+        <div className="bg-gray-900 p-6 rounded-2xl shadow-lg border border-gray-800 mb-10">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-green-400">
+              Jogos Reais (via API-Football)
+            </h2>
 
-              {/* Equipas */}
-              <div className="flex items-center justify-center mb-3 space-x-2">
-                {filteredPredictions[0].home_logo && (
-                  <img
-                    src={filteredPredictions[0].home_logo}
-                    alt="home"
-                    className="w-10 h-10 rounded-full border border-gray-700"
-                  />
-                )}
-                <span className="text-white font-semibold">
-                  {filteredPredictions[0].home_team} vs{" "}
-                  {filteredPredictions[0].away_team}
-                </span>
-                {filteredPredictions[0].away_logo && (
-                  <img
-                    src={filteredPredictions[0].away_logo}
-                    alt="away"
-                    className="w-10 h-10 rounded-full border border-gray-700"
-                  />
-                )}
-              </div>
+            {/* Botão atualizar */}
+            <button
+              onClick={() => {
+                isManualRefresh.current = true;
+                loadFixtures(true);
+              }}
+              disabled={loadingFixtures}
+              className="flex items-center gap-2 bg-gray-800 text-sm text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+            >
+              🔁 {loadingFixtures ? "A atualizar..." : "Atualizar"}
+            </button>
+          </div>
 
-              <p className="text-center text-sm text-gray-400 mb-2">
-                {new Date(filteredPredictions[0].date).toLocaleString("pt-PT")}
-              </p>
-              <div className="text-center text-2xl font-bold text-green-400 mb-2">
-                {filteredPredictions[0].predicted_score?.home} -{" "}
-                {filteredPredictions[0].predicted_score?.away}
-              </div>
-              <p className="text-center text-gray-300">
-                Confiança:{" "}
-                {(filteredPredictions[0].confidence * 100).toFixed(1)}%
-              </p>
+          {/* Estado de carregamento */}
+          {loadingFixtures && (
+            <div className="text-center text-sm text-gray-400 animate-pulse mb-4">
+              ⏳ A carregar jogos reais...
             </div>
+          )}
 
-            {/* ⚽ Outros jogos */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPredictions.slice(1).map((match, idx) => (
+          {/* Lista de jogos */}
+          {liveFixtures.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {liveFixtures.map((f: any) => (
                 <div
-                  key={idx}
-                  className="bg-gray-900 p-4 rounded-xl border border-gray-800 hover:border-green-500 transition"
+                  key={f.fixture.id}
+                  className="p-4 rounded-xl border border-gray-800 bg-gray-950 hover:border-green-500 transition"
                 >
-                  <div className="flex items-center justify-center mb-1 space-x-2">
-                    {match.league_logo && (
-                      <img
-                        src={match.league_logo}
-                        alt="liga"
-                        className="w-5 h-5 rounded-full border border-gray-700"
-                      />
-                    )}
-                    <p className="text-sm text-gray-400 text-center">
-                      {getLeagueName(match.league_id)}
-                    </p>
+                  <div className="flex items-center justify-center space-x-2 mb-2">
+                    <img src={f.teams.home.logo} className="w-6 h-6" />
+                    <span className="text-white font-medium">{f.teams.home.name}</span>
+                    <span className="text-gray-400">vs</span>
+                    <span className="text-white font-medium">{f.teams.away.name}</span>
+                    <img src={f.teams.away.logo} className="w-6 h-6" />
                   </div>
-                  <div className="flex items-center justify-center mb-2">
-                    {match.home_logo && (
-                      <img
-                        src={match.home_logo}
-                        alt="home"
-                        className="w-8 h-8 mr-2 rounded-full border border-gray-700"
-                      />
-                    )}
-                    <span className="text-white font-semibold">
-                      {match.home_team} vs {match.away_team}
-                    </span>
-                    {match.away_logo && (
-                      <img
-                        src={match.away_logo}
-                        alt="away"
-                        className="w-8 h-8 ml-2 rounded-full border border-gray-700"
-                      />
-                    )}
-                  </div>
-                  <div className="text-center text-green-400 font-bold">
-                    {match.predicted_score?.home} -{" "}
-                    {match.predicted_score?.away}
-                  </div>
-                  <p className="text-center text-sm text-gray-400 mt-1">
-                    Confiança: {(match.confidence * 100).toFixed(1)}%
+                  <p className="text-sm text-center text-gray-400">
+                    {new Date(f.fixture.date).toLocaleString("pt-PT")}
+                  </p>
+                  <p className="text-xs text-center text-gray-500 mt-1">
+                    {f.league.name} ({f.league.country})
                   </p>
                 </div>
               ))}
             </div>
+          ) : (
+            !loadingFixtures && (
+              <p className="text-center text-gray-400 mt-4">
+                Nenhum jogo encontrado para esta liga.
+              </p>
+            )
+          )}
+
+          {/* Badge última atualização */}
+          {lastFixturesUpdate && (
+            <div className="text-xs text-center text-gray-500 mt-4">
+              Última atualização: {timeSince(lastFixturesUpdate)}
+            </div>
+          )}
+        </div>
+
+        {/* Bloco de previsões (original) */}
+        {filteredPredictions.length > 0 ? (
+          <>
+            {/* Aqui entra o teu bloco original de previsões */}
           </>
         ) : (
           <p className="text-center text-gray-400 mt-10">
@@ -290,7 +315,7 @@ export default function HomeClient() {
         {lastUpdate && (
           <div className="w-full text-center mt-10">
             <span className="text-xs text-gray-400">
-              Última atualização: {lastUpdate}
+              Última atualização global: {lastUpdate}
             </span>
           </div>
         )}
