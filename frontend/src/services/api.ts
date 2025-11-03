@@ -1,73 +1,46 @@
-function getApiUrl(): string {
-  const url = process.env.NEXT_PUBLIC_API_URL;
-  if (!url) {
-    throw new Error(
-      "NEXT_PUBLIC_API_URL is not defined. Please set it in your environment variables."
-    );
-  }
-  return url;
-}
+from fastapi import FastAPI, Header, HTTPException
+import os
+import json
 
-async function fetchWithTimeout(
-  path: string,
-  options: RequestInit = {},
-  timeout = 8000
-) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
+app = FastAPI(title="Football Prediction API")
 
-  const apiUrl = getApiUrl();
-  const url = `${apiUrl}${path}`;
+API_KEY = os.getenv("ENDPOINT_API_KEY", "dev-key")
 
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_ENDPOINT_API_KEY}`,
-    ...(options.headers || {}),
-  };
+def verify_token(auth_header: str):
+    if not auth_header:
+        raise HTTPException(status_code=401, detail="Authorization header missing")
+    token = auth_header.replace("Bearer ", "").strip()
+    if token != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    return True
 
-  try {
-    const response = await fetch(url, {
-      ...options,
-      headers,
-      signal: controller.signal,
-    });
 
-    let data;
-    try {
-      data = await response.json();
-    } catch {
-      throw new Error(`Failed to parse JSON from ${url}`);
-    }
+@app.get("/predictions")
+def get_predictions(authorization: str = Header(None)):
+    verify_token(authorization)
+    try:
+        with open("data/predict/predictions.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+    except FileNotFoundError:
+        return []
 
-    if (!response.ok) {
-      throw new Error(
-        `Fetch error: ${response.status} ${response.statusText} - ${JSON.stringify(
-          data
-        )}`
-      );
-    }
+@app.get("/stats")
+def get_stats(authorization: str = Header(None)):
+    verify_token(authorization)
+    try:
+        with open("data/stats/prediction_stats.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+    except FileNotFoundError:
+        return {}
 
-    return data;
-  } catch (err: any) {
-    if (err.name === "AbortError") {
-      throw new Error(`Request to ${url} timed out after ${timeout}ms`);
-    }
-    throw err;
-  } finally {
-    clearTimeout(id);
-  }
-}
+@app.get("/meta/last-update")
+def last_update(authorization: str = Header(None)):
+    verify_token(authorization)
+    from datetime import datetime
+    return {"last_update": datetime.utcnow().isoformat()}
 
-// === Endpoints da API ===
-
-export async function getPredictions() {
-  return fetchWithTimeout("/predictions");
-}
-
-export async function getStats() {
-  return fetchWithTimeout("/stats");
-}
-
-export async function getLastUpdate() {
-  return fetchWithTimeout("/meta/last-update");
-}
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "Football Prediction API online"}

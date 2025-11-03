@@ -107,4 +107,5 @@ if __name__ == "__main__":
     # Modo servidor FastAPI (Render)
     else:
         import uvicorn
-        uvicorn.run("src.main:api", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+uvicorn.run("src.api:app", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+

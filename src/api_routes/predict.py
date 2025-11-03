@@ -1,173 +1,163 @@
-from fastapi import APIRouter, Request, Response, HTTPException, Depends
-from pydantic import BaseModel
-from typing import Optional
-from src.auth import verify_token
+from fastapi import APIRouter, HTTPException
 from datetime import datetime
+from src import config
+from src.fetch_matches import fetch_today_matches
 import os
 import json
-from src import config
+import logging
 
 router = APIRouter()
+logger = logging.getLogger("football_api")
+
+# ======================================================
+# 🔐 Verificação de Token (para rotas protegidas)
+# ======================================================
+def verify_token(auth_header: str = None):
+    expected = os.getenv("ENDPOINT_API_KEY")
+    if not expected:
+        raise HTTPException(status_code=500, detail="Server missing ENDPOINT_API_KEY.")
+    if not auth_header:
+        raise HTTPException(status_code=401, detail="Authorization header missing.")
+    if not auth_header.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Invalid Authorization header format.")
+    token = auth_header.split(" ")[1]
+    if token != expected:
+        raise HTTPException(status_code=401, detail="Invalid or expired token.")
+    return True
 
 
-# ==========================
-# MODELOS DE DADOS
-# ==========================
-
-class Odds(BaseModel):
-    home: float
-    draw: float
-    away: float
-
-
-class MatchInput(BaseModel):
-    match_id: int
-    date: str
-    time: str
-    league: str
-    home_team: str
-    away_team: str
-    odds: Optional[Odds] = None
-
-
-# ==========================
-# ENDPOINTS PRINCIPAIS
-# ==========================
-
+# ======================================================
+# 📊 Endpoint público — previsões atuais
+# ======================================================
 @router.get("/predictions", tags=["Predictions"])
-def get_predictions(request: Request, token: bool = Depends(verify_token)):
-    """Devolve todas as previsões armazenadas na aplicação."""
-    return request.app.state.predictions
+def get_predictions():
+    """
+    Retorna as previsões armazenadas localmente (acesso público — sem token).
+    """
+    path = "data/predict/predictions.json"
 
+    if not os.path.exists(path):
+        return {
+            "status": "empty",
+            "detail": "Nenhum ficheiro de previsões encontrado.",
+        }
 
-@router.get("/predictions/{match_id}", tags=["Predictions"])
-def get_prediction_by_id(match_id: int, request: Request, token: bool = Depends(verify_token)):
-    """Devolve a previsão de um jogo específico."""
-    for match in request.app.state.predictions:
-        if str(match.get("match_id")) == str(match_id):
-            return match
-    raise HTTPException(status_code=404, detail="Prediction for this match_id not found.")
-
-
-@router.get("/stats", response_class=Response, tags=["Predictions"])
-def get_prediction_stats(token: bool = Depends(verify_token)):
-    """Lê as estatísticas agregadas do ficheiro JSON."""
-    stats_path = os.path.join("data", "stats", "prediction_stats.json")
     try:
-        with open(stats_path, "r", encoding="utf-8") as f:
-            stats = json.load(f)
-        return Response(content=json.dumps(stats), media_type="application/json")
-    except FileNotFoundError:
-        return Response(
-            content=json.dumps({"error": "Stats file not found"}),
-            media_type="application/json",
-            status_code=404,
-        )
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        # Se o ficheiro está vazio ou mal formado
+        if not isinstance(data, list) or len(data) == 0:
+            return {"status": "empty", "detail": "Ficheiro de previsões vazio."}
+
+        return data
+
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Erro ao ler ficheiro JSON.")
     except Exception as e:
-        return Response(
-            content=json.dumps({"error": str(e)}),
-            media_type="application/json",
-            status_code=500,
-        )
-
-
-# ==========================
-# META - ÚLTIMA ATUALIZAÇÃO
-# ==========================
-
-@router.get("/meta/last-update", tags=["Meta"])
-def get_last_update(token: bool = Depends(verify_token)):
-    """
-    Obtém a data/hora da última atualização de previsões.
-    Lê o valor da chave no Upstash Redis.
-    """
-    try:
-        if not config.redis_client:
-            return {"last_update": "N/A"}
-
-        value = config.redis_client.get(config.LAST_UPDATE_KEY)
-        if isinstance(value, bytes):
-            value = value.decode("utf-8")
-        return {"last_update": value or "N/A"}
-    except Exception as e:
-        print("⚠️ Erro ao ler do Redis:", e)
-        return {"last_update": "N/A"}
-
-
-# ==========================
-# REGISTO AUTOMÁTICO DA DATA DE ATUALIZAÇÃO
-# ==========================
-
-@router.post("/meta/update", tags=["Meta"])
-def set_last_update(token: bool = Depends(verify_token)):
-    """
-    Atualiza manualmente (ou via script) o timestamp da última atualização.
-    Usa o cliente Upstash Redis (HTTP).
-    """
-    try:
-        if not config.redis_client:
-            raise Exception("Redis client not initialized")
-
-        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        result = config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
-
-        print(f"🕒 Última atualização registada no Redis: {now_str}")
-        return {"status": "ok", "last_update": now_str, "redis_result": str(result)}
-    except Exception as e:
-        print(f"⚠️ Erro ao atualizar last_update no Redis: {e}")
+        logger.error(f"Erro em /predictions: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ==========================
-# STATUS DO REDIS
-# ==========================
+# ======================================================
+# 🔁 Atualização manual — busca jogos reais
+# ======================================================
+@router.post("/meta/update", tags=["Meta"])
+def manual_update(auth_header: str = None):
+    """Atualiza manualmente os jogos (fetch direto da API-Football)."""
+    verify_token(auth_header)
 
-@router.get("/meta/status", tags=["Meta"])
-def get_redis_status():
-    """
-    Mostra o estado atual da ligação Redis e o último update.
-    Útil para debugging e monitorização em produção.
-    """
     try:
-        if not config.redis_client:
-            return {"status": "offline", "error": "Redis client not initialized"}
+        result = fetch_today_matches()
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # Teste simples
-        ping = config.redis_client.ping()
-        last_update = config.redis_client.get(config.LAST_UPDATE_KEY)
-        if isinstance(last_update, bytes):
-            last_update = last_update.decode("utf-8")
+        # Atualiza Redis
+        if config.redis_client:
+            config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
 
+        msg = f"✅ Atualização manual concluída às {now_str} — {result['total']} jogos."
+        logger.info(msg)
         return {
-            "status": "online" if ping else "error",
-            "ping": bool(ping),
-            "last_update": last_update or "N/A"
+            "status": "ok",
+            "last_update": now_str,
+            "total_matches": result["total"],
         }
     except Exception as e:
-        return {"status": "error", "detail": str(e)}
+        logger.error(f"❌ Erro no update manual: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
-# ==========================
-# AUTO-INIT AO ARRANCAR SERVIDOR
-# ==========================
-
-def initialize_last_update():
-    """Garante que a chave de last_update existe ao iniciar o backend."""
-    if not config.redis_client:
-        print("⚠️ Redis desativado — a chave last_update não será inicializada.")
-        return
+# ======================================================
+# 🧠 Executa previsões IA
+# ======================================================
+@router.post("/predict", tags=["AI"])
+def run_predictions(auth_header: str = None):
+    """Executa o modelo IA sobre os jogos armazenados."""
+    verify_token(auth_header)
 
     try:
-        existing = config.redis_client.get(config.LAST_UPDATE_KEY)
-        if not existing:
-            now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        from src.predict import main as run_model
+        run_model()  # executa o modelo de previsão IA
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if config.redis_client:
             config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
-            print(f"🟢 Chave '{config.LAST_UPDATE_KEY}' criada automaticamente: {now_str}")
-        else:
-            print(f"✅ Chave '{config.LAST_UPDATE_KEY}' já existente: {existing}")
+
+        msg = f"🤖 Previsões IA atualizadas em {now_str}."
+        logger.info(msg)
+
+        return {"status": "ok", "detail": msg}
     except Exception as e:
-        print(f"⚠️ Erro ao inicializar chave last_update: {e}")
+        logger.error(f"Erro ao executar IA: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
-# Executa ao importar este módulo
-initialize_last_update()
+# ======================================================
+# 📈 Estado geral (Redis, ficheiros, IA)
+# ======================================================
+@router.get("/meta/status", tags=["Meta"])
+def meta_status():
+    """Mostra estado geral do sistema e disponibilidade."""
+    redis_ok = False
+    redis_val = None
+    if config.redis_client:
+        try:
+            redis_val = config.redis_client.get(config.LAST_UPDATE_KEY)
+            redis_ok = True
+        except Exception:
+            redis_ok = False
+
+    predictions_file = "data/predict/predictions.json"
+    predictions_exists = os.path.exists(predictions_file)
+    total_predictions = 0
+    if predictions_exists:
+        try:
+            with open(predictions_file, "r", encoding="utf-8") as f:
+                total_predictions = len(json.load(f))
+        except Exception:
+            pass
+
+    return {
+        "status": "online",
+        "redis_connected": redis_ok,
+        "last_update": redis_val,
+        "predictions_file": predictions_exists,
+        "total_predictions": total_predictions,
+    }
+
+
+# ======================================================
+# 🧩 Último treino IA
+# ======================================================
+@router.get("/meta/last-train", tags=["AI"])
+def last_train():
+    """Retorna a data do último treino do modelo IA."""
+    try:
+        train_file = "data/meta/last_train.json"
+        if not os.path.exists(train_file):
+            return {"status": "missing", "detail": "Nenhum treino encontrado."}
+        with open(train_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
