@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
 from datetime import datetime
 from src import config
 from src.fetch_matches import fetch_today_matches
@@ -10,9 +10,9 @@ router = APIRouter()
 logger = logging.getLogger("football_api")
 
 # ======================================================
-# 🔐 Verificação de Token (para rotas protegidas)
+# 🔐 Verificação de Token
 # ======================================================
-def verify_token(auth_header: str = None):
+def verify_token(auth_header: str | None):
     expected = os.getenv("ENDPOINT_API_KEY")
     if not expected:
         raise HTTPException(status_code=500, detail="Server missing ENDPOINT_API_KEY.")
@@ -27,35 +27,23 @@ def verify_token(auth_header: str = None):
 
 
 # ======================================================
-# 📊 Endpoint público — previsões atuais
+# 📊 Endpoint principal de previsões
 # ======================================================
 @router.get("/predictions", tags=["Predictions"])
 def get_predictions():
     """
-    Retorna as previsões armazenadas localmente (acesso público — sem token).
+    Retorna as previsões armazenadas localmente (sem necessidade de autenticação).
     """
-    path = "data/predict/predictions.json"
-
-    if not os.path.exists(path):
-        return {
-            "status": "empty",
-            "detail": "Nenhum ficheiro de previsões encontrado.",
-        }
-
     try:
+        path = "data/predict/predictions.json"
+        if not os.path.exists(path):
+            return {"status": "empty", "detail": "Ficheiro de previsões não encontrado."}
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-
-        # Se o ficheiro está vazio ou mal formado
-        if not isinstance(data, list) or len(data) == 0:
+        if not data:
             return {"status": "empty", "detail": "Ficheiro de previsões vazio."}
-
         return data
-
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=500, detail="Erro ao ler ficheiro JSON.")
     except Exception as e:
-        logger.error(f"Erro em /predictions: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -63,9 +51,9 @@ def get_predictions():
 # 🔁 Atualização manual — busca jogos reais
 # ======================================================
 @router.post("/meta/update", tags=["Meta"])
-def manual_update(auth_header: str = None):
+def manual_update(authorization: str = Header(None)):
     """Atualiza manualmente os jogos (fetch direto da API-Football)."""
-    verify_token(auth_header)
+    verify_token(authorization)
 
     try:
         result = fetch_today_matches()
@@ -91,24 +79,22 @@ def manual_update(auth_header: str = None):
 # 🧠 Executa previsões IA
 # ======================================================
 @router.post("/predict", tags=["AI"])
-def run_predictions(auth_header: str = None):
+def run_predictions(authorization: str = Header(None)):
     """Executa o modelo IA sobre os jogos armazenados."""
-    verify_token(auth_header)
+    verify_token(authorization)
 
     try:
         from src.predict import main as run_model
         run_model()  # executa o modelo de previsão IA
         now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
         if config.redis_client:
             config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
 
-        msg = f"🤖 Previsões IA atualizadas em {now_str}."
-        logger.info(msg)
-
-        return {"status": "ok", "detail": msg}
+        return {
+            "status": "ok",
+            "detail": f"Previsões IA atualizadas com sucesso em {now_str}.",
+        }
     except Exception as e:
-        logger.error(f"Erro ao executar IA: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -117,7 +103,7 @@ def run_predictions(auth_header: str = None):
 # ======================================================
 @router.get("/meta/status", tags=["Meta"])
 def meta_status():
-    """Mostra estado geral do sistema e disponibilidade."""
+    """Mostra estado geral do sistema."""
     redis_ok = False
     redis_val = None
     if config.redis_client:
@@ -138,7 +124,6 @@ def meta_status():
             pass
 
     return {
-        "status": "online",
         "redis_connected": redis_ok,
         "last_update": redis_val,
         "predictions_file": predictions_exists,
