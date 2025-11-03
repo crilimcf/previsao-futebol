@@ -183,11 +183,12 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://previsao-futebol.vercel.app",
+        "https://previsao-futebol-6q2ejj6lc-carlos-projects-e7f825c1.vercel.app",
+        "http://localhost:3000",
     ],
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
-    allow_headers=["Authorization", "Content-Type"],
-    max_age=3600,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # ======================================
