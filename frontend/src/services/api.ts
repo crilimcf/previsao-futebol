@@ -1,46 +1,91 @@
-from fastapi import FastAPI, Header, HTTPException
-import os
-import json
+// =====================================================
+// src/services/api.ts
+// Cliente HTTP para comunicar com a API FastAPI (Render)
+// =====================================================
 
-app = FastAPI(title="Football Prediction API")
+import axios from "axios";
 
-API_KEY = os.getenv("ENDPOINT_API_KEY", "dev-key")
+// 🌍 URL base da tua API (Render)
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://previsao-futebol.onrender.com";
 
-def verify_token(auth_header: str):
-    if not auth_header:
-        raise HTTPException(status_code=401, detail="Authorization header missing")
-    token = auth_header.replace("Bearer ", "").strip()
-    if token != API_KEY:
-        raise HTTPException(status_code=401, detail="Invalid token")
-    return True
+// 🔑 Token de autenticação (igual ao ENDPOINT_API_KEY do backend)
+export const API_TOKEN =
+  process.env.NEXT_PUBLIC_API_TOKEN || "d110d6f22b446c54deadcadef7b234f6966af678";
 
+// Instância Axios configurada
+export const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${API_TOKEN}`,
+  },
+});
 
-@app.get("/predictions")
-def get_predictions(authorization: str = Header(None)):
-    verify_token(authorization)
-    try:
-        with open("data/predict/predictions.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data
-    except FileNotFoundError:
-        return []
+// =====================================================
+// 📊 Funções principais para o frontend consumir
+// =====================================================
 
-@app.get("/stats")
-def get_stats(authorization: str = Header(None)):
-    verify_token(authorization)
-    try:
-        with open("data/stats/prediction_stats.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data
-    except FileNotFoundError:
-        return {}
+/**
+ * Obtém todas as previsões atuais.
+ */
+export async function getPredictions() {
+  try {
+    const response = await api.get("/predictions");
+    return response.data;
+  } catch (error: any) {
+    console.error("❌ Erro ao obter previsões:", error.message);
+    throw error;
+  }
+}
 
-@app.get("/meta/last-update")
-def last_update(authorization: str = Header(None)):
-    verify_token(authorization)
-    from datetime import datetime
-    return {"last_update": datetime.utcnow().isoformat()}
+/**
+ * Obtém estatísticas agregadas.
+ */
+export async function getStats() {
+  try {
+    const response = await api.get("/stats");
+    return response.data;
+  } catch (error: any) {
+    console.error("❌ Erro ao obter estatísticas:", error.message);
+    throw error;
+  }
+}
 
-@app.get("/")
-def root():
-    return {"status": "ok", "message": "Football Prediction API online"}
+/**
+ * Obtém a data da última atualização.
+ */
+export async function getLastUpdate() {
+  try {
+    const response = await api.get("/meta/last-update");
+    return response.data;
+  } catch (error: any) {
+    console.error("❌ Erro ao obter última atualização:", error.message);
+    throw error;
+  }
+}
+
+/**
+ * Força atualização manual das previsões (endpoint protegido).
+ */
+export async function triggerUpdate() {
+  try {
+    const response = await api.post("/meta/update");
+    return response.data;
+  } catch (error: any) {
+    console.error("❌ Erro ao atualizar previsões:", error.message);
+    throw error;
+  }
+}
+
+/**
+ * Testa estado geral da API.
+ */
+export async function getApiHealth() {
+  try {
+    const response = await api.get("/healthz");
+    return response.data;
+  } catch {
+    return { status: "offline" };
+  }
+}
