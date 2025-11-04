@@ -1,35 +1,33 @@
 import os
-from datetime import datetime
-from dotenv import load_dotenv
+import logging
 from upstash_redis import Redis
 
-load_dotenv()
+logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
+logger = logging.getLogger("config")
 
-LAST_UPDATE_KEY = "football_predictions_last_update"
-
-# --- Configuração Upstash Redis manual ---
-REDIS_URL = "https://dear-squid-35681.upstash.io"
-REDIS_TOKEN = "AYthAAIncDFjZDJkNDY2ZGRlOTk0NTE2ODA3MTJkMzRjNGZkZmUyNXAxMzU2ODE"
+# Redis (Upstash)
+REDIS_URL = os.getenv("REDIS_URL")
+REDIS_TOKEN = os.getenv("REDIS_TOKEN")
 
 redis_client = None
-
-try:
-    redis_client = Redis(url=REDIS_URL, token=REDIS_TOKEN)
-    # Teste rápido
-    redis_client.set("test_key", "ok")
-    print("✅ Ligação HTTP com Upstash Redis estabelecida com sucesso!")
-except Exception as e:
-    print(f"❌ Erro ao conectar ao Upstash Redis: {e}")
-    redis_client = None
+if REDIS_URL and REDIS_TOKEN:
+    try:
+        redis_client = Redis(url=REDIS_URL, token=REDIS_TOKEN)
+        logger.info("✅ Ligação Redis OK.")
+    except Exception as e:
+        logger.warning(f"⚠️ Falha ao conectar ao Redis: {e}")
+else:
+    logger.warning("⚠️ Variáveis REDIS_URL ou REDIS_TOKEN ausentes.")
 
 
 def update_last_update():
-    """Atualiza a chave de último update no Redis."""
+    """Atualiza a data da última previsão no Redis."""
+    import datetime
     if not redis_client:
-        return {"status": "redis_disabled"}
+        return
     try:
-        ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        redis_client.set(LAST_UPDATE_KEY, ts)
-        return {"status": "ok", "last_update": ts}
+        ts = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        redis_client.set("football_predictions_last_update", ts)
+        logger.info(f"🕒 Última atualização registada no Redis ({ts})")
     except Exception as e:
-        return {"status": "error", "detail": str(e)}
+        logger.error(f"⚠️ Falha ao atualizar timestamp: {e}")

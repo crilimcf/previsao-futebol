@@ -1,489 +1,175 @@
-from pathlib import Path
-from datetime import datetime, timedelta
-from src.utils import get_api_key, load_json
-
-import json
 import requests
+import json
+import os
+import time
+import random
 import logging
+from datetime import date, timedelta
+from src import config
 
-SESSION = requests.Session()
-TIMEOUT = (10, 30)
+logger = logging.getLogger("football_api")
+redis = config.redis_client
 
-
-def get_leagues_id(json_path="config/leagues.json"):
-    """Load league IDs from a JSON configuration file."""
-
-    data = load_json(json_path)
-    if not isinstance(data, list) or not all("id" in lg for lg in data):
-        raise ValueError("Leagues JSON must be a list of dicts with 'id' key.")
-    return [lg["id"] for lg in data]
-
-
-def get_historical_data(leagues_id=None, weeks=1):
-    """Fetches historical match data from the SoccerDataAPI for the specified leagues and time frame."""
-
-    api_key = get_api_key()
-
-    if leagues_id is None:
-        try:
-            leagues_id = get_leagues_id()
-        except ValueError as e:
-            logging.error(f"[Error] loading leagues: {e}")
-            raise ValueError(f"Leagues configuration is invalid: {e}")
-
-    today_dt = datetime.now()
-    now = today_dt - timedelta(hours=1)
-    start_dt = today_dt - timedelta(weeks=weeks)
-    games = []
-
-    for league_id in leagues_id:
-        url = "https://api.soccerdataapi.com/matches/"
-        query = {"league_id": league_id, "auth_token": api_key}
-        headers = {"Accept-Encoding": "gzip", "Content-Type": "application/json"}
-        try:
-            response = SESSION.get(url, headers=headers, params=query, timeout=TIMEOUT)
-            data = response.json()
-        except Exception as e:
-            logging.error(f"[ERROR] Request or JSON decode failed for league {league_id}: {e}")
-            continue
-
-        if isinstance(data, dict):
-            data = [data]
-        elif not isinstance(data, list):
-            logging.warning(f"[WARNING] Unexpected data type: {type(data)} for league {league_id}")
-            continue
-
-        for obj in data:
-            if not isinstance(obj, dict):
-                logging.warning(f"[WARNING] Unexpected data format: {obj}")
-                continue
-            for stage in obj.get("stage", []):
-                for match in stage.get("matches", []):
-                    match_date_str = match.get("date")
-                    if not match_date_str:
-                        continue
-                    try:
-                        match_date = datetime.strptime(match_date_str, "%d/%m/%Y")
-                    except Exception as e:
-                        logging.warning(f"[WARNING] Date parsing failed: {match_date_str} ({e})")
-                        continue
-                    if start_dt.date() <= match_date.date() <= now.date():
-                        home_team = match.get("teams", {}).get("home", {})
-                        away_team = match.get("teams", {}).get("away", {})
-
-                        is_cup = match.get("is_cup")
-
-                        odds = match.get("odds", {}).get("match_winner", {})
-                        if not isinstance(odds, dict):
-                            odds = None
-
-                        if is_cup is None:
-                            is_cup = obj.get("is_cup")
-
-                        if not home_team or not away_team or not isinstance(odds, dict) or not odds:
-                            continue
-
-                        games.append(
-                            {
-                                "date": match["date"],
-                                "time": match.get("time", ""),
-                                "home_name": home_team.get("name", "?"),
-                                "away_name": away_team.get("name", "?"),
-                                "home_id": home_team.get("id", "?"),
-                                "away_id": away_team.get("id", "?"),
-                                "match_id": match.get("id"),
-                                "league_id": league_id,
-                                "is_cup": is_cup,
-                                "odds": odds,
-                            }
-                        )
-    return games
+API_KEY = os.getenv("API_KEY") or os.getenv("API_FOOTBALL_KEY")
+BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/")
+SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
+PRED_PATH = "data/predict/predictions.json"
+HEADERS = {"x-apisports-key": API_KEY}
 
 
-def get_matches_details(match_id):
-    """Fetches detailed information for a specific match by its ID."""
-
-    api_key = get_api_key()
-
-    url = "https://api.soccerdataapi.com/match/"
-    querystring = {"match_id": match_id, "auth_token": api_key}
-    headers = {"Accept-Encoding": "gzip", "Content-Type": "application/json"}
-    response = SESSION.get(url, headers=headers, params=querystring, timeout=TIMEOUT)
+# ======================================================
+# REDIS CACHE
+# ======================================================
+def redis_cache_get(key):
     try:
-        return response.json()
-    except Exception as e:
-        logging.error(f"[ERROR] JSON decode failed for match {match_id}: {e}")
-        return None
-
-
-def get_h2h(team1_id, team2_id):
-    """Fetches head-to-head statistics between two teams by their IDs."""
-
-    api_key = get_api_key()
-
-    url = "https://api.soccerdataapi.com/head-to-head/"
-    querystring = {"team_1_id": team1_id, "team_2_id": team2_id, "auth_token": api_key}
-    headers = {"Accept-Encoding": "gzip", "Content-Type": "application/json"}
-    try:
-        resp = SESSION.get(url, headers=headers, params=querystring, timeout=TIMEOUT)
-        resp.raise_for_status()
-        data = resp.json()
-    except Exception as e:
-        logging.error(f"[ERROR] H2H request failed for {team1_id} vs {team2_id}: {e}")
-        return {}
-    if isinstance(data, dict):
-        return data.get("stats", {})
-    logging.warning(f"[WARNING] Unexpected H2H payload type: {type(data)}")
-    return {}
-
-
-def get_standings(league_id):
-    """Fetches the current standings for a specific league by its ID."""
-
-    api_key = get_api_key()
-
-    url = "https://api.soccerdataapi.com/standing/"
-    query = {"league_id": league_id, "auth_token": api_key}
-    headers = {"Accept-Encoding": "gzip", "Content-Type": "application/json"}
-    response = SESSION.get(url, headers=headers, params=query, timeout=TIMEOUT)
-    try:
-        response.raise_for_status()
-        data = response.json()
-    except Exception as e:
-        logging.error(f"[ERROR] JSON decode failed for standings of league {league_id}: {e}")
-        return []
-    try:
-        if (
-            isinstance(data, dict)
-            and data.get("stage")
-            and isinstance(data["stage"][0], dict)
-            and "standings" in data["stage"][0]
-        ):
-            return data["stage"][0]["standings"]
+        if redis:
+            val = redis.get(key)
+            if val:
+                return json.loads(val)
     except Exception:
-        logging.exception(
-            "[Exception] Unexpected data format for standings of league %s", league_id
-        )
-    return []
+        pass
+    return None
 
 
-def main():
-    """Main function to fetch historical match data and save it to a JSON file."""
-
-    matches = get_historical_data()
-    logging.info(f"[INFO] Fetched {len(matches)} historical matches.")
-
-    output_path = Path("data/raw/matches_raw.json")
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    total_saved = 0
-    total_ignored = 0
-
+def redis_cache_set(key, data, expire=3600):
     try:
-        if output_path.exists():
-            try:
-                with open(output_path, "r", encoding="utf-8") as f:
-                    existing_matches = json.load(f)
-            except Exception as e:
-                logging.warning(f"[WARNING] Could not read existing matches: {e}")
-                existing_matches = []
+        if redis:
+            redis.set(key, json.dumps(data), ex=expire)
+    except Exception:
+        pass
+
+
+# ======================================================
+# SAFE REQUEST
+# ======================================================
+def safe_request(url, params=None):
+    key = f"cache:{url}:{json.dumps(params, sort_keys=True)}"
+    cached = redis_cache_get(key)
+    if cached:
+        return cached
+    try:
+        r = requests.get(url, headers=HEADERS, params=params, timeout=5)
+        if r.status_code == 200:
+            data = r.json().get("response", [])
+            redis_cache_set(key, data)
+            return data
         else:
-            existing_matches = []
-
-        existing_ids = set(str(m.get("match_id")) for m in existing_matches if "match_id" in m)
-
-        for match in matches:
-            try:
-                match_id = match["match_id"]
-                is_cup = match.get("is_cup")
-                odds = match.get("odds", {})
-                details = get_matches_details(match_id)
-                if not details or details.get("status") != "finished":
-                    continue
-                date = details.get("date", "")
-                time = details.get("time", "")
-                league = details.get("league", {}).get("name", "")
-                team1 = details.get("teams", {}).get("home", {}).get("name", "")
-                team2 = details.get("teams", {}).get("away", {}).get("name", "")
-                team1_goals = details.get("goals", {}).get("home_ft_goals", "")
-                team2_goals = details.get("goals", {}).get("away_ft_goals", "")
-
-                team1_id = details.get("teams", {}).get("home", {}).get("id", None)
-                team2_id = details.get("teams", {}).get("away", {}).get("id", None)
-
-                team1_rank = team2_rank = ""
-                league_id = details.get("league", {}).get("id", None)
-                standings = []
-                if league_id:
-                    try:
-                        standings = get_standings(league_id)
-                    except Exception as e:
-                        logging.warning(f"Error getting standings for league_id {league_id}: {e}")
-                if standings:
-                    for team in standings:
-                        if team1_id and str(team.get("team_id")) == str(team1_id):
-                            team1_rank = team.get("position", "")
-                        if team2_id and str(team.get("team_id")) == str(team2_id):
-                            team2_rank = team.get("position", "")
-
-                h2h_games_played = h2h_team1_wins = h2h_team2_wins = h2h_draws = ""
-                h2h_team1_scored = h2h_team2_scored = ""
-                h2h_team1_home_wins = h2h_team1_home_draws = h2h_team1_home_losses = ""
-                h2h_team1_home_scored = h2h_team1_home_conceded = ""
-                h2h_team2_home_wins = h2h_team2_home_draws = h2h_team2_home_losses = ""
-                h2h_team2_home_scored = h2h_team2_home_conceded = ""
-                if team1_id and team2_id:
-                    h2h_data = get_h2h(team1_id, team2_id)
-                    stats = h2h_data.get("overall", {}) if isinstance(h2h_data, dict) else {}
-                    h2h_games_played = stats.get("overall_games_played", "")
-                    h2h_team1_wins = stats.get("overall_team1_wins", "")
-                    h2h_team2_wins = stats.get("overall_team2_wins", "")
-                    h2h_draws = stats.get("overall_draws", "")
-                    h2h_team1_scored = stats.get("overall_team1_scored", "")
-                    h2h_team2_scored = stats.get("overall_team2_scored", "")
-                    t1_home = h2h_data.get("team1_at_home", {})
-                    h2h_team1_home_wins = t1_home.get("team1_wins_at_home", "")
-                    h2h_team1_home_draws = t1_home.get("team1_draws_at_home", "")
-                    h2h_team1_home_losses = t1_home.get("team1_losses_at_home", "")
-                    h2h_team1_home_scored = t1_home.get("team1_scored_at_home", "")
-                    h2h_team1_home_conceded = t1_home.get("team1_conceded_at_home", "")
-                    t2_home = h2h_data.get("team2_at_home", {})
-                    h2h_team2_home_wins = t2_home.get("team2_wins_at_home", "")
-                    h2h_team2_home_draws = t2_home.get("team2_draws_at_home", "")
-                    h2h_team2_home_losses = t2_home.get("team2_losses_at_home", "")
-                    h2h_team2_home_scored = t2_home.get("team2_scored_at_home", "")
-                    h2h_team2_home_conceded = t2_home.get("team2_conceded_at_home", "")
-
-                match_data = {
-                    "match_id": match_id,
-                    "date": date,
-                    "time": time,
-                    "league": league,
-                    "is_cup": is_cup,
-                    "team1": team1,
-                    "team2": team2,
-                    "team1_goals": team1_goals,
-                    "team2_goals": team2_goals,
-                    "team1_rank": team1_rank,
-                    "team2_rank": team2_rank,
-                    "h2h_games_played": h2h_games_played,
-                    "h2h_team1_wins": h2h_team1_wins,
-                    "h2h_team2_wins": h2h_team2_wins,
-                    "h2h_draws": h2h_draws,
-                    "h2h_team1_scored": h2h_team1_scored,
-                    "h2h_team2_scored": h2h_team2_scored,
-                    "h2h_team1_home_wins": h2h_team1_home_wins,
-                    "h2h_team1_home_draws": h2h_team1_home_draws,
-                    "h2h_team1_home_losses": h2h_team1_home_losses,
-                    "h2h_team1_home_scored": h2h_team1_home_scored,
-                    "h2h_team1_home_conceded": h2h_team1_home_conceded,
-                    "h2h_team2_home_wins": h2h_team2_home_wins,
-                    "h2h_team2_home_draws": h2h_team2_home_draws,
-                    "h2h_team2_home_losses": h2h_team2_home_losses,
-                    "h2h_team2_home_scored": h2h_team2_home_scored,
-                    "h2h_team2_home_conceded": h2h_team2_home_conceded,
-                    "odds": odds,
-                }
-
-                rank_indexes = ["team1_rank", "team2_rank"]
-                if is_cup is True:
-                    essential_fields = [v for k, v in match_data.items() if k not in rank_indexes]
-                else:
-                    essential_fields = list(match_data.values())
-                if all(str(x).strip() != "" for x in essential_fields):
-                    if str(match_id) not in existing_ids:
-                        existing_matches.append(match_data)
-                        existing_ids.add(str(match_id))
-                        total_saved += 1
-                    else:
-                        total_ignored += 1
-                        logging.info(
-                            f"[SKIPPED] Duplicate match_id {match_id} | {team1} vs {team2}"
-                        )
-                else:
-                    total_ignored += 1
-                    empty_fields = [
-                        k
-                        for k, v in match_data.items()
-                        if (str(v).strip() == "")
-                        and ((is_cup is True and k not in rank_indexes) or (is_cup is not True))
-                    ]
-                    logging.info(
-                        f"[SKIPPED] Match {team1} vs {team2} | Empty essential fields: {empty_fields}"
-                    )
-            except Exception as e:
-                logging.error(
-                    f"[ERROR] Unexpected error processing match {match.get('match_id', '?')}: {e}"
-                )
-        with open(output_path, "w", encoding="utf-8") as f:
-            logging.info(f"[INFO] Writing data to {output_path}")
-            json.dump(existing_matches, f, ensure_ascii=False, indent=2)
-        logging.info(f"[INFO] Total saved matches: {total_saved}")
-        logging.info(f"[INFO] Total games skipped: {total_ignored}")
+            logger.warning(f"⚠️ {r.status_code} em {url}")
+            return []
     except Exception as e:
-        logging.critical(f"[CRITICAL] Fatal error in main loop: {e}")
+        logger.error(f"❌ Erro em {url}: {e}")
+        return []
 
 
-def fetch_upcoming_matches(leagues_id=None, weeks=1):
-    """Fetch upcoming match data from the API for specified leagues over the next given weeks."""
-    api_key = get_api_key()
-    if leagues_id is None:
-        try:
-            leagues_id = get_leagues_id()
-        except ValueError as e:
-            logging.error(f"[Error] loading leagues: {e}")
-            raise ValueError(f"Leagues configuration is invalid: {e}")
+# ======================================================
+# LIGAS
+# ======================================================
+def get_all_leagues():
+    cache_key = "cache:leagues"
+    cached = redis_cache_get(cache_key)
+    if cached:
+        return cached
 
-    today_dt = datetime.now()
-    now = today_dt - timedelta(hours=1)
-    finish_dt = today_dt + timedelta(weeks=weeks)
-    games = []
+    leagues = []
+    try:
+        data = safe_request(f"{BASE_URL}leagues", {"season": SEASON})
+        for l in data:
+            league = l.get("league", {})
+            country = l.get("country", {})
+            if league.get("id") and league.get("type") == "League":
+                leagues.append({
+                    "id": league["id"],
+                    "name": league["name"],
+                    "logo": league.get("logo"),
+                    "country": country.get("name"),
+                })
+        redis_cache_set(cache_key, leagues, 21600)  # 6h cache
+    except Exception as e:
+        logger.warning(f"⚠️ Erro ao obter ligas: {e}")
+    return leagues[:25]
 
-    for league_id in leagues_id:
-        url = "https://api.soccerdataapi.com/matches/"
-        query = {"league_id": league_id, "auth_token": api_key}
-        headers = {"Accept-Encoding": "gzip", "Content-Type": "application/json"}
 
-        try:
-            response = SESSION.get(url, headers=headers, params=query, timeout=TIMEOUT)
-            data = response.json()
-        except Exception as e:
-            logging.error(f"[ERROR] Request or JSON decode failed for league {league_id}: {e}")
-            continue
+# ======================================================
+# PREVISÃO
+# ======================================================
+def calculate_prediction(stats_home, stats_away):
+    try:
+        avg_home = float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2))
+        avg_away = float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1))
+        score_home = max(0, round(avg_home + random.uniform(-0.5, 0.5)))
+        score_away = max(0, round(avg_away + random.uniform(-0.5, 0.5)))
+        conf = min(0.95, round(0.6 + abs(score_home - score_away) * 0.1 + random.uniform(0.05, 0.15), 2))
+        return {"predicted_score": {"home": score_home, "away": score_away}, "confidence": conf}
+    except Exception:
+        return {"predicted_score": {"home": 1, "away": 1}, "confidence": 0.6}
 
-        if isinstance(data, dict):
-            data = [data]
-        elif not isinstance(data, list):
-            logging.warning(f"[WARNING] Unexpected data type: {type(data)} for league {league_id}")
-            continue
 
-        for obj in data:
-            if not isinstance(obj, dict):
-                logging.warning(f"[WARNING] Unexpected data format: {obj}")
-                continue
+# ======================================================
+# TOP SCORERS
+# ======================================================
+def get_top_scorers(league_id):
+    try:
+        data = safe_request(f"{BASE_URL}players/topscorers", {"league": league_id, "season": SEASON})
+        return [
+            {
+                "player": s.get("player", {}).get("name"),
+                "team": s.get("statistics", [{}])[0].get("team", {}).get("name"),
+                "goals": s.get("statistics", [{}])[0].get("goals", {}).get("total", 0),
+            }
+            for s in data[:5]
+        ]
+    except Exception:
+        return []
 
-            for stage in obj.get("stage", []):
-                for match in stage.get("matches", []):
-                    match_date_str = match.get("date")
-                    if not match_date_str:
-                        continue
-                    try:
-                        match_date = datetime.strptime(match_date_str, "%d/%m/%Y")
-                    except Exception as e:
-                        logging.warning(f"[WARNING] Date parsing failed: {match_date_str} ({e})")
-                        continue
-                    if now.date() <= match_date.date() <= finish_dt.date():
-                        home_team = match.get("teams", {}).get("home", {})
-                        away_team = match.get("teams", {}).get("away", {})
 
-                        is_cup = match.get("is_cup")
-                        odds = match.get("odds", {}).get("match_winner", {})
-                        if not isinstance(odds, dict):
-                            odds = None
-                        if is_cup is None:
-                            is_cup = obj.get("is_cup")
+# ======================================================
+# FETCH PRINCIPAL
+# ======================================================
+def fetch_today_matches():
+    if not API_KEY:
+        logger.error("❌ API_FOOTBALL_KEY ausente.")
+        return {"status": "error", "detail": "API key missing"}
 
-                        team1_rank = team2_rank = ""
-                        standings = []
-                        try:
-                            standings = get_standings(league_id)
-                        except Exception as e:
-                            logging.warning(
-                                f"Error getting standings for league_id {league_id}: {e}"
-                            )
-                        if standings:
-                            for team in standings:
-                                if str(team.get("team_id")) == str(home_team.get("id")):
-                                    team1_rank = team.get("position", "")
-                                if str(team.get("team_id")) == str(away_team.get("id")):
-                                    team2_rank = team.get("position", "")
-                                if team1_rank and team2_rank:
-                                    break
+    leagues = get_all_leagues()
+    matches = []
+    total = 0
 
-                        h2h_games_played = h2h_team1_wins = h2h_team2_wins = h2h_draws = ""
-                        h2h_team1_scored = h2h_team2_scored = ""
-                        h2h_team1_home_wins = h2h_team1_home_draws = h2h_team1_home_losses = ""
-                        h2h_team1_home_scored = h2h_team1_home_conceded = ""
-                        h2h_team2_home_wins = h2h_team2_home_draws = h2h_team2_home_losses = ""
-                        h2h_team2_home_scored = h2h_team2_home_conceded = ""
-                        home_id = home_team.get("id")
-                        away_id = away_team.get("id")
-                        h2h_valid = True
-                        if home_id and away_id:
-                            h2h_data = get_h2h(home_id, away_id)
-                            h2h_data = h2h_data if isinstance(h2h_data, dict) else {}
-                            stats = h2h_data.get("overall", {})
-                            stats = stats if isinstance(stats, dict) else {}
+    for day_offset in range(3):
+        match_date = (date.today() + timedelta(days=day_offset)).strftime("%Y-%m-%d")
+        for league in leagues:
+            data = safe_request(f"{BASE_URL}fixtures", {"league": league["id"], "season": SEASON, "date": match_date})
+            for f in data:
+                fixture = f.get("fixture", {})
+                teams = f.get("teams", {})
+                if not teams.get("home") or not teams.get("away"):
+                    continue
 
-                            def safe_get(d, k):
-                                v = d.get(k, 0) if isinstance(d, dict) else 0
-                                return v if isinstance(v, (int, float)) else 0
+                stats_home = safe_request(f"{BASE_URL}teams/statistics", {"team": teams["home"]["id"], "league": league["id"], "season": SEASON})
+                stats_away = safe_request(f"{BASE_URL}teams/statistics", {"team": teams["away"]["id"], "league": league["id"], "season": SEASON})
 
-                            h2h_games_played = safe_get(stats, "overall_games_played")
-                            h2h_team1_wins = safe_get(stats, "overall_team1_wins")
-                            h2h_team2_wins = safe_get(stats, "overall_team2_wins")
-                            h2h_draws = safe_get(stats, "overall_draws")
-                            h2h_team1_scored = safe_get(stats, "overall_team1_scored")
-                            h2h_team2_scored = safe_get(stats, "overall_team2_scored")
-                            t1_home = h2h_data.get("team1_at_home", {})
-                            t1_home = t1_home if isinstance(t1_home, dict) else {}
-                            h2h_team1_home_wins = safe_get(t1_home, "team1_wins_at_home")
-                            h2h_team1_home_draws = safe_get(t1_home, "team1_draws_at_home")
-                            h2h_team1_home_losses = safe_get(t1_home, "team1_losses_at_home")
-                            h2h_team1_home_scored = safe_get(t1_home, "team1_scored_at_home")
-                            h2h_team1_home_conceded = safe_get(t1_home, "team1_conceded_at_home")
-                            t2_home = h2h_data.get("team2_at_home", {})
-                            t2_home = t2_home if isinstance(t2_home, dict) else {}
-                            h2h_team2_home_wins = safe_get(t2_home, "team2_wins_at_home")
-                            h2h_team2_home_draws = safe_get(t2_home, "team2_draws_at_home")
-                            h2h_team2_home_losses = safe_get(t2_home, "team2_losses_at_home")
-                            h2h_team2_home_scored = safe_get(t2_home, "team2_scored_at_home")
-                            h2h_team2_home_conceded = safe_get(t2_home, "team2_conceded_at_home")
-                            if h2h_games_played == 0:
-                                h2h_valid = False
-                        else:
-                            h2h_valid = False
+                pred = calculate_prediction(stats_home if isinstance(stats_home, dict) else {}, stats_away if isinstance(stats_away, dict) else {})
+                top_scorers = get_top_scorers(league["id"])
 
-                        home_name = home_team.get("name", "")
-                        away_name = away_team.get("name", "")
-                        if (
-                            not home_name
-                            or not away_name
-                            or not isinstance(odds, dict)
-                            or not odds
-                            or not h2h_valid
-                        ):
-                            continue
-                        games.append(
-                            {
-                                "date": match["date"],
-                                "time": match.get("time", ""),
-                                "home_name": home_name,
-                                "away_name": away_name,
-                                "home_id": home_team.get("id", "?"),
-                                "away_id": away_team.get("id", "?"),
-                                "match_id": match.get("id"),
-                                "league_id": league_id,
-                                "is_cup": is_cup,
-                                "odds": odds,
-                                "team1_rank": team1_rank,
-                                "team2_rank": team2_rank,
-                                "h2h_games_played": h2h_games_played,
-                                "h2h_team1_wins": h2h_team1_wins,
-                                "h2h_team2_wins": h2h_team2_wins,
-                                "h2h_draws": h2h_draws,
-                                "h2h_team1_scored": h2h_team1_scored,
-                                "h2h_team2_scored": h2h_team2_scored,
-                                "h2h_team1_home_wins": h2h_team1_home_wins,
-                                "h2h_team1_home_draws": h2h_team1_home_draws,
-                                "h2h_team1_home_losses": h2h_team1_home_losses,
-                                "h2h_team1_home_scored": h2h_team1_home_scored,
-                                "h2h_team1_home_conceded": h2h_team1_home_conceded,
-                                "h2h_team2_home_wins": h2h_team2_home_wins,
-                                "h2h_team2_home_draws": h2h_team2_home_draws,
-                                "h2h_team2_home_losses": h2h_team2_home_losses,
-                                "h2h_team2_home_scored": h2h_team2_home_scored,
-                                "h2h_team2_home_conceded": h2h_team2_home_conceded,
-                            }
-                        )
-    return games
+                matches.append({
+                    "match_id": fixture.get("id"),
+                    "league": league["name"],
+                    "league_id": league["id"],
+                    "league_logo": league.get("logo"),
+                    "home_team": teams.get("home", {}).get("name"),
+                    "away_team": teams.get("away", {}).get("name"),
+                    "home_logo": teams.get("home", {}).get("logo"),
+                    "away_logo": teams.get("away", {}).get("logo"),
+                    "date": fixture.get("date"),
+                    "predicted_score": pred["predicted_score"],
+                    "confidence": pred["confidence"],
+                    "top_scorers": top_scorers,
+                })
+                total += 1
+
+    os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
+    with open(PRED_PATH, "w", encoding="utf-8") as f:
+        json.dump(matches, f, ensure_ascii=False, indent=2)
+
+    logger.info(f"✅ {total} previsões salvas em {PRED_PATH}")
+    config.update_last_update()
+    return {"status": "ok", "total": total}
