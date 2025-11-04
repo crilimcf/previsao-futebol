@@ -21,7 +21,7 @@ now = datetime.utcnow()
 API_SEASON = str(now.year if now.month >= 8 else now.year - 1)
 
 API_KEY = os.getenv("API_FOOTBALL_KEY") or os.getenv("APISPORTS_KEY")
-API_BASE = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io").rstrip("/") + "/"
+API_BASE = os.getenv("API_FOOTBALL_BASE", "https://football-proxy.onrender.com").rstrip("/") + "/"
 
 REDIS_URL = os.getenv("REDIS_URL")
 REDIS_TOKEN = os.getenv("REDIS_TOKEN")

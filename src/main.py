@@ -53,11 +53,11 @@ def main(
 # 🌍 FASTAPI APP (para Render /healthz)
 # ============================================================
 
-api = FastAPI(title="Previsão Futebol API", version="1.0.0")
+api = FastAPI(title="Previsão Futebol API", version="1.0.1")
 
-@api.get("/healthz", tags=["system"])
+@api.api_route("/healthz", methods=["GET", "HEAD"], tags=["system"])
 def healthz():
-    """Endpoint de monitorização e integridade da API."""
+    """Endpoint de monitorização e integridade da API (suporta HEAD para UptimeRobot)."""
     status = {"status": "ok"}
 
     try:
@@ -88,12 +88,29 @@ def healthz():
             status["last_update"] = "error"
 
         # 🔹 Informações gerais
-        status["time_utc"] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        status["time_utc"] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
         status["environment"] = os.getenv("ENVIRONMENT", "production")
 
         return JSONResponse(status)
     except Exception as e:
         return JSONResponse({"status": "error", "detail": str(e)}, status_code=500)
+
+
+# ============================================================
+# 🏠 ROTA RAIZ (para UptimeRobot e Render info)
+# ============================================================
+
+@api.api_route("/", methods=["GET", "HEAD"])
+def root():
+    """Retorna estado geral da API (métodos GET e HEAD permitidos)."""
+    return {
+        "status": "online",
+        "service": "previsao-futebol",
+        "version": "1.0.1",
+        "docs": "/docs",
+        "health": "/healthz",
+        "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    }
 
 
 # ============================================================
@@ -107,5 +124,4 @@ if __name__ == "__main__":
     # Modo servidor FastAPI (Render)
     else:
         import uvicorn
-uvicorn.run("src.api:app", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
-
+        uvicorn.run("main:api", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
