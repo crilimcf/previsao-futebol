@@ -5,13 +5,14 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 from src.api_routes import health, predict
 from src import config
-from src.fetch_matches import fetch_today_matches  # 👈 Importa a função que busca os jogos
+from src.fetch_matches import fetch_today_matches
 import os
 import json
 import threading
 import time
 import logging
 import requests
+import codecs
 
 # ======================================
 # CONFIGURAÇÃO DE LOGGING
@@ -49,9 +50,30 @@ def send_telegram_message(msg: str):
             "disable_web_page_preview": True,
         }
         requests.post(url, data=payload, timeout=10)
-        logger.info(f"📤 Notificação Telegram enviada.")
+        logger.info("📤 Notificação Telegram enviada.")
     except Exception as e:
         logger.error(f"⚠️ Falha ao enviar notificação Telegram: {e}")
+
+# ======================================
+# SAFE JSON LOAD (proteção anti-BOM)
+# ======================================
+def safe_json_load(path: str):
+    """Lê ficheiros JSON ignorando BOM UTF-8, regravando limpo se necessário."""
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except UnicodeDecodeError:
+        with codecs.open(path, "r", encoding="utf-8-sig") as f:
+            data = json.load(f)
+        with open(path, "w", encoding="utf-8") as fw:
+            json.dump(data, fw, ensure_ascii=False, indent=2)
+        logger.warning(f"🧹 Corrigido BOM UTF-8 em {path}")
+        return data
+    except Exception as e:
+        logger.error(f"Erro ao ler {path}: {e}")
+        return None
 
 # ======================================
 # Caminhos principais
@@ -68,17 +90,15 @@ WATCHED_FILES = [
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        with open(PREDICTIONS_PATH, encoding="utf-8-sig") as f:
-            app.state.predictions = json.load(f)
-            msg = f"✅ <b>{len(app.state.predictions)} previsões carregadas</b> com sucesso."
-            print(msg)
-            logger.info(msg)
-            send_telegram_message(msg)
-    except FileNotFoundError:
-        app.state.predictions = []
-        msg = "⚠️ <b>Ficheiro de previsões não encontrado</b>"
+        data = safe_json_load(PREDICTIONS_PATH)
+        if data:
+            app.state.predictions = data
+            msg = f"✅ <b>{len(data)} previsões carregadas</b> com sucesso."
+        else:
+            app.state.predictions = []
+            msg = "⚠️ <b>Ficheiro de previsões vazio ou não encontrado</b>"
         print(msg)
-        logger.warning(msg)
+        logger.info(msg)
         send_telegram_message(msg)
     except Exception as e:
         app.state.predictions = []
@@ -101,11 +121,8 @@ scheduler = BackgroundScheduler(timezone="Europe/Lisbon")
 def daily_update_job():
     """Executa atualização automática no Redis + fetch dos jogos às 00:30."""
     try:
-        # 1️⃣ Buscar jogos reais
         result = fetch_today_matches()
         total = result.get("total", 0)
-        
-        # 2️⃣ Atualizar timestamp no Redis
         if config.redis_client:
             now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
@@ -116,18 +133,15 @@ def daily_update_job():
             )
         else:
             msg = "⚠️ <b>Redis desativado</b> — atualização automática ignorada."
-
         print(msg)
         logger.info(msg)
         send_telegram_message(msg)
-
     except Exception as e:
         msg = f"⚠️ <b>Erro ao executar atualização automática:</b>\n<i>{e}</i>"
         print(msg)
         logger.error(msg)
         send_telegram_message(msg)
 
-# Agenda a tarefa diária
 scheduler.add_job(daily_update_job, "cron", hour=0, minute=30)
 scheduler.start()
 logger.info("🕒 Agendamento diário configurado para 00:30.")
@@ -157,9 +171,25 @@ def watch_files():
                         send_telegram_message(msg)
         time.sleep(10)
 
-# Inicia o monitor de ficheiros em background
 threading.Thread(target=watch_files, daemon=True).start()
 logger.info("👀 Monitor de ficheiros iniciado.")
+
+# ======================================
+# Keep-Alive (Render Free)
+# ======================================
+def keep_alive():
+    """Mantém o Render acordado (ping a cada 5 min)."""
+    url = "https://previsao-futebol.onrender.com/healthz"
+    while True:
+        try:
+            res = requests.get(url, timeout=15)
+            logger.info(f"💓 Keep-alive ping → {res.status_code}")
+        except Exception as e:
+            logger.warning(f"⚠️ Falha no keep-alive: {e}")
+        time.sleep(300)  # 5 minutos
+
+threading.Thread(target=keep_alive, daemon=True).start()
+logger.info("💓 Keep-alive iniciado (ping 5min).")
 
 # ======================================
 # Criação da aplicação FastAPI

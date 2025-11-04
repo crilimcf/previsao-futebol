@@ -1,0 +1,41 @@
+# =====================================================
+# Render Deployment Configuration – Football Prediction API
+# =====================================================
+
+services:
+  - type: web
+    name: previsao-futebol
+    env: python
+    plan: free
+    region: frankfurt
+    autoDeploy: true
+
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+
+    startCommand: |
+      uvicorn main:app --host 0.0.0.0 --port $PORT --log-level info
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+      - key: PREDICTIONS_PATH
+        value: data/predict/predictions.json
+
+      - key: ENV
+        value: prod
+
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: CHAT_ID
+        sync: false
+      - key: REDIS_URL
+        sync: false
+
+    healthCheckPath: /healthz
+    healthCheckTimeout: 30
+    healthCheckInterval: 300
+    autoDeployOnCrash: true
+    restartPolicy: always
