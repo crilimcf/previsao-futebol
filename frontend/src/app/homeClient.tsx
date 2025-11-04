@@ -91,33 +91,36 @@ export default function HomeClient() {
           getLastUpdate(),
         ]);
 
-        setPredictions(Array.isArray(preds) ? preds : []);
+        // ✅ Tipagem e proteção segura
+        const safePreds = Array.isArray(preds) ? preds : [];
+        const safeStats =
+          statsData && Object.keys(statsData).length > 0
+            ? (statsData as StatsType)
+            : null;
+        const safeLastUpdate =
+          (lastUpdateObj as { last_update?: string })?.last_update ?? "";
 
-        // ✅ Correção de tipo — só define stats se não for objeto vazio
-        setStats(
-          statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null
-        );
+        setPredictions(safePreds);
+        setStats(safeStats);
 
-          const lastUpdateRaw = (lastUpdateObj as { last_update?: string })?.last_update;
-        if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
-          const dateObj = new Date(lastUpdateRaw.replace(" ", "T"));
+        if (safeLastUpdate && typeof safeLastUpdate === "string") {
+          const dateObj = new Date(safeLastUpdate.replace(" ", "T"));
           setLastUpdate(
-            dateObj.toLocaleDateString("pt-PT", {
+            `${dateObj.toLocaleDateString("pt-PT", {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",
-            }) +
-              " " +
-              dateObj.toLocaleTimeString("pt-PT", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
+            })} ${dateObj.toLocaleTimeString("pt-PT", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}`
           );
         }
 
+        // ⚠️ Caso não haja dados
         if (
-          (!preds || preds.length === 0) &&
-          (!statsData || Object.keys(statsData).length === 0)
+          (!Array.isArray(safePreds) || safePreds.length === 0) &&
+          (!safeStats || Object.keys(safeStats).length === 0)
         ) {
           setError("Sem dados disponíveis no momento.");
         }
