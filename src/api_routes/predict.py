@@ -41,7 +41,9 @@ def get_predictions():
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         if not data:
-            return {"status": "empty", "detail": "Ficheiro de previsões vazio."}
+            return []
+        if isinstance(data, dict):
+            return data
         return data
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
