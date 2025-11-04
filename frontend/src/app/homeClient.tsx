@@ -90,8 +90,13 @@ export default function HomeClient() {
           getStats(),
           getLastUpdate(),
         ]);
-        setPredictions(Array.isArray(preds) ? preds : []); // ✅ correção principal
-        setStats(statsData || null);
+
+        setPredictions(Array.isArray(preds) ? preds : []);
+
+        // ✅ Correção de tipo — só define stats se não for objeto vazio
+        setStats(
+          statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null
+        );
 
         const lastUpdateRaw = lastUpdateObj?.last_update;
         if (lastUpdateRaw) {
