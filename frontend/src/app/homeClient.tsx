@@ -98,8 +98,8 @@ export default function HomeClient() {
           statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null
         );
 
-        const lastUpdateRaw = lastUpdateObj?.last_update;
-        if (lastUpdateRaw) {
+          const lastUpdateRaw = (lastUpdateObj as { last_update?: string })?.last_update;
+        if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
           const dateObj = new Date(lastUpdateRaw.replace(" ", "T"));
           setLastUpdate(
             dateObj.toLocaleDateString("pt-PT", {
