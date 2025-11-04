@@ -6,35 +6,38 @@ import requests
 from datetime import datetime, timedelta
 from upstash_redis import Redis
 
+# ===========================================
 # ✅ Forçar IPv4
+# ===========================================
 orig_getaddrinfo = socket.getaddrinfo
 def force_ipv4(*args, **kwargs):
     return [info for info in orig_getaddrinfo(*args, **kwargs) if info[0] == socket.AF_INET]
 socket.getaddrinfo = force_ipv4
 
-# =============================
+# ===========================================
 # 🔧 Configurações
-# =============================
+# ===========================================
 API_KEY = os.getenv("API_FOOTBALL_KEY") or os.getenv("APISPORTS_KEY")
-API_BASE = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/")
+API_BASE = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io")
+API_BASE = API_BASE.rstrip("/") + "/"  # ✅ garante a barra final sempre
 API_SEASON = os.getenv("API_FOOTBALL_SEASON", "2024")
 WEBSCRAPING_AI_KEY = os.getenv("WEBSCRAPING_AI_KEY") or os.getenv("WEBSCRAPING_API_KEY")
 REDIS_URL = os.getenv("REDIS_URL")
 
-PREDICTIONS_PATH = "data/predict/predictions.json"  # 🔹 caminho fixo e garantido
+PREDICTIONS_PATH = "data/predict/predictions.json"
 os.makedirs(os.path.dirname(PREDICTIONS_PATH), exist_ok=True)
 
-# =============================
+# ===========================================
 # 🧱 Logging
-# =============================
+# ===========================================
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
 )
 
-# =============================
+# ===========================================
 # 🔌 Redis
-# =============================
+# ===========================================
 redis = None
 if REDIS_URL:
     try:
@@ -43,19 +46,21 @@ if REDIS_URL:
     except Exception as e:
         logging.warning(f"⚠️ Falha ao conectar no Redis: {e}")
 
-# =============================
+# ===========================================
 # 🌍 Função de request à API-Football
-# =============================
+# ===========================================
 def _call_api_football(endpoint, params):
     if not API_KEY:
         logging.error("❌ API-Football KEY não definida nas variáveis de ambiente.")
         return {}
 
-    url = f"{API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
+    url = f"{API_BASE}{endpoint.lstrip('/')}"
     headers = {"x-apisports-key": API_KEY}
 
+    logging.info(f"🌐 A chamar API-Football: {url} | params={params}")
+
     try:
-        resp = requests.get(url, headers=headers, params=params, timeout=20)
+        resp = requests.get(url, headers=headers, params=params, timeout=25)
         if resp.status_code == 200:
             data = resp.json()
             if "errors" in data and data["errors"]:
@@ -65,20 +70,22 @@ def _call_api_football(endpoint, params):
         else:
             logging.warning(f"⚠️ API-Football respondeu {resp.status_code}: {resp.text}")
             return {}
+    except requests.exceptions.Timeout:
+        logging.error("⏳ Timeout na chamada da API-Football.")
     except Exception as e:
         logging.error(f"❌ Erro ao chamar API-Football: {e}")
-        return {}
+    return {}
 
-# =============================
+# ===========================================
 # 📅 Busca jogos (3 dias)
-# =============================
+# ===========================================
 def fetch_today_matches():
     leagues = [39, 140, 135, 61, 78, 94, 88, 2]  # Premier, LaLiga, SerieA, etc.
     today = datetime.utcnow().date()
     all_fixtures = []
 
     logging.info(f"🌍 API-Football ativo | Época {API_SEASON}")
-    logging.info(f"🔢 Total ligas: {len(leagues)}")
+    logging.info(f"🔢 Total ligas configuradas: {len(leagues)}")
 
     for offset in range(3):
         match_date = today + timedelta(days=offset)
@@ -107,24 +114,26 @@ def fetch_today_matches():
                     "home_logo": teams.get("home", {}).get("logo"),
                     "away_logo": teams.get("away", {}).get("logo"),
                     "predicted_score": {"home": goals.get("home"), "away": goals.get("away")},
-                    "confidence": 0.0,  # reservado para IA futuramente
+                    "confidence": 0.0,  # reservado para IA futura
                 })
 
-        logging.info(f"📊 {len(fixtures_for_day)} jogos para {match_date}")
+        logging.info(f"📊 {len(fixtures_for_day)} jogos encontrados para {match_date}")
         all_fixtures.extend(fixtures_for_day)
 
-    # =============================
-    # 💾 Gravar ficheiro
-    # =============================
+    # ===========================================
+    # 💾 Gravar ficheiro local
+    # ===========================================
     with open(PREDICTIONS_PATH, "w", encoding="utf-8") as f:
         json.dump(all_fixtures, f, ensure_ascii=False, indent=2)
     logging.info(f"✅ {len(all_fixtures)} jogos gravados em {PREDICTIONS_PATH}")
 
-    # Redis
+    # ===========================================
+    # 🔁 Redis cache
+    # ===========================================
     if redis:
         try:
             redis.set("latest_predictions", json.dumps(all_fixtures))
-            logging.info("📦 Redis atualizado com previsões atuais")
+            logging.info("📦 Redis atualizado com previsões atuais.")
         except Exception as e:
             logging.warning(f"⚠️ Erro ao atualizar Redis: {e}")
 
@@ -135,6 +144,9 @@ def fetch_today_matches():
         "path": PREDICTIONS_PATH,
     }
 
+# ===========================================
+# 🚀 Execução direta
+# ===========================================
 if __name__ == "__main__":
     res = fetch_today_matches()
     print(res)
