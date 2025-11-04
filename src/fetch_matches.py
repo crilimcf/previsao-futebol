@@ -3,11 +3,11 @@ import json
 import socket
 import logging
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 from upstash_redis import Redis
 
 # ===========================================
-# ✅ Forçar IPv4 (evita falhas IPv6 no Render)
+# ✅ Forçar IPv4 (evita falhas no Render)
 # ===========================================
 orig_getaddrinfo = socket.getaddrinfo
 def force_ipv4(*args, **kwargs):
@@ -15,7 +15,7 @@ def force_ipv4(*args, **kwargs):
 socket.getaddrinfo = force_ipv4
 
 # ===========================================
-# 🔧 Configurações
+# 🔧 Configurações principais
 # ===========================================
 API_KEY = os.getenv("API_FOOTBALL_KEY") or os.getenv("APISPORTS_KEY")
 API_BASE = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io")
@@ -35,7 +35,7 @@ logging.basicConfig(
 )
 
 # ===========================================
-# 🔌 Redis (opcional)
+# 🔌 Conexão Redis (opcional)
 # ===========================================
 redis = None
 if REDIS_URL:
@@ -49,7 +49,7 @@ if REDIS_URL:
         logging.warning(f"⚠️ Falha ao conectar no Redis: {e}")
 
 # ===========================================
-# 🌍 Função genérica para chamar a API
+# 🌍 Função genérica para chamada à API-Football
 # ===========================================
 def _call_api_football(endpoint, params):
     if not API_KEY:
@@ -77,36 +77,35 @@ def _call_api_football(endpoint, params):
     return {}
 
 # ===========================================
-# 📅 Busca automática de jogos (3 dias)
+# ⚽ Busca automática dos próximos jogos (next=50)
 # ===========================================
 def fetch_today_matches():
-    today = datetime.utcnow().date()
+    """
+    Busca os próximos 50 jogos reais em todas as ligas disponíveis.
+    """
     all_fixtures = []
+    params = {"next": 50, "season": API_SEASON}
 
     logging.info(f"🌍 API-Football ativo | Época {API_SEASON}")
-    logging.info("🔎 A buscar jogos automaticamente (3 dias futuros)...")
+    logging.info("🔎 A buscar próximos 50 jogos (globais)...")
 
-    for offset in range(3):
-        match_date = today + timedelta(days=offset)
-        params = {"date": str(match_date), "season": API_SEASON}
-        data = _call_api_football("fixtures", params)
+    data = _call_api_football("fixtures", params)
 
-        if not data or not data.get("response"):
-            logging.info(f"📭 Nenhum jogo encontrado para {match_date}.")
-            continue
-
-        fixtures_for_day = []
+    if not data or not data.get("response"):
+        logging.warning("📭 Nenhum jogo retornado pela API-Football.")
+    else:
         for f in data["response"]:
             fixture = f.get("fixture", {})
             league_info = f.get("league", {})
             teams = f.get("teams", {})
             goals = f.get("goals", {})
 
-            fixtures_for_day.append({
+            all_fixtures.append({
                 "league_id": league_info.get("id"),
                 "league_name": league_info.get("name"),
                 "league_country": league_info.get("country"),
                 "date": fixture.get("date"),
+                "venue": fixture.get("venue", {}).get("name"),
                 "home_team": teams.get("home", {}).get("name"),
                 "away_team": teams.get("away", {}).get("name"),
                 "home_logo": teams.get("home", {}).get("logo"),
@@ -115,8 +114,7 @@ def fetch_today_matches():
                 "confidence": 0.0,  # reservado para IA futura
             })
 
-        logging.info(f"📊 {len(fixtures_for_day)} jogos encontrados para {match_date}")
-        all_fixtures.extend(fixtures_for_day)
+        logging.info(f"📊 {len(all_fixtures)} jogos encontrados nos próximos dias.")
 
     # ===========================================
     # 💾 Gravar ficheiro local
@@ -127,7 +125,7 @@ def fetch_today_matches():
     logging.info(f"✅ {len(all_fixtures)} jogos gravados em {PREDICTIONS_PATH}")
 
     # ===========================================
-    # 🔁 Redis cache
+    # 🔁 Atualizar Redis (opcional)
     # ===========================================
     if redis:
         try:
@@ -143,7 +141,7 @@ def fetch_today_matches():
     }
 
 # ===========================================
-# 🚀 Execução direta (teste local)
+# 🚀 Execução direta (para teste local)
 # ===========================================
 if __name__ == "__main__":
     res = fetch_today_matches()
