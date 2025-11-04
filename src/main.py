@@ -1,48 +1,49 @@
-import typer
+# src/main.py
 import os
 import datetime
-import json
 import logging
+import typer
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from src.train import train_model as train_main
-from src.predict import main as predict_main
-from scripts.validate_historical_matches import validate_historical_matches as validate_main
 from src import config
 
-# ============================================================
-# ⚙️ CONFIGURAÇÃO DE LOGGING
-# ============================================================
+# 👉 importa os routers
+from src.api_routes import health as health_routes
+from src.api_routes import predict as predict_routes
 
+# ============================================================
+# ⚙️ LOGGING
+# ============================================================
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
 )
-
 logger = logging.getLogger(__name__)
 
 # ============================================================
-# 🎯 CLI PRINCIPAL (Typer)
+# 🎯 CLI (Typer)
 # ============================================================
-
 app = typer.Typer(help="Football Prediction Project CLI")
 
 @app.command()
 def train():
     """Train the models and save artifacts."""
-    logger.info("🚀 Training models...")
+    from src.train import train_model as train_main
+    logger.info("🚀 Training models…")
     train_main()
 
 @app.command()
 def predict():
     """Make predictions on upcoming matches."""
-    logger.info("⚽ Generating predictions...")
+    from src.predict import main as predict_main
+    logger.info("⚽ Generating predictions…")
     predict_main()
 
 @app.command()
 def validate():
     """Validate historical match data for consistency."""
-    logger.info("🧩 Validating historical match data...")
+    from scripts.validate_historical_matches import validate_historical_matches as validate_main
+    logger.info("🧩 Validating historical match data…")
     validate_main()
 
 def version_callback(value: bool):
@@ -58,19 +59,22 @@ def main(
 ):
     pass
 
-
 # ============================================================
-# 🌍 FASTAPI APP (Render + UptimeRobot /healthz)
+# 🌍 FASTAPI APP
 # ============================================================
+api = FastAPI(title="Previsão Futebol API", version="1.0.3")
 
-api = FastAPI(title="Previsão Futebol API", version="1.0.2")
+# 👉 inclui os routers com os endpoints:
+#    - /predictions, /stats, /meta/update, /meta/last-update, /meta/status, /predict, …
+api.include_router(health_routes.router)
+api.include_router(predict_routes.router)
 
 @api.api_route("/healthz", methods=["GET", "HEAD"], tags=["system"])
 def healthz():
-    """Endpoint de monitorização e integridade da API (suporta HEAD para UptimeRobot)."""
+    """Endpoint de monitorização e integridade (GET/HEAD)."""
     status = {"status": "ok"}
     try:
-        # 🔹 Verifica Redis
+        # Redis
         if config.redis_client:
             try:
                 test_key = "healthz_test"
@@ -83,61 +87,48 @@ def healthz():
         else:
             status["redis"] = "missing"
 
-        # 🔹 Verifica ficheiro de previsões
+        # Ficheiro de previsões
         pred_path = "data/predict/predictions.json"
         status["predictions_file"] = "exists" if os.path.exists(pred_path) else "missing"
 
-        # 🔹 Última atualização
+        # Última atualização
         try:
-            last_update = config.redis_client.get("football_predictions_last_update")
-            if last_update:
-                status["last_update"] = last_update
-            else:
-                status["last_update"] = "unknown"
+            last_update = config.redis_client.get("football_predictions_last_update") if config.redis_client else None
+            status["last_update"] = last_update or "unknown"
         except Exception:
             status["last_update"] = "error"
 
-        # 🔹 Informações gerais
+        # Infos gerais
         status["time_utc"] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
         status["environment"] = os.getenv("ENV", "production")
 
-        logger.info("✅ API viva e monitorizada via /healthz")
+        logger.info("✅ /healthz OK")
         return JSONResponse(status)
-
     except Exception as e:
         logger.error(f"❌ Erro em /healthz: {e}")
         return JSONResponse({"status": "error", "detail": str(e)}, status_code=500)
 
-
-# ============================================================
-# 🏠 ROTA RAIZ (para testes e status rápido)
-# ============================================================
-
 @api.api_route("/", methods=["GET", "HEAD"])
 def root():
-    """Retorna estado geral da API (GET e HEAD permitidos)."""
     logger.info("📡 Ping recebido na rota raiz /")
     return {
         "status": "online",
         "service": "previsao-futebol",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "docs": "/docs",
         "health": "/healthz",
         "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     }
 
-
 # ============================================================
-# 🚀 ENTRY POINT UNIVERSAL
+# 🚀 ENTRY POINT
 # ============================================================
-
 if __name__ == "__main__":
     mode = os.getenv("MODE", "cli")
-
     if mode == "cli":
         app()
     else:
         import uvicorn
         port = int(os.getenv("PORT", 8000))
-        logger.info(f"🚀 Iniciando API FastAPI em modo {mode.upper()} na porta {port}...")
-        uvicorn.run("main:api", host="0.0.0.0", port=port)
+        logger.info(f"🚀 Iniciando API FastAPI em modo {mode.upper()} na porta {port}…")
+        uvicorn.run("src.main:api", host="0.0.0.0", port=port)
