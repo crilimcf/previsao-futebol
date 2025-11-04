@@ -3,7 +3,7 @@ import json
 import socket
 import logging
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 from upstash_redis import Redis
 
 # ===========================================
@@ -88,8 +88,8 @@ def fetch_today_matches():
     all_fixtures = []
 
     # Puxa próximos 50 jogos (mais fiável que buscar por datas)
-    params = {"next": 50, "season": API_SEASON}
-    logging.info(f"🔎 A buscar próximos 50 jogos (globais)...")
+    params = {"next": 50}
+    logging.info("🔎 A buscar próximos 50 jogos (globais)...")
 
     data = _call_api_football("fixtures", params)
     if not data or not data.get("response"):
@@ -118,11 +118,19 @@ def fetch_today_matches():
     logging.info(f"📊 {len(all_fixtures)} jogos processados pela API-Football.")
 
     # ===========================================
-    # 💾 Gravar ficheiro local
+    # 💾 Gravar ficheiro local com segurança
     # ===========================================
-    with open(PREDICTIONS_PATH, "w", encoding="utf-8") as f:
-        json.dump(all_fixtures, f, ensure_ascii=False, indent=2)
-    logging.info(f"✅ {len(all_fixtures)} jogos gravados em {PREDICTIONS_PATH}")
+    try:
+        os.makedirs(os.path.dirname(PREDICTIONS_PATH), exist_ok=True)
+        temp_path = PREDICTIONS_PATH + ".tmp"
+
+        with open(temp_path, "w", encoding="utf-8") as f:
+            json.dump(all_fixtures, f, ensure_ascii=False, indent=2)
+
+        os.replace(temp_path, PREDICTIONS_PATH)
+        logging.info(f"✅ {len(all_fixtures)} jogos gravados em {PREDICTIONS_PATH}")
+    except Exception as e:
+        logging.error(f"❌ Erro ao gravar ficheiro de previsões: {e}")
 
     # ===========================================
     # 🔁 Atualizar Redis
@@ -130,7 +138,10 @@ def fetch_today_matches():
     if redis:
         try:
             redis.set("latest_predictions", json.dumps(all_fixtures))
-            logging.info("📦 Redis atualizado com previsões atuais.")
+            redis.set("meta:last_update", datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
+            redis.set("meta:total_matches", len(all_fixtures))
+            redis.set("meta:season", API_SEASON)
+            logging.info("📦 Redis atualizado com previsões atuais e metadados.")
         except Exception as e:
             logging.warning(f"⚠️ Erro ao atualizar Redis: {e}")
 

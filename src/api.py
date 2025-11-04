@@ -68,7 +68,7 @@ WATCHED_FILES = [
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        with open(PREDICTIONS_PATH, encoding="utf-8") as f:
+        with open(PREDICTIONS_PATH, encoding="utf-8-sig") as f:
             app.state.predictions = json.load(f)
             msg = f"✅ <b>{len(app.state.predictions)} previsões carregadas</b> com sucesso."
             print(msg)
