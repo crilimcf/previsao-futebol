@@ -5,6 +5,7 @@ import logging
 import typer
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from src import config
 
 # 👉 importa os routers
@@ -62,7 +63,21 @@ def main(
 # ============================================================
 # 🌍 FASTAPI APP
 # ============================================================
-api = FastAPI(title="Previsão Futebol API", version="1.0.3")
+api = FastAPI(title="Previsão Futebol API", version="1.0.4")
+
+# 🔓 CORS (permite preflight OPTIONS com Authorization vindos do Vercel)
+ALLOWED_ORIGINS = [
+    "https://previsao-futebol.vercel.app",
+    "http://localhost:3000",
+]
+api.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=r"^https://.+\.vercel\.app$",  # previews do Vercel
+    allow_credentials=True,
+    allow_methods=["*"],  # inclui OPTIONS
+    allow_headers=["*"],  # inclui Authorization
+)
 
 # 👉 inclui os routers com os endpoints:
 #    - /predictions, /stats, /meta/update, /meta/last-update, /meta/status, /predict, …
@@ -114,7 +129,7 @@ def root():
     return {
         "status": "online",
         "service": "previsao-futebol",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "docs": "/docs",
         "health": "/healthz",
         "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
