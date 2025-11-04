@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from upstash_redis import Redis
 
 # ===========================================
-# ✅ Forçar IPv4
+# ✅ Forçar IPv4 (evita falhas IPv6 no Render)
 # ===========================================
 orig_getaddrinfo = socket.getaddrinfo
 def force_ipv4(*args, **kwargs):
@@ -19,10 +19,8 @@ socket.getaddrinfo = force_ipv4
 # ===========================================
 API_KEY = os.getenv("API_FOOTBALL_KEY") or os.getenv("APISPORTS_KEY")
 API_BASE = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io")
-API_BASE = API_BASE.rstrip("/") + "/"  # ✅ garante a barra final
-current_year = datetime.utcnow().year
-API_SEASON = os.getenv("API_FOOTBALL_SEASON", str(current_year))  # ✅ automática
-WEBSCRAPING_AI_KEY = os.getenv("WEBSCRAPING_AI_KEY") or os.getenv("WEBSCRAPING_API_KEY")
+API_BASE = API_BASE.rstrip("/") + "/"  # garante barra final
+API_SEASON = os.getenv("API_FOOTBALL_SEASON", str(datetime.utcnow().year))
 REDIS_URL = os.getenv("REDIS_URL")
 
 PREDICTIONS_PATH = "data/predict/predictions.json"
@@ -37,12 +35,11 @@ logging.basicConfig(
 )
 
 # ===========================================
-# 🔌 Redis
+# 🔌 Redis (opcional)
 # ===========================================
 redis = None
 if REDIS_URL:
     try:
-        # compatível com versões antigas e novas do pacote
         if hasattr(Redis, "from_url"):
             redis = Redis.from_url(REDIS_URL)
         else:
@@ -52,7 +49,7 @@ if REDIS_URL:
         logging.warning(f"⚠️ Falha ao conectar no Redis: {e}")
 
 # ===========================================
-# 🌍 Função de request à API-Football
+# 🌍 Função genérica para chamar a API
 # ===========================================
 def _call_api_football(endpoint, params):
     if not API_KEY:
@@ -63,14 +60,13 @@ def _call_api_football(endpoint, params):
     headers = {"x-apisports-key": API_KEY}
 
     logging.info(f"🌐 A chamar API-Football: {url} | params={params}")
-
     try:
         resp = requests.get(url, headers=headers, params=params, timeout=25)
         if resp.status_code == 200:
             data = resp.json()
             if data.get("errors"):
                 if "Ip" in data["errors"]:
-                    logging.warning("⚠️ IP não autorizado na API-Football. Verifica whitelist no painel API-Sports.")
+                    logging.warning("⚠️ IP não autorizado na API-Football. Verifica whitelist no painel da API.")
             return data
         else:
             logging.warning(f"⚠️ API-Football respondeu {resp.status_code}: {resp.text}")
@@ -81,45 +77,43 @@ def _call_api_football(endpoint, params):
     return {}
 
 # ===========================================
-# 📅 Busca jogos (3 dias)
+# 📅 Busca automática de jogos (3 dias)
 # ===========================================
 def fetch_today_matches():
-    leagues = [39, 140, 135, 61, 78, 94, 88, 2]  # Premier, LaLiga, SerieA, etc.
     today = datetime.utcnow().date()
     all_fixtures = []
 
     logging.info(f"🌍 API-Football ativo | Época {API_SEASON}")
-    logging.info(f"🔢 Total ligas configuradas: {len(leagues)}")
+    logging.info("🔎 A buscar jogos automaticamente (3 dias futuros)...")
 
     for offset in range(3):
         match_date = today + timedelta(days=offset)
+        params = {"date": str(match_date), "season": API_SEASON}
+        data = _call_api_football("fixtures", params)
+
+        if not data or not data.get("response"):
+            logging.info(f"📭 Nenhum jogo encontrado para {match_date}.")
+            continue
+
         fixtures_for_day = []
+        for f in data["response"]:
+            fixture = f.get("fixture", {})
+            league_info = f.get("league", {})
+            teams = f.get("teams", {})
+            goals = f.get("goals", {})
 
-        logging.info(f"\n📅 Procurando jogos de {match_date}...")
-        for league in leagues:
-            params = {"league": league, "season": API_SEASON, "date": str(match_date)}
-            data = _call_api_football("fixtures", params)
-            if not data or not data.get("response"):
-                continue
-
-            for f in data["response"]:
-                fixture = f.get("fixture", {})
-                league_info = f.get("league", {})
-                teams = f.get("teams", {})
-                goals = f.get("goals", {})
-
-                fixtures_for_day.append({
-                    "league_id": league_info.get("id"),
-                    "league_name": league_info.get("name"),
-                    "league_country": league_info.get("country"),
-                    "date": fixture.get("date"),
-                    "home_team": teams.get("home", {}).get("name"),
-                    "away_team": teams.get("away", {}).get("name"),
-                    "home_logo": teams.get("home", {}).get("logo"),
-                    "away_logo": teams.get("away", {}).get("logo"),
-                    "predicted_score": {"home": goals.get("home"), "away": goals.get("away")},
-                    "confidence": 0.0,  # reservado para IA futura
-                })
+            fixtures_for_day.append({
+                "league_id": league_info.get("id"),
+                "league_name": league_info.get("name"),
+                "league_country": league_info.get("country"),
+                "date": fixture.get("date"),
+                "home_team": teams.get("home", {}).get("name"),
+                "away_team": teams.get("away", {}).get("name"),
+                "home_logo": teams.get("home", {}).get("logo"),
+                "away_logo": teams.get("away", {}).get("logo"),
+                "predicted_score": {"home": goals.get("home"), "away": goals.get("away")},
+                "confidence": 0.0,  # reservado para IA futura
+            })
 
         logging.info(f"📊 {len(fixtures_for_day)} jogos encontrados para {match_date}")
         all_fixtures.extend(fixtures_for_day)
@@ -129,6 +123,7 @@ def fetch_today_matches():
     # ===========================================
     with open(PREDICTIONS_PATH, "w", encoding="utf-8") as f:
         json.dump(all_fixtures, f, ensure_ascii=False, indent=2)
+
     logging.info(f"✅ {len(all_fixtures)} jogos gravados em {PREDICTIONS_PATH}")
 
     # ===========================================
@@ -144,12 +139,11 @@ def fetch_today_matches():
     return {
         "status": "ok",
         "total": len(all_fixtures),
-        "coverage": f"{len(all_fixtures)}/{len(leagues)}",
         "path": PREDICTIONS_PATH,
     }
 
 # ===========================================
-# 🚀 Execução direta
+# 🚀 Execução direta (teste local)
 # ===========================================
 if __name__ == "__main__":
     res = fetch_today_matches()
