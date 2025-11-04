@@ -1,1 +1,2002 @@
-[]
+﻿[
+    {
+        "fixture_id":  1479575,
+        "date":  "2025-11-04T00:00:00+00:00",
+        "league_id":  242,
+        "league":  "Liga Pro",
+        "country":  "Ecuador",
+        "home_team":  "Libertad",
+        "away_team":  "Independiente del Valle",
+        "status":  "1H"
+    },
+    {
+        "fixture_id":  1483008,
+        "date":  "2025-11-04T00:00:00+00:00",
+        "league_id":  1205,
+        "league":  "Kings Cup",
+        "country":  "Brazil",
+        "home_team":  "Dendele",
+        "away_team":  "Capim",
+        "status":  "PST"
+    },
+    {
+        "fixture_id":  1385709,
+        "date":  "2025-11-04T00:10:00+00:00",
+        "league_id":  131,
+        "league":  "Primera B Metropolitana",
+        "country":  "Argentina",
+        "home_team":  "Comunicaciones",
+        "away_team":  "UAI Urquiza",
+        "status":  "1H"
+    },
+    {
+        "fixture_id":  1374263,
+        "date":  "2025-11-04T00:15:00+00:00",
+        "league_id":  128,
+        "league":  "Liga Profesional Argentina",
+        "country":  "Argentina",
+        "home_team":  "Belgrano Cordoba",
+        "away_team":  "Tigre",
+        "status":  "1H"
+    },
+    {
+        "fixture_id":  1374272,
+        "date":  "2025-11-04T00:15:00+00:00",
+        "league_id":  128,
+        "league":  "Liga Profesional Argentina",
+        "country":  "Argentina",
+        "home_team":  "Banfield",
+        "away_team":  "Lanus",
+        "status":  "1H"
+    },
+    {
+        "fixture_id":  1482414,
+        "date":  "2025-11-04T03:45:00+00:00",
+        "league_id":  253,
+        "league":  "Major League Soccer",
+        "country":  "USA",
+        "home_team":  "Seattle Sounders",
+        "away_team":  "Minnesota United FC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438940,
+        "date":  "2025-11-04T10:00:00+00:00",
+        "league_id":  17,
+        "league":  "AFC Champions League",
+        "country":  "World",
+        "home_team":  "Sanfrecce Hiroshima",
+        "away_team":  "Gangwon FC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438941,
+        "date":  "2025-11-04T10:00:00+00:00",
+        "league_id":  17,
+        "league":  "AFC Champions League",
+        "country":  "World",
+        "home_team":  "FC Seoul",
+        "away_team":  "Chengdu Better City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438942,
+        "date":  "2025-11-04T10:00:00+00:00",
+        "league_id":  17,
+        "league":  "AFC Champions League",
+        "country":  "World",
+        "home_team":  "Machida Zelvia",
+        "away_team":  "Melbourne City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469100,
+        "date":  "2025-11-04T10:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Bodø / Glimt U19",
+        "away_team":  "Monaco  U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469099,
+        "date":  "2025-11-04T10:30:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Napoli U19",
+        "away_team":  "Eintracht Frankf U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481478,
+        "date":  "2025-11-04T10:30:00+00:00",
+        "league_id":  343,
+        "league":  "First League",
+        "country":  "Armenia",
+        "home_team":  "Bentonit Ijevan",
+        "away_team":  "Pyunik II",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481479,
+        "date":  "2025-11-04T10:30:00+00:00",
+        "league_id":  343,
+        "league":  "First League",
+        "country":  "Armenia",
+        "home_team":  "Shirak II",
+        "away_team":  "Noah II",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1400519,
+        "date":  "2025-11-04T11:00:00+00:00",
+        "league_id":  334,
+        "league":  "Persha Liga",
+        "country":  "Ukraine",
+        "home_team":  "Yarud Mariupol\u0027",
+        "away_team":  "Podillya Khmelnytskyi",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1457896,
+        "date":  "2025-11-04T11:00:00+00:00",
+        "league_id":  340,
+        "league":  "V.League 1",
+        "country":  "Vietnam",
+        "home_team":  "Hồng Lĩnh Hà Tĩnh",
+        "away_team":  "Hoang Anh Gia Lai",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481480,
+        "date":  "2025-11-04T11:00:00+00:00",
+        "league_id":  343,
+        "league":  "First League",
+        "country":  "Armenia",
+        "home_team":  "Andranik",
+        "away_team":  "Ararat II",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481481,
+        "date":  "2025-11-04T11:00:00+00:00",
+        "league_id":  343,
+        "league":  "First League",
+        "country":  "Armenia",
+        "home_team":  "Ararat-Armenia II",
+        "away_team":  "Araks Ararat",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1396235,
+        "date":  "2025-11-04T12:00:00+00:00",
+        "league_id":  668,
+        "league":  "1. Liga U19",
+        "country":  "Czech-Republic",
+        "home_team":  "Sigma Olomouc U19",
+        "away_team":  "Sparta Praha U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469102,
+        "date":  "2025-11-04T12:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Slavia Praha U19",
+        "away_team":  "Arsenal U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482172,
+        "date":  "2025-11-04T12:00:00+00:00",
+        "league_id":  363,
+        "league":  "Premier League",
+        "country":  "Ethiopia",
+        "home_team":  "Arba Minch Kenema",
+        "away_team":  "Adama Kenema",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438943,
+        "date":  "2025-11-04T12:15:00+00:00",
+        "league_id":  17,
+        "league":  "AFC Champions League",
+        "country":  "World",
+        "home_team":  "Buriram United",
+        "away_team":  "SHANGHAI SIPG",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1457897,
+        "date":  "2025-11-04T12:15:00+00:00",
+        "league_id":  340,
+        "league":  "V.League 1",
+        "country":  "Vietnam",
+        "home_team":  "Ha Noi",
+        "away_team":  "Pho Hien",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1376567,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "Côte d\u0027Ivoire U17",
+        "away_team":  "Switzerland U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1376570,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "Brazil U17",
+        "away_team":  "Honduras U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1423329,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  371,
+        "league":  "First League",
+        "country":  "Macedonia",
+        "home_team":  "Makedonija GjP",
+        "away_team":  "Struga",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1423331,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  371,
+        "league":  "First League",
+        "country":  "Macedonia",
+        "home_team":  "FK Rabotnicki",
+        "away_team":  "Tikveš",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1437349,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  308,
+        "league":  "Division 1",
+        "country":  "Saudi-Arabia",
+        "home_team":  "Al Jandal",
+        "away_team":  "Al Bukayriyah",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1441298,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Belasica",
+        "away_team":  "Vardar Negotino",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1441299,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Detonit Plachkovica",
+        "away_team":  "Novaci",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1441300,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Osogovo",
+        "away_team":  "Pobeda",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1441301,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Shkëndija Haraçinë",
+        "away_team":  "Kozuv Gevgelija",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1441302,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Sloga Vinica",
+        "away_team":  "Bregalnica Štip",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1441412,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Ohrid",
+        "away_team":  "Teteks",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1441427,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Golemo Konjari",
+        "away_team":  "Sasa",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1446056,
+        "date":  "2025-11-04T12:30:00+00:00",
+        "league_id":  372,
+        "league":  "Second League",
+        "country":  "Macedonia",
+        "home_team":  "Skopje",
+        "away_team":  "FK Prespa Resen",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1388158,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  374,
+        "league":  "2. SNL",
+        "country":  "Slovenia",
+        "home_team":  "Krško",
+        "away_team":  "Rudar",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1413103,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  569,
+        "league":  "Premier League",
+        "country":  "Kyrgyzstan",
+        "home_team":  "Neftchi",
+        "away_team":  "Alga",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1413104,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  569,
+        "league":  "Premier League",
+        "country":  "Kyrgyzstan",
+        "home_team":  "Bars",
+        "away_team":  "Bishkek City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1413106,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  569,
+        "league":  "Premier League",
+        "country":  "Kyrgyzstan",
+        "home_team":  "Muras United",
+        "away_team":  "Talant",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1434000,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  703,
+        "league":  "Professional Development League",
+        "country":  "England",
+        "home_team":  "Bristol City U21",
+        "away_team":  "Millwall U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1434001,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  703,
+        "league":  "Professional Development League",
+        "country":  "England",
+        "home_team":  "Wigan Athletic U21",
+        "away_team":  "Sheffield United U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1434002,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  703,
+        "league":  "Professional Development League",
+        "country":  "England",
+        "home_team":  "Charlton Athletic U21",
+        "away_team":  "Brentford U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1434003,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  703,
+        "league":  "Professional Development League",
+        "country":  "England",
+        "home_team":  "Watford U21",
+        "away_team":  "Colchester United U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1457640,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  567,
+        "league":  "Ligi kuu Bara",
+        "country":  "Tanzania",
+        "home_team":  "Young Africans",
+        "away_team":  "KMC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469104,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Tottenham Hotspur U19",
+        "away_team":  "København U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469106,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "PSG U19",
+        "away_team":  "Bayern München U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481641,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "Mexico W U17",
+        "away_team":  "Korea Republic U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482173,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  363,
+        "league":  "Premier League",
+        "country":  "Ethiopia",
+        "home_team":  "Sidama Bunna",
+        "away_team":  "Welayta Dicha",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482792,
+        "date":  "2025-11-04T13:00:00+00:00",
+        "league_id":  424,
+        "league":  "Ligue 1",
+        "country":  "Congo-DR",
+        "home_team":  "Etoile de Kivu",
+        "away_team":  "Céleste",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1376565,
+        "date":  "2025-11-04T13:30:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "Haiti U17",
+        "away_team":  "Egypt U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1415871,
+        "date":  "2025-11-04T13:30:00+00:00",
+        "league_id":  202,
+        "league":  "Ligue 1",
+        "country":  "Tunisia",
+        "home_team":  "AS Soliman",
+        "away_team":  "US Ben Guerdane",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1415877,
+        "date":  "2025-11-04T13:30:00+00:00",
+        "league_id":  202,
+        "league":  "Ligue 1",
+        "country":  "Tunisia",
+        "home_team":  "JS Kairouanaise",
+        "away_team":  "AS Gabes",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438617,
+        "date":  "2025-11-04T13:45:00+00:00",
+        "league_id":  18,
+        "league":  "AFC Cup",
+        "country":  "World",
+        "home_team":  "ATK Mohun Bagan",
+        "away_team":  "Al Hussein",
+        "status":  "CANC"
+    },
+    {
+        "fixture_id":  1469101,
+        "date":  "2025-11-04T14:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Juventus U19",
+        "away_team":  "Sporting CP U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481482,
+        "date":  "2025-11-04T14:00:00+00:00",
+        "league_id":  343,
+        "league":  "First League",
+        "country":  "Armenia",
+        "home_team":  "Banants II",
+        "away_team":  "BKMA II",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482174,
+        "date":  "2025-11-04T14:00:00+00:00",
+        "league_id":  363,
+        "league":  "Premier League",
+        "country":  "Ethiopia",
+        "home_team":  "Mekelle Kenema",
+        "away_team":  "Awassa Kenema",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451007,
+        "date":  "2025-11-04T14:25:00+00:00",
+        "league_id":  330,
+        "league":  "Premier League",
+        "country":  "Kuwait",
+        "home_team":  "Al Kuwait",
+        "away_team":  "Al Nasar",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1437350,
+        "date":  "2025-11-04T14:35:00+00:00",
+        "league_id":  308,
+        "league":  "Division 1",
+        "country":  "Saudi-Arabia",
+        "home_team":  "Al Jubail",
+        "away_team":  "Al-Raed",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1376568,
+        "date":  "2025-11-04T14:45:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "Germany U17",
+        "away_team":  "Colombia U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1415448,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  310,
+        "league":  "Superliga",
+        "country":  "Albania",
+        "home_team":  "Vora",
+        "away_team":  "Partizani",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1415449,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  310,
+        "league":  "Superliga",
+        "country":  "Albania",
+        "home_team":  "Egnatia Rrogozhinë",
+        "away_team":  "Vllaznia Shkodër",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1418279,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  284,
+        "league":  "Liga II",
+        "country":  "Romania",
+        "home_team":  "FC Voluntari",
+        "away_team":  "Sepsi OSK Sfantu Gheorghe",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1423860,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  701,
+        "league":  "Liga Revelação U23",
+        "country":  "Portugal",
+        "home_team":  "Academico Viseu U23",
+        "away_team":  "Gil Vicente U23",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1423861,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  701,
+        "league":  "Liga Revelação U23",
+        "country":  "Portugal",
+        "home_team":  "Famalicão U23",
+        "away_team":  "Leixões U23",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1440169,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  306,
+        "league":  "Second Division",
+        "country":  "Qatar",
+        "home_team":  "Al Mesaimeer",
+        "away_team":  "Lusail City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1440170,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  306,
+        "league":  "Second Division",
+        "country":  "Qatar",
+        "home_team":  "Al-Khor",
+        "away_team":  "Al Kharaitiyat",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1440171,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  306,
+        "league":  "Second Division",
+        "country":  "Qatar",
+        "home_team":  "Al-Markhiya",
+        "away_team":  "Al Waab",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1440172,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  306,
+        "league":  "Second Division",
+        "country":  "Qatar",
+        "home_team":  "Muaither SC",
+        "away_team":  "Al Bidda SC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1445950,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  233,
+        "league":  "Premier League",
+        "country":  "Egypt",
+        "home_team":  "Wadi Degla",
+        "away_team":  "Haras El Hodood",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469103,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Olympiakos Piraeus U19",
+        "away_team":  "PSV U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469105,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Liverpool U19",
+        "away_team":  "Real Madrid U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1469166,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Atlético Madrid U19",
+        "away_team":  "R. Union SG U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1477311,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  397,
+        "league":  "Girabola",
+        "country":  "Angola",
+        "home_team":  "Petro de Luanda",
+        "away_team":  "Interclube",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1479307,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  1162,
+        "league":  "AGCFF Gulf Champions League",
+        "country":  "World",
+        "home_team":  "Sitra",
+        "away_team":  "Al Qadsia",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482168,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  363,
+        "league":  "Premier League",
+        "country":  "Ethiopia",
+        "home_team":  "Welwalo Adigrat Uni",
+        "away_team":  "Mekelakeya",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1484812,
+        "date":  "2025-11-04T15:00:00+00:00",
+        "league_id":  863,
+        "league":  "Cup",
+        "country":  "Jordan",
+        "home_team":  "Al Hussein",
+        "away_team":  "Al Karmal",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1376564,
+        "date":  "2025-11-04T15:15:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "England U17",
+        "away_team":  "Venezuela U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1376569,
+        "date":  "2025-11-04T15:45:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "Korea DPR U17",
+        "away_team":  "El Salvador U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1376571,
+        "date":  "2025-11-04T15:45:00+00:00",
+        "league_id":  587,
+        "league":  "World Cup - U17",
+        "country":  "World",
+        "home_team":  "Indonesia U17",
+        "away_team":  "Zambia U17",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1341289,
+        "date":  "2025-11-04T16:00:00+00:00",
+        "league_id":  327,
+        "league":  "Erovnuli Liga",
+        "country":  "Georgia",
+        "home_team":  "Dinamo Batumi",
+        "away_team":  "Saburtalo",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1398057,
+        "date":  "2025-11-04T16:00:00+00:00",
+        "league_id":  95,
+        "league":  "Segunda Liga",
+        "country":  "Portugal",
+        "home_team":  "Torreense",
+        "away_team":  "Felgueiras 1932",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438618,
+        "date":  "2025-11-04T16:00:00+00:00",
+        "league_id":  18,
+        "league":  "AFC Cup",
+        "country":  "World",
+        "home_team":  "Sepahan FC",
+        "away_team":  "Ahal",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438740,
+        "date":  "2025-11-04T16:00:00+00:00",
+        "league_id":  17,
+        "league":  "AFC Champions League",
+        "country":  "World",
+        "home_team":  "Al Sadd",
+        "away_team":  "Al-Ahli Jeddah",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1479534,
+        "date":  "2025-11-04T16:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Genk U19",
+        "away_team":  "Vikingur U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1484346,
+        "date":  "2025-11-04T16:15:00+00:00",
+        "league_id":  762,
+        "league":  "Premier League",
+        "country":  "Mauritania",
+        "home_team":  "Police",
+        "away_team":  "Tevragh-Zeïne",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451008,
+        "date":  "2025-11-04T16:40:00+00:00",
+        "league_id":  330,
+        "league":  "Premier League",
+        "country":  "Kuwait",
+        "home_team":  "Al Arabi",
+        "away_team":  "Al Jahra",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401265,
+        "date":  "2025-11-04T17:00:00+00:00",
+        "league_id":  82,
+        "league":  "Frauen Bundesliga",
+        "country":  "Germany",
+        "home_team":  "Nürnberg",
+        "away_team":  "Bayern Munich W",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1479308,
+        "date":  "2025-11-04T17:00:00+00:00",
+        "league_id":  1162,
+        "league":  "AGCFF Gulf Champions League",
+        "country":  "World",
+        "home_team":  "Zakho",
+        "away_team":  "Al Ain",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1429561,
+        "date":  "2025-11-04T17:30:00+00:00",
+        "league_id":  288,
+        "league":  "Premier Soccer League",
+        "country":  "South-Africa",
+        "home_team":  "Sekhukhune United",
+        "away_team":  "Richards Bay",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1429562,
+        "date":  "2025-11-04T17:30:00+00:00",
+        "league_id":  288,
+        "league":  "Premier Soccer League",
+        "country":  "South-Africa",
+        "home_team":  "Kaizer Chiefs",
+        "away_team":  "Orbit College",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1429563,
+        "date":  "2025-11-04T17:30:00+00:00",
+        "league_id":  288,
+        "league":  "Premier Soccer League",
+        "country":  "South-Africa",
+        "home_team":  "Chippa United",
+        "away_team":  "Magesi",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1429564,
+        "date":  "2025-11-04T17:30:00+00:00",
+        "league_id":  288,
+        "league":  "Premier Soccer League",
+        "country":  "South-Africa",
+        "home_team":  "Amazulu",
+        "away_team":  "Polokwane City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451074,
+        "date":  "2025-11-04T17:45:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Napoli",
+        "away_team":  "Eintracht Frankfurt",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451075,
+        "date":  "2025-11-04T17:45:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Slavia Praha",
+        "away_team":  "Arsenal",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1398050,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  95,
+        "league":  "Segunda Liga",
+        "country":  "Portugal",
+        "home_team":  "Academico Viseu",
+        "away_team":  "Lusitânia Lourosa",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401271,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  82,
+        "league":  "Frauen Bundesliga",
+        "country":  "Germany",
+        "home_team":  "Union Berlin W",
+        "away_team":  "VfL Wolfsburg W",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1418883,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  233,
+        "league":  "Premier League",
+        "country":  "Egypt",
+        "home_team":  "Masr",
+        "away_team":  "National Bank of Egypt",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1418884,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  233,
+        "league":  "Premier League",
+        "country":  "Egypt",
+        "home_team":  "El Mokawloon",
+        "away_team":  "Smouha SC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1479528,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  14,
+        "league":  "UEFA Youth League",
+        "country":  "World",
+        "home_team":  "Lincoln Red Imps U19",
+        "away_team":  "AZ U19",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482337,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  386,
+        "league":  "Ligue 1",
+        "country":  "Ivory-Coast",
+        "home_team":  "Racing d\u0027Abidjan",
+        "away_team":  "ISCA",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1483377,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  1088,
+        "league":  "Pernambucano - U20",
+        "country":  "Brazil",
+        "home_team":  "America PE U20",
+        "away_team":  "Atletico PE U20",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1483871,
+        "date":  "2025-11-04T18:00:00+00:00",
+        "league_id":  1165,
+        "league":  "Copa Fares Lopes",
+        "country":  "Brazil",
+        "home_team":  "Caucaia",
+        "away_team":  "WSG Wattens",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438741,
+        "date":  "2025-11-04T18:15:00+00:00",
+        "league_id":  17,
+        "league":  "AFC Champions League",
+        "country":  "World",
+        "home_team":  "Al-Ittihad FC",
+        "away_team":  "Sharjah FC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1385713,
+        "date":  "2025-11-04T18:30:00+00:00",
+        "league_id":  131,
+        "league":  "Primera B Metropolitana",
+        "country":  "Argentina",
+        "home_team":  "Argentino Quilmes",
+        "away_team":  "Argentino de Merlo",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1444060,
+        "date":  "2025-11-04T18:30:00+00:00",
+        "league_id":  57,
+        "league":  "Non League Div One - Isthmian South East",
+        "country":  "England",
+        "home_team":  "Broadbridge Heath",
+        "away_team":  "East Grinstead Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1484871,
+        "date":  "2025-11-04T18:30:00+00:00",
+        "league_id":  1115,
+        "league":  "Paraense A3",
+        "country":  "Brazil",
+        "home_team":  "Belenense",
+        "away_team":  "Vénus",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1485198,
+        "date":  "2025-11-04T18:30:00+00:00",
+        "league_id":  132,
+        "league":  "Primera C",
+        "country":  "Argentina",
+        "home_team":  "Deportivo Español",
+        "away_team":  "Leandro N. Alem",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1435207,
+        "date":  "2025-11-04T18:45:00+00:00",
+        "league_id":  56,
+        "league":  "Non League Div One - Southern South",
+        "country":  "England",
+        "home_team":  "Winchester City",
+        "away_team":  "Bideford",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1473032,
+        "date":  "2025-11-04T18:45:00+00:00",
+        "league_id":  54,
+        "league":  "Non League Div One - Northern West",
+        "country":  "England",
+        "home_team":  "Congleton Town",
+        "away_team":  "Runcorn Linnets",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1473044,
+        "date":  "2025-11-04T18:45:00+00:00",
+        "league_id":  54,
+        "league":  "Non League Div One - Northern West",
+        "country":  "England",
+        "home_team":  "Wythenshawe Town",
+        "away_team":  "Clitheroe",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1476057,
+        "date":  "2025-11-04T18:45:00+00:00",
+        "league_id":  932,
+        "league":  "Non League Div One - Northern East",
+        "country":  "England",
+        "home_team":  "Bishop Auckland",
+        "away_team":  "Bridlington Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1434005,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  703,
+        "league":  "Professional Development League",
+        "country":  "England",
+        "home_team":  "Cardiff City U21",
+        "away_team":  "Queens Park Rangers U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1444556,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  46,
+        "league":  "EFL Trophy",
+        "country":  "England",
+        "home_team":  "Notts County",
+        "away_team":  "Manchester United U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1466697,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  1039,
+        "league":  "Premier League International Cup",
+        "country":  "World",
+        "home_team":  "Fulham U21",
+        "away_team":  "Nordsjælland U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1466698,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  1039,
+        "league":  "Premier League International Cup",
+        "country":  "World",
+        "home_team":  "Crystal Palace U21",
+        "away_team":  "Valencia U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1466699,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  1039,
+        "league":  "Premier League International Cup",
+        "country":  "World",
+        "home_team":  "Leicester City U21",
+        "away_team":  "Borussia M\u0027gladbach II",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482504,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  344,
+        "league":  "Primera División",
+        "country":  "Bolivia",
+        "home_team":  "San Antonio Bulo Bulo",
+        "away_team":  "Always Ready",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1484595,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  761,
+        "league":  "Cup",
+        "country":  "Liechtenstein",
+        "home_team":  "Triesenberg",
+        "away_team":  "FC Vaduz",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1485139,
+        "date":  "2025-11-04T19:00:00+00:00",
+        "league_id":  200,
+        "league":  "Botola Pro",
+        "country":  "Morocco",
+        "home_team":  "Raja Casablanca",
+        "away_team":  "Kawkab Marrakech",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1438234,
+        "date":  "2025-11-04T19:30:00+00:00",
+        "league_id":  93,
+        "league":  "Derde Divisie - Sunday",
+        "country":  "Netherlands",
+        "home_team":  "Vvsb",
+        "away_team":  "ASWH",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1444557,
+        "date":  "2025-11-04T19:30:00+00:00",
+        "league_id":  46,
+        "league":  "EFL Trophy",
+        "country":  "England",
+        "home_team":  "Grimsby",
+        "away_team":  "Everton U21",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386707,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Leicester",
+        "away_team":  "Middlesbrough",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386708,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Oxford United",
+        "away_team":  "Stoke City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386710,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Birmingham",
+        "away_team":  "Millwall",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386711,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Bristol City",
+        "away_team":  "Blackburn",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386712,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Derby",
+        "away_team":  "Hull City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386713,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Charlton",
+        "away_team":  "West Brom",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386714,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Ipswich",
+        "away_team":  "Watford",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1387147,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  41,
+        "league":  "League One",
+        "country":  "England",
+        "home_team":  "Rotherham",
+        "away_team":  "Burton Albion",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1399590,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  43,
+        "league":  "National League",
+        "country":  "England",
+        "home_team":  "Boreham Wood",
+        "away_team":  "Aldershot Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1399591,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  43,
+        "league":  "National League",
+        "country":  "England",
+        "home_team":  "Carlisle",
+        "away_team":  "FC Halifax Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1399593,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  43,
+        "league":  "National League",
+        "country":  "England",
+        "home_team":  "Hartlepool",
+        "away_team":  "Morecambe",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1399594,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  43,
+        "league":  "National League",
+        "country":  "England",
+        "home_team":  "Rochdale",
+        "away_team":  "Scunthorpe",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1399595,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  43,
+        "league":  "National League",
+        "country":  "England",
+        "home_team":  "Yeovil Town",
+        "away_team":  "Wealdstone",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401671,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "AFC Totton",
+        "away_team":  "Maidenhead",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401672,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Chippenham Town",
+        "away_team":  "Salisbury",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401673,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Dorking Wanderers",
+        "away_team":  "Enfield Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401674,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Eastbourne Borough",
+        "away_team":  "Dagenham \u0026 Redbridge",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401675,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Ebbsfleet United",
+        "away_team":  "Maidstone Utd",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401676,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Hemel Hempstead Town",
+        "away_team":  "Weston-super-Mare",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401677,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "AFC Hornchurch",
+        "away_team":  "Chesham United",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401678,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Horsham",
+        "away_team":  "Dover",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401679,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Slough Town",
+        "away_team":  "Bath City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1401680,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  51,
+        "league":  "National League - South",
+        "country":  "England",
+        "home_team":  "Tonbridge Angels",
+        "away_team":  "Chelmsford City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402223,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "AFC Fylde",
+        "away_team":  "South Shields",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402224,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "AFC Telford United",
+        "away_team":  "Merthyr Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402225,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Buxton",
+        "away_team":  "Southport",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402226,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Chester",
+        "away_team":  "Marine",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402227,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Chorley",
+        "away_team":  "Alfreton Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402228,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Curzon Ashton",
+        "away_team":  "Spennymoor Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402229,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Darlington 1883",
+        "away_team":  "Worksop Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402230,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Kidderminster Harriers",
+        "away_team":  "Bedford Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402231,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "King\u0027s Lynn Town",
+        "away_team":  "Leamington",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402232,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Macclesfield",
+        "away_team":  "Peterborough Sports",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402233,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Oxford City",
+        "away_team":  "Hereford",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1402234,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  50,
+        "league":  "National League - North",
+        "country":  "England",
+        "home_team":  "Scarborough Athletic",
+        "away_team":  "Radcliffe",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1405155,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  731,
+        "league":  "Football League - Lowland League",
+        "country":  "Scotland",
+        "home_team":  "Bonnyrigg Rose Athletic",
+        "away_team":  "Bo\u0027ness United",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1405156,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  731,
+        "league":  "Football League - Lowland League",
+        "country":  "Scotland",
+        "home_team":  "Berwick Rangers",
+        "away_team":  "Caledonian Braves",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1405157,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  731,
+        "league":  "Football League - Lowland League",
+        "country":  "Scotland",
+        "home_team":  "Cumbernauld Colts",
+        "away_team":  "East Stirlingshire",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1405158,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  731,
+        "league":  "Football League - Lowland League",
+        "country":  "Scotland",
+        "home_team":  "Linlithgow Rose",
+        "away_team":  "Albion Rovers",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1405159,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  731,
+        "league":  "Football League - Lowland League",
+        "country":  "Scotland",
+        "home_team":  "Tranent Juniors",
+        "away_team":  "Civil Service Strollers",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1405162,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  731,
+        "league":  "Football League - Lowland League",
+        "country":  "Scotland",
+        "home_team":  "Gretna 2008",
+        "away_team":  "Stirling University",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1424480,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  58,
+        "league":  "Non League Premier - Isthmian",
+        "country":  "England",
+        "home_team":  "Billericay Town",
+        "away_team":  "Chatham Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1424481,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  58,
+        "league":  "Non League Premier - Isthmian",
+        "country":  "England",
+        "home_team":  "Cray Valley PM",
+        "away_team":  "Aveley",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1424510,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  58,
+        "league":  "Non League Premier - Isthmian",
+        "country":  "England",
+        "home_team":  "Canvey Island",
+        "away_team":  "Wingate \u0026 Finchley",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1424516,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  58,
+        "league":  "Non League Premier - Isthmian",
+        "country":  "England",
+        "home_team":  "Welling United",
+        "away_team":  "Folkestone Invicta",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1424554,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  58,
+        "league":  "Non League Premier - Isthmian",
+        "country":  "England",
+        "home_team":  "Whitehawk",
+        "away_team":  "Brentwood Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1427798,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  931,
+        "league":  "Non League Premier - Southern Central",
+        "country":  "England",
+        "home_team":  "Stratford Town",
+        "away_team":  "Needham Market",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1427804,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  931,
+        "league":  "Non League Premier - Southern Central",
+        "country":  "England",
+        "home_team":  "Spalding United",
+        "away_team":  "Quorn",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1428720,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  59,
+        "league":  "Non League Premier - Northern",
+        "country":  "England",
+        "home_team":  "Bamber Bridge",
+        "away_team":  "Warrington Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1442629,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  53,
+        "league":  "Non League Div One - Isthmian South Central",
+        "country":  "England",
+        "home_team":  "Westfield (Surrey)",
+        "away_team":  "AFC Portchester",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1443100,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  52,
+        "league":  "Non League Div One - Isthmian North",
+        "country":  "England",
+        "home_team":  "Felixstowe \u0026 Walton Utd",
+        "away_team":  "Brightlingsea Regent",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1443119,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  52,
+        "league":  "Non League Div One - Isthmian North",
+        "country":  "England",
+        "home_team":  "Waltham Abbey",
+        "away_team":  "Lowestoft Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1443126,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  52,
+        "league":  "Non League Div One - Isthmian North",
+        "country":  "England",
+        "home_team":  "Grays Athletic",
+        "away_team":  "Brantham Athletic",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1444558,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  46,
+        "league":  "EFL Trophy",
+        "country":  "England",
+        "home_team":  "Huddersfield",
+        "away_team":  "Mansfield Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1470115,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  738,
+        "league":  "League Cup",
+        "country":  "Wales",
+        "home_team":  "The New Saints",
+        "away_team":  "Caernarfon Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1470116,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  738,
+        "league":  "League Cup",
+        "country":  "Wales",
+        "home_team":  "Haverfordwest County AFC",
+        "away_team":  "Barry Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1470117,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  738,
+        "league":  "League Cup",
+        "country":  "Wales",
+        "home_team":  "Cambrian \u0026 Clydach",
+        "away_team":  "Briton Ferry",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1471212,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  738,
+        "league":  "League Cup",
+        "country":  "Wales",
+        "home_team":  "Newtown AFC",
+        "away_team":  "Llandudno",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1473118,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  54,
+        "league":  "Non League Div One - Northern West",
+        "country":  "England",
+        "home_team":  "Stalybridge Celtic",
+        "away_team":  "Nantwich Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1476472,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  55,
+        "league":  "Non League Div One - Northern Midlands",
+        "country":  "England",
+        "home_team":  "Mickleover Sports",
+        "away_team":  "Sutton Coldfield Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1476473,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  55,
+        "league":  "Non League Div One - Northern Midlands",
+        "country":  "England",
+        "home_team":  "Carlton Town",
+        "away_team":  "AFC Rushden \u0026 Diamonds",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481560,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  559,
+        "league":  "League Cup",
+        "country":  "Northern-Ireland",
+        "home_team":  "Ballymena United",
+        "away_team":  "Newington Youth",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481562,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  559,
+        "league":  "League Cup",
+        "country":  "Northern-Ireland",
+        "home_team":  "Coleraine FC",
+        "away_team":  "Armagh City",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481563,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  559,
+        "league":  "League Cup",
+        "country":  "Northern-Ireland",
+        "home_team":  "Dungannon Swifts",
+        "away_team":  "Moyola Park",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481564,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  559,
+        "league":  "League Cup",
+        "country":  "Northern-Ireland",
+        "home_team":  "Glentoran",
+        "away_team":  "Crusaders FC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481566,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  559,
+        "league":  "League Cup",
+        "country":  "Northern-Ireland",
+        "home_team":  "Larne",
+        "away_team":  "Bangor",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1481567,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  559,
+        "league":  "League Cup",
+        "country":  "Northern-Ireland",
+        "home_team":  "Newry City AFC",
+        "away_team":  "Glenavon FC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482580,
+        "date":  "2025-11-04T19:45:00+00:00",
+        "league_id":  931,
+        "league":  "Non League Premier - Southern Central",
+        "country":  "England",
+        "home_team":  "AFC Sudbury",
+        "away_team":  "Royston Town",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1386709,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  40,
+        "league":  "Championship",
+        "country":  "England",
+        "home_team":  "Coventry",
+        "away_team":  "Sheffield Utd",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451076,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Tottenham",
+        "away_team":  "FC Copenhagen",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451077,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Liverpool",
+        "away_team":  "Real Madrid",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451078,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Olympiakos Piraeus",
+        "away_team":  "PSV Eindhoven",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451079,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Atletico Madrid",
+        "away_team":  "Union St. Gilloise",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451080,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Bodo/Glimt",
+        "away_team":  "Monaco",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451081,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Paris Saint Germain",
+        "away_team":  "Bayern München",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1451082,
+        "date":  "2025-11-04T20:00:00+00:00",
+        "league_id":  2,
+        "league":  "UEFA Champions League",
+        "country":  "World",
+        "home_team":  "Juventus",
+        "away_team":  "Sporting CP",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1482505,
+        "date":  "2025-11-04T23:00:00+00:00",
+        "league_id":  344,
+        "league":  "Primera División",
+        "country":  "Bolivia",
+        "home_team":  "Nacional Potosí",
+        "away_team":  "Blooming",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1480981,
+        "date":  "2025-11-04T23:30:00+00:00",
+        "league_id":  299,
+        "league":  "Primera División",
+        "country":  "Venezuela",
+        "home_team":  "Puerto Cabello",
+        "away_team":  "Monagas SC",
+        "status":  "NS"
+    },
+    {
+        "fixture_id":  1480982,
+        "date":  "2025-11-04T23:30:00+00:00",
+        "league_id":  299,
+        "league":  "Primera División",
+        "country":  "Venezuela",
+        "home_team":  "Zamora FC",
+        "away_team":  "Deportivo La Guaira",
+        "status":  "NS"
+    }
+]
