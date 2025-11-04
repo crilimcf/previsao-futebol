@@ -15,7 +15,7 @@ socket.getaddrinfo = force_ipv4
 # =============================
 # 🔧 Configurações
 # =============================
-API_KEY = os.getenv("API_FOOTBALL_KEY")
+API_KEY = os.getenv("API_FOOTBALL_KEY") or os.getenv("APISPORTS_KEY")
 API_BASE = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/")
 API_SEASON = os.getenv("API_FOOTBALL_SEASON", "2024")
 WEBSCRAPING_AI_KEY = os.getenv("WEBSCRAPING_AI_KEY") or os.getenv("WEBSCRAPING_API_KEY")
@@ -38,7 +38,7 @@ logging.basicConfig(
 redis = None
 if REDIS_URL:
     try:
-        redis = Redis.from_url(REDIS_URL)
+        redis = Redis(url=REDIS_URL)
         logging.info("✅ Ligação HTTP com Upstash Redis estabelecida com sucesso!")
     except Exception as e:
         logging.warning(f"⚠️ Falha ao conectar no Redis: {e}")
@@ -47,18 +47,23 @@ if REDIS_URL:
 # 🌍 Função de request à API-Football
 # =============================
 def _call_api_football(endpoint, params):
+    if not API_KEY:
+        logging.error("❌ API-Football KEY não definida nas variáveis de ambiente.")
+        return {}
+
     url = f"{API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
     headers = {"x-apisports-key": API_KEY}
+
     try:
         resp = requests.get(url, headers=headers, params=params, timeout=20)
         if resp.status_code == 200:
             data = resp.json()
             if "errors" in data and data["errors"]:
                 if "Ip" in data["errors"]:
-                    logging.warning("⚠️ IP não autorizado na API-Football.")
+                    logging.warning("⚠️ IP não autorizado na API-Football. Verifica whitelist no painel API-Sports.")
             return data
         else:
-            logging.warning(f"⚠️ API-Football respondeu {resp.status_code}")
+            logging.warning(f"⚠️ API-Football respondeu {resp.status_code}: {resp.text}")
             return {}
     except Exception as e:
         logging.error(f"❌ Erro ao chamar API-Football: {e}")
@@ -117,8 +122,11 @@ def fetch_today_matches():
 
     # Redis
     if redis:
-        redis.set("latest_predictions", json.dumps(all_fixtures))
-        logging.info("📦 Redis atualizado com previsões atuais")
+        try:
+            redis.set("latest_predictions", json.dumps(all_fixtures))
+            logging.info("📦 Redis atualizado com previsões atuais")
+        except Exception as e:
+            logging.warning(f"⚠️ Erro ao atualizar Redis: {e}")
 
     return {
         "status": "ok",
@@ -126,7 +134,6 @@ def fetch_today_matches():
         "coverage": f"{len(all_fixtures)}/{len(leagues)}",
         "path": PREDICTIONS_PATH,
     }
-
 
 if __name__ == "__main__":
     res = fetch_today_matches()
