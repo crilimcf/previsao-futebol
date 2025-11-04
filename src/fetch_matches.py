@@ -19,8 +19,9 @@ socket.getaddrinfo = force_ipv4
 # ===========================================
 API_KEY = os.getenv("API_FOOTBALL_KEY") or os.getenv("APISPORTS_KEY")
 API_BASE = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io")
-API_BASE = API_BASE.rstrip("/") + "/"  # ✅ garante a barra final sempre
-API_SEASON = os.getenv("API_FOOTBALL_SEASON", "2024")
+API_BASE = API_BASE.rstrip("/") + "/"  # ✅ garante a barra final
+current_year = datetime.utcnow().year
+API_SEASON = os.getenv("API_FOOTBALL_SEASON", str(current_year))  # ✅ automática
 WEBSCRAPING_AI_KEY = os.getenv("WEBSCRAPING_AI_KEY") or os.getenv("WEBSCRAPING_API_KEY")
 REDIS_URL = os.getenv("REDIS_URL")
 
@@ -41,7 +42,11 @@ logging.basicConfig(
 redis = None
 if REDIS_URL:
     try:
-        redis = Redis(url=REDIS_URL)
+        # compatível com versões antigas e novas do pacote
+        if hasattr(Redis, "from_url"):
+            redis = Redis.from_url(REDIS_URL)
+        else:
+            redis = Redis(url=REDIS_URL)
         logging.info("✅ Ligação HTTP com Upstash Redis estabelecida com sucesso!")
     except Exception as e:
         logging.warning(f"⚠️ Falha ao conectar no Redis: {e}")
@@ -63,13 +68,12 @@ def _call_api_football(endpoint, params):
         resp = requests.get(url, headers=headers, params=params, timeout=25)
         if resp.status_code == 200:
             data = resp.json()
-            if "errors" in data and data["errors"]:
+            if data.get("errors"):
                 if "Ip" in data["errors"]:
                     logging.warning("⚠️ IP não autorizado na API-Football. Verifica whitelist no painel API-Sports.")
             return data
         else:
             logging.warning(f"⚠️ API-Football respondeu {resp.status_code}: {resp.text}")
-            return {}
     except requests.exceptions.Timeout:
         logging.error("⏳ Timeout na chamada da API-Football.")
     except Exception as e:
