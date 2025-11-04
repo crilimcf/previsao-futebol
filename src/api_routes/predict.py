@@ -132,6 +132,40 @@ def meta_status():
 
 
 # ======================================================
+# 🕒 Última atualização (novo)
+# ======================================================
+@router.get("/meta/last-update", tags=["Meta"])
+def meta_last_update():
+    """Retorna o timestamp da última atualização guardada no Redis."""
+    if config.redis_client:
+        try:
+            val = config.redis_client.get(config.LAST_UPDATE_KEY)
+            return {"last_update": val or "unknown"}
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+    return {"last_update": "N/A"}
+
+
+# ======================================================
+# 📊 Estatísticas (novo)
+# ======================================================
+@router.get("/stats", tags=["Stats"])
+def get_stats():
+    """Retorna estatísticas gerais das previsões."""
+    path = "data/stats/prediction_stats.json"
+    if not os.path.exists(path):
+        raise HTTPException(status_code=404, detail="Ficheiro de estatísticas não encontrado.")
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Erro ao ler ficheiro JSON.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ======================================================
 # 🧩 Último treino IA
 # ======================================================
 @router.get("/meta/last-train", tags=["AI"])
