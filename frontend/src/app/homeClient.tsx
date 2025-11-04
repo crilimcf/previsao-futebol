@@ -30,11 +30,9 @@ export default function HomeClient() {
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDate, setSelectedDate] = useState<string>("today");
 
-  // Jogos Reais
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [loadingFixtures, setLoadingFixtures] = useState(false);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
-
   const isManualRefresh = useRef(false);
 
   // -------------------------------
@@ -92,7 +90,7 @@ export default function HomeClient() {
           getStats(),
           getLastUpdate(),
         ]);
-        setPredictions(preds || []);
+        setPredictions(Array.isArray(preds) ? preds : []); // ✅ correção principal
         setStats(statsData || null);
 
         const lastUpdateRaw = lastUpdateObj?.last_update;
@@ -112,10 +110,14 @@ export default function HomeClient() {
           );
         }
 
-        if ((!preds || preds.length === 0) && (!statsData || Object.keys(statsData).length === 0)) {
+        if (
+          (!preds || preds.length === 0) &&
+          (!statsData || Object.keys(statsData).length === 0)
+        ) {
           setError("Sem dados disponíveis no momento.");
         }
       } catch (err: any) {
+        console.error(err);
         setError("Falha ao carregar dados. Tente novamente mais tarde.");
       } finally {
         setLoading(false);
@@ -131,11 +133,9 @@ export default function HomeClient() {
     try {
       if (selectedLeague === "all") return;
       setLoadingFixtures(true);
-      console.log(`🔄 Carregando jogos da liga ${selectedLeague}...`);
       const data = await getFixturesByLeague(Number(selectedLeague), ignoreCache ? 0 : 5);
       setLiveFixtures(data.response || []);
       setLastFixturesUpdate(Date.now());
-      console.log(`✅ ${data.response?.length || 0} jogos carregados.`);
     } catch (err) {
       console.error("Erro ao carregar fixtures:", err);
     } finally {
@@ -149,17 +149,20 @@ export default function HomeClient() {
   }, [selectedLeague]);
 
   // -------------------------------
-  // Filtro de previsões
+  // Filtro de previsões (com proteção)
   // -------------------------------
-  const filteredPredictions = predictions.filter((p) => {
-    const matchDate = p.date ? p.date.split("T")[0] : "";
-    const targetDate = formatDate(dates[selectedDate as keyof typeof dates]);
-    const leagueMatch = selectedLeague === "all" || String(p.league_id) === String(selectedLeague);
-    return leagueMatch && matchDate === targetDate;
-  });
+  const filteredPredictions = Array.isArray(predictions)
+    ? predictions.filter((p) => {
+        const matchDate = p.date ? p.date.split("T")[0] : "";
+        const targetDate = formatDate(dates[selectedDate as keyof typeof dates]);
+        const leagueMatch =
+          selectedLeague === "all" || String(p.league_id) === String(selectedLeague);
+        return leagueMatch && matchDate === targetDate;
+      })
+    : [];
 
   // -------------------------------
-  // UI: LOADING / ERRO
+  // UI
   // -------------------------------
   if (loading) {
     return (
@@ -188,7 +191,7 @@ export default function HomeClient() {
   }
 
   // -------------------------------
-  // UI: PRINCIPAL
+  // UI principal
   // -------------------------------
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -199,7 +202,6 @@ export default function HomeClient() {
 
         {/* FILTROS */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-          {/* Ligas */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -240,8 +242,6 @@ export default function HomeClient() {
             <h2 className="text-lg font-semibold text-green-400">
               Jogos Reais (via API-Football)
             </h2>
-
-            {/* Botão atualizar */}
             <button
               onClick={() => {
                 isManualRefresh.current = true;
@@ -254,14 +254,12 @@ export default function HomeClient() {
             </button>
           </div>
 
-          {/* Estado de carregamento */}
           {loadingFixtures && (
             <div className="text-center text-sm text-gray-400 animate-pulse mb-4">
               ⏳ A carregar jogos reais...
             </div>
           )}
 
-          {/* Lista de jogos */}
           {liveFixtures.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {liveFixtures.map((f: any) => (
@@ -293,7 +291,6 @@ export default function HomeClient() {
             )
           )}
 
-          {/* Badge última atualização */}
           {lastFixturesUpdate && (
             <div className="text-xs text-center text-gray-500 mt-4">
               Última atualização: {timeSince(lastFixturesUpdate)}
@@ -301,10 +298,10 @@ export default function HomeClient() {
           )}
         </div>
 
-        {/* Bloco de previsões (original) */}
+        {/* BLOCO: PREVISÕES */}
         {filteredPredictions.length > 0 ? (
           <>
-            {/* Aqui entra o teu bloco original de previsões */}
+            {/* Aqui entra o teu bloco de previsões existente */}
           </>
         ) : (
           <p className="text-center text-gray-400 mt-10">
