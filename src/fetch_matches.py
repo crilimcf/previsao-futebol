@@ -39,18 +39,20 @@ logging.basicConfig(
 )
 
 # ===========================================
-# 🔌 Redis (com token)
+# 🔌 Redis (compatível com Render / Upstash)
 # ===========================================
 redis = None
-if REDIS_URL:
-    try:
-        if REDIS_TOKEN:
-            redis = Redis(url=REDIS_URL, token=REDIS_TOKEN)
-        else:
-            redis = Redis(url=REDIS_URL)
+try:
+    if REDIS_URL and REDIS_TOKEN:
+        redis = Redis(url=REDIS_URL, token=REDIS_TOKEN)
+    elif REDIS_URL:
+        redis = Redis.from_url(REDIS_URL)
+    if redis:
         logging.info("✅ Ligação HTTP com Upstash Redis estabelecida com sucesso!")
-    except Exception as e:
-        logging.warning(f"⚠️ Falha ao conectar no Redis: {e}")
+    else:
+        logging.warning("⚠️ Redis não configurado — variáveis REDIS_URL ou REDIS_TOKEN ausentes.")
+except Exception as e:
+    logging.warning(f"⚠️ Falha ao conectar no Redis: {e}")
 
 # ===========================================
 # 🌍 Função de request à API-Football
@@ -81,15 +83,23 @@ def _call_api_football(endpoint, params):
     return {}
 
 # ===========================================
-# 📅 Busca próximos jogos (automático)
+# 📅 Busca próximos jogos (automático, com fallback de temporada)
 # ===========================================
 def fetch_today_matches():
     logging.info(f"🌍 API-Football ativo | Época {API_SEASON}")
     all_fixtures = []
 
-    # Puxa próximos 50 jogos (mais fiável que buscar por datas)
-    params = {"next": 50}
-    logging.info("🔎 A buscar próximos 50 jogos (globais)...")
+    # Ajuste automático da época
+    current_year = datetime.utcnow().year
+    season = API_SEASON
+    if int(API_SEASON) > current_year:
+        season = str(current_year)
+    elif int(API_SEASON) < 2024:
+        season = "2024"
+
+    # Busca global dos próximos jogos
+    params = {"next": 50, "season": season}
+    logging.info(f"🔎 A buscar próximos 50 jogos (época {season})...")
 
     data = _call_api_football("fixtures", params)
     if not data or not data.get("response"):
@@ -140,7 +150,7 @@ def fetch_today_matches():
             redis.set("latest_predictions", json.dumps(all_fixtures))
             redis.set("meta:last_update", datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
             redis.set("meta:total_matches", len(all_fixtures))
-            redis.set("meta:season", API_SEASON)
+            redis.set("meta:season", season)
             logging.info("📦 Redis atualizado com previsões atuais e metadados.")
         except Exception as e:
             logging.warning(f"⚠️ Erro ao atualizar Redis: {e}")
@@ -148,7 +158,7 @@ def fetch_today_matches():
     return {
         "status": "ok",
         "total": len(all_fixtures),
-        "season": API_SEASON,
+        "season": season,
         "path": PREDICTIONS_PATH,
     }
 
