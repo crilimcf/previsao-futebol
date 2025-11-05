@@ -1,28 +1,22 @@
-// =====================================================
-// src/services/api.ts
-// Cliente HTTP para comunicar com a API FastAPI (Render)
-// =====================================================
-
+// frontend/src/services/api.ts
 import axios from "axios";
 
-// 🌍 URL base da tua API (Render)
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "https://previsao-futebol.onrender.com";
 
-// 🔑 Token apenas para endpoints protegidos (ex.: /meta/update)
 export const API_TOKEN =
   process.env.NEXT_PUBLIC_API_TOKEN || "d110d6f22b446c54deadcadef7b234f6966af678";
 
-// Instância pública (sem headers que disparam preflight)
+// Instância pública (sem headers “extras” que forçam preflight)
 export const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 12_000,
+  timeout: 12000,
 });
 
-// Instância autenticada (usar só quando precisar de Bearer)
+// Instância autenticada
 export const authApi = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 20_000,
+  timeout: 20000,
   headers: {
     Authorization: `Bearer ${API_TOKEN}`,
     "Content-Type": "application/json",
@@ -31,9 +25,9 @@ export const authApi = axios.create({
 });
 
 // ---------------------------
-// Tipos úteis (frontend)
+// Tipos
 // ---------------------------
-export type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
+export type DCClass = 0 | 1 | 2;
 
 export type OddsMap = {
   winner?: { home?: number | null; draw?: number | null; away?: number | null } | null;
@@ -45,49 +39,43 @@ export type OddsMap = {
 export type Prediction = {
   match_id: number | string;
   league_id: number | string;
-  league: string;
-  country?: string;
+  league?: string;
+  league_name?: string;
+  country?: string | null;
   date: string; // ISO
   home_team: string;
   away_team: string;
-  home_logo?: string;
-  away_logo?: string;
+  home_logo?: string | null;
+  away_logo?: string | null;
   odds?: OddsMap;
   predictions: {
-    winner: { class: 0 | 1 | 2; confidence: number };
-    over_2_5: { class: 0 | 1; confidence: number };
-    over_1_5: { class: 0 | 1; confidence: number };
-    double_chance: { class: DCClass; confidence: number };
-    btts: { class: 0 | 1; confidence: number };
+    winner: { class: 0 | 1 | 2; confidence?: number; prob?: number };
+    over_2_5: { class: 0 | 1; confidence?: number; prob?: number };
+    over_1_5: { class: 0 | 1; confidence?: number; prob?: number };
+    double_chance: { class: DCClass; confidence?: number; prob?: number };
+    btts: { class: 0 | 1; confidence?: number; prob?: number };
+    correct_score?: { best?: string; top3?: { score: string; prob: number }[] };
   };
   correct_score_top3?: { score: string; prob: number }[];
   top_scorers?: { player: string; team: string; goals: number }[];
 };
 
 export type LastUpdate = { last_update: string | null };
+export type LeagueItem = { id: string; name: string; country?: string | null };
 
-// =====================================================
-// 📊 Funções principais para o frontend consumir
-// =====================================================
-
-/** Obtém previsões (suporta filtros via query params). */
-export async function getPredictions(
-  params?: { date?: string; league_id?: number | string }
-): Promise<Prediction[]> {
+// ---------------------------
+// API helpers
+// ---------------------------
+export async function getPredictions(params?: { date?: string; league_id?: number | string }) {
   try {
-    const normalized = params
-      ? {
-          ...params,
-          league_id:
-            params.league_id !== undefined && params.league_id !== null
-              ? String(params.league_id)
-              : undefined,
-        }
-      : undefined;
+    const normalized =
+      params && params.league_id != null
+        ? { ...params, league_id: String(params.league_id) }
+        : params;
 
     const r = await api.get("/predictions", {
       params: normalized,
-      headers: { Accept: "application/json" },
+      headers: { Accept: "application/json", "Cache-Control": "no-store" },
     });
     return Array.isArray(r.data) ? (r.data as Prediction[]) : [];
   } catch {
@@ -95,7 +83,6 @@ export async function getPredictions(
   }
 }
 
-/** Obtém estatísticas agregadas (fallback para objeto vazio). */
 export async function getStats() {
   try {
     const r = await api.get("/stats", { headers: { Accept: "application/json" } });
@@ -105,7 +92,6 @@ export async function getStats() {
   }
 }
 
-/** Obtém a data da última atualização (fallback seguro). */
 export async function getLastUpdate(): Promise<LastUpdate> {
   try {
     const r = await api.get("/meta/last-update", { headers: { Accept: "application/json" } });
@@ -115,13 +101,24 @@ export async function getLastUpdate(): Promise<LastUpdate> {
   }
 }
 
-/** Força atualização manual das previsões (endpoint protegido). */
 export async function triggerUpdate() {
   const r = await authApi.post("/meta/update");
   return r.data;
 }
 
-/** Testa estado geral da API. */
+// 🔥 NOVO — lista de ligas do backend
+export async function getLeagues(): Promise<LeagueItem[]> {
+  try {
+    const r = await api.get("/meta/leagues", {
+      headers: { Accept: "application/json", "Cache-Control": "no-store" },
+    });
+    const items = Array.isArray(r.data?.items) ? r.data.items : [];
+    return items as LeagueItem[];
+  } catch {
+    return [];
+  }
+}
+
 export async function getApiHealth() {
   try {
     const r = await api.get("/healthz", { headers: { Accept: "application/json" } });

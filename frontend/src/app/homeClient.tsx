@@ -14,13 +14,14 @@ import {
   getStats,
   getLastUpdate,
   triggerUpdate,
+  getLeagues,
   type Prediction,
+  type LeagueItem,
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
-type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
+type DCClass = 0 | 1 | 2;
 
-// ---------- Helpers de tempo ----------
 function timeSince(ts: number) {
   const sec = Math.floor((Date.now() - ts) / 1000);
   if (sec < 60) return `${sec}s atrás`;
@@ -41,17 +42,11 @@ const dateTabs = [
   { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
 ];
 
-// Fallback universal para logos ausentes
-const FALLBACK_SVG_24 =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><rect width='100%' height='100%' fill='%23222'/></svg>";
-const FALLBACK_SVG_28 =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><rect width='100%' height='100%' fill='%23222'/></svg>";
-
 export default function HomeClient() {
   const router = useRouter();
   const search = useSearchParams();
 
-  // ---------- Estado ----------
+  // estados
   const [loading, setLoading] = useState(true);
   const [loadingFixtures, setLoadingFixtures] = useState(false);
   const [error, setError] = useState<string>("");
@@ -60,6 +55,7 @@ export default function HomeClient() {
   const [stats, setStats] = useState<StatsType | null>(null);
   const [lastUpdate, setLastUpdate] = useState("");
 
+  const [leagues, setLeagues] = useState<LeagueItem[]>([]);
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
@@ -67,27 +63,7 @@ export default function HomeClient() {
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
   const manualTriggerRef = useRef(false);
 
-  // ---------- Lista dinâmica de ligas (extraída das previsões carregadas) ----------
-  const allLeagues = useMemo(() => {
-    const map = new Map<string, string>();
-    predictions.forEach((p) => {
-      // suporta liga tanto por p.league_id/p.league_name como por p.league
-      const id = String((p as any).league_id ?? (p as any).league ?? "");
-      const label =
-        (p as any).league_name ??
-        (p as any).league ??
-        "Liga";
-      if (id && !map.has(id)) map.set(id, label);
-    });
-
-    const dynamic = Array.from(map.entries())
-      .sort((a, b) => a[1].localeCompare(b[1], "pt-PT"))
-      .map(([id, name]) => ({ id, name }));
-
-    return [{ id: "all", name: "🌍 Todas as Ligas" }, ...dynamic];
-  }, [predictions]);
-
-  // ---------- Estado inicial via query params ----------
+  // Query → estado
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
@@ -97,13 +73,18 @@ export default function HomeClient() {
       const today = ymd(new Date());
       const tomorrow = ymd(new Date(Date.now() + 86400000));
       const after = ymd(new Date(Date.now() + 2 * 86400000));
-      const key =
-        qpDate === today ? "today" :
-        qpDate === tomorrow ? "tomorrow" :
-        qpDate === after ? "after" : "today";
+      const key = qpDate === today ? "today" : qpDate === tomorrow ? "tomorrow" : qpDate === after ? "after" : "today";
       setSelectedDateKey(key);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Carrega ligas do backend
+  useEffect(() => {
+    (async () => {
+      const ls = await getLeagues();
+      setLeagues(ls);
+    })();
   }, []);
 
   const selectedDateISO = useMemo(() => {
@@ -111,7 +92,7 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // ---------- Reflete filtros na URL (UX/partilha) ----------
+  // Reflete filtros na URL
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
@@ -121,7 +102,7 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague]);
 
-  // ---------- Carrega previsões + stats + lastUpdate ----------
+  // Carrega previsões + stats + lastUpdate
   async function loadMainData() {
     setLoading(true);
     setError("");
@@ -132,12 +113,7 @@ export default function HomeClient() {
           ? { date: selectedDateISO }
           : { date: selectedDateISO, league_id: selectedLeague };
 
-      const [preds, statsData, lastU] = await Promise.all([
-        getPredictions(params),
-        getStats(),
-        getLastUpdate(),
-      ]);
-
+      const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
       setPredictions(Array.isArray(preds) ? (preds as Prediction[]) : []);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
@@ -145,14 +121,10 @@ export default function HomeClient() {
       if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
         const d = new Date(lastUpdateRaw.replace(" ", "T"));
         setLastUpdate(
-          `${d.toLocaleDateString("pt-PT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })} ${d.toLocaleTimeString("pt-PT", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}`
+          `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString(
+            "pt-PT",
+            { hour: "2-digit", minute: "2-digit" }
+          )}`
         );
       }
     } catch (e) {
@@ -168,7 +140,7 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
 
-  // ---------- Fixtures reais por liga (proxy) ----------
+  // Fixtures reais (proxy) por liga
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -193,14 +165,56 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague]);
 
-  // ---------- Helpers de render ----------
+  // Helpers
   const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
   const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(v * 100)}%` : "—");
   const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
   const bestCorrectScore = (p: any) =>
-    p?.correct_score_top3?.[0]?.score ??
-    p?.predictions?.correct_score?.best ??
-    "—";
+    p?.correct_score_top3?.[0]?.score ?? p?.predictions?.correct_score?.best ?? "—";
+
+  // ---------- Highlights do Dia ----------
+  const totMatches = predictions.length;
+  const leaguesSet = useMemo(() => {
+    const s = new Set<string>();
+    predictions.forEach((p: any) => s.add(String(p.league_id ?? p.league ?? "")));
+    return s;
+  }, [predictions]);
+  const totLeagues = leaguesSet.size;
+
+  // confiança média (Winner)
+  const avgConf = useMemo(() => {
+    if (!predictions.length) return 0;
+    let sum = 0;
+    let n = 0;
+    predictions.forEach((p: any) => {
+      const v = p?.predictions?.winner?.confidence ?? p?.predictions?.winner?.prob;
+      if (typeof v === "number") {
+        sum += v;
+        n += 1;
+      }
+    });
+    return n ? sum / n : 0;
+  }, [predictions]);
+
+  // Top Pick (maior confiança Winner)
+  const topPick = useMemo(() => {
+    let best: any = null;
+    let bestV = -1;
+    predictions.forEach((p: any) => {
+      const v = p?.predictions?.winner?.confidence ?? p?.predictions?.winner?.prob ?? -1;
+      if (typeof v === "number" && v > bestV) {
+        bestV = v;
+        best = p;
+      }
+    });
+    return { item: best, value: bestV };
+  }, [predictions]);
+
+  // Ring progress via conic-gradient
+  const ringPct = Math.max(0, Math.min(100, Math.round(avgConf * 100)));
+  const ringStyle = {
+    background: `conic-gradient(#22c55e ${ringPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)`,
+  };
 
   // ---------- Loading ----------
   if (loading) {
@@ -238,25 +252,76 @@ export default function HomeClient() {
       <Header />
       <main className="space-y-12 md:space-y-16">
         <InfoCard />
-        {stats && <StatsAverage stats={stats} />}
+
+        {/* HIGHLIGHTS DO DIA */}
+        <section className="card p-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+            {/* Ring de confiança média */}
+            <div className="flex items-center justify-center">
+              <div className="relative w-32 h-32 rounded-full" style={ringStyle}>
+                <div className="absolute inset-2 rounded-full bg-black/60 flex flex-col items-center justify-center">
+                  <span className="text-xs text-gray-400">Confiança média</span>
+                  <span className="text-2xl font-bold text-white">{ringPct}%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* contadores */}
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <div className="text-sm text-gray-400">Jogos</div>
+              <div className="text-2xl font-bold text-white">{totMatches}</div>
+            </div>
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <div className="text-sm text-gray-400">Ligas</div>
+              <div className="text-2xl font-bold text-white">{totLeagues}</div>
+            </div>
+
+            {/* Top Pick */}
+            <div className="rounded-xl bg-white/5 border border-white/10 p-4">
+              <div className="text-xs text-gray-400 mb-1">Top Pick (Winner)</div>
+              {topPick.item ? (
+                <div className="text-sm text-white">
+                  <span className="font-semibold">{topPick.item.home_team}</span> vs{" "}
+                  <span className="font-semibold">{topPick.item.away_team}</span>
+                  <span className="text-gray-400 ml-2">({toPct(topPick.value)})</span>
+                </div>
+              ) : (
+                <div className="text-sm text-gray-500">—</div>
+              )}
+              <div className="text-xs text-gray-500">
+                {topPick.item &&
+                  new Date(topPick.item.date).toLocaleString("pt-PT", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+              </div>
+            </div>
+          </div>
+          <div className="text-xs text-gray-500 mt-3">
+            Metodologia: Poisson ajustado + calibração leve (IA) com histórico recente.
+          </div>
+        </section>
 
         {/* Filtros */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas dinâmicas */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-5 mb-2 md:mb-4">
+          {/* Ligas (do backend) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
-            className="bg-white/5 text-white px-5 py-2 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-lg"
+            className="bg-white/5 text-white px-5 py-2 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-lg min-w-[240px]"
           >
-            {allLeagues.map((l) => (
+            <option value="all">🌍 Todas as Ligas</option>
+            {leagues.map((l) => (
               <option key={l.id} value={l.id}>
-                {l.name}
+                {l.name} {l.country ? `(${l.country})` : ""}
               </option>
             ))}
           </select>
 
-          {/* Datas */}
-          <div className="flex gap-2">
+          {/* Datas (botões com mais respiro) */}
+          <div className="flex flex-wrap gap-2 md:gap-3">
             {dateTabs.map((d) => (
               <button
                 key={d.key}
@@ -309,9 +374,7 @@ export default function HomeClient() {
             </div>
 
             {loadingFixtures && (
-              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">
-                A carregar jogos reais…
-              </div>
+              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">A carregar jogos reais…</div>
             )}
 
             {liveFixtures.length > 0 ? (
@@ -319,21 +382,11 @@ export default function HomeClient() {
                 {liveFixtures.map((f: any) => (
                   <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
                     <div className="flex items-center justify-center gap-3 mb-2">
-                      <Image
-                        src={f.teams.home.logo || FALLBACK_SVG_24}
-                        alt={f.teams.home.name || "Home"}
-                        width={24}
-                        height={24}
-                      />
+                      <Image src={f.teams.home.logo} alt="" width={24} height={24} />
                       <span className="text-white font-medium">{f.teams.home.name}</span>
                       <span className="text-gray-400">vs</span>
                       <span className="text-white font-medium">{f.teams.away.name}</span>
-                      <Image
-                        src={f.teams.away.logo || FALLBACK_SVG_24}
-                        alt={f.teams.away.name || "Away"}
-                        width={24}
-                        height={24}
-                      />
+                      <Image src={f.teams.away.logo} alt="" width={24} height={24} />
                     </div>
                     <p className="text-sm text-center text-gray-400">
                       {new Date(f.fixture.date).toLocaleString("pt-PT")}
@@ -345,15 +398,11 @@ export default function HomeClient() {
                 ))}
               </div>
             ) : (
-              !loadingFixtures && (
-                <p className="text-center text-gray-400 mt-4">Nenhum jogo encontrado.</p>
-              )
+              !loadingFixtures && <p className="text-center text-gray-400 mt-4">Nenhum jogo encontrado.</p>
             )}
 
             {lastFixturesUpdate && (
-              <div className="text-xs text-center text-gray-500 mt-4">
-                Última atualização: {timeSince(lastFixturesUpdate)}
-              </div>
+              <div className="text-xs text-center text-gray-500 mt-4">Última atualização: {timeSince(lastFixturesUpdate)}</div>
             )}
           </div>
         )}
@@ -369,123 +418,81 @@ export default function HomeClient() {
               const btts = p?.predictions?.btts;
 
               const winnerLabel =
-                winner?.class === 0
-                  ? p.home_team
-                  : winner?.class === 1
-                  ? "Empate"
-                  : winner?.class === 2
-                  ? p.away_team
-                  : "—";
+                winner?.class === 0 ? p.home_team :
+                winner?.class === 1 ? "Empate" :
+                winner?.class === 2 ? p.away_team : "—";
 
-              // Odds compat (winner vs "1x2") + OU2.5 normalizado + BTTS
+              // odds compat
               const odds1x2 = p?.odds?.winner ?? p?.odds?.["1x2"] ?? {};
               const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
               const oddsBTTS = p?.odds?.btts ?? {};
 
               return (
-                <div
-                  key={String(p.match_id ?? p.fixture_id)}
-                  className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4"
-                >
-                  {/* Header */}
+                <div key={String(p.match_id ?? p.fixture_id)} className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4">
+                  {/* header */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-400">
-                      {(p.league_name ?? p.league) || "Liga"}{" "}
-                      {p.country ? `(${p.country})` : ""}
+                      {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
                     </div>
                     <div className="text-xs text-gray-500">
-                      {new Date(p.date).toLocaleString("pt-PT", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {new Date(p.date).toLocaleString("pt-PT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}
                     </div>
                   </div>
 
-                  {/* Teams */}
+                  {/* teams */}
                   <div className="flex items-center justify-center gap-3">
-                    <Image
-                      src={p.home_logo || FALLBACK_SVG_28}
-                      alt={p.home_team || "Home"}
-                      width={28}
-                      height={28}
-                    />
-                    <div className="text-white font-semibold text-center">
-                      {p.home_team}
-                    </div>
+                    {!!p.home_logo && <Image src={p.home_logo} alt="" width={28} height={28} />}
+                    <div className="text-white font-semibold text-center">{p.home_team}</div>
                     <div className="text-gray-500">vs</div>
-                    <div className="text-white font-semibold text-center">
-                      {p.away_team}
-                    </div>
-                    <Image
-                      src={p.away_logo || FALLBACK_SVG_28}
-                      alt={p.away_team || "Away"}
-                      width={28}
-                      height={28}
-                    />
+                    <div className="text-white font-semibold text-center">{p.away_team}</div>
+                    {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
                   </div>
 
-                  {/* Correct score (best) */}
+                  {/* best correct score */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
                     <span className="text-sm text-white">{bestCorrectScore(p)}</span>
                   </div>
 
-                  {/* Tips */}
+                  {/* tips */}
                   <div className="grid grid-cols-2 gap-2">
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Winner</div>
                       <div className="text-sm text-white">
-                        {winnerLabel}{" "}
-                        <span className="text-gray-400 ml-1">
-                          ({toPct(winner?.confidence ?? winner?.prob)})
-                        </span>
+                        {winnerLabel} <span className="text-gray-400 ml-1">({toPct(winner?.confidence ?? winner?.prob)})</span>
                       </div>
                     </div>
 
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Double Chance</div>
                       <div className="text-sm text-white">
-                        {dc ? (dc.class === 0 ? "1X" : dc.class === 1 ? "12" : "X2") : "—"}{" "}
-                        <span className="text-gray-400 ml-1">
-                          ({toPct(dc?.confidence ?? dc?.prob)})
-                        </span>
+                        {dcLabel(dc?.class)} <span className="text-gray-400 ml-1">({toPct(dc?.confidence ?? dc?.prob)})</span>
                       </div>
                     </div>
 
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Over 2.5</div>
                       <div className="text-sm text-white">
-                        {over25?.class ? "Sim" : "Não"}{" "}
-                        <span className="text-gray-400 ml-1">
-                          ({toPct(over25?.confidence ?? over25?.prob)})
-                        </span>
+                        {over25?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(over25?.confidence ?? over25?.prob)})</span>
                       </div>
                     </div>
 
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Over 1.5</div>
                       <div className="text-sm text-white">
-                        {over15?.class ? "Sim" : "Não"}{" "}
-                        <span className="text-gray-400 ml-1">
-                          ({toPct(over15?.confidence ?? over15?.prob)})
-                        </span>
+                        {over15?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(over15?.confidence ?? over15?.prob)})</span>
                       </div>
                     </div>
 
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
-                        {btts?.class ? "Sim" : "Não"}{" "}
-                        <span className="text-gray-400 ml-1">
-                          ({toPct(btts?.confidence ?? btts?.prob)})
-                        </span>
+                        {btts?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(btts?.confidence ?? btts?.prob)})</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Odds */}
+                  {/* odds */}
                   {(odds1x2 || oddsOU25 || oddsBTTS) && (
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400 mb-2">Odds</div>
@@ -493,8 +500,7 @@ export default function HomeClient() {
                         <div>
                           <div className="text-gray-400 text-xs mb-1">1X2</div>
                           <div className="text-white">
-                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} /{" "}
-                            {oddFmt(odds1x2?.away)}
+                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} / {oddFmt(odds1x2?.away)}
                           </div>
                         </div>
                         <div>
@@ -513,7 +519,7 @@ export default function HomeClient() {
                     </div>
                   )}
 
-                  {/* Detalhes */}
+                  {/* detalhes */}
                   <details className="rounded-xl bg-white/5 border border-white/10 p-3">
                     <summary className="cursor-pointer text-sm text-gray-200 select-none">
                       Detalhes (Correct Score & Marcadores)
@@ -527,9 +533,7 @@ export default function HomeClient() {
                             .map((cs: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{cs.score}</span>
-                                <span className="text-gray-400">
-                                  {Math.round((cs.prob ?? 0) * 1000) / 10}%
-                                </span>
+                                <span className="text-gray-400">{Math.round((cs.prob ?? 0) * 1000) / 10}%</span>
                               </li>
                             ))}
                           {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? []).length === 0) && (
@@ -558,16 +562,12 @@ export default function HomeClient() {
             })}
           </div>
         ) : (
-          <p className="text-center text-gray-400 mt-10">
-            Nenhum jogo encontrado para os filtros.
-          </p>
+          <p className="text-center text-gray-400 mt-10">Nenhum jogo encontrado para os filtros.</p>
         )}
 
         {lastUpdate && (
           <div className="w-full text-center mt-10">
-            <span className="text-xs text-gray-400">
-              Última atualização global: {lastUpdate}
-            </span>
+            <span className="text-xs text-gray-400">Última atualização global: {lastUpdate}</span>
           </div>
         )}
       </main>
