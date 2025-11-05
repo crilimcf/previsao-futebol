@@ -2,7 +2,7 @@
 import os
 import logging
 import datetime
-from typing import Optional
+from typing import Optional, Any
 
 logger = logging.getLogger(__name__)
 
@@ -11,24 +11,26 @@ ENDPOINT_API_KEY = os.getenv("ENDPOINT_API_KEY", "")
 LAST_UPDATE_KEY = os.getenv("LAST_UPDATE_KEY", "football_predictions_last_update")
 
 # --------- Detectar backends Redis ----------
+# Preferimos REST do Upstash (HTTP). Aceitamos também REDIS_URL em https:// (alguns providers)
 REST_URL = (
     os.getenv("UPSTASH_REDIS_REST_URL")
-    or os.getenv("UPSTASH_REDIS_URL")  # compat legacy
+    or os.getenv("UPSTASH_REDIS_URL")
     or (os.getenv("REDIS_URL") if (os.getenv("REDIS_URL") or "").startswith("https://") else None)
 )
 REST_TOKEN = (
     os.getenv("UPSTASH_REDIS_REST_TOKEN")
-    or os.getenv("UPSTASH_REDIS_TOKEN")  # compat legacy
+    or os.getenv("UPSTASH_REDIS_TOKEN")
     or os.getenv("REDIS_TOKEN")
 )
 
+# Socket (redis:// ou rediss://)
 SOCKET_URL = None
 _raw_ru = os.getenv("REDIS_URL", "")
 if _raw_ru.startswith("redis://") or _raw_ru.startswith("rediss://"):
     SOCKET_URL = _raw_ru
 
-redis_client = None
-_used_backend = None
+redis_client: Optional[Any] = None
+_used_backend: Optional[str] = None
 
 # --------- Preferir REST (Upstash HTTP) ----------
 if REST_URL and REST_TOKEN:
@@ -41,15 +43,17 @@ if REST_URL and REST_TOKEN:
 
             def get(self, key: str) -> Optional[str]:
                 v = self._c.get(key)
+                # Upstash REST normalmente já devolve a string; mas se vier bytes/dict, tratamos
                 if isinstance(v, bytes):
                     try:
                         return v.decode("utf-8")
                     except Exception:
                         return None
-                return v
+                if isinstance(v, dict) and "result" in v:
+                    return v["result"]
+                return v  # str | None
 
             def set(self, key: str, value: str, ex: Optional[int] = None):
-                # Upstash aceita ex (segundos)
                 return self._c.set(key, value, ex=ex)
 
             def delete(self, key: str):
@@ -58,7 +62,6 @@ if REST_URL and REST_TOKEN:
                 except Exception:
                     return None
 
-            # para compat com algum código que chama .info()
             def info(self):
                 return {}
 
@@ -68,11 +71,10 @@ if REST_URL and REST_TOKEN:
     except Exception as e:
         logger.error(f"❌ Falha a inicializar Upstash REST: {e}")
 
-# --------- Fallback: socket (apenas se REST falhar/ausente) ----------
+# --------- Fallback: socket (se REST falhar/ausente) ----------
 if not redis_client and SOCKET_URL:
     try:
         import redis as redis_py  # redis-py
-        # Conexão simples; para rediss:// o token pode vir embutido no URL
         redis_client = redis_py.Redis.from_url(SOCKET_URL, decode_responses=True)
         _used_backend = "socket"
         logger.info("✅ Ligação Redis por socket configurada.")
@@ -86,7 +88,10 @@ if not redis_client:
 # --------- Helpers ----------
 def redis_get(key: str) -> Optional[str]:
     try:
-        return redis_client.get(key) if redis_client else None
+        v = redis_client.get(key) if redis_client else None
+        if isinstance(v, dict) and "result" in v:
+            return v["result"]
+        return v
     except Exception as e:
         logger.warning(f"Redis GET falhou: {e}")
         return None
