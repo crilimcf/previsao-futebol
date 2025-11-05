@@ -27,9 +27,9 @@ HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 PREFERRED_BOOKMAKERS = {"Pinnacle", "bet365", "Bet365", "1xBet", "1XBET"}
 
 # Limites
-REQUEST_TIMEOUT = 5
-MAX_GOALS = 6     # Poisson 0..6
-DAYS_AHEAD  = 5   # hoje + 4 dias
+REQUEST_TIMEOUT = 8
+MAX_GOALS = 6            # Poisson 0..6
+DAYS_AHEAD  = 5          # hoje + 4 dias
 
 
 # =========================
@@ -61,7 +61,7 @@ def _cache_key(url: str, params: Optional[Dict[str, Any]]) -> str:
 def _get_api(endpoint: str, params: Optional[Dict[str, Any]] = None) -> Any:
     """
     GET à API-Football com cache Redis.
-    Devolve o campo response (list/dict) quando existir; senão o JSON bruto.
+    Devolve o campo "response" quando existir; senão o JSON bruto.
     """
     if not API_KEY:
         logger.error("❌ API_FOOTBALL_KEY não definida.")
@@ -95,11 +95,13 @@ def _get_api(endpoint: str, params: Optional[Dict[str, Any]] = None) -> Any:
 # CARREGAR LIGAS
 # =========================
 def _load_target_league_ids() -> List[int]:
-    """Se existir config/leagues.json usa-o; caso contrário lê da API e cacheia 12h."""
+    """
+    Se existir config/leagues.json usa-o (lista branca).
+    Caso contrário, devolve lista vazia -> SEM FILTRO (apanha TODAS as ligas).
+    """
     path = "config/leagues.json"
     if os.path.exists(path):
         try:
-            # utf-8-sig para tolerar BOM no teu ficheiro de config
             with open(path, "r", encoding="utf-8-sig") as f:
                 leagues = json.load(f)
             ids = [int(l["id"]) for l in leagues if "id" in l]
@@ -107,28 +109,8 @@ def _load_target_league_ids() -> List[int]:
                 return ids
         except Exception as e:
             logger.warning(f"⚠️ leagues.json inválido: {e}")
-
-    ck = "cache:all_leagues_ids"
-    cached = _rget(ck)
-    if cached:
-        try:
-            return json.loads(cached)
-        except Exception:
-            pass
-
-    data = _get_api("leagues", {"season": SEASON}) or []
-    ids: List[int] = []
-    try:
-        for item in data:
-            lg = item.get("league", {})
-            if lg.get("id"):
-                ids.append(int(lg["id"]))
-        ids = sorted(list(set(ids)))
-        _rset(ck, json.dumps(ids), ex=12 * 3600)
-    except Exception as e:
-        logger.warning(f"⚠️ erro a obter ligas: {e}")
-        ids = [39, 140, 135, 78, 61, 94, 88, 2]  # fallback
-    return ids
+    # Sem config -> sem filtro
+    return []
 
 
 # =========================
@@ -138,7 +120,7 @@ def _fixtures_by_date(yyyy_mm_dd: str) -> List[Dict[str, Any]]:
     return _get_api("fixtures", {"date": yyyy_mm_dd, "season": SEASON}) or []
 
 def _team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
-    """teams/statistics (cache 6h). A API devolve dict; guardamos como dict."""
+    """teams/statistics (cache 6h)."""
     url = BASE_URL + "teams/statistics"
     params = {"team": team_id, "league": league_id, "season": SEASON}
     ck = _cache_key(url, params)
@@ -171,7 +153,7 @@ def _odds_by_fixture(fixture_id: int) -> Dict[str, Any]:
     try:
         for row in raw:
             bms = row.get("bookmakers") or []
-            pref = [b for b in bms if b.get("name") in PREFERRED_BOOKMAKERS]
+            pref = [b for b in bms if (b.get("name") or "") in PREFERRED_BOOKMAKERS]
             candidates = pref or bms
             if candidates:
                 best_bm = candidates[0]
@@ -337,14 +319,14 @@ def _probs_from_matrix(mat: List[List[float]]) -> Dict[str, Any]:
 
     flat = [((i, j), mat[i][j]) for i in range(n) for j in range(n)]
     flat.sort(key=lambda x: x[1], reverse=True)
-    top3 = [{"score": f"{a}-{b}", "prob": round(p, 4)} for (a, b), p in flat[:3]]
+    top3 = [{"score": f"{a}-{b}", "prob": round(float(p), 4)} for (a, b), p in flat[:3]]
 
     return {
-        "winner": {"home": p_home, "draw": p_draw, "away": p_away},
-        "over_1_5": p_over15,
-        "over_2_5": p_over25,
-        "btts": p_btts,
-        "double_chance": {"1X": p_1x, "12": p_12, "X2": p_x2},
+        "winner": {"home": float(p_home), "draw": float(p_draw), "away": float(p_away)},
+        "over_1_5": float(p_over15),
+        "over_2_5": float(p_over25),
+        "btts": float(p_btts),
+        "double_chance": {"1X": float(p_1x), "12": float(p_12), "X2": float(p_x2)},
         "correct_score_top3": top3,
     }
 
@@ -363,7 +345,7 @@ def _merge_odds_from_probs_and_bookmaker(
     probs: Dict[str, Any], real: Dict[str, Any]
 ) -> Dict[str, Any]:
     """
-    Constrói o mapa de odds no formato esperado pelo frontend.
+    Formato final esperado pelo frontend.
     Preferimos odds reais quando presentes; fallback = odds lineadas via Poisson.
     """
     # 1X2
@@ -429,8 +411,12 @@ def _predicted_score_from_top(top3: List[Dict[str, Any]]) -> Dict[str, Optional[
         return {"home": None, "away": None}
 
 
-def _build_match_record(fix: Dict[str, Any], odds_real: Dict[str, Any],
-                        probs: Dict[str, Any], scorers: List[Dict[str, Any]]) -> Dict[str, Any]:
+def _build_match_record(
+    fix: Dict[str, Any],
+    odds_real: Dict[str, Any],
+    probs: Dict[str, Any],
+    scorers: List[Dict[str, Any]],
+) -> Dict[str, Any]:
     fixture = fix.get("fixture", {})
     league = fix.get("league", {})
     teams = fix.get("teams", {})
@@ -452,12 +438,17 @@ def _build_match_record(fix: Dict[str, Any], odds_real: Dict[str, Any],
     # odds finais (real com fallback em modeladas)
     odds_map = _merge_odds_from_probs_and_bookmaker(probs, odds_real)
 
+    iso_dt = fixture.get("date") or ""
+    date_ymd = iso_dt[:10] if iso_dt else None
+
     return {
         "match_id": fid,
         "league_id": lg_id,
+        "league_name": league.get("name"),  # útil para /meta/leagues
         "league": league.get("name"),
         "country": league.get("country"),
-        "date": fixture.get("date"),
+        "date": iso_dt,
+        "date_ymd": date_ymd,
         "home_team": home.get("name"),
         "away_team": away.get("name"),
         "home_logo": home.get("logo"),
@@ -487,25 +478,26 @@ def _build_match_record(fix: Dict[str, Any], odds_real: Dict[str, Any],
 # =========================
 def fetch_today_matches() -> Dict[str, Any]:
     """
-    Busca fixtures (hoje + 2 dias), odds (reais se existirem), stats equipas,
-    calcula Poisson, DC, BTTS, Correct Score top-3 e grava em data/predict/predictions.json (UTF-8 sem BOM).
+    Busca fixtures (hoje + próximos DAYS_AHEAD-1 dias), odds, stats, calcula Poisson,
+    e grava em data/predict/predictions.json (UTF-8).
     """
     if not API_KEY:
         msg = "❌ API_FOOTBALL_KEY não definida."
         logger.error(msg)
         return {"status": "error", "detail": "API key missing", "total": 0}
 
-    # Fixtures alvo
+    # Fixtures alvo (sem filtrar por liga, exceto se leagues.json existir)
     target_leagues = set(_load_target_league_ids())
     fixtures_all: List[Dict[str, Any]] = []
 
     for d in range(DAYS_AHEAD):
-        iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
-        day_fixtures = _fixtures_by_date(iso) or []
+        yyyy_mm_dd = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
+        day_fixtures = _fixtures_by_date(yyyy_mm_dd) or []
         for f in day_fixtures:
             lg = f.get("league") or {}
             if not lg.get("id"):
                 continue
+            # Só filtra se houver whitelist
             if target_leagues and int(lg["id"]) not in target_leagues:
                 continue
             fixtures_all.append(f)
@@ -545,7 +537,7 @@ def fetch_today_matches() -> Dict[str, Any]:
 
         out.append(_build_match_record(f, odds_real, probs, top_scorers))
 
-    # Escreve ficheiro (UTF-8 normal, SEM BOM)
+    # Escreve ficheiro (UTF-8 normal)
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
     with open(PRED_PATH, "w", encoding="utf-8") as fp:
         json.dump(out, fp, ensure_ascii=False, indent=2)
