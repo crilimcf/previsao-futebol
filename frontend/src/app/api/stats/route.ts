@@ -1,23 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  try {
-    const response = await fetch(`${process.env.BACKEND_API_URL}/stats`, {
-      headers: {
-        Authorization: `Bearer ${process.env.ENDPOINT_API_KEY}`,
-      },
-    });
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Failed to fetch stats" },
-        { status: response.status }
-      );
-    }
+export async function GET() {
+  const base =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "https://previsao-futebol.onrender.com";
 
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
-  }
+  const r = await fetch(`${base}/stats`, {
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
+  const data = await r.json();
+  return NextResponse.json(data, {
+    headers: { "Cache-Control": "no-store" },
+  });
 }
