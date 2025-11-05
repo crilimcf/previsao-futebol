@@ -8,9 +8,10 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src import config
 
-# 👉 importa os routers
+# 👉 routers
 from src.api_routes import health as health_routes
 from src.api_routes import predict as predict_routes
+from src.api_routes import meta as meta_routes  # <— NOVO
 
 # ============================================================
 # ⚙️ LOGGING
@@ -28,21 +29,18 @@ app = typer.Typer(help="Football Prediction Project CLI")
 
 @app.command()
 def train():
-    """Train the models and save artifacts."""
     from src.train import train_model as train_main
     logger.info("🚀 Training models…")
     train_main()
 
 @app.command()
 def predict():
-    """Make predictions on upcoming matches."""
     from src.predict import main as predict_main
     logger.info("⚽ Generating predictions…")
     predict_main()
 
 @app.command()
 def validate():
-    """Validate historical match data for consistency."""
     from scripts.validate_historical_matches import validate_historical_matches as validate_main
     logger.info("🧩 Validating historical match data…")
     validate_main()
@@ -63,9 +61,9 @@ def main(
 # ============================================================
 # 🌍 FASTAPI APP
 # ============================================================
-api = FastAPI(title="Previsão Futebol API", version="1.0.4")
+api = FastAPI(title="Previsão Futebol API", version="1.0.5")
 
-# 🔓 CORS (permite preflight OPTIONS com Authorization vindos do Vercel)
+# 🔓 CORS
 ALLOWED_ORIGINS = [
     "https://previsao-futebol.vercel.app",
     "http://localhost:3000",
@@ -73,20 +71,19 @@ ALLOWED_ORIGINS = [
 api.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_origin_regex=r"^https://.+\.vercel\.app$",  # previews do Vercel
+    allow_origin_regex=r"^https://.+\.vercel\.app$",  # previews Vercel
     allow_credentials=True,
     allow_methods=["*"],  # inclui OPTIONS
     allow_headers=["*"],  # inclui Authorization
 )
 
-# 👉 inclui os routers com os endpoints:
-#    - /predictions, /stats, /meta/update, /meta/last-update, /meta/status, /predict, …
+# 👉 inclui routers
 api.include_router(health_routes.router)
 api.include_router(predict_routes.router)
+api.include_router(meta_routes.router)  # <— NOVO
 
 @api.api_route("/healthz", methods=["GET", "HEAD"], tags=["system"])
 def healthz():
-    """Endpoint de monitorização e integridade (GET/HEAD)."""
     status = {"status": "ok"}
     try:
         # Redis
@@ -102,7 +99,7 @@ def healthz():
         else:
             status["redis"] = "missing"
 
-        # Ficheiro de previsões
+        # Ficheiro
         pred_path = "data/predict/predictions.json"
         status["predictions_file"] = "exists" if os.path.exists(pred_path) else "missing"
 
@@ -113,7 +110,6 @@ def healthz():
         except Exception:
             status["last_update"] = "error"
 
-        # Infos gerais
         status["time_utc"] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
         status["environment"] = os.getenv("ENV", "production")
 
@@ -129,10 +125,10 @@ def root():
     return {
         "status": "online",
         "service": "previsao-futebol",
-        "version": "1.0.4",
+        "version": "1.0.5",
         "docs": "/docs",
         "health": "/healthz",
-        "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+        "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
     }
 
 # ============================================================
