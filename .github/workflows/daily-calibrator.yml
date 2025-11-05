@@ -1,0 +1,47 @@
+name: Daily calibrator
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  calibrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -V
+          pip install --upgrade pip
+          pip install requests pandas numpy scikit-learn joblib
+
+      - name: Harvest results (yesterday)
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE }}
+          API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON }}
+        run: |
+          python scripts/harvest_results.py
+
+      - name: Train calibrator
+        run: |
+          python scripts/calibrator_train.py
+
+      - name: Commit & push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "ci(model): daily harvest + calibrator"
+          file_pattern: |
+            data/training/history.jsonl
+            data/model/calibrator.joblib

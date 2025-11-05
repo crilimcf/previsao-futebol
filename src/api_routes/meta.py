@@ -60,3 +60,19 @@ def leagues():
         key=lambda x: ((x.get("country") or ""), (x.get("name") or ""))
     )
     return {"count": len(items), "items": items}
+
+# adiciona ao src/api_routes/meta.py
+
+@router.get("/calibration")
+def calibration_info():
+    base = "data/model"
+    out = {}
+    for name in ["calibration.json", "cal_winner.json", "cal_over25.json", "cal_btts.json"]:
+        path = os.path.join(base, name)
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    out[name] = json.load(f)
+            except Exception as e:
+                out[name] = {"error": str(e)}
+    return out or {"status": "no-calibration"}

@@ -1,59 +1,89 @@
+"use client";
+
+export type PredictionField = {
+  class: number | string;          // 0/1/2 ou "1X"/"12"/"X2" no caso de DC
+  confidence?: number;             // 0..1
+  prob?: number;                   // 0..1 (backend novo)
+};
+
+export type PredictionBlock = {
+  winner: PredictionField;
+  over_2_5: PredictionField;
+  over_1_5: PredictionField;
+  double_chance: PredictionField;
+  btts: PredictionField;
+};
+
 export type Match = {
-    match_id: string | number;
-    home_team: string;
-    away_team: string;
-    predictions: Prediction;
-}
-
-type PredictionField = {
-    class: number;
-    confidence: number;
+  match_id: string | number;
+  home_team: string;
+  away_team: string;
+  predictions: PredictionBlock;
 };
 
-type Prediction = {
-    winner: PredictionField;
-    over_2_5: PredictionField;
-    over_1_5: PredictionField;
-    double_chance: PredictionField;
-    btts: PredictionField;
+const FIELDS: Array<{ key: keyof PredictionBlock; label: string }> = [
+  { key: "winner", label: "Winner" },
+  { key: "double_chance", label: "Double Chance" },
+  { key: "over_2_5", label: "Over 2.5" },
+  { key: "over_1_5", label: "Over 1.5" },
+  { key: "btts", label: "BTTS" },
+];
+
+const pct = (f?: PredictionField) => {
+  const v = f?.confidence ?? f?.prob ?? 0;
+  return `${Math.round((Number.isFinite(v) ? v : 0) * 100)}%`;
 };
 
-const predictionFields: Array<{ key: keyof Prediction; label: string }> = [
-    { key: "winner", label: "Winner" },
-    { key: "over_2_5", label: "Over 2.5 Goals" },
-    { key: "over_1_5", label: "Over 1.5 Goals" },
-    { key: "double_chance", label: "Double Chance" },
-    { key: "btts", label: "Both Teams to Score" },
-] as const;
+const dcLabel = (v: number | string) => {
+  if (typeof v === "string") return v.toUpperCase(); // já vem "1X" | "12" | "X2"
+  if (v === 0) return "1X";
+  if (v === 1) return "12";
+  if (v === 2) return "X2";
+  return "-";
+};
 
-export function PredictionItem({ match } : { match: Match}) {
-    const { home_team, away_team, predictions } = match;
-    const classToText = (key: string, value: number) => {
-        if (["btts", "over_2_5", "over_1_5"].includes(key)) {
-            return value === 1 ? "Yes" : "No";
-        }
-        if (["winner"].includes(key)) {
-            return value === 0 ? home_team : value === 1 ? "Draw" : away_team;
-        }
-        if (["double_chance"].includes(key)) {
-            return value === 0 ? "1X" : "X2";
-        }
-        return value;
-    };
-    return (
-        <li className="mb-2">
-            <strong>{home_team} vs {away_team}</strong>
-            <ul className="ml-4 list-disc">
-                {predictionFields.map(({key, label}) => {
-                    const field = predictions[key];
-                    return (
-                        <li key={key}>
-                            {label}: {classToText(key, field.class)}{" "}
-                            <span className="text-card">({(field.confidence * 100).toFixed(0)}%)</span>
-                        </li>
-                    );
-                })}
-            </ul>
-        </li>
-    );
+const winnerLabel = (v: number, home: string, away: string) =>
+  v === 0 ? home : v === 1 ? "Empate" : away;
+
+const boolLabel = (v: number) => (v === 1 ? "Sim" : "Não");
+
+export function PredictionItem({ match }: { match: Match }) {
+  const { home_team, away_team, predictions } = match;
+
+  return (
+    <li className="mb-3 rounded-xl border border-gray-800/70 bg-gray-900/50 p-3">
+      <strong className="text-sm text-white">
+        {home_team} <span className="text-gray-500">vs</span> {away_team}
+      </strong>
+      <ul className="ml-4 mt-2 list-disc text-sm text-gray-200 space-y-1">
+        {FIELDS.map(({ key, label }) => {
+          const field = predictions[key];
+          let txt: string;
+
+          switch (key) {
+            case "winner":
+              txt = winnerLabel(Number(field.class), home_team, away_team);
+              break;
+            case "double_chance":
+              txt = dcLabel(field.class);
+              break;
+            case "btts":
+            case "over_2_5":
+            case "over_1_5":
+              txt = boolLabel(Number(field.class));
+              break;
+            default:
+              txt = String(field.class);
+          }
+
+          return (
+            <li key={key}>
+              {label}: {txt}{" "}
+              <span className="text-gray-400">({pct(field)})</span>
+            </li>
+          );
+        })}
+      </ul>
+    </li>
+  );
 }

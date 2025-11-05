@@ -1,0 +1,44 @@
+name: Export predictions & commit
+
+on:
+  schedule:
+    - cron: "20 3,9,15,21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps (stdlib only neste script, mas deixa requests se quiseres)
+        run: |
+          python -V
+          pip install --upgrade pip
+
+      - name: Run exporter
+        env:
+            API_BASE_URL: ${{ secrets.API_BASE_URL }}
+            API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: |
+          python scripts/export_predictions.py
+
+      - name: Commit & push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): export predictions & stats"
+          commit_user_name: "GitHub Actions"
+          commit_user_email: "actions@users.noreply.github.com"
+          file_pattern: |
+            data/predict/predictions.json
+            data/predict/predictions_history.json
+            data/stats/prediction_stats.json

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Bebas_Neue } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -7,16 +7,21 @@ import Footer from "@/components/footer";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const bebas = Bebas_Neue({
   variable: "--font-bebas",
   subsets: ["latin"],
   weight: "400",
+  display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://football-prediction-murex.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://football-prediction-murex.vercel.app"),
+  metadataBase: new URL(siteUrl),
   title: "Football Prediction AI | Accurate Soccer Tips",
   description:
     "Get the most accurate football predictions powered by AI. Check match tips and confidence levels for your favorite teams. Updated daily.",
@@ -35,17 +40,9 @@ export const metadata: Metadata = {
     title: "Football Prediction AI | Accurate Soccer Tips",
     description:
       "Get the most accurate football predictions powered by AI. Check match tips and confidence levels for your favorite teams. Updated daily.",
-    url: "https://football-prediction-murex.vercel.app",
+    url: siteUrl,
     siteName: "Football Prediction AI",
-    images: [
-      {
-        // ficheiro dentro de /public
-        url: "/file.png",
-        width: 1200,
-        height: 630,
-        alt: "Football Prediction AI Banner",
-      },
-    ],
+    images: [{ url: "/file.png", width: 1200, height: 630, alt: "Football Prediction AI" }],
     locale: "en_US",
     type: "website",
   },
@@ -67,31 +64,27 @@ export const metadata: Metadata = {
   category: "sports",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  // Usa env var quando existir; fallback para o teu ID actual
-  const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-NNKXJQDTQ3";
+export const viewport: Viewport = {
+  themeColor: "#0ea5e9",
+  colorScheme: "dark",
+};
 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt">
       <head>
-        {/* Google Analytics via next/script (elimina o warning @next/next/next-script-for-ga) */}
-        <Script
-          id="ga-lib"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="ga-init" strategy="afterInteractive">
+        {/* Google Analytics via next/script (melhor prática) */}
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-NNKXJQDTQ3" />
+        <Script id="ga" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){ dataLayer.push(arguments); }
+            function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${GA_ID}');
+            gtag('config', 'G-NNKXJQDTQ3');
           `}
         </Script>
       </head>
-      <body className={`${inter.variable} ${bebas.variable} antialiased bg-gray-900 text-white`}>
+      <body className={`${inter.variable} ${bebas.variable} antialiased bg-app text-white`}>
         {children}
         <Footer />
       </body>

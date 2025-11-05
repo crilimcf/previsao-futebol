@@ -1,0 +1,37 @@
+name: Update predictions (Render)
+
+on:
+  schedule:
+    # corre 4x/dia em UTC (≈ Lisboa no inverno)
+    - cron: "5 3,9,15,21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping-backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Call backend /meta/update (Render)
+        env:
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: |
+          set -e
+          echo "POST $API_BASE_URL/meta/update"
+          curl -fsS -X POST "$API_BASE_URL/meta/update" \
+            -H "Authorization: Bearer $API_TOKEN" \
+            -H "Accept: application/json" \
+            -o response.json
+          cat response.json || true
+          echo "Done."
+
+      - name: Warm frontend (opcional)
+        if: ${{ secrets.FRONTEND_URL != '' }}
+        env:
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+        run: |
+          curl -fsS "$FRONTEND_URL/api/last-update" || true
+          curl -fsS "$FRONTEND_URL" > /dev/null || true

@@ -128,3 +128,5 @@ fastapi==0.116.1
 python-dotenv==1.1.1
 apscheduler==3.10.4
 upstash-redis==1.5.0
+scikit-learn>=1.2
+joblib>=1.3
