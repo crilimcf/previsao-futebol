@@ -64,17 +64,35 @@ export type Prediction = {
   top_scorers?: { player: string; team: string; goals: number }[];
 };
 
+export type LastUpdate = { last_update: string | null };
+
 // =====================================================
 // 📊 Funções principais para o frontend consumir
 // =====================================================
 
 /** Obtém previsões (suporta filtros via query params). */
-export async function getPredictions(params?: { date?: string; league_id?: number | string }) {
-  const r = await api.get("/predictions", {
-    params: params ?? {},
-    headers: { Accept: "application/json" },
-  });
-  return r.data ?? [];
+export async function getPredictions(
+  params?: { date?: string; league_id?: number | string }
+): Promise<Prediction[]> {
+  try {
+    const normalized = params
+      ? {
+          ...params,
+          league_id:
+            params.league_id !== undefined && params.league_id !== null
+              ? String(params.league_id)
+              : undefined,
+        }
+      : undefined;
+
+    const r = await api.get("/predictions", {
+      params: normalized,
+      headers: { Accept: "application/json" },
+    });
+    return Array.isArray(r.data) ? (r.data as Prediction[]) : [];
+  } catch {
+    return [];
+  }
 }
 
 /** Obtém estatísticas agregadas (fallback para objeto vazio). */
@@ -88,10 +106,10 @@ export async function getStats() {
 }
 
 /** Obtém a data da última atualização (fallback seguro). */
-export async function getLastUpdate() {
+export async function getLastUpdate(): Promise<LastUpdate> {
   try {
     const r = await api.get("/meta/last-update", { headers: { Accept: "application/json" } });
-    return r.data ?? { last_update: null };
+    return (r.data as LastUpdate) ?? { last_update: null };
   } catch {
     return { last_update: null };
   }

@@ -1,8 +1,9 @@
-# routes/predict.py
+# src/routes/predict.py
 from fastapi import APIRouter, HTTPException, Header, Query
 from datetime import datetime
-from typing import Optional, List, Any, Dict
+from typing import Optional, List, Dict, Any
 from src import config
+from src.fetch_matches import fetch_today_matches
 import os
 import json
 import logging
@@ -10,6 +11,9 @@ import logging
 router = APIRouter()
 logger = logging.getLogger("football_api")
 
+# ======================================================
+# 🔐 Verificação de Token
+# ======================================================
 def verify_token(auth_header: str | None):
     expected = os.getenv("ENDPOINT_API_KEY")
     if not expected:
@@ -23,64 +27,97 @@ def verify_token(auth_header: str | None):
         raise HTTPException(status_code=401, detail="Invalid or expired token.")
     return True
 
+
+# ======================================================
+# 🧹 Loader resiliente (remove BOM e saneia ficheiro se preciso)
+# ======================================================
+def _load_predictions_file(path: str) -> List[Dict[str, Any]]:
+    if not os.path.exists(path):
+        return []
+    # 1) tenta utf-8-sig (remove BOM)
+    try:
+        with open(path, "r", encoding="utf-8-sig") as f:
+            data = json.load(f)
+        # se leu OK, regrava limpo em utf-8 (sem BOM) — best effort
+        try:
+            if isinstance(data, list):
+                with open(path, "w", encoding="utf-8") as fw:
+                    json.dump(data, fw, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+        return data if isinstance(data, list) else []
+    except json.JSONDecodeError:
+        # 2) fallback: tira BOM manualmente a partir de bytes
+        try:
+            with open(path, "rb") as fb:
+                raw = fb.read()
+            if raw.startswith(b"\xef\xbb\xbf"):
+                raw = raw[3:]
+            data = json.loads(raw.decode("utf-8"))
+            # persistir ficheiro saneado (sem BOM)
+            try:
+                with open(path, "w", encoding="utf-8") as fw:
+                    json.dump(data, fw, ensure_ascii=False, indent=2)
+            except Exception:
+                pass
+            return data if isinstance(data, list) else []
+        except Exception as ee:
+            logger.error(f"Falha a ler {path}: {ee}")
+            raise HTTPException(status_code=500, detail=str(ee))
+    except Exception as e:
+        logger.error(f"Erro a ler {path}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ======================================================
+# 📊 Endpoint principal de previsões (com filtros server-side)
+# ======================================================
 @router.get("/predictions", tags=["Predictions"])
 def get_predictions(
     date: Optional[str] = Query(None, description="YYYY-MM-DD"),
-    league_id: Optional[str] = Query(None),
-) -> List[Dict[str, Any]]:
-    """
-    Lê data/predict/predictions.json e aplica filtros opcionais:
-      - ?date=YYYY-MM-DD
-      - ?league_id=94
-    """
+    league_id: Optional[str] = Query(None, description="League ID"),
+):
     path = "data/predict/predictions.json"
-    if not os.path.exists(path):
-        return []
-
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        if not isinstance(data, list):
-            return []
-
-        # filtros server-side
+        data = _load_predictions_file(path)
+        # filtros opcionais
         if date:
-            data = [x for x in data if isinstance(x.get("date"), str) and x["date"][:10] == date]
+            data = [x for x in data if str(x.get("date", ""))[:10] == date]
         if league_id:
             data = [x for x in data if str(x.get("league_id")) == str(league_id)]
-
-        # ordena por confiança do winner (desc)
-        data.sort(key=lambda x: (x.get("predictions", {}).get("winner", {}).get("confidence") or 0.0), reverse=True)
         return data
-
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro em /predictions: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# ======================================================
+# 🔁 Atualização manual
+# ======================================================
 @router.post("/meta/update", tags=["Meta"])
 def manual_update(authorization: str = Header(None)):
     verify_token(authorization)
     try:
-        # usa o motor PRO
-        from src.api_fetch_pro import build_predictions_for_range
-        # hoje apenas (3 dias também é possível: days=3)
-        result = build_predictions_for_range(days=1)
-
+        result = fetch_today_matches()
         now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if config.redis_client:
             config.redis_client.set(config.LAST_UPDATE_KEY, now_str)
-
         logger.info(f"✅ Atualização manual concluída às {now_str}")
         return {"status": "ok", "last_update": now_str, "total_matches": result.get("total", 0)}
     except Exception as e:
         logger.error(f"❌ Erro no update manual: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# ======================================================
+# 🧠 Executa previsões IA
+# ======================================================
 @router.post("/predict", tags=["AI"])
 def run_predictions(authorization: str = Header(None)):
     verify_token(authorization)
     try:
-        # Mantém compatibilidade com o teu pipeline local se quiseres chamar o modelo
         from src.predict import main as run_model
         run_model()
         now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -90,6 +127,10 @@ def run_predictions(authorization: str = Header(None)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# ======================================================
+# 📈 Estado geral
+# ======================================================
 @router.get("/meta/status", tags=["Meta"])
 def meta_status():
     redis_ok = False
@@ -106,7 +147,7 @@ def meta_status():
     total_predictions = 0
     if predictions_exists:
         try:
-            with open(predictions_file, "r", encoding="utf-8") as f:
+            with open(predictions_file, "r", encoding="utf-8-sig") as f:
                 total_predictions = len(json.load(f))
         except Exception:
             pass
@@ -118,6 +159,10 @@ def meta_status():
         "total_predictions": total_predictions,
     }
 
+
+# ======================================================
+# 🕒 Última atualização
+# ======================================================
 @router.get("/meta/last-update", tags=["Meta"])
 def meta_last_update():
     if config.redis_client:
@@ -128,26 +173,34 @@ def meta_last_update():
             raise HTTPException(status_code=500, detail=str(e))
     return {"last_update": "N/A"}
 
+
+# ======================================================
+# 📊 Estatísticas
+# ======================================================
 @router.get("/stats", tags=["Stats"])
 def get_stats():
     path = "data/stats/prediction_stats.json"
     if not os.path.exists(path):
         return {}
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8-sig") as f:
             return json.load(f)
     except json.JSONDecodeError:
         raise HTTPException(status_code=500, detail="Erro ao ler ficheiro JSON.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# ======================================================
+# 🧩 Último treino IA
+# ======================================================
 @router.get("/meta/last-train", tags=["AI"])
 def last_train():
     try:
         train_file = "data/meta/last_train.json"
         if not os.path.exists(train_file):
             return {"status": "missing", "detail": "Nenhum treino encontrado."}
-        with open(train_file, "r", encoding="utf-8") as f:
+        with open(train_file, "r", encoding="utf-8-sig") as f:
             return json.load(f)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
