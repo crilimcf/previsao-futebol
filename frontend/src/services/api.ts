@@ -14,10 +14,7 @@ export const API_TOKEN =
 export const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 12_000,
-  headers: {
-    // força JSON sempre
-    Accept: "application/json",
-  },
+  headers: { Accept: "application/json" },
 });
 
 export const authApi = axios.create({
@@ -106,12 +103,17 @@ export async function getStats() {
   }
 }
 
-/** Obtém a data da última atualização (fallback seguro). */
+/** Obtém a data da última atualização (robusto ao tipo do axios). */
 export async function getLastUpdate(): Promise<LastUpdate> {
   try {
     const r = await api.get("/meta/last-update");
-    if (r && r.data && typeof r.data.last_update !== "undefined") {
-      return r.data as LastUpdate;
+    const d: any = r?.data ?? {};
+    // Aceita { last_update: string|null } ou qualquer coisa parecida
+    if ("last_update" in d) {
+      const lu = d.last_update;
+      if (typeof lu === "string" || lu === null) {
+        return { last_update: lu };
+      }
     }
     return { last_update: null };
   } catch {
@@ -135,24 +137,16 @@ export async function getApiHealth() {
   }
 }
 
-/** Lista de ligas conhecidas pelo backend (array simples ou {items:[...]}) */
+/** Lista de ligas conhecidas pelo backend (array simples ou {items:[...]}/{data:[...]}) */
 export async function getLeagues(): Promise<LeagueItem[]> {
   try {
     const r = await api.get("/meta/leagues");
-    const data = r?.data;
+    const data = r?.data as any;
 
-    // aceita: array direto
-    if (Array.isArray(data)) {
-      return data as LeagueItem[];
-    }
-    // aceita: { items: [...] }
-    if (data && Array.isArray((data as any).items)) {
-      return (data as any).items as LeagueItem[];
-    }
-    // aceita: { data: [...] }
-    if (data && Array.isArray((data as any).data)) {
-      return (data as any).data as LeagueItem[];
-    }
+    if (Array.isArray(data)) return data as LeagueItem[];
+    if (data && Array.isArray(data.items)) return data.items as LeagueItem[];
+    if (data && Array.isArray(data.data)) return data.data as LeagueItem[];
+
     return [];
   } catch {
     return [];
