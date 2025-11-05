@@ -2,23 +2,27 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 import Header from "@/components/header";
 import InfoCard from "@/components/infoCards";
 import StatsAverage, { StatsType } from "@/components/StatsAverage";
 import CardSkeleton from "@/components/CardSkeleton";
 import StatsSkeleton from "@/components/StatsSkeleton";
-import PredictionCard from "@/components/predictionCard";
-import TopPredictionCard from "@/components/topPredictionCard";
 
 import {
-  getPredictions,
+  getPredictions as apiGetPredictions,
   getStats,
   getLastUpdate,
   triggerUpdate,
-  type Prediction,
+  type Prediction as PredictionType,
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
+
+// -------------------------------
+// Tipos (alinhados ao backend)
+// -------------------------------
+type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
 
 // 🕒 Helper de tempo decorrido
 function timeSince(ts: number) {
@@ -30,12 +34,15 @@ function timeSince(ts: number) {
   return `${hours}h atrás`;
 }
 
-// YYYY-MM-DD local (browser)
+// YYYY-MM-DD local
 function ymd(d: Date) {
   const off = d.getTimezoneOffset();
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().split("T")[0];
 }
+
+const FALLBACK_SVG =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><rect width='100%' height='100%' fill='%23222'/></svg>";
 
 const leagues = [
   { id: "all", name: "🌍 Todas as Ligas" },
@@ -60,13 +67,13 @@ export default function HomeClient() {
   const search = useSearchParams();
 
   // -------------------------------
-  // Estados
+  // Estados principais
   // -------------------------------
   const [loading, setLoading] = useState(true);
   const [loadingFixtures, setLoadingFixtures] = useState(false);
   const [error, setError] = useState<string>("");
 
-  const [predictions, setPredictions] = useState<Prediction[]>([]);
+  const [predictions, setPredictions] = useState<PredictionType[]>([]);
   const [stats, setStats] = useState<StatsType | null>(null);
   const [lastUpdate, setLastUpdate] = useState("");
 
@@ -79,14 +86,13 @@ export default function HomeClient() {
   const manualTriggerRef = useRef(false);
 
   // -------------------------------
-  // Ler filtros da URL (se existirem)
+  // Sincronizar com URL (query params)
   // -------------------------------
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
 
     if (qpLeague) setSelectedLeague(qpLeague);
-
     if (qpDate) {
       const today = ymd(new Date());
       const tomorrow = ymd(new Date(Date.now() + 86400000));
@@ -95,15 +101,16 @@ export default function HomeClient() {
         qpDate === today ? "today" : qpDate === tomorrow ? "tomorrow" : qpDate === after ? "after" : "today";
       setSelectedDateKey(key);
     }
-  }, [search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Data alvo conforme a tab
+  // Formata a data alvo conforme a tab
   const selectedDateISO = useMemo(() => {
     const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Escrever filtros na URL
+  // Atualiza URL quando filtros mudam
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
@@ -127,16 +134,16 @@ export default function HomeClient() {
           : { date: selectedDateISO, league_id: selectedLeague };
 
       const [preds, statsData, lastU] = await Promise.all([
-        getPredictions(params),
+        apiGetPredictions(params),
         getStats(),
         getLastUpdate(),
       ]);
 
-      setPredictions(Array.isArray(preds) ? (preds as Prediction[]) : []);
+      setPredictions(Array.isArray(preds) ? (preds as PredictionType[]) : []);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
-      const lastUpdateRaw = (lastU as { last_update?: string | null })?.last_update;
-      if (typeof lastUpdateRaw === "string" && lastUpdateRaw.trim()) {
+      const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
+      if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
         const d = new Date(lastUpdateRaw.replace(" ", "T"));
         setLastUpdate(
           `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString(
@@ -144,8 +151,10 @@ export default function HomeClient() {
             { hour: "2-digit", minute: "2-digit" }
           )}`
         );
-      } else {
-        setLastUpdate("");
+      }
+
+      if ((!preds || (Array.isArray(preds) && preds.length === 0)) && (!statsData || Object.keys(statsData).length === 0)) {
+        setError("Sem dados disponíveis no momento.");
       }
     } catch (e: any) {
       console.error(e);
@@ -161,7 +170,7 @@ export default function HomeClient() {
   }, [selectedLeague, selectedDateISO]);
 
   // -------------------------------
-  // Fixtures reais via proxy (liga específica)
+  // Fixtures reais via proxy (para liga específica)
   // -------------------------------
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
@@ -171,7 +180,6 @@ export default function HomeClient() {
     }
     try {
       setLoadingFixtures(true);
-      // usar next diferente para "furar" a cache em memória do proxy
       const data = await getFixturesByLeague(Number(selectedLeague), ignoreCache ? 0 : 5);
       setLiveFixtures(data?.response || []);
       setLastFixturesUpdate(Date.now());
@@ -189,7 +197,14 @@ export default function HomeClient() {
   }, [selectedLeague]);
 
   // -------------------------------
-  // UI: Loading / Error
+  // Render helpers
+  // -------------------------------
+  const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "-");
+  const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(v * 100)}%` : "—");
+  const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
+
+  // -------------------------------
+  // UI Loading / Error
   // -------------------------------
   if (loading) {
     return (
@@ -262,16 +277,16 @@ export default function HomeClient() {
           {/* Botão Atualizar */}
           <button
             onClick={async () => {
-              try {
-                if (selectedLeague === "all") {
-                  await triggerUpdate();      // força refresh no backend
-                  await loadMainData();       // refaz fetch conforme filtros
-                } else {
-                  manualTriggerRef.current = true;
-                  await loadFixtures(true);   // força refresh nos fixtures da liga
+              if (selectedLeague === "all") {
+                try {
+                  await triggerUpdate(); // força refresh no backend
+                  await loadMainData();
+                } catch (e) {
+                  console.error(e);
                 }
-              } catch (e) {
-                console.error(e);
+              } else {
+                manualTriggerRef.current = true;
+                await loadFixtures(true);
               }
             }}
             className="flex items-center gap-2 bg-gray-800 text-sm text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-700 transition"
@@ -280,7 +295,7 @@ export default function HomeClient() {
           </button>
         </div>
 
-        {/* ⚽ BLOCO: JOGOS REAIS (proxy) — apenas quando liga específica */}
+        {/* ⚽ BLOCO: JOGOS REAIS (proxy) — só quando liga específica */}
         {selectedLeague !== "all" && (
           <div className="bg-gray-900 p-6 rounded-2xl shadow-lg border border-gray-800 mb-10">
             <div className="flex justify-between items-center mb-4">
@@ -298,9 +313,7 @@ export default function HomeClient() {
             </div>
 
             {loadingFixtures && (
-              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">
-                A carregar jogos reais…
-              </div>
+              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">A carregar jogos reais…</div>
             )}
 
             {liveFixtures.length > 0 ? (
@@ -310,26 +323,32 @@ export default function HomeClient() {
                     key={f.fixture.id}
                     className="p-4 rounded-xl border border-gray-800 bg-gray-950 hover:border-green-500 transition"
                   >
-                    <div className="flex items-center justify-center space-x-2 mb-2">
-                      {f.teams?.home?.logo ? (
-                        <img src={f.teams.home.logo} className="w-6 h-6" alt="" />
-                      ) : (
-                        <div className="w-6 h-6" />
-                      )}
-                      <span className="text-white font-medium">{f.teams?.home?.name}</span>
+                    <div className="flex items-center justify-center gap-3 mb-2">
+                      <Image
+                        src={f.teams.home.logo || FALLBACK_SVG}
+                        alt={f.teams?.home?.name || "Home"}
+                        width={24}
+                        height={24}
+                        className="w-6 h-6"
+                        unoptimized
+                      />
+                      <span className="text-white font-medium">{f.teams.home.name}</span>
                       <span className="text-gray-400">vs</span>
-                      <span className="text-white font-medium">{f.teams?.away?.name}</span>
-                      {f.teams?.away?.logo ? (
-                        <img src={f.teams.away.logo} className="w-6 h-6" alt="" />
-                      ) : (
-                        <div className="w-6 h-6" />
-                      )}
+                      <span className="text-white font-medium">{f.teams.away.name}</span>
+                      <Image
+                        src={f.teams.away.logo || FALLBACK_SVG}
+                        alt={f.teams?.away?.name || "Away"}
+                        width={24}
+                        height={24}
+                        className="w-6 h-6"
+                        unoptimized
+                      />
                     </div>
                     <p className="text-sm text-center text-gray-400">
                       {new Date(f.fixture.date).toLocaleString("pt-PT")}
                     </p>
                     <p className="text-xs text-center text-gray-500 mt-1">
-                      {f.league?.name} {f.league?.country ? `(${f.league.country})` : ""}
+                      {f.league.name} ({f.league.country})
                     </p>
                   </div>
                 ))}
@@ -339,28 +358,169 @@ export default function HomeClient() {
             )}
 
             {lastFixturesUpdate && (
-              <div className="text-xs text-center text-gray-500 mt-4">
-                Última atualização: {timeSince(lastFixturesUpdate)}
-              </div>
+              <div className="text-xs text-center text-gray-500 mt-4">Última atualização: {timeSince(lastFixturesUpdate)}</div>
             )}
           </div>
         )}
 
-        {/* 🔮 PREVISÕES (agora usando os componentes PRO) */}
+        {/* BLOCO: PREVISÕES (com campos PRO) */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
-          <>
-            {/* Destaque do 1º jogo */}
-            <div className="mb-6">
-              <TopPredictionCard p={predictions[0]} />
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {predictions.map((p) => {
+              const winner = (p as any).predictions?.winner;
+              const dc = (p as any).predictions?.double_chance;
+              const over25 = (p as any).predictions?.over_2_5;
+              const over15 = (p as any).predictions?.over_1_5;
+              const btts = (p as any).predictions?.btts;
 
-            {/* Restantes jogos */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {predictions.slice(1).map((p) => (
-                <PredictionCard key={p.match_id} p={p} />
-              ))}
-            </div>
-          </>
+              const winnerLabel =
+                winner?.class === 0 ? p.home_team : winner?.class === 1 ? "Empate" : winner?.class === 2 ? p.away_team : "—";
+
+              return (
+                <div
+                  key={String((p as any).match_id ?? (p as any).fixture_id)}
+                  className="p-5 rounded-2xl border border-gray-800 bg-gray-950 hover:border-green-500 transition flex flex-col gap-4"
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-gray-400">
+                      {(p as any).league_name || (p as any).league} {(p as any).country ? `(${(p as any).country})` : ""}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {new Date(p.date).toLocaleString("pt-PT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}
+                    </div>
+                  </div>
+
+                  {/* Teams */}
+                  <div className="flex items-center justify-center gap-3">
+                    <Image
+                      src={(p as any).home_logo || FALLBACK_SVG}
+                      alt={p.home_team || "Home"}
+                      width={28}
+                      height={28}
+                      className="w-7 h-7"
+                      unoptimized
+                    />
+                    <div className="text-white font-semibold text-center">{p.home_team}</div>
+                    <div className="text-gray-500">vs</div>
+                    <div className="text-white font-semibold text-center">{p.away_team}</div>
+                    <Image
+                      src={(p as any).away_logo || FALLBACK_SVG}
+                      alt={p.away_team || "Away"}
+                      width={28}
+                      height={28}
+                      className="w-7 h-7"
+                      unoptimized
+                    />
+                  </div>
+
+                  {/* Tips principais */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                      <div className="text-xs text-gray-400">Winner</div>
+                      <div className="text-sm text-white">
+                        {winnerLabel} <span className="text-gray-400 ml-1">({toPct(winner?.prob)})</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                      <div className="text-xs text-gray-400">Double Chance</div>
+                      <div className="text-sm text-white">
+                        {dcLabel(dc?.class as DCClass)} <span className="text-gray-400 ml-1">({toPct(dc?.prob)})</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                      <div className="text-xs text-gray-400">Over 2.5</div>
+                      <div className="text-sm text-white">
+                        {over25?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(over25?.prob)})</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                      <div className="text-xs text-gray-400">Over 1.5</div>
+                      <div className="text-sm text-white">
+                        {over15?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(over15?.prob)})</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3 col-span-2">
+                      <div className="text-xs text-gray-400">BTTS</div>
+                      <div className="text-sm text-white">
+                        {btts?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(btts?.prob)})</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Odds lineadas */}
+                  {(p as any).odds && (
+                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                      <div className="text-xs text-gray-400 mb-2">Odds</div>
+                      <div className="grid grid-cols-3 gap-2 text-sm">
+                        <div>
+                          <div className="text-gray-400 text-xs mb-1">1X2</div>
+                          <div className="text-white">
+                            {oddFmt((p as any).odds?.["1x2"]?.home)} / {oddFmt((p as any).odds?.["1x2"]?.draw)} /{" "}
+                            {oddFmt((p as any).odds?.["1x2"]?.away)}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
+                          <div className="text-white">
+                            O {oddFmt((p as any).odds?.over_under?.["2.5"]?.over)} · U {oddFmt((p as any).odds?.over_under?.["2.5"]?.under)}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-gray-400 text-xs mb-1">BTTS</div>
+                          <div className="text-white">
+                            Sim {oddFmt((p as any).odds?.btts?.yes)} · Não {oddFmt((p as any).odds?.btts?.no)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Accordion Detalhes: Correct Score + Top Scorers */}
+                  <details className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                    <summary className="cursor-pointer text-sm text-gray-200 select-none">Detalhes (Correct Score & Marcadores)</summary>
+                    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <div className="text-xs text-gray-400 mb-1">Top-3 Correct Score</div>
+                        <ul className="text-sm text-white space-y-1">
+                          {((p as any).predictions?.correct_score?.top3 || []).slice(0, 3).map((cs: any, idx: number) => (
+                            <li key={idx} className="flex justify-between">
+                              <span>{cs.score}</span>
+                              <span className="text-gray-400">{Math.round((cs.prob ?? 0) * 1000) / 10}%</span>
+                            </li>
+                          ))}
+                          {(!((p as any).predictions?.correct_score?.top3) ||
+                            (p as any).predictions?.correct_score?.top3?.length === 0) && (
+                            <li className="text-gray-500">—</li>
+                          )}
+                        </ul>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-400 mb-1">Top Scorers (liga)</div>
+                        <ul className="text-sm text-white space-y-1">
+                          {((p as any).top_scorers || []).slice(0, 5).map((sc: any, idx: number) => (
+                            <li key={idx} className="flex justify-between">
+                              <span>
+                                {sc.player} <span className="text-gray-400">({sc.team})</span>
+                              </span>
+                              <span className="text-gray-400">{sc.goals} golos</span>
+                            </li>
+                          ))}
+                          {(!((p as any).top_scorers) || (p as any).top_scorers?.length === 0) && (
+                            <li className="text-gray-500">—</li>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              );
+            })}
+          </div>
         ) : (
           <p className="text-center text-gray-400 mt-10">Nenhum jogo encontrado para os filtros.</p>
         )}
