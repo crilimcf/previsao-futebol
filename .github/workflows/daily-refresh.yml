@@ -1,0 +1,57 @@
+name: Daily refresh (update + calibrate)
+
+on:
+  schedule:
+    # Corre todos os dias às 03:15 UTC (em Lisboa normalmente = 03:15 no inverno; no verão é 04:15 local).
+    - cron: "15 3 * * *"
+  workflow_dispatch: {}   # permite correr manualmente no GitHub
+
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  hit-backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BACKEND_BASE: ${{ secrets.BACKEND_BASE }}          # ex: https://previsao-futebol.onrender.com
+      BACKEND_TOKEN: ${{ secrets.BACKEND_BEARER }}       # o teu Bearer
+      VERCEL_WARM_URL: ${{ secrets.VERCEL_WARM_URL }}    # opcional: URL pública do teu site para “aquecer” a cache
+    steps:
+      - name: Show time
+        run: date -u
+
+      - name: Update predictions
+        run: |
+          set -e
+          curl -fsS -X POST "$BACKEND_BASE/meta/update" \
+            -H "Authorization: Bearer $BACKEND_TOKEN"
+          echo "✅ /meta/update OK"
+
+      - name: Calibrate (safe to skip if not present)
+        run: |
+          set +e
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            "$BACKEND_BASE/meta/calibrate" \
+            -H "Authorization: Bearer $BACKEND_TOKEN")
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ /meta/calibrate OK"
+          else
+            echo "ℹ️ /meta/calibrate não disponível (HTTP $HTTP_CODE) — a ignorar."
+          fi
+
+      - name: Health check
+        run: |
+          curl -fsS "$BACKEND_BASE/healthz"
+          curl -fsS "$BACKEND_BASE/meta/last-update"
+          echo "✅ backend saudável"
+
+      - name: Warm frontend (optional)
+        if: env.VERCEL_WARM_URL != ''
+        run: |
+          # puxa página principal e com datas típicas para preparar caches do Next
+          curl -fsS "$VERCEL_WARM_URL" >/dev/null
+          TODAY=$(date -u +"%Y-%m-%d")
+          curl -fsS "$VERCEL_WARM_URL?date=$TODAY" >/dev/null
+          echo "🔥 frontend aquecido"
