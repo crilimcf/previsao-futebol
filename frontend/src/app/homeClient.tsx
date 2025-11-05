@@ -1,14 +1,14 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 import Header from "@/components/header";
 import InfoCard from "@/components/infoCards";
 import StatsAverage, { StatsType } from "@/components/StatsAverage";
 import CardSkeleton from "@/components/CardSkeleton";
 import StatsSkeleton from "@/components/StatsSkeleton";
-
 import {
   getPredictions,
   getStats,
@@ -18,18 +18,18 @@ import {
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
-// -------------------------------
-// Utils
-// -------------------------------
+type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
+
+// ---------- Helpers de tempo ----------
 function timeSince(ts: number) {
-  const s = Math.floor((Date.now() - ts) / 1000);
-  if (s < 60) return `${s}s atrás`;
-  const m = Math.floor(s / 60);
+  const sec = Math.floor((Date.now() - ts) / 1000);
+  if (sec < 60) return `${sec}s atrás`;
+  const m = Math.floor(sec / 60);
   if (m < 60) return `${m}m atrás`;
   const h = Math.floor(m / 60);
   return `${h}h atrás`;
 }
-function ymdLocal(d: Date) {
+function ymd(d: Date) {
   const off = d.getTimezoneOffset();
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().split("T")[0];
@@ -39,20 +39,21 @@ const dateTabs = [
   { key: "today", label: "Hoje", calc: () => new Date() },
   { key: "tomorrow", label: "Amanhã", calc: () => new Date(Date.now() + 86400000) },
   { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
-] as const;
-type DateKey = typeof dateTabs[number]["key"];
+];
 
-// -------------------------------
-// Componente
-// -------------------------------
-function HomeClientInner() {
+// Fallback universal para logos ausentes
+const FALLBACK_SVG_24 =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><rect width='100%' height='100%' fill='%23222'/></svg>";
+const FALLBACK_SVG_28 =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><rect width='100%' height='100%' fill='%23222'/></svg>";
+
+export default function HomeClient() {
   const router = useRouter();
   const search = useSearchParams();
 
-  // Estados principais
+  // ---------- Estado ----------
   const [loading, setLoading] = useState(true);
   const [loadingFixtures, setLoadingFixtures] = useState(false);
-  const [updating, setUpdating] = useState(false);
   const [error, setError] = useState<string>("");
 
   const [predictions, setPredictions] = useState<Prediction[]>([]);
@@ -60,36 +61,57 @@ function HomeClientInner() {
   const [lastUpdate, setLastUpdate] = useState("");
 
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
-  const [selectedDateKey, setSelectedDateKey] = useState<DateKey>("today");
+  const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
+  const manualTriggerRef = useRef(false);
 
-  const abortRef = useRef<AbortController | null>(null);
+  // ---------- Lista dinâmica de ligas (extraída das previsões carregadas) ----------
+  const allLeagues = useMemo(() => {
+    const map = new Map<string, string>();
+    predictions.forEach((p) => {
+      // suporta liga tanto por p.league_id/p.league_name como por p.league
+      const id = String((p as any).league_id ?? (p as any).league ?? "");
+      const label =
+        (p as any).league_name ??
+        (p as any).league ??
+        "Liga";
+      if (id && !map.has(id)) map.set(id, label);
+    });
 
-  // Leitura inicial de query params
+    const dynamic = Array.from(map.entries())
+      .sort((a, b) => a[1].localeCompare(b[1], "pt-PT"))
+      .map(([id, name]) => ({ id, name }));
+
+    return [{ id: "all", name: "🌍 Todas as Ligas" }, ...dynamic];
+  }, [predictions]);
+
+  // ---------- Estado inicial via query params ----------
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
     if (qpLeague) setSelectedLeague(qpLeague);
+
     if (qpDate) {
-      const t = ymdLocal(new Date());
-      const tm = ymdLocal(new Date(Date.now() + 86400000));
-      const af = ymdLocal(new Date(Date.now() + 2 * 86400000));
-      const key: DateKey =
-        qpDate === t ? "today" : qpDate === tm ? "tomorrow" : qpDate === af ? "after" : "today";
+      const today = ymd(new Date());
+      const tomorrow = ymd(new Date(Date.now() + 86400000));
+      const after = ymd(new Date(Date.now() + 2 * 86400000));
+      const key =
+        qpDate === today ? "today" :
+        qpDate === tomorrow ? "tomorrow" :
+        qpDate === after ? "after" : "today";
       setSelectedDateKey(key);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Data ISO da tab selecionada
   const selectedDateISO = useMemo(() => {
     const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
-    return ymdLocal(tab.calc());
+    return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Atualiza URL quando filtros mudam
+  // ---------- Reflete filtros na URL (UX/partilha) ----------
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
@@ -99,12 +121,8 @@ function HomeClientInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague]);
 
-  // Carrega dados principais (predictions/stats/lastUpdate) com cancelamento
+  // ---------- Carrega previsões + stats + lastUpdate ----------
   async function loadMainData() {
-    abortRef.current?.abort();
-    const ac = new AbortController();
-    abortRef.current = ac;
-
     setLoading(true);
     setError("");
 
@@ -120,26 +138,28 @@ function HomeClientInner() {
         getLastUpdate(),
       ]);
 
-      if (ac.signal.aborted) return;
-
-      setPredictions(Array.isArray(preds) ? preds : []);
+      setPredictions(Array.isArray(preds) ? (preds as Prediction[]) : []);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
-      const lu = (lastU as { last_update?: string })?.last_update;
-      if (lu && typeof lu === "string") {
-        const d = new Date(lu.replace(" ", "T"));
+      const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
+      if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
+        const d = new Date(lastUpdateRaw.replace(" ", "T"));
         setLastUpdate(
-          `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString(
-            "pt-PT",
-            { hour: "2-digit", minute: "2-digit" }
-          )}`
+          `${d.toLocaleDateString("pt-PT", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })} ${d.toLocaleTimeString("pt-PT", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}`
         );
       }
     } catch (e) {
       console.error(e);
       setError("Falha ao carregar dados. Tenta novamente mais tarde.");
     } finally {
-      if (!ac.signal.aborted) setLoading(false);
+      setLoading(false);
     }
   }
 
@@ -148,7 +168,7 @@ function HomeClientInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
 
-  // Fixtures reais via proxy (só quando liga específica)
+  // ---------- Fixtures reais por liga (proxy) ----------
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -164,6 +184,7 @@ function HomeClientInner() {
       console.error("Erro ao carregar fixtures:", err);
     } finally {
       setLoadingFixtures(false);
+      manualTriggerRef.current = false;
     }
   }
 
@@ -172,34 +193,16 @@ function HomeClientInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague]);
 
-  // Construção dinâmica da lista de ligas a partir das previsões
-  const availableLeagues = useMemo(() => {
-    const set = new Map<string, { id: string; name: string }>();
-    for (const p of predictions) {
-      const id = String(p.league_id ?? "");
-      if (!id) continue;
-      const nm =
-        p.league_name || p.league || (p.country ? `${p.country}` : "Liga") + (id ? ` (${id})` : "");
-      if (!set.has(id)) set.set(id, { id, name: nm });
-    }
-    const arr = Array.from(set.values()).sort((a, b) => a.name.localeCompare(b.name));
-    return [{ id: "all", name: "🌍 Todas as Ligas" }, ...arr];
-  }, [predictions]);
-
-  // Se a liga selecionada não existir mais, regressa a "all"
-  useEffect(() => {
-    if (selectedLeague !== "all") {
-      const exists = availableLeagues.some((l) => String(l.id) === String(selectedLeague));
-      if (!exists) setSelectedLeague("all");
-    }
-  }, [availableLeagues, selectedLeague]);
-
-  // Helpers UI
-  const dcLabel = (dc: any) => (dc === "1X" || dc === "12" || dc === "X2" ? dc : "—");
+  // ---------- Helpers de render ----------
+  const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
   const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(v * 100)}%` : "—");
   const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
+  const bestCorrectScore = (p: any) =>
+    p?.correct_score_top3?.[0]?.score ??
+    p?.predictions?.correct_score?.best ??
+    "—";
 
-  // Loading / Error
+  // ---------- Loading ----------
   if (loading) {
     return (
       <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -219,6 +222,7 @@ function HomeClientInner() {
     );
   }
 
+  // ---------- Erro ----------
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -228,7 +232,7 @@ function HomeClientInner() {
     );
   }
 
-  // UI principal
+  // ---------- UI principal ----------
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
       <Header />
@@ -236,19 +240,15 @@ function HomeClientInner() {
         <InfoCard />
         {stats && <StatsAverage stats={stats} />}
 
-        {/* FILTROS */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+        {/* Filtros */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
           {/* Ligas dinâmicas */}
           <select
             value={selectedLeague}
-            onChange={(e) => {
-              setSelectedLeague(e.target.value);
-              // Quando troca de liga, recarrega imediatamente as fixtures da liga
-              setTimeout(() => loadFixtures(true), 0);
-            }}
-            className="bg-gray-800 text-white px-5 py-2 rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-lg min-w-[220px]"
+            onChange={(e) => setSelectedLeague(e.target.value)}
+            className="bg-white/5 text-white px-5 py-2 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-lg"
           >
-            {availableLeagues.map((l) => (
+            {allLeagues.map((l) => (
               <option key={l.id} value={l.id}>
                 {l.name}
               </option>
@@ -260,75 +260,80 @@ function HomeClientInner() {
             {dateTabs.map((d) => (
               <button
                 key={d.key}
-                onClick={() => {
-                  setSelectedDateKey(d.key);
-                  // força fetch imediato sem esperar pelo useEffect
-                  setTimeout(() => loadMainData(), 0);
-                }}
-                className={`px-4 py-2 rounded-lg font-medium transition ${
-                  selectedDateKey === d.key ? "bg-green-500 text-white" : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                }`}
+                onClick={() => setSelectedDateKey(d.key)}
+                className={`btn ${selectedDateKey === d.key ? "btn-primary" : "btn-ghost"}`}
               >
                 {d.label}
               </button>
             ))}
           </div>
 
-          {/* Botão Atualizar */}
+          {/* Atualizar */}
           <button
             onClick={async () => {
-              try {
-                setUpdating(true);
-                if (selectedLeague === "all") {
+              if (selectedLeague === "all") {
+                try {
                   await triggerUpdate();
                   await loadMainData();
-                } else {
-                  await loadFixtures(true);
+                } catch (e) {
+                  console.error(e);
                 }
-              } catch (e) {
-                console.error(e);
-              } finally {
-                setUpdating(false);
+              } else {
+                manualTriggerRef.current = true;
+                await loadFixtures(true);
               }
             }}
-            disabled={updating}
-            className="flex items-center gap-2 bg-gray-800 text-sm text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-700 transition disabled:opacity-60"
+            className="btn btn-ghost"
+            disabled={loading || loadingFixtures}
+            aria-busy={loading || loadingFixtures}
           >
-            {updating ? "⏳ A atualizar..." : "🔁 Atualizar"}
+            {loading || loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
           </button>
         </div>
 
-        {/* ⚽ BLOCO: JOGOS REAIS (proxy) — só quando liga específica */}
+        {/* Jogos reais (liga específica) */}
         {selectedLeague !== "all" && (
-          <div className="bg-gray-900 p-6 rounded-2xl shadow-lg border border-gray-800 mb-10">
+          <div className="card p-6 mb-10">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-green-400">Jogos Reais (via API-Football)</h2>
+              <h2 className="text-lg font-semibold text-emerald-400">Jogos Reais (via API-Football)</h2>
               <button
-                onClick={() => loadFixtures(true)}
+                onClick={() => {
+                  manualTriggerRef.current = true;
+                  loadFixtures(true);
+                }}
                 disabled={loadingFixtures}
-                className="flex items-center gap-2 bg-gray-800 text-sm text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-700 transition disabled:opacity-50"
+                className="btn btn-ghost disabled:opacity-50"
               >
-                {loadingFixtures ? "⏳ A atualizar..." : "🔁 Atualizar"}
+                {loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
               </button>
             </div>
 
             {loadingFixtures && (
-              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">A carregar jogos reais…</div>
+              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">
+                A carregar jogos reais…
+              </div>
             )}
 
             {liveFixtures.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {liveFixtures.map((f: any) => (
-                  <div
-                    key={f.fixture.id}
-                    className="p-4 rounded-xl border border-gray-800 bg-gray-950 hover:border-green-500 transition"
-                  >
-                    <div className="flex items-center justify-center space-x-2 mb-2">
-                      <img src={f.teams.home.logo} className="w-6 h-6" alt="" />
+                  <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
+                    <div className="flex items-center justify-center gap-3 mb-2">
+                      <Image
+                        src={f.teams.home.logo || FALLBACK_SVG_24}
+                        alt={f.teams.home.name || "Home"}
+                        width={24}
+                        height={24}
+                      />
                       <span className="text-white font-medium">{f.teams.home.name}</span>
                       <span className="text-gray-400">vs</span>
                       <span className="text-white font-medium">{f.teams.away.name}</span>
-                      <img src={f.teams.away.logo} className="w-6 h-6" alt="" />
+                      <Image
+                        src={f.teams.away.logo || FALLBACK_SVG_24}
+                        alt={f.teams.away.name || "Away"}
+                        width={24}
+                        height={24}
+                      />
                     </div>
                     <p className="text-sm text-center text-gray-400">
                       {new Date(f.fixture.date).toLocaleString("pt-PT")}
@@ -340,39 +345,53 @@ function HomeClientInner() {
                 ))}
               </div>
             ) : (
-              !loadingFixtures && <p className="text-center text-gray-400 mt-4">Nenhum jogo encontrado.</p>
+              !loadingFixtures && (
+                <p className="text-center text-gray-400 mt-4">Nenhum jogo encontrado.</p>
+              )
             )}
 
             {lastFixturesUpdate && (
-              <div className="text-xs text-center text-gray-500 mt-4">Última atualização: {timeSince(lastFixturesUpdate)}</div>
+              <div className="text-xs text-center text-gray-500 mt-4">
+                Última atualização: {timeSince(lastFixturesUpdate)}
+              </div>
             )}
           </div>
         )}
 
-        {/* BLOCO: PREVISÕES */}
+        {/* Previsões */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {predictions.map((p) => {
-              const pr = p.predictions || ({} as Prediction["predictions"]);
-              const winner = pr?.winner;
-              const dc = pr?.double_chance;
-              const over25 = pr?.over_2_5;
-              const over15 = pr?.over_1_5;
-              const btts = pr?.btts;
+            {predictions.map((p: any) => {
+              const winner = p?.predictions?.winner;
+              const dc = p?.predictions?.double_chance;
+              const over25 = p?.predictions?.over_2_5;
+              const over15 = p?.predictions?.over_1_5;
+              const btts = p?.predictions?.btts;
 
               const winnerLabel =
-                winner?.class === 0 ? p.home_team : winner?.class === 1 ? "Empate" : winner?.class === 2 ? p.away_team : "—";
-              const bestCS = pr?.correct_score?.best || "";
+                winner?.class === 0
+                  ? p.home_team
+                  : winner?.class === 1
+                  ? "Empate"
+                  : winner?.class === 2
+                  ? p.away_team
+                  : "—";
+
+              // Odds compat (winner vs "1x2") + OU2.5 normalizado + BTTS
+              const odds1x2 = p?.odds?.winner ?? p?.odds?.["1x2"] ?? {};
+              const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
+              const oddsBTTS = p?.odds?.btts ?? {};
 
               return (
                 <div
-                  key={String(p.match_id)}
-                  className="p-5 rounded-2xl border border-gray-800 bg-gray-950 hover:border-green-500 transition flex flex-col gap-4"
+                  key={String(p.match_id ?? p.fixture_id)}
+                  className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4"
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-400">
-                      {p.league_name || p.league || "Liga"} {p.country ? `(${p.country})` : ""}
+                      {(p.league_name ?? p.league) || "Liga"}{" "}
+                      {p.country ? `(${p.country})` : ""}
                     </div>
                     <div className="text-xs text-gray-500">
                       {new Date(p.date).toLocaleString("pt-PT", {
@@ -386,100 +405,134 @@ function HomeClientInner() {
 
                   {/* Teams */}
                   <div className="flex items-center justify-center gap-3">
-                    <img src={p.home_logo || ""} alt="" className="w-7 h-7" />
-                    <div className="text-white font-semibold text-center">{p.home_team}</div>
+                    <Image
+                      src={p.home_logo || FALLBACK_SVG_28}
+                      alt={p.home_team || "Home"}
+                      width={28}
+                      height={28}
+                    />
+                    <div className="text-white font-semibold text-center">
+                      {p.home_team}
+                    </div>
                     <div className="text-gray-500">vs</div>
-                    <div className="text-white font-semibold text-center">{p.away_team}</div>
-                    <img src={p.away_logo || ""} alt="" className="w-7 h-7" />
+                    <div className="text-white font-semibold text-center">
+                      {p.away_team}
+                    </div>
+                    <Image
+                      src={p.away_logo || FALLBACK_SVG_28}
+                      alt={p.away_team || "Away"}
+                      width={28}
+                      height={28}
+                    />
                   </div>
 
-                  {/* Correct Score (best) destacado */}
-                  <div className="flex items-center justify-center">
-                    <span className="text-xs text-gray-400 mr-2">Correct Score (best):</span>
-                    <span className="px-2 py-0.5 rounded bg-green-600/20 border border-green-600/40 text-green-300 text-xs">
-                      {bestCS || "—"}
-                    </span>
+                  {/* Correct score (best) */}
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="badge">Correct Score</span>
+                    <span className="text-sm text-white">{bestCorrectScore(p)}</span>
                   </div>
 
-                  {/* Tips principais */}
+                  {/* Tips */}
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Winner</div>
                       <div className="text-sm text-white">
-                        {winnerLabel} <span className="text-gray-400 ml-1">({toPct(winner?.prob)})</span>
+                        {winnerLabel}{" "}
+                        <span className="text-gray-400 ml-1">
+                          ({toPct(winner?.confidence ?? winner?.prob)})
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Double Chance</div>
                       <div className="text-sm text-white">
-                        {dcLabel(dc?.class)} <span className="text-gray-400 ml-1">({toPct(dc?.prob)})</span>
+                        {dc ? (dc.class === 0 ? "1X" : dc.class === 1 ? "12" : "X2") : "—"}{" "}
+                        <span className="text-gray-400 ml-1">
+                          ({toPct(dc?.confidence ?? dc?.prob)})
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Over 2.5</div>
                       <div className="text-sm text-white">
-                        {over25?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(over25?.prob)})</span>
+                        {over25?.class ? "Sim" : "Não"}{" "}
+                        <span className="text-gray-400 ml-1">
+                          ({toPct(over25?.confidence ?? over25?.prob)})
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400">Over 1.5</div>
                       <div className="text-sm text-white">
-                        {over15?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(over15?.prob)})</span>
+                        {over15?.class ? "Sim" : "Não"}{" "}
+                        <span className="text-gray-400 ml-1">
+                          ({toPct(over15?.confidence ?? over15?.prob)})
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3 col-span-2">
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
-                        {btts?.class ? "Sim" : "Não"} <span className="text-gray-400 ml-1">({toPct(btts?.prob)})</span>
+                        {btts?.class ? "Sim" : "Não"}{" "}
+                        <span className="text-gray-400 ml-1">
+                          ({toPct(btts?.confidence ?? btts?.prob)})
+                        </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Odds lineadas */}
-                  {p.odds && (
-                    <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
+                  {/* Odds */}
+                  {(odds1x2 || oddsOU25 || oddsBTTS) && (
+                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400 mb-2">Odds</div>
                       <div className="grid grid-cols-3 gap-2 text-sm">
                         <div>
                           <div className="text-gray-400 text-xs mb-1">1X2</div>
                           <div className="text-white">
-                            {oddFmt(p.odds?.["1x2"]?.home)} / {oddFmt(p.odds?.["1x2"]?.draw)} / {oddFmt(p.odds?.["1x2"]?.away)}
+                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} /{" "}
+                            {oddFmt(odds1x2?.away)}
                           </div>
                         </div>
                         <div>
                           <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
                           <div className="text-white">
-                            O {oddFmt(p.odds?.over_under?.["2.5"]?.over)} · U {oddFmt(p.odds?.over_under?.["2.5"]?.under)}
+                            O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
                           </div>
                         </div>
                         <div>
                           <div className="text-gray-400 text-xs mb-1">BTTS</div>
                           <div className="text-white">
-                            Sim {oddFmt(p.odds?.btts?.yes)} · Não {oddFmt(p.odds?.btts?.no)}
+                            Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
                           </div>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {/* Detalhes: Correct Score top-3 e Top Scorers */}
-                  <details className="rounded-xl bg-gray-900 border border-gray-800 p-3">
-                    <summary className="cursor-pointer text-sm text-gray-200 select-none">Detalhes (Correct Score & Marcadores)</summary>
+                  {/* Detalhes */}
+                  <details className="rounded-xl bg-white/5 border border-white/10 p-3">
+                    <summary className="cursor-pointer text-sm text-gray-200 select-none">
+                      Detalhes (Correct Score & Marcadores)
+                    </summary>
                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div>
                         <div className="text-xs text-gray-400 mb-1">Top-3 Correct Score</div>
                         <ul className="text-sm text-white space-y-1">
-                          {(pr?.correct_score?.top3 || []).slice(0, 3).map((cs, idx) => (
-                            <li key={idx} className="flex justify-between">
-                              <span>{cs.score}</span>
-                              <span className="text-gray-400">{Math.round((cs.prob ?? 0) * 1000) / 10}%</span>
-                            </li>
-                          ))}
-                          {(!pr?.correct_score?.top3 || pr.correct_score.top3.length === 0) && (
+                          {(p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
+                            .slice(0, 3)
+                            .map((cs: any, idx: number) => (
+                              <li key={idx} className="flex justify-between">
+                                <span>{cs.score}</span>
+                                <span className="text-gray-400">
+                                  {Math.round((cs.prob ?? 0) * 1000) / 10}%
+                                </span>
+                              </li>
+                            ))}
+                          {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? []).length === 0) && (
                             <li className="text-gray-500">—</li>
                           )}
                         </ul>
@@ -487,7 +540,7 @@ function HomeClientInner() {
                       <div>
                         <div className="text-xs text-gray-400 mb-1">Top Scorers (liga)</div>
                         <ul className="text-sm text-white space-y-1">
-                          {(p.top_scorers || []).slice(0, 5).map((sc, idx) => (
+                          {(p.top_scorers ?? []).slice(0, 5).map((sc: any, idx: number) => (
                             <li key={idx} className="flex justify-between">
                               <span>
                                 {sc.player} <span className="text-gray-400">({sc.team})</span>
@@ -495,7 +548,7 @@ function HomeClientInner() {
                               <span className="text-gray-400">{sc.goals} golos</span>
                             </li>
                           ))}
-                          {(!p.top_scorers || p.top_scorers.length === 0) && <li className="text-gray-500">—</li>}
+                          {(!(p.top_scorers ?? []).length) && <li className="text-gray-500">—</li>}
                         </ul>
                       </div>
                     </div>
@@ -505,24 +558,19 @@ function HomeClientInner() {
             })}
           </div>
         ) : (
-          <p className="text-center text-gray-400 mt-10">Nenhum jogo encontrado para os filtros.</p>
+          <p className="text-center text-gray-400 mt-10">
+            Nenhum jogo encontrado para os filtros.
+          </p>
         )}
 
         {lastUpdate && (
           <div className="w-full text-center mt-10">
-            <span className="text-xs text-gray-400">Última atualização: {lastUpdate}</span>
+            <span className="text-xs text-gray-400">
+              Última atualização global: {lastUpdate}
+            </span>
           </div>
         )}
       </main>
     </div>
-  );
-}
-
-// Envolvido em Suspense (Next 13+/15 exige para useSearchParams estável)
-export default function HomeClient() {
-  return (
-    <Suspense fallback={<div className="min-h-screen container mx-auto px-4 py-16"><StatsSkeleton /></div>}>
-      <HomeClientInner />
-    </Suspense>
   );
 }
