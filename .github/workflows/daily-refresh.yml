@@ -1,57 +1,155 @@
-name: Daily refresh (update + calibrate)
+name: Daily refresh (update + calibrate + deploy)
 
 on:
+  workflow_dispatch:
   schedule:
-    # Corre todos os dias às 03:15 UTC (em Lisboa normalmente = 03:15 no inverno; no verão é 04:15 local).
-    - cron: "15 3 * * *"
-  workflow_dispatch: {}   # permite correr manualmente no GitHub
+    # corre todos os dias às 02:45 UTC
+    - cron: "45 2 * * *"
+
+permissions:
+  contents: write
 
 concurrency:
   group: daily-refresh
-  cancel-in-progress: false
+  cancel-in-progress: true
+
+env:
+  # ---- ajusta se quiseres; usa Repository Variables quando possível ----
+  BACKEND_URL: ${{ vars.BACKEND_URL || 'https://previsao-futebol.onrender.com' }}
+  API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
+  API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON || '2025' }}
+
+  # opcionais (como Secrets):
+  BACKEND_TOKEN: ${{ secrets.BACKEND_TOKEN }}
+  VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+  RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+  # se quiseres também a key da API para harvest/calibrate, deixa aqui:
+  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
 
 jobs:
-  hit-backend:
+  refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      BACKEND_BASE: ${{ secrets.BACKEND_BASE }}          # ex: https://previsao-futebol.onrender.com
-      BACKEND_TOKEN: ${{ secrets.BACKEND_BEARER }}       # o teu Bearer
-      VERCEL_WARM_URL: ${{ secrets.VERCEL_WARM_URL }}    # opcional: URL pública do teu site para “aquecer” a cache
-    steps:
-      - name: Show time
-        run: date -u
+    timeout-minutes: 25
 
-      - name: Update predictions
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install --upgrade requests numpy pandas scikit-learn joblib
+
+      # --- 1) Lê o last_update atual para comparar
+      - name: Read current last-update
+        id: before
         run: |
           set -e
-          curl -fsS -X POST "$BACKEND_BASE/meta/update" \
-            -H "Authorization: Bearer $BACKEND_TOKEN"
-          echo "✅ /meta/update OK"
+          LU_BEFORE="$(curl -fsSL "$BACKEND_URL/meta/last-update" | python - <<'PY'
+import sys, json
+try:
+  print(json.load(sys.stdin).get("last_update",""))
+except Exception:
+  print("")
+PY
+)"
+          echo "last_update_before=$LU_BEFORE" >> $GITHUB_OUTPUT
 
-      - name: Calibrate (safe to skip if not present)
+      # --- 2) Dispara a atualização no backend
+      - name: Trigger backend /meta/update
         run: |
-          set +e
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-            "$BACKEND_BASE/meta/calibrate" \
-            -H "Authorization: Bearer $BACKEND_TOKEN")
-          if [ "$HTTP_CODE" = "200" ]; then
-            echo "✅ /meta/calibrate OK"
+          set -e
+          echo "POST $BACKEND_URL/meta/update"
+          curl -fsSL -X POST "$BACKEND_URL/meta/update" \
+            -H "Authorization: Bearer $BACKEND_TOKEN" \
+            -H "Content-Type: application/json" || exit 1
+
+      # --- 3) Poll até o last_update mudar (máx ~2 min)
+      - name: Wait for backend to finish
+        run: |
+          set -e
+          TARGET_BEFORE="${{ steps.before.outputs.last_update_before }}"
+          echo "Last update (before): [$TARGET_BEFORE]"
+          for i in $(seq 1 24); do
+            NOW="$(curl -fsSL "$BACKEND_URL/meta/last-update" | python - <<'PY'
+import sys, json
+try:
+  print(json.load(sys.stdin).get("last_update",""))
+except Exception:
+  print("")
+PY
+)"
+            echo "[$i] last_update now: [$NOW]"
+            if [ -n "$NOW" ] && [ "$NOW" != "$TARGET_BEFORE" ]; then
+              echo "Backend updated."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "WARN: backend last_update did not change within timeout"; exit 0
+
+      # --- 4) (Opcional) calibrar com o histórico local
+      - name: Harvest yesterday results (safe retry)
+        if: env.API_FOOTBALL_KEY != ''
+        env:
+          API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
+          API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
+          API_FOOTBALL_SEASON: ${{ env.API_FOOTBALL_SEASON }}
+        run: |
+          set -e
+          for i in 1 2 3; do
+            echo "Harvest attempt $i ..."
+            python scripts/harvest_results.py && break || sleep $((i*10))
+          done
+
+      - name: Calibrate models
+        run: |
+          set -e
+          if [ -f scripts/calibrate.py ]; then
+            python scripts/calibrate.py --input data/training/history.jsonl --output data/model
           else
-            echo "ℹ️ /meta/calibrate não disponível (HTTP $HTTP_CODE) — a ignorar."
+            echo "scripts/calibrate.py not found; skipping calibrate."
           fi
 
-      - name: Health check
+      # --- 5) Commit do que mudou (modelos / ficheiros gerados)
+      - name: Commit & push if changed
         run: |
-          curl -fsS "$BACKEND_BASE/healthz"
-          curl -fsS "$BACKEND_BASE/meta/last-update"
-          echo "✅ backend saudável"
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "ci: daily refresh + calibrate [skip ci]"
+            git push
+          fi
 
-      - name: Warm frontend (optional)
-        if: env.VERCEL_WARM_URL != ''
+      # --- 6) Deploy hooks opcionais (não falham o job se não estiverem definidos)
+      - name: Trigger Vercel Deploy Hook (optional)
+        continue-on-error: true
         run: |
-          # puxa página principal e com datas típicas para preparar caches do Next
-          curl -fsS "$VERCEL_WARM_URL" >/dev/null
-          TODAY=$(date -u +"%Y-%m-%d")
-          curl -fsS "$VERCEL_WARM_URL?date=$TODAY" >/dev/null
-          echo "🔥 frontend aquecido"
+          if [ -n "${VERCEL_DEPLOY_HOOK:-}" ]; then
+            echo "Triggering Vercel hook..."
+            curl -fsS -X POST "$VERCEL_DEPLOY_HOOK" || true
+          else
+            echo "No VERCEL_DEPLOY_HOOK set."
+          fi
+
+      - name: Trigger Render Deploy Hook (optional)
+        continue-on-error: true
+        run: |
+          if [ -n "${RENDER_DEPLOY_HOOK:-}" ]; then
+            echo "Triggering Render hook..."
+            curl -fsS -X POST "$RENDER_DEPLOY_HOOK" || true
+          else
+            echo "No RENDER_DEPLOY_HOOK set."
+          fi

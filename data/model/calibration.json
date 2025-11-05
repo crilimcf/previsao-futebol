@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+# scripts/calibrate.py
+import os
+import json
+import argparse
+import math
+from typing import Dict, Tuple, List
+
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+
+OUT_DIR = "data/model"
+OUT_FILE = os.path.join(OUT_DIR, "calibration.json")
+
+def _load_history(path: str) -> pd.DataFrame:
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"{path} não existe")
+    rows = []
+    with open(path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rows.append(json.loads(line))
+            except Exception:
+                pass
+    if not rows:
+        raise RuntimeError("history.jsonl vazio")
+    return pd.DataFrame(rows)
+
+def _fit_logit_1d(p: np.ndarray, y: np.ndarray) -> Tuple[float, float]:
+    """
+    Ajusta Platt scaling (logística com 1 feature: logit(p)).
+    Retorna (a, b) tal que: z = a*logit(p) + b ; calibrated = 1/(1+exp(-z))
+    """
+    # evita 0/1 extremos
+    eps = 1e-6
+    p = np.clip(p, eps, 1 - eps)
+    x = np.log(p / (1 - p)).reshape(-1, 1)
+    clf = LogisticRegression(solver="lbfgs", max_iter=200)
+    clf.fit(x, y)
+    # Como x é logit(p), o coeficiente é 'a' e o intercepto é 'b'
+    a = float(clf.coef_[0, 0])
+    b = float(clf.intercept_[0])
+    return a, b
+
+def _save(out: Dict[str, Dict[str, float]]):
+    os.makedirs(OUT_DIR, exist_ok=True)
+    with open(OUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=2)
+    print(f"✅ gravado {OUT_FILE}")
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--input", default="data/training/history.jsonl", help="history.jsonl do harvest")
+    ap.add_argument("--output", default=OUT_DIR, help="pasta de saída (grava calibration.json)")
+    args = ap.parse_args()
+
+    df = _load_history(args.input)
+
+    need_cols = [
+        "p_home", "p_draw", "p_away",
+        "p_over25", "p_btts",
+        "y_home", "y_draw", "y_away",
+        "y_over25", "y_btts"
+    ]
+    for c in need_cols:
+        if c not in df.columns:
+            raise RuntimeError(f"Coluna em falta no histórico: {c}")
+
+    # ------- Winner (calibra "prob da classe predita estar correta") -------
+    p_triplet = df[["p_home", "p_draw", "p_away"]].values
+    y_labels = np.argmax(df[["y_home", "y_draw", "y_away"]].values, axis=1)  # 0/1/2 etiqueta real
+    pred_labels = np.argmax(p_triplet, axis=1)  # 0/1/2 predição por Poisson
+    p_pred = p_triplet[np.arange(len(df)), pred_labels]  # prob da classe escolhida
+    y_correct = (pred_labels == y_labels).astype(int)    # 1 se acertou a classe
+
+    cal: Dict[str, Dict[str, float]] = {}
+
+    # só treina se houver variação
+    if len(np.unique(y_correct)) > 1:
+        a_w, b_w = _fit_logit_1d(p_pred, y_correct)
+        cal["winner"] = {"a": a_w, "b": b_w}
+    else:
+        cal["winner"] = {"a": 1.0, "b": 0.0}
+
+    # ------- Over 2.5 -------
+    p_over25 = df["p_over25"].astype(float).values
+    y_over25 = df["y_over25"].astype(int).values
+    if len(np.unique(y_over25)) > 1:
+        a_o, b_o = _fit_logit_1d(p_over25, y_over25)
+        cal["over_2_5"] = {"a": a_o, "b": b_o}
+    else:
+        cal["over_2_5"] = {"a": 1.0, "b": 0.0}
+
+    # ------- BTTS -------
+    p_btts = df["p_btts"].astype(float).values
+    y_btts = df["y_btts"].astype(int).values
+    if len(np.unique(y_btts)) > 1:
+        a_b, b_b = _fit_logit_1d(p_btts, y_btts)
+        cal["btts"] = {"a": a_b, "b": b_b}
+    else:
+        cal["btts"] = {"a": 1.0, "b": 0.0}
+
+    # grava
+    os.makedirs(args.output, exist_ok=True)
+    with open(os.path.join(args.output, "calibration.json"), "w", encoding="utf-8") as f:
+        json.dump(cal, f, ensure_ascii=False, indent=2)
+
+    print("✅ calibração concluída:")
+    for k, v in cal.items():
+        print(f"  {k}: a={v['a']:.4f}, b={v['b']:.4f}")
+
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())

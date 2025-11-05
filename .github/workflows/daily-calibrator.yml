@@ -1,9 +1,10 @@
 name: Daily calibrator
 
 on:
-  schedule:
-    - cron: "30 2 * * *"
   workflow_dispatch:
+  schedule:
+    # todos os dias às 03:15 UTC (ajusta se quiseres)
+    - cron: "15 3 * * *"
 
 permissions:
   contents: write
@@ -12,36 +13,56 @@ jobs:
   calibrate:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup Python
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
-          python -V
-          pip install --upgrade pip
-          pip install requests pandas numpy scikit-learn joblib
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          # mínimos para harvest + calibrate
+          pip install --upgrade requests numpy pandas scikit-learn joblib
 
-      - name: Harvest results (yesterday)
+      - name: Harvest yesterday results (retry)
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE }}
-          API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON }}
+          # podes definir estes como "Repository variables" (Settings > Variables) — senão usa os defaults
+          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
+          API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON || '2025' }}
         run: |
-          python scripts/harvest_results.py
+          set -e
+          for i in 1 2 3; do
+            echo "Attempt $i ..."
+            python scripts/harvest_results.py && break || sleep $((i*10))
+          done
 
-      - name: Train calibrator
+      - name: Calibrate models
         run: |
-          python scripts/calibrator_train.py
+          set -e
+          if [ -f scripts/calibrate.py ]; then
+            python scripts/calibrate.py --input data/training/history.jsonl --output data/model
+          else
+            echo "scripts/calibrate.py not found; skipping calibrate."
+          fi
 
-      - name: Commit & push
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "ci(model): daily harvest + calibrator"
-          file_pattern: |
-            data/training/history.jsonl
-            data/model/calibrator.joblib
+      - name: Commit & push if changed
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "ci: harvest & calibrate (auto) [skip ci]"
+            git push
+          fi

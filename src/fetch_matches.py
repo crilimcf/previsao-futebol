@@ -29,7 +29,7 @@ PREFERRED_BOOKMAKERS = {"Pinnacle", "bet365", "Bet365", "1xBet", "1XBET"}
 # Limites
 REQUEST_TIMEOUT = 5
 MAX_GOALS = 6     # Poisson 0..6
-DAYS_AHEAD  = 3   # hoje + 2 dias
+DAYS_AHEAD  = 5   # hoje + 4 dias
 
 
 # =========================
