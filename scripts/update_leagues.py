@@ -4,19 +4,22 @@ import json
 import requests
 from typing import List, Dict, Any, Set
 
+def normalize_base(url: str | None) -> str:
+    u = (url or "").strip()
+    if not u.startswith(("http://", "https://")):
+        # fallback seguro
+        return "https://v3.football.api-sports.io/"
+    return u.rstrip("/") + "/"
+
 API_KEY = os.getenv("API_FOOTBALL_KEY", "")
-BASE_URL = (os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/")
+BASE_URL = normalize_base(os.getenv("API_FOOTBALL_BASE"))
 SEASON = os.getenv("API_FOOTBALL_SEASON", "2024")
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-# Ligas UEFA a incluir mesmo que country seja "World"
 EXTRA_LEAGUES: Set[str] = {
     "UEFA Champions League",
     "UEFA Europa League",
     "UEFA Europa Conference League",
-
-
-
 }
 
 def fetch_json(endpoint: str, params: Dict[str, Any] | None = None) -> Dict[str, Any]:
@@ -26,39 +29,25 @@ def fetch_json(endpoint: str, params: Dict[str, Any] | None = None) -> Dict[str,
     return r.json()
 
 def get_target_countries() -> Set[str]:
-    """
-    Constrói o conjunto de países-alvo:
-      - Todos os países com continent == 'Europe'
-      - + Brasil
-      - + Arábia Saudita
-    Se o /countries falhar, usa uma lista fallback estática.
-    """
     try:
         data = fetch_json("countries")
         resp = data.get("response", [])
         europe = {c.get("name") for c in resp if (c or {}).get("continent") == "Europe"}
         europe.discard(None)
-        europe.update({"Saudi Arabia"})
+        europe.update({"Brazil", "Saudi Arabia"})
         return europe
     except Exception as e:
         print(f"[aviso] Falhou /countries ({e}), usando fallback estático.")
         europe_fallback = {
             "Portugal","Spain","England","France","Germany","Italy","Netherlands","Belgium",
-            "Turkey","Greece","Switzerland","Denmark","Croatia","Hungary",
-
+            "Turkey","Greece","Switzerland","Denmark","Czech Republic","Croatia","Hungary",
         }
-        europe_fallback.update({"Brazil", "Saudi Arabia"})
+        europe_fallback.update({"Saudi Arabia"})
         return europe_fallback
 
 def fetch_leagues_for_season() -> List[Dict[str, Any]]:
-    # 'current=true' ajuda a reduzir ruído (se a tua conta permitir)
-    params = {"season": SEASON}
-    try:
-        data = fetch_json("leagues", params=params)
-        return data.get("response", [])
-    except requests.HTTPError as e:
-        print(f"[erro] HTTP ao pedir /leagues: {e}")
-        raise
+    data = fetch_json("leagues", params={"season": SEASON})
+    return data.get("response", [])
 
 def main() -> int:
     if not API_KEY:
@@ -81,7 +70,6 @@ def main() -> int:
         if not lid or not lname or not cname:
             continue
 
-        # Mantém se for país-alvo OU se for liga UEFA especial
         if not (cname in target_countries or lname in EXTRA_LEAGUES):
             continue
 
@@ -95,11 +83,4 @@ def main() -> int:
     out.sort(key=lambda x: (x.get("country") or "", x.get("name") or ""))
 
     os.makedirs("config", exist_ok=True)
-    with open("config/leagues.json", "w", encoding="utf-8") as f:
-        json.dump(out, f, ensure_ascii=False, indent=2)
-
-    print(f"Gravado config/leagues.json com {len(out)} ligas.")
-    return 0
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+    with op
