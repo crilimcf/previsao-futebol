@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
@@ -59,7 +59,6 @@ export default function HomeClient() {
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
-  const manualTriggerRef = useRef(false);
 
   // Ligas vindas do backend (/meta/leagues) — fallback para ligas presentes nas previsões
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
@@ -180,7 +179,6 @@ export default function HomeClient() {
       console.error("Erro ao carregar fixtures:", err);
     } finally {
       setLoadingFixtures(false);
-      manualTriggerRef.current = false;
     }
   }
 
@@ -251,7 +249,7 @@ export default function HomeClient() {
             ))}
           </select>
 
-          {/* Datas — com mais espaçamento */}
+          {/* Datas */}
           <div className="flex gap-3 md:gap-4">
             {dateTabs.map((d) => (
               <button
@@ -264,7 +262,7 @@ export default function HomeClient() {
             ))}
           </div>
 
-          {/* Atualizar */}
+          {/* Atualizar (único botão) */}
           <button
             onClick={async () => {
               if (selectedLeague === "all") {
@@ -275,7 +273,6 @@ export default function HomeClient() {
                   console.error(e);
                 }
               } else {
-                manualTriggerRef.current = true;
                 await loadFixtures(true);
               }
             }}
@@ -295,11 +292,9 @@ export default function HomeClient() {
               setLiveFixtures([]);
               setLastFixturesUpdate(null);
               setError("");
-              // Atualiza URL só com a data de hoje
               const params = new URLSearchParams();
               params.set("date", ymd(new Date()));
               router.replace(`?${params.toString()}`);
-              // Recarrega dados "limpos"
               loadMainData();
             }}
             className="btn btn-ghost"
@@ -314,16 +309,7 @@ export default function HomeClient() {
           <div className="card p-6 mb-10">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold text-emerald-400">Jogos Reais (via API-Football)</h2>
-              <button
-                onClick={() => {
-                  manualTriggerRef.current = true;
-                  loadFixtures(true);
-                }}
-                disabled={loadingFixtures}
-                className="btn btn-ghost disabled:opacity-50"
-              >
-                {loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
-              </button>
+              <span className="text-xs text-gray-500">Use o botão “Atualizar” no topo</span>
             </div>
 
             {loadingFixtures && (
@@ -481,7 +467,9 @@ export default function HomeClient() {
                     <summary className="cursor-pointer text-sm text-gray-200 select-none">
                       Detalhes (Correct Score & Marcadores)
                     </summary>
+
                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {/* Correct Score */}
                       <div>
                         <div className="text-xs text-gray-400 mb-1">Top-3 Correct Score</div>
                         <ul className="text-sm text-white space-y-1">
@@ -498,19 +486,33 @@ export default function HomeClient() {
                           )}
                         </ul>
                       </div>
+
+                      {/* Marcadores Prováveis */}
                       <div>
-                        <div className="text-xs text-gray-400 mb-1">Top Scorers (liga)</div>
-                        <ul className="text-sm text-white space-y-1">
-                          {(p.top_scorers ?? []).slice(0, 5).map((sc: any, idx: number) => (
-                            <li key={idx} className="flex justify-between">
-                              <span>
-                                {sc.player} <span className="text-gray-400">({sc.team})</span>
-                              </span>
-                              <span className="text-gray-400">{sc.goals} golos</span>
-                            </li>
-                          ))}
-                          {(!(p.top_scorers ?? []).length) && <li className="text-gray-500">—</li>}
-                        </ul>
+                        <div className="text-xs text-gray-400 mb-1">Marcadores Prováveis</div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <ul className="text-sm text-white space-y-1">
+                            <li className="text-emerald-400">{p.home_team}</li>
+                            {(p.predicted_scorers?.home ?? []).slice(0, 3).map((sc: any, idx: number) => (
+                              <li key={idx} className="flex justify-between">
+                                <span>{sc.player}</span>
+                                <span className="text-gray-400">{Math.round((sc.prob ?? 0) * 100)}%</span>
+                              </li>
+                            ))}
+                            {!(p.predicted_scorers?.home ?? []).length && <li className="text-gray-500">—</li>}
+                          </ul>
+
+                          <ul className="text-sm text-white space-y-1">
+                            <li className="text-emerald-400">{p.away_team}</li>
+                            {(p.predicted_scorers?.away ?? []).slice(0, 3).map((sc: any, idx: number) => (
+                              <li key={idx} className="flex justify-between">
+                                <span>{sc.player}</span>
+                                <span className="text-gray-400">{Math.round((sc.prob ?? 0) * 100)}%</span>
+                              </li>
+                            ))}
+                            {!(p.predicted_scorers?.away ?? []).length && <li className="text-gray-500">—</li>}
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </details>

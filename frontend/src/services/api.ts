@@ -72,6 +72,11 @@ export type Prediction = {
   };
   correct_score_top3?: { score: string; prob: number }[];
   top_scorers?: { player: string; team: string; goals: number }[];
+  // >>> novo: marcadores prováveis por jogo
+  predicted_scorers?: {
+    home?: { player: string; prob: number; xg: number; position?: string }[];
+    away?: { player: string; prob: number; xg: number; position?: string }[];
+  };
 };
 
 export type LastUpdate = { last_update: string | null };
