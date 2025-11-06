@@ -1,0 +1,31 @@
+name: Refresh leagues.json (weekly)
+
+on:
+  schedule:
+    - cron: "0 4 * * 0"   # todos os domingos 04:00 UTC
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_BASE: https://v3.football.api-sports.io/
+      API_FOOTBALL_SEASON: "2025"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python scripts/update_leagues.py
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "gh-bot"
+          git config user.email "gh-bot@users.noreply.github.com"
+          git add config/leagues.json || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: weekly leagues.json refresh"
+            git push
+          else
+            echo "No changes."
+          fi
