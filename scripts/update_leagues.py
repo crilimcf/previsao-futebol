@@ -9,10 +9,10 @@ HEADERS  = {"x-apisports-key": API_KEY} if API_KEY else {}
 
 # Países alvo: Europa + Brasil + Arábia Saudita + competições UEFA
 EUROPE = {
-    "Confederations Cup"
+    "UEFA Europa League","UEFA Champions League","UEFA Europa League","Primeira Liga"
    
 }
-EXTRA  = {}  # UEFA cobre UCL/UEL/UECL
+
 
 TARGET_COUNTRIES = EUROPE | EXTRA
 
