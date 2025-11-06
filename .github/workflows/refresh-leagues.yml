@@ -1,43 +1,58 @@
 name: Refresh leagues.json (weekly)
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "23 3 * * 0"   # semanal
+    - cron: "0 3 * * 1"   # segunda 03:00 UTC
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths:
+      - "scripts/update_leagues.py"
+      - "requirements.txt"
+      - ".github/workflows/refresh-leagues.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-leagues
+  cancel-in-progress: true
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
+          cache-dependency-path: "requirements.txt"
 
-      - name: Install deps (minimal)
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests
+          pip install -r requirements.txt
 
-      - name: Run python scripts/update_leagues.py
+      - name: Run update_leagues.py
         env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: https://v3.football.api-sports.io/
-          API_FOOTBALL_SEASON: "2025"
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}     # obrigatório
+          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE }}       # opcional (tem default no script)
+          API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON }}   # opcional (tem default no script)
         run: python scripts/update_leagues.py
 
       - name: Commit & push if changed
         run: |
-          if [[ -n "$(git status --porcelain config/leagues.json)" ]]; then
+          if [[ -n "$(git status --porcelain)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add config/leagues.json
-            git commit -m "chore: refresh leagues.json (CI)"
+            git commit -m "chore(ci): refresh leagues.json [skip ci]"
             git push
           else
             echo "No changes to commit."
