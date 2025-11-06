@@ -1,155 +1,101 @@
-name: Daily refresh (update + calibrate + deploy)
+name: Daily refresh (update + calibrate)
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
   schedule:
-    # corre todos os dias às 02:45 UTC
-    - cron: "45 2 * * *"
-
-permissions:
-  contents: write
+    - cron: "17 03 * * *"   # 03:17 UTC diário
 
 concurrency:
   group: daily-refresh
   cancel-in-progress: true
 
-env:
-  # ---- ajusta se quiseres; usa Repository Variables quando possível ----
-  BACKEND_URL: ${{ vars.BACKEND_URL || 'https://previsao-futebol.onrender.com' }}
-  API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
-  API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON || '2025' }}
+permissions:
+  contents: write
 
-  # opcionais (como Secrets):
-  BACKEND_TOKEN: ${{ secrets.BACKEND_TOKEN }}
-  VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
-  RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
-  # se quiseres também a key da API para harvest/calibrate, deixa aqui:
+env:
+  # === API-Football ===
+  API_FOOTBALL_BASE: https://v3.football.api-sports.io/
+  API_FOOTBALL_SEASON: "2025"
   API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+  # === Redis (opcional) ===
+  UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
+  UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN }}
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install deps
         run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install --upgrade requests numpy pandas scikit-learn joblib
-
-      # --- 1) Lê o last_update atual para comparar
-      - name: Read current last-update
-        id: before
-        run: |
-          set -e
-          LU_BEFORE="$(curl -fsSL "$BACKEND_URL/meta/last-update" | python - <<'PY'
-import sys, json
-try:
-  print(json.load(sys.stdin).get("last_update",""))
-except Exception:
-  print("")
-PY
-)"
-          echo "last_update_before=$LU_BEFORE" >> $GITHUB_OUTPUT
-
-      # --- 2) Dispara a atualização no backend
-      - name: Trigger backend /meta/update
-        run: |
-          set -e
-          echo "POST $BACKEND_URL/meta/update"
-          curl -fsSL -X POST "$BACKEND_URL/meta/update" \
-            -H "Authorization: Bearer $BACKEND_TOKEN" \
-            -H "Content-Type: application/json" || exit 1
-
-      # --- 3) Poll até o last_update mudar (máx ~2 min)
-      - name: Wait for backend to finish
-        run: |
-          set -e
-          TARGET_BEFORE="${{ steps.before.outputs.last_update_before }}"
-          echo "Last update (before): [$TARGET_BEFORE]"
-          for i in $(seq 1 24); do
-            NOW="$(curl -fsSL "$BACKEND_URL/meta/last-update" | python - <<'PY'
-import sys, json
-try:
-  print(json.load(sys.stdin).get("last_update",""))
-except Exception:
-  print("")
-PY
-)"
-            echo "[$i] last_update now: [$NOW]"
-            if [ -n "$NOW" ] && [ "$NOW" != "$TARGET_BEFORE" ]; then
-              echo "Backend updated."
-              exit 0
-            fi
-            sleep 5
-          done
-          echo "WARN: backend last_update did not change within timeout"; exit 0
-
-      # --- 4) (Opcional) calibrar com o histórico local
-      - name: Harvest yesterday results (safe retry)
-        if: env.API_FOOTBALL_KEY != ''
-        env:
-          API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
-          API_FOOTBALL_SEASON: ${{ env.API_FOOTBALL_SEASON }}
-        run: |
-          set -e
-          for i in 1 2 3; do
-            echo "Harvest attempt $i ..."
-            python scripts/harvest_results.py && break || sleep $((i*10))
-          done
-
-      - name: Calibrate models
-        run: |
-          set -e
-          if [ -f scripts/calibrate.py ]; then
-            python scripts/calibrate.py --input data/training/history.jsonl --output data/model
+          set -euxo pipefail
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
           else
-            echo "scripts/calibrate.py not found; skipping calibrate."
+            pip install requests joblib scikit-learn numpy scipy
           fi
 
-      # --- 5) Commit do que mudou (modelos / ficheiros gerados)
+      - name: Sanity env
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          import os
+          base = os.environ.get("API_FOOTBALL_BASE","")
+          key  = os.environ.get("API_FOOTBALL_KEY","")
+          assert base.startswith("http"), f"API_FOOTBALL_BASE inválida: {base}"
+          assert key, "API_FOOTBALL_KEY vazio"
+          print("✅ env OK:", base)
+          PY
+
+      - name: Build predictions (today + próximos dias)
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          from src.fetch_matches import fetch_today_matches
+          r = fetch_today_matches()
+          print(r)
+          PY
+
+      - name: Optional calibrator (se existir)
+        run: |
+          set -euxo pipefail
+          if [ -f scripts/harvest_results.py ]; then
+            python scripts/harvest_results.py || echo "harvest falhou (segue)"
+          fi
+          if [ -f scripts/calibrate.py ]; then
+            python scripts/calibrate.py || echo "calibrate falhou (segue)"
+          fi
+          # garante JSON válido para não partir o backend
+          mkdir -p data/model
+          if [ ! -s data/model/calibration.json ]; then
+            echo '{}' > data/model/calibration.json
+          fi
+
       - name: Commit & push if changed
         run: |
-          set -e
+          set -euxo pipefail
           git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "ci: daily refresh + calibrate [skip ci]"
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(ci): daily refresh (predictions + optional calibrator)"
             git push
-          fi
-
-      # --- 6) Deploy hooks opcionais (não falham o job se não estiverem definidos)
-      - name: Trigger Vercel Deploy Hook (optional)
-        continue-on-error: true
-        run: |
-          if [ -n "${VERCEL_DEPLOY_HOOK:-}" ]; then
-            echo "Triggering Vercel hook..."
-            curl -fsS -X POST "$VERCEL_DEPLOY_HOOK" || true
           else
-            echo "No VERCEL_DEPLOY_HOOK set."
-          fi
-
-      - name: Trigger Render Deploy Hook (optional)
-        continue-on-error: true
-        run: |
-          if [ -n "${RENDER_DEPLOY_HOOK:-}" ]; then
-            echo "Triggering Render hook..."
-            curl -fsS -X POST "$RENDER_DEPLOY_HOOK" || true
-          else
-            echo "No RENDER_DEPLOY_HOOK set."
+            echo "Sem alterações."
           fi

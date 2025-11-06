@@ -1,37 +1,78 @@
-name: Update predictions (Render)
+name: Update predictions on push
 
 on:
-  schedule:
-    # corre 4x/dia em UTC (≈ Lisboa no inverno)
-    - cron: "5 3,9,15,21 * * *"
-  workflow_dispatch:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths:
+      - "src/**"
+      - "scripts/**"
+      - "config/**"
+      - ".github/workflows/update-predictions.yml"
+
+concurrency:
+  group: update-predictions
+  cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
+
+env:
+  API_FOOTBALL_BASE: https://v3.football.api-sports.io/
+  API_FOOTBALL_SEASON: "2025"
+  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+  UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
+  UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN }}
 
 jobs:
-  ping-backend:
+  update:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Call backend /meta/update (Render)
-        env:
-          API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          API_TOKEN: ${{ secrets.API_TOKEN }}
-        run: |
-          set -e
-          echo "POST $API_BASE_URL/meta/update"
-          curl -fsS -X POST "$API_BASE_URL/meta/update" \
-            -H "Authorization: Bearer $API_TOKEN" \
-            -H "Accept: application/json" \
-            -o response.json
-          cat response.json || true
-          echo "Done."
+      - uses: actions/checkout@v4
 
-      - name: Warm frontend (opcional)
-        if: ${{ secrets.FRONTEND_URL != '' }}
-        env:
-          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install deps
         run: |
-          curl -fsS "$FRONTEND_URL/api/last-update" || true
-          curl -fsS "$FRONTEND_URL" > /dev/null || true
+          set -euxo pipefail
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install requests joblib scikit-learn numpy scipy
+          fi
+
+      - name: Build predictions
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          from src.fetch_matches import fetch_today_matches
+          print(fetch_today_matches())
+          PY
+
+      - name: Ensure calibration.json is valid
+        run: |
+          set -euxo pipefail
+          mkdir -p data/model
+          [ -s data/model/calibration.json ] || echo '{}' > data/model/calibration.json
+
+      - name: Commit & push if changed
+        run: |
+          set -euxo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(ci): update predictions on push"
+            git push
+          else
+            echo "Sem alterações."
+          fi
