@@ -42,6 +42,35 @@ const dateTabs = [
   { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
 ];
 
+/* ----------------------------- */
+/*   ✨ Helpers de destaque      */
+/* ----------------------------- */
+function prob01(v?: number | null): number {
+  // aceita 0..1 (preferido) ou 0..100
+  if (typeof v !== "number" || !isFinite(v)) return 0;
+  return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
+}
+function pctStr01(v?: number | null): string {
+  return `${Math.round(prob01(v) * 100)}%`;
+}
+function tileClass(prob: number, isMax: boolean): string {
+  const p = Math.round(prob * 100);
+  // máximo do conjunto -> ring e border mais forte
+  if (isMax) return "bg-emerald-600/15 border-emerald-500/60 ring-2 ring-emerald-400";
+  if (p >= 70) return "bg-emerald-500/10 border-emerald-400/40";
+  if (p >= 60) return "bg-amber-500/10 border-amber-400/40";
+  if (p >= 50) return "bg-sky-500/10 border-sky-400/40";
+  return "bg-white/5 border-white/10";
+}
+function badgeClass(prob: number, isMax: boolean): string {
+  const p = Math.round(prob * 100);
+  if (isMax) return "bg-emerald-600 text-white font-semibold";
+  if (p >= 70) return "bg-emerald-200 text-emerald-900";
+  if (p >= 60) return "bg-amber-200 text-amber-900";
+  if (p >= 50) return "bg-sky-200 text-sky-900";
+  return "bg-gray-100 text-gray-700";
+}
+
 export default function HomeClient() {
   const router = useRouter();
   const search = useSearchParams();
@@ -60,37 +89,32 @@ export default function HomeClient() {
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
-  // Ligas vindas do backend (/meta/leagues) — fallback para ligas presentes nas previsões
+  /* ----------------------------- */
+  /* 1) Ligas só do backend curado */
+  /* ----------------------------- */
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues();
-        setBackendLeagues(ls);
+        const ls = await getLeagues(); // <- deve devolver apenas as ligas curadas
+        setBackendLeagues(ls ?? []);
       } catch {
         setBackendLeagues([]);
       }
     })();
   }, []);
 
-  // Fallback: construir lista a partir de predictions caso backend não devolva nada
-  const leaguesFromPreds = useMemo(() => {
-    const map = new Map<string, string>();
-    predictions.forEach((p) => {
-      const id = String(p.league_id ?? "");
-      const name = (p.league_name ?? p.league ?? "Liga").toString();
-      if (id && !map.has(id)) map.set(id, name);
-    });
-    return Array.from(map.entries())
-      .sort((a, b) => a[1].localeCompare(b[1], "pt-PT"))
-      .map(([id, name]) => ({ id, name }));
-  }, [predictions]);
+  // Conjunto de IDs permitidos (para "cinto e suspensórios" no render das previsões)
+  const allowedLeagueIds = useMemo(
+    () => new Set<string>(backendLeagues.map((x) => String(x.id))),
+    [backendLeagues]
+  );
 
+  // Dropdown: só ligas curadas + opção "Todas" (agregado das curadas)
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
-    const source = backendLeagues.length > 0 ? backendLeagues : leaguesFromPreds;
-    const arr = source.map((x) => ({ id: String(x.id), name: x.name }));
+    const arr = backendLeagues.map((x) => ({ id: String(x.id), name: x.name }));
     return [{ id: "all", name: "🌍 Todas as Ligas" }, ...arr];
-  }, [backendLeagues, leaguesFromPreds]);
+  }, [backendLeagues]);
 
   // Sincroniza estado inicial com query params
   useEffect(() => {
@@ -102,7 +126,8 @@ export default function HomeClient() {
       const today = ymd(new Date());
       const tomorrow = ymd(new Date(Date.now() + 86400000));
       const after = ymd(new Date(Date.now() + 2 * 86400000));
-      const key = qpDate === today ? "today" : qpDate === tomorrow ? "tomorrow" : qpDate === after ? "after" : "today";
+      const key =
+        qpDate === today ? "today" : qpDate === tomorrow ? "tomorrow" : qpDate === after ? "after" : "today";
       setSelectedDateKey(key);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,7 +160,15 @@ export default function HomeClient() {
           : { date: selectedDateISO, league_id: selectedLeague };
 
       const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
-      setPredictions(Array.isArray(preds) ? (preds as Prediction[]) : []);
+      const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
+
+      // 🔒 Filtra previsões por ligas curadas (se houver lista do backend)
+      const filteredPreds =
+        allowedLeagueIds.size > 0
+          ? predsArray.filter((p: any) => allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id)))
+          : predsArray;
+
+      setPredictions(filteredPreds);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
@@ -161,7 +194,7 @@ export default function HomeClient() {
   useEffect(() => {
     loadMainData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLeague, selectedDateISO]);
+  }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
 
   // Fixtures reais por liga (proxy)
   async function loadFixtures(ignoreCache = false) {
@@ -187,9 +220,9 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague]);
 
-  // Helpers
+  // Helpers UI
   const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
-  const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(v * 100)}%` : "—");
+  const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—");
   const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
   const bestCorrectScore = (p: any) =>
     p?.correct_score_top3?.[0]?.score ?? p?.predictions?.correct_score?.best ?? "—";
@@ -236,7 +269,7 @@ export default function HomeClient() {
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas dinâmicas (do backend se houver, senão das previsões) */}
+          {/* Ligas dinâmicas (APENAS do backend curado) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -283,7 +316,7 @@ export default function HomeClient() {
             {loading || loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
           </button>
 
-          {/* 🧹 Limpar (zera UI e volta para hoje + Todas as Ligas) */}
+          {/* 🧹 Limpar */}
           <button
             onClick={() => {
               setSelectedLeague("all");
@@ -341,12 +374,14 @@ export default function HomeClient() {
             )}
 
             {lastFixturesUpdate && (
-              <div className="text-xs text-center text-gray-500 mt-4">Última atualização: {timeSince(lastFixturesUpdate)}</div>
+              <div className="text-xs text-center text-gray-500 mt-4">
+                Última atualização: {timeSince(lastFixturesUpdate)}
+              </div>
             )}
           </div>
         )}
 
-        {/* Previsões */}
+        {/* Previsões (já filtradas pelas ligas curadas) */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {predictions.map((p: any) => {
@@ -365,15 +400,39 @@ export default function HomeClient() {
               const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
               const oddsBTTS = p?.odds?.btts ?? {};
 
+              // 🔎 percentagens normalizadas (0..1)
+              const prWinner = prob01(winner?.confidence ?? winner?.prob);
+              const prDC = prob01(dc?.confidence ?? dc?.prob);
+              const prO25 = prob01(over25?.confidence ?? over25?.prob);
+              const prO15 = prob01(over15?.confidence ?? over15?.prob);
+
+              // ⭐ mercado "top" (maior % entre os quatro)
+              const marketEntries: [keyof any, number][] = [
+                ["winner", prWinner],
+                ["double", prDC],
+                ["over25", prO25],
+                ["over15", prO15],
+              ];
+              const topEntry = marketEntries.reduce((a, b) => (b[1] > a[1] ? b : a), ["winner", -1]);
+              const isTop = (k: string) => topEntry[0] === k;
+
               return (
-                <div key={String(p.match_id ?? p.fixture_id)} className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4">
+                <div
+                  key={String(p.match_id ?? p.fixture_id)}
+                  className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4"
+                >
                   {/* Header */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-400">
                       {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
                     </div>
                     <div className="text-xs text-gray-500">
-                      {new Date(p.date).toLocaleString("pt-PT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}
+                      {new Date(p.date).toLocaleString("pt-PT", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </div>
                   </div>
 
@@ -392,40 +451,65 @@ export default function HomeClient() {
                     <span className="text-sm text-white">{bestCorrectScore(p)}</span>
                   </div>
 
-                  {/* Tips */}
+                  {/* Tips com destaque */}
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
-                      <div className="text-xs text-gray-400">Winner</div>
-                      <div className="text-sm text-white">
+                    {/* Winner */}
+                    <div className={`rounded-xl border p-3 ${tileClass(prWinner, isTop("winner"))}`}>
+                      <div className="text-xs text-gray-400 flex items-center justify-between">
+                        <span>Winner</span>
+                        {isTop("winner") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                      </div>
+                      <div className="text-sm text-white mt-0.5">
                         {winnerLabel}{" "}
-                        <span className="text-gray-400 ml-1">({toPct(winner?.confidence ?? winner?.prob)})</span>
+                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prWinner, isTop("winner"))}`}>
+                          {pctStr01(winner?.confidence ?? winner?.prob)}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
-                      <div className="text-xs text-gray-400">Double Chance</div>
-                      <div className="text-sm text-white">
+                    {/* Double Chance */}
+                    <div className={`rounded-xl border p-3 ${tileClass(prDC, isTop("double"))}`}>
+                      <div className="text-xs text-gray-400 flex items-center justify-between">
+                        <span>Double Chance</span>
+                        {isTop("double") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                      </div>
+                      <div className="text-sm text-white mt-0.5">
                         {dcLabel(dc?.class)}{" "}
-                        <span className="text-gray-400 ml-1">({toPct(dc?.confidence ?? dc?.prob)})</span>
+                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prDC, isTop("double"))}`}>
+                          {pctStr01(dc?.confidence ?? dc?.prob)}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
-                      <div className="text-xs text-gray-400">Over 2.5</div>
-                      <div className="text-sm text-white">
+                    {/* Over 2.5 */}
+                    <div className={`rounded-xl border p-3 ${tileClass(prO25, isTop("over25"))}`}>
+                      <div className="text-xs text-gray-400 flex items-center justify-between">
+                        <span>Over 2.5</span>
+                        {isTop("over25") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                      </div>
+                      <div className="text-sm text-white mt-0.5">
                         {over25?.class ? "Sim" : "Não"}{" "}
-                        <span className="text-gray-400 ml-1">({toPct(over25?.confidence ?? over25?.prob)})</span>
+                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prO25, isTop("over25"))}`}>
+                          {pctStr01(over25?.confidence ?? over25?.prob)}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
-                      <div className="text-xs text-gray-400">Over 1.5</div>
-                      <div className="text-sm text-white">
+                    {/* Over 1.5 */}
+                    <div className={`rounded-xl border p-3 ${tileClass(prO15, isTop("over15"))}`}>
+                      <div className="text-xs text-gray-400 flex items-center justify-between">
+                        <span>Over 1.5</span>
+                        {isTop("over15") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                      </div>
+                      <div className="text-sm text-white mt-0.5">
                         {over15?.class ? "Sim" : "Não"}{" "}
-                        <span className="text-gray-400 ml-1">({toPct(over15?.confidence ?? over15?.prob)})</span>
+                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prO15, isTop("over15"))}`}>
+                          {pctStr01(over15?.confidence ?? over15?.prob)}
+                        </span>
                       </div>
                     </div>
 
+                    {/* BTTS (mantive, sem competir no TOP pedido) */}
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
@@ -478,7 +562,7 @@ export default function HomeClient() {
                             .map((cs: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{cs.score}</span>
-                                <span className="text-gray-400">{Math.round((cs.prob ?? 0) * 1000) / 10}%</span>
+                                <span className="text-gray-400">{Math.round(prob01(cs.prob) * 1000) / 10}%</span>
                               </li>
                             ))}
                           {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? []).length === 0) && (
@@ -496,7 +580,7 @@ export default function HomeClient() {
                             {(p.predicted_scorers?.home ?? []).slice(0, 3).map((sc: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{sc.player}</span>
-                                <span className="text-gray-400">{Math.round((sc.prob ?? 0) * 100)}%</span>
+                                <span className="text-gray-400">{Math.round(prob01(sc.prob) * 100)}%</span>
                               </li>
                             ))}
                             {!(p.predicted_scorers?.home ?? []).length && <li className="text-gray-500">—</li>}
@@ -507,7 +591,7 @@ export default function HomeClient() {
                             {(p.predicted_scorers?.away ?? []).slice(0, 3).map((sc: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{sc.player}</span>
-                                <span className="text-gray-400">{Math.round((sc.prob ?? 0) * 100)}%</span>
+                                <span className="text-gray-400">{Math.round(prob01(sc.prob) * 100)}%</span>
                               </li>
                             ))}
                             {!(p.predicted_scorers?.away ?? []).length && <li className="text-gray-500">—</li>}
