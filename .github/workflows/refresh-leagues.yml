@@ -1,31 +1,44 @@
 name: Refresh leagues.json (weekly)
 
 on:
-  schedule:
-    - cron: "0 4 * * 0"   # todos os domingos 04:00 UTC
   workflow_dispatch:
+  schedule:
+    - cron: "23 3 * * 0"   # semanal
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    env:
-      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-      API_FOOTBALL_BASE: https://v3.football.api-sports.io/
-      API_FOOTBALL_SEASON: "2025"
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: python scripts/update_leagues.py
+          cache: "pip"
+
+      - name: Install deps (minimal)
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run python scripts/update_leagues.py
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          API_FOOTBALL_BASE: https://v3.football.api-sports.io/
+          API_FOOTBALL_SEASON: "2025"
+        run: python scripts/update_leagues.py
+
       - name: Commit & push if changed
         run: |
-          git config user.name  "gh-bot"
-          git config user.email "gh-bot@users.noreply.github.com"
-          git add config/leagues.json || true
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: weekly leagues.json refresh"
+          if [[ -n "$(git status --porcelain config/leagues.json)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add config/leagues.json
+            git commit -m "chore: refresh leagues.json (CI)"
             git push
           else
-            echo "No changes."
+            echo "No changes to commit."
           fi
