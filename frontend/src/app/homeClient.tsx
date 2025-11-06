@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import Header from "@/components/header";
 import InfoCard from "@/components/infoCards";
-import StatsAverage, { StatsType } from "@/components/StatsAverage"; // <- usado
+import StatsAverage, { StatsType } from "@/components/StatsAverage";
 import CardSkeleton from "@/components/CardSkeleton";
 import StatsSkeleton from "@/components/StatsSkeleton";
 import {
@@ -51,7 +51,7 @@ export default function HomeClient() {
   const [error, setError] = useState<string>("");
 
   const [predictions, setPredictions] = useState<Prediction[]>([]);
-  const [stats, setStats] = useState<StatsType | null>(null); // <- usado
+  const [stats, setStats] = useState<StatsType | null>(null);
   const [lastUpdate, setLastUpdate] = useState("");
 
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
@@ -65,8 +65,12 @@ export default function HomeClient() {
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
-      const ls = await getLeagues();
-      setBackendLeagues(ls);
+      try {
+        const ls = await getLeagues();
+        setBackendLeagues(ls);
+      } catch {
+        setBackendLeagues([]);
+      }
     })();
   }, []);
 
@@ -144,6 +148,8 @@ export default function HomeClient() {
             { hour: "2-digit", minute: "2-digit" }
           )}`
         );
+      } else {
+        setLastUpdate("");
       }
     } catch (e) {
       console.error(e);
@@ -245,7 +251,7 @@ export default function HomeClient() {
             ))}
           </select>
 
-          {/* Datas — com espaçamento */}
+          {/* Datas — com mais espaçamento */}
           <div className="flex gap-3 md:gap-4">
             {dateTabs.map((d) => (
               <button
@@ -278,6 +284,28 @@ export default function HomeClient() {
             aria-busy={loading || loadingFixtures}
           >
             {loading || loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
+          </button>
+
+          {/* 🧹 Limpar (zera UI e volta para hoje + Todas as Ligas) */}
+          <button
+            onClick={() => {
+              setSelectedLeague("all");
+              setSelectedDateKey("today");
+              setPredictions([]);
+              setLiveFixtures([]);
+              setLastFixturesUpdate(null);
+              setError("");
+              // Atualiza URL só com a data de hoje
+              const params = new URLSearchParams();
+              params.set("date", ymd(new Date()));
+              router.replace(`?${params.toString()}`);
+              // Recarrega dados "limpos"
+              loadMainData();
+            }}
+            className="btn btn-ghost"
+            title="Limpar jogos visíveis e filtros"
+          >
+            🧹 Limpar
           </button>
         </div>
 
@@ -314,7 +342,7 @@ export default function HomeClient() {
                       <Image src={f.teams.away.logo} alt="" width={24} height={24} />
                     </div>
                     <p className="text-sm text-center text-gray-400">
-                      {new Date(f.fixture.date).toLocaleString("pt-PT")}
+                      {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
                     </p>
                     <p className="text-xs text-center text-gray-500 mt-1">
                       {f.league.name} ({f.league.country})
@@ -502,4 +530,10 @@ export default function HomeClient() {
       </main>
     </div>
   );
+}
+
+// Evita crash se a API der date inválida
+function fixtureDateSafe(d?: string) {
+  const t = d ? Date.parse(d) : NaN;
+  return Number.isFinite(t) ? new Date(d as string) : new Date();
 }

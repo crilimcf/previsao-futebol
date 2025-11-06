@@ -14,7 +14,11 @@ export const API_TOKEN =
 export const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 12_000,
-  headers: { Accept: "application/json" },
+  headers: {
+    Accept: "application/json",
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
+  },
 });
 
 export const authApi = axios.create({
@@ -24,8 +28,15 @@ export const authApi = axios.create({
     Authorization: `Bearer ${API_TOKEN}`,
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
   },
 });
+
+// helper para bustar cache de GETs
+function withTs(params?: Record<string, any>) {
+  return { ...(params || {}), _ts: Date.now() };
+}
 
 // ---------------------------
 // Tipos úteis (frontend)
@@ -86,7 +97,7 @@ export async function getPredictions(
         }
       : undefined;
 
-    const r = await api.get("/predictions", { params: normalized });
+    const r = await api.get("/predictions", { params: withTs(normalized) });
     return Array.isArray(r.data) ? (r.data as Prediction[]) : [];
   } catch {
     return [];
@@ -96,7 +107,7 @@ export async function getPredictions(
 /** Obtém estatísticas agregadas (fallback para objeto vazio). */
 export async function getStats() {
   try {
-    const r = await api.get("/stats");
+    const r = await api.get("/stats", { params: withTs() });
     return r.data ?? {};
   } catch {
     return {};
@@ -106,11 +117,10 @@ export async function getStats() {
 /** Obtém a data da última atualização (robusto ao tipo do axios). */
 export async function getLastUpdate(): Promise<LastUpdate> {
   try {
-    const r = await api.get("/meta/last-update");
+    const r = await api.get("/meta/last-update", { params: withTs() });
     const d: any = r?.data ?? {};
-    // Aceita { last_update: string|null } ou qualquer coisa parecida
-    if ("last_update" in d) {
-      const lu = d.last_update;
+    if (d && typeof d === "object" && "last_update" in d) {
+      const lu = (d as any).last_update;
       if (typeof lu === "string" || lu === null) {
         return { last_update: lu };
       }
@@ -130,22 +140,23 @@ export async function triggerUpdate() {
 /** Testa estado geral da API. */
 export async function getApiHealth() {
   try {
-    const r = await api.get("/healthz");
+    const r = await api.get("/healthz", { params: withTs() });
     return r.data ?? { status: "unknown" };
   } catch {
     return { status: "offline" };
   }
 }
 
-/** Lista de ligas conhecidas pelo backend (array simples ou {items:[...]}/{data:[...]}) */
+/** Lista de ligas conhecidas pelo backend. Aceita vários formatos. */
 export async function getLeagues(): Promise<LeagueItem[]> {
   try {
-    const r = await api.get("/meta/leagues");
+    const r = await api.get("/meta/leagues", { params: withTs() });
     const data = r?.data as any;
 
     if (Array.isArray(data)) return data as LeagueItem[];
     if (data && Array.isArray(data.items)) return data.items as LeagueItem[];
     if (data && Array.isArray(data.data)) return data.data as LeagueItem[];
+    if (data && Array.isArray(data.leagues)) return data.leagues as LeagueItem[];
 
     return [];
   } catch {
