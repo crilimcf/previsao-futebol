@@ -1,4 +1,4 @@
-name: Train bivariate correlation (weekly)
+name: Train bivariate correlation (weekly + manual)
 
 on:
   schedule:
@@ -8,30 +8,56 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: train-bivar
+  cancel-in-progress: true
+
 jobs:
   train:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout (full history para rebase)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python 3.11 (com cache pip)
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
+
       - name: Install deps
         run: |
+          set -euxo pipefail
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: Train λ3 per league
         run: |
+          set -euxo pipefail
           python scripts/train_lambda3_per_league.py
-      - name: Commit λ3
+
+      - name: Commit & push λ3 (com rebase seguro)
         run: |
+          set -euxo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add models/bivar_lambda3.json
+
+          # adiciona onde quer que o script tenha gravado
+          git add models/bivar_lambda3.json 2>/dev/null || true
+          git add data/models/** 2>/dev/null || true
+
           if git diff --cached --quiet; then
-            echo "Sem alterações."
-          else
-            git commit -m "chore(models): refresh λ3 por liga"
-            git push
+            echo "Sem alterações para commit."
+            exit 0
           fi
+
+          git commit -m "chore(models): refresh λ3 por liga"
+
+          # evita 'fetch first'
+          git fetch origin
+          git rebase origin/main || (git rebase --abort && git reset --soft origin/main)
+
+          git push
