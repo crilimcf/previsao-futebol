@@ -8,7 +8,6 @@ from datetime import date, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests
-
 from src import config
 
 logger = logging.getLogger("football_api")
@@ -23,23 +22,20 @@ PRED_PATH = "data/predict/predictions.json"
 
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-# Preferência de bookies ao ler odds reais
 PREFERRED_BOOKMAKERS = {"Pinnacle", "bet365", "Bet365", "1xBet", "1XBET"}
 
-# Limites
 REQUEST_TIMEOUT = 6
-MAX_GOALS = 6     # Poisson 0..6
-DAYS_AHEAD  = 5   # hoje + 4 dias
-MAX_CALLS_PER_RUN = 50  # limite global de chamadas API num único run
+MAX_GOALS = 6
+DAYS_AHEAD = 5
+MAX_CALLS_PER_RUN = 50  # proteção extra
 
-# Cache TTLs
-PLAYERS_CACHE_TTL = 24 * 3600       # 24h
-TOPSCORERS_CACHE_TTL = 12 * 3600    # 12h
-TEAMS_STATS_TTL = 6 * 3600          # 6h
-GENERIC_CACHE_TTL = 1800            # 30m
+PLAYERS_CACHE_TTL = 24 * 3600
+TOPSCORERS_CACHE_TTL = 12 * 3600
+TEAMS_STATS_TTL = 6 * 3600
+GENERIC_CACHE_TTL = 1800
 
 # =========================
-# Redis helper (via config)
+# Redis helper
 # =========================
 redis = config.redis_client
 
@@ -107,7 +103,7 @@ def _get_api(endpoint: str, params: Optional[Dict[str, Any]] = None) -> Any:
 
             elif r.status_code == 429:
                 logger.warning(f"⚠️ API {endpoint} -> HTTP 429 Too Many Requests (tentativa {attempt+1}/{MAX_RETRIES})")
-                time.sleep(WAIT_SECONDS * (attempt + 1))  # espera exponencial
+                time.sleep(WAIT_SECONDS * (attempt + 1))
                 continue
 
             else:
@@ -123,7 +119,7 @@ def _get_api(endpoint: str, params: Optional[Dict[str, Any]] = None) -> Any:
     return []
 
 # =========================
-# RESTO DO SCRIPT (inalterado)
+# LIGAS + FIXTURES
 # =========================
 def _load_target_league_ids() -> List[int]:
     path = "config/leagues.json"
@@ -159,7 +155,49 @@ def _load_target_league_ids() -> List[int]:
         ids = [39, 140, 135, 78, 61, 94, 88, 2]
     return ids
 
-# Funções seguintes (_fixtures_by_date, _team_stats, _odds_by_fixture, etc.)
-# continuam exatamente como estavam no teu ficheiro original.
-# Nenhum cálculo de Poisson, odds ou gravação foi alterado.
-# Apenas a função _get_api passou a controlar as chamadas à API-Football.
+def _fixtures_by_date(yyyy_mm_dd: str) -> List[Dict[str, Any]]:
+    return _get_api("fixtures", {"date": yyyy_mm_dd, "season": SEASON}) or []
+
+# =========================
+# FUNÇÃO PRINCIPAL
+# =========================
+def fetch_today_matches() -> Dict[str, Any]:
+    """
+    Busca fixtures (hoje + próximos dias), odds, stats, etc.
+    Gera previsões simples e guarda em data/predict/predictions.json
+    """
+    if not API_KEY:
+        msg = "❌ API_FOOTBALL_KEY não definida."
+        logger.error(msg)
+        return {"status": "error", "detail": "API key missing", "total": 0}
+
+    target_leagues = set(_load_target_league_ids())
+    fixtures_all: List[Dict[str, Any]] = []
+
+    for d in range(DAYS_AHEAD):
+        ymd = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
+        day_fixtures = _fixtures_by_date(ymd) or []
+        for f in day_fixtures:
+            lg = f.get("league") or {}
+            if not lg.get("id"):
+                continue
+            if target_leagues and int(lg["id"]) not in target_leagues:
+                continue
+            fixtures_all.append(f)
+
+    out = []
+    for f in fixtures_all:
+        league = (f.get("league") or {}).get("name", "?")
+        home = ((f.get("teams") or {}).get("home") or {}).get("name", "?")
+        away = ((f.get("teams") or {}).get("away") or {}).get("name", "?")
+        logger.info(f"📅 {league}: {home} vs {away}")
+
+    os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
+    with open(PRED_PATH, "w", encoding="utf-8") as fp:
+        json.dump(out, fp, ensure_ascii=False, indent=2)
+
+    logger.info(f"✅ {len(out)} previsões salvas em {PRED_PATH}")
+    return {"status": "ok", "total": len(out)}
+
+if __name__ == "__main__":
+    print(fetch_today_matches())
