@@ -1,0 +1,240 @@
+{
+  "POR-L1": {
+    "id": 94,
+    "country": "Portugal",
+    "type": "League",
+    "preferred": "Liga Portugal",
+    "last_name": "Primeira Liga"
+  },
+  "POR-L2": {
+    "id": 95,
+    "country": "Portugal",
+    "type": "League",
+    "preferred": "Liga Portugal 2",
+    "last_name": "Segunda Liga"
+  },
+  "POR-CUP": {
+    "id": 96,
+    "country": "Portugal",
+    "type": "Cup",
+    "preferred": "Taça de Portugal",
+    "last_name": "Taça de Portugal"
+  },
+  "POR-LCUP": {
+    "id": 97,
+    "country": "Portugal",
+    "type": "Cup",
+    "preferred": "Taça da Liga",
+    "last_name": "Taça da Liga"
+  },
+  "ESP-L1": {
+    "id": 140,
+    "country": "Spain",
+    "type": "League",
+    "preferred": "La Liga",
+    "last_name": "La Liga"
+  },
+  "ESP-L2": {
+    "id": 141,
+    "country": "Spain",
+    "type": "League",
+    "preferred": "Segunda División",
+    "last_name": "Segunda División"
+  },
+  "ESP-CUP": {
+    "id": 143,
+    "country": "Spain",
+    "type": "Cup",
+    "preferred": "Copa del Rey",
+    "last_name": "Copa del Rey"
+  },
+  "FRA-L1": {
+    "id": 61,
+    "country": "France",
+    "type": "League",
+    "preferred": "Ligue 1",
+    "last_name": "Ligue 1"
+  },
+  "FRA-L2": {
+    "id": 62,
+    "country": "France",
+    "type": "League",
+    "preferred": "Ligue 2",
+    "last_name": "Ligue 2"
+  },
+  "FRA-CUP": {
+    "id": 66,
+    "country": "France",
+    "type": "Cup",
+    "preferred": "Coupe de France",
+    "last_name": "Coupe de France"
+  },
+  "ENG-L1": {
+    "id": 39,
+    "country": "England",
+    "type": "League",
+    "preferred": "Premier League",
+    "last_name": "Premier League"
+  },
+  "ENG-L2": {
+    "id": 40,
+    "country": "England",
+    "type": "League",
+    "preferred": "Championship",
+    "last_name": "Championship"
+  },
+  "ENG-FA": {
+    "id": 45,
+    "country": "England",
+    "type": "Cup",
+    "preferred": "FA Cup",
+    "last_name": "FA Cup"
+  },
+  "ENG-LCUP": {
+    "id": 48,
+    "country": "England",
+    "type": "Cup",
+    "preferred": "EFL Cup",
+    "last_name": "League Cup"
+  },
+  "GER-L1": {
+    "id": 78,
+    "country": "Germany",
+    "type": "League",
+    "preferred": "Bundesliga",
+    "last_name": "Bundesliga"
+  },
+  "GER-L2": {
+    "id": 79,
+    "country": "Germany",
+    "type": "League",
+    "preferred": "2. Bundesliga",
+    "last_name": "2. Bundesliga"
+  },
+  "GER-CUP": {
+    "id": 81,
+    "country": "Germany",
+    "type": "Cup",
+    "preferred": "DFB-Pokal",
+    "last_name": "DFB Pokal"
+  },
+  "ITA-L1": {
+    "id": 135,
+    "country": "Italy",
+    "type": "League",
+    "preferred": "Serie A",
+    "last_name": "Serie A"
+  },
+  "ITA-L2": {
+    "id": 136,
+    "country": "Italy",
+    "type": "League",
+    "preferred": "Serie B",
+    "last_name": "Serie B"
+  },
+  "ITA-CUP": {
+    "id": 137,
+    "country": "Italy",
+    "type": "Cup",
+    "preferred": "Coppa Italia",
+    "last_name": "Coppa Italia"
+  },
+  "NED-L1": {
+    "id": 88,
+    "country": "Netherlands",
+    "type": "League",
+    "preferred": "Eredivisie",
+    "last_name": "Eredivisie"
+  },
+  "BEL-L1": {
+    "id": 144,
+    "country": "Belgium",
+    "type": "League",
+    "preferred": "Pro League",
+    "last_name": "Jupiler Pro League"
+  },
+  "SCO-L1": {
+    "id": 179,
+    "country": "Scotland",
+    "type": "League",
+    "preferred": "Premiership",
+    "last_name": "Premiership"
+  },
+  "TUR-L1": {
+    "id": 203,
+    "country": "Turkey",
+    "type": "League",
+    "preferred": "Süper Lig",
+    "last_name": "Süper Lig"
+  },
+  "GRE-L1": {
+    "id": 197,
+    "country": "Greece",
+    "type": "League",
+    "preferred": "Super League 1",
+    "last_name": "Super League 1"
+  },
+  "SUI-L1": {
+    "id": 207,
+    "country": "Switzerland",
+    "type": "League",
+    "preferred": "Super League",
+    "last_name": "Super League"
+  },
+  "DEN-L1": {
+    "id": 119,
+    "country": "Denmark",
+    "type": "League",
+    "preferred": "Superliga",
+    "last_name": "Superliga"
+  },
+  "AUT-L1": {
+    "id": 218,
+    "country": "Austria",
+    "type": "League",
+    "preferred": "Bundesliga",
+    "last_name": "Bundesliga"
+  },
+  "BRA-L1": {
+    "id": 71,
+    "country": "Brazil",
+    "type": "League",
+    "preferred": "Serie A (Brasileirão)",
+    "last_name": "Serie A"
+  },
+  "BRA-CUP": {
+    "id": 73,
+    "country": "Brazil",
+    "type": "Cup",
+    "preferred": "Copa do Brasil",
+    "last_name": "Copa Do Brasil"
+  },
+  "KSA-L1": {
+    "id": 307,
+    "country": "Saudi Arabia",
+    "type": "League",
+    "preferred": "Saudi Pro League",
+    "last_name": "Pro League"
+  },
+  "UEFA-UCL": {
+    "id": 2,
+    "country": "World",
+    "type": "Cup",
+    "preferred": "UEFA Champions League",
+    "last_name": "UEFA Champions League"
+  },
+  "UEFA-UEL": {
+    "id": 3,
+    "country": "World",
+    "type": "Cup",
+    "preferred": "UEFA Europa League",
+    "last_name": "UEFA Europa League"
+  },
+  "UEFA-UECL": {
+    "id": 848,
+    "country": "World",
+    "type": "Cup",
+    "preferred": "UEFA Europa Conference League",
+    "last_name": "UEFA Europa Conference League"
+  }
+}
