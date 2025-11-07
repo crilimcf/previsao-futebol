@@ -31,6 +31,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0            # necessário para rebase/merge
+          persist-credentials: true # usa o GITHUB_TOKEN para o push
 
       - name: Health check backend
         run: |
@@ -44,7 +47,7 @@ jobs:
                -H "Authorization: Bearer $API_TOKEN" \
                -H "Accept: application/json"
 
-      # (Opcional) Exporta artefactos locais se o teu repo guardar JSONs de previsões/estatísticas
+      # -------- Opcional: export local de JSONs --------
       - name: Setup Python (optional)
         if: ${{ always() }}
         uses: actions/setup-python@v5
@@ -53,8 +56,9 @@ jobs:
           cache: "pip"
 
       - name: Install deps (optional)
-        if: ${{ always() }}
+        if: ${{ always() && hashFiles('requirements.txt') != '' }}
         run: |
+          set -euxo pipefail
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
 
@@ -67,15 +71,44 @@ jobs:
           set -euxo pipefail
           python scripts/export_predictions.py || true
 
-      - name: Commit & push if changed (optional)
+      - name: Commit & push (auto-rebase com retry)
+        shell: bash
         run: |
           set -euxo pipefail
+
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/predict/*.json data/stats/*.json 2>/dev/null || true
-          if ! git diff --cached --quiet; then
-            git commit -m "chore(data): export predictions & stats (post-update)"
-            git push
-          else
-            echo "Sem alterações."
+
+          # adiciona ficheiros gerados se existirem
+          git add data/predict/predictions.json \
+                  data/predict/predictions_history.json \
+                  data/stats/prediction_stats.json 2>/dev/null || true
+
+          # se não há alterações, terminar limpo
+          if git diff --cached --quiet; then
+            echo "Sem alterações para exportar."
+            exit 0
           fi
+
+          git commit -m "chore(data): export predictions & stats (post-update)"
+
+          # sincroniza com a main remota
+          git fetch origin main
+
+          # tenta rebase; se falhar, aborta e faz merge favorecendo 'ours' (ficheiros gerados)
+          git pull --rebase origin main || (git rebase --abort || true; git pull --no-rebase -X ours origin main)
+
+          # tenta push até 3x (para lidar com corridas)
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK na tentativa $i"
+              exit 0
+            fi
+            echo "Push rejeitado; a sincronizar e tentar de novo ($i/3)..."
+            git fetch origin main
+            git pull --rebase origin main || (git rebase --abort || true; git pull --no-rebase -X ours origin main)
+            sleep $((i*3))
+          done
+
+          # última tentativa (deixa o job falhar se ainda assim não conseguir)
+          git push
