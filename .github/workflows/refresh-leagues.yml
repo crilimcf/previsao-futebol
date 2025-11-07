@@ -56,3 +56,4 @@ jobs:
             git push || echo "Nada para enviar"
           else
             echo "Sem alterações em ficheiros já versionados."
+          fi
