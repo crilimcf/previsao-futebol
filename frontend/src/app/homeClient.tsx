@@ -37,9 +37,6 @@ function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
 }
-function pctStr01(v?: number | null): string {
-  return `${Math.round(prob01(v) * 100)}%`;
-}
 
 export default function HomeClient() {
   const [loading, setLoading] = useState(true);
@@ -54,7 +51,6 @@ export default function HomeClient() {
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
-  const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
 
   useEffect(() => {
@@ -83,7 +79,7 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  async function loadMainData() {
+  const loadMainData = async () => {
     setLoading(true);
     setError("");
 
@@ -132,49 +128,38 @@ export default function HomeClient() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  useEffect(() => {
-    loadMainData();
-  }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
-
-  async function loadFixtures(ignoreCache = false) {
+  const loadFixtures = async (ignoreCache = false) => {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
-      setLastFixturesUpdate(null);
       return;
     }
     try {
       setLoadingFixtures(true);
       const data = await getFixturesByLeague(Number(selectedLeague), ignoreCache ? 0 : 2);
       setLiveFixtures(data?.response || []);
-      setLastFixturesUpdate(Date.now());
     } catch (err) {
       console.error("Erro ao carregar fixtures:", err);
     } finally {
       setLoadingFixtures(false);
     }
-  }
+  };
+
+  useEffect(() => {
+    loadMainData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
 
   useEffect(() => {
     loadFixtures();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague]);
 
   function fixtureDateSafe(d?: string) {
     const t = d ? Date.parse(d) : NaN;
     return Number.isFinite(t) ? new Date(d as string) : new Date();
   }
-
-  const dcLabel = (dc: DCClass | undefined) =>
-    dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
-  const toPct = (v?: number | null) =>
-    typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
-  const oddFmt = (v?: number | null) =>
-    typeof v === "number" ? v.toFixed(2) : "—";
-  const bestCorrectScore = (p: any) =>
-    p?.correct_score_top3?.[0]?.score ??
-    p?.predictions?.correct_score?.best ??
-    "—";
 
   if (loading) {
     return (
