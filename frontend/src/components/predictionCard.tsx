@@ -3,18 +3,40 @@
 import Image from "next/image";
 
 type DCClass = 0 | 1 | 2;
-const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
-const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(v * 100)}%` : "—");
-const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
 
 const FALLBACK_SVG =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><rect width='100%' height='100%' fill='%23222'/></svg>";
+
+const dcLabel = (dc: DCClass | undefined) =>
+  dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+
+// normaliza 0..1 ou 0..100 para percentagem
+function prob01(v?: number | null): number {
+  if (typeof v !== "number" || !isFinite(v)) return 0;
+  return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
+}
+const toPct = (v?: number | null) => `${Math.round(prob01(v) * 100)}%`;
+const oddFmt = (v?: number | null) =>
+  typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
+
+// evita crash se vier undefined ou uma string inválida
+function safeDate(val?: string | number | Date) {
+  if (val === undefined || val === null) return new Date();
+  const d = new Date(val as any);
+  if (!isNaN(d.getTime())) return d;
+  // tenta fallback simples (ex.: "YYYY-MM-DD HH:MM" -> "YYYY-MM-DDTHH:MM")
+  if (typeof val === "string") {
+    const d2 = new Date(val.replace(" ", "T"));
+    if (!isNaN(d2.getTime())) return d2;
+  }
+  return new Date();
+}
 
 export interface PredictionCardProps {
   league?: string;
   league_name?: string;
   country?: string;
-  date: string;
+  date?: string; // pode vir ausente em alguns registos
   home_team: string;
   away_team: string;
   home_logo?: string;
@@ -65,7 +87,8 @@ export default function PredictionCard({
     predictions?.correct_score?.best ??
     "—";
 
-  const prob = (x?: { prob?: number; confidence?: number }) => x?.confidence ?? x?.prob;
+  const prob = (x?: { prob?: number; confidence?: number }) =>
+    x?.confidence ?? x?.prob;
 
   return (
     <div className="p-5 rounded-2xl border border-gray-800 bg-gray-950 hover:border-green-500 transition flex flex-col gap-4">
@@ -75,17 +98,36 @@ export default function PredictionCard({
           {league_name || league || "Liga"} {country ? `(${country})` : ""}
         </div>
         <div className="text-xs text-gray-500">
-          {new Date(date).toLocaleString("pt-PT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}
+          {safeDate(date).toLocaleString("pt-PT", {
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </div>
       </div>
 
       {/* teams */}
       <div className="flex items-center justify-center gap-3">
-        <Image src={home_logo || FALLBACK_SVG} alt={home_team || "Home"} width={28} height={28} className="w-7 h-7" />
+        <Image
+          src={home_logo || FALLBACK_SVG}
+          alt={home_team || "Home"}
+          width={28}
+          height={28}
+          className="w-7 h-7"
+          unoptimized
+        />
         <div className="text-white font-semibold text-center">{home_team}</div>
         <div className="text-gray-500">vs</div>
         <div className="text-white font-semibold text-center">{away_team}</div>
-        <Image src={away_logo || FALLBACK_SVG} alt={away_team || "Away"} width={28} height={28} className="w-7 h-7" />
+        <Image
+          src={away_logo || FALLBACK_SVG}
+          alt={away_team || "Away"}
+          width={28}
+          height={28}
+          className="w-7 h-7"
+          unoptimized
+        />
       </div>
 
       {/* correct score */}
@@ -99,7 +141,8 @@ export default function PredictionCard({
         <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
           <div className="text-xs text-gray-400">Winner</div>
           <div className="text-sm text-white">
-            {winnerLabel} <span className="text-gray-400 ml-1">({toPct(prob(predictions?.winner))})</span>
+            {winnerLabel}{" "}
+            <span className="text-gray-400 ml-1">({toPct(prob(predictions?.winner))})</span>
           </div>
         </div>
 
@@ -165,7 +208,9 @@ export default function PredictionCard({
 
       {/* detalhes */}
       <details className="rounded-xl bg-gray-900 border border-gray-800 p-3">
-        <summary className="cursor-pointer text-sm text-gray-200 select-none">Detalhes (Correct Score & Marcadores)</summary>
+        <summary className="cursor-pointer text-sm text-gray-200 select-none">
+          Detalhes (Correct Score & Marcadores)
+        </summary>
         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
             <div className="text-xs text-gray-400 mb-1">Top-3 Correct Score</div>
@@ -175,10 +220,14 @@ export default function PredictionCard({
                 .map((cs, idx) => (
                   <li key={idx} className="flex justify-between">
                     <span>{cs.score}</span>
-                    <span className="text-gray-400">{Math.round((cs.prob ?? 0) * 1000) / 10}%</span>
+                    <span className="text-gray-400">
+                      {Math.round(prob01(cs.prob) * 1000) / 10}%
+                    </span>
                   </li>
                 ))}
-              {(!(predictions?.correct_score?.top3 ?? []).length) && <li className="text-gray-500">—</li>}
+              {!(predictions?.correct_score?.top3 ?? []).length && (
+                <li className="text-gray-500">—</li>
+              )}
             </ul>
           </div>
           <div>
@@ -192,7 +241,7 @@ export default function PredictionCard({
                   <span className="text-gray-400">{sc.goals} golos</span>
                 </li>
               ))}
-              {(!(top_scorers ?? []).length) && <li className="text-gray-500">—</li>}
+              {!(top_scorers ?? []).length && <li className="text-gray-500">—</li>}
             </ul>
           </div>
         </div>
