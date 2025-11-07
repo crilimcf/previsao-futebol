@@ -5,7 +5,7 @@ import math
 import time
 import logging
 from datetime import date, timedelta
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import requests
 from src import config
@@ -22,10 +22,8 @@ PRED_PATH = "data/predict/predictions.json"
 
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-# Preferência de bookies
 PREFERRED_BOOKMAKERS = {"Pinnacle", "bet365", "Bet365", "1xBet", "1XBET"}
 
-# Limites
 REQUEST_TIMEOUT = 6
 MAX_GOALS = 6
 DAYS_AHEAD = 5
@@ -55,7 +53,6 @@ def _rset(key: str, value: str, ex: Optional[int] = GENERIC_CACHE_TTL):
     except Exception:
         pass
 
-
 # =========================
 # HTTP + CACHE + RATE-LIMIT
 # =========================
@@ -68,7 +65,7 @@ def _cache_key(url: str, params: Optional[Dict[str, Any]]) -> str:
 def _get_api(endpoint: str, params: Optional[Dict[str, Any]] = None) -> Any:
     """
     GET à API-Football com cache Redis e controlo de rate-limit.
-    Retry automático em 429 e 502, fallback para cache.
+    Retry automático em 429/502 e fallback para cache.
     """
     global _call_counter
 
@@ -106,7 +103,10 @@ def _get_api(endpoint: str, params: Optional[Dict[str, Any]] = None) -> Any:
                 return data
 
             elif r.status_code in (429, 502):
-                logger.warning(f"⚠️ API {endpoint} -> {r.status_code} Too Many Requests (tentativa {attempt+1}/{MAX_RETRIES}) — esperar {WAIT_SECONDS*(attempt+1):.1f}s...")
+                logger.warning(
+                    f"⚠️ API {endpoint} -> {r.status_code} Too Many Requests (tentativa {attempt+1}/{MAX_RETRIES}) "
+                    f"— esperar {WAIT_SECONDS*(attempt+1):.1f}s..."
+                )
                 time.sleep(WAIT_SECONDS * (attempt + 1))
                 continue
 
@@ -131,9 +131,8 @@ def _get_api(endpoint: str, params: Optional[Dict[str, Any]] = None) -> Any:
             return _get_api(endpoint, params)
     return []
 
-
 # =========================
-# CARREGAR LIGAS
+# LIGAS
 # =========================
 def _load_target_league_ids() -> List[int]:
     path = "config/leagues.json"
@@ -169,9 +168,49 @@ def _load_target_league_ids() -> List[int]:
         ids = [39, 140, 135, 78, 61, 94, 88, 2]
     return ids
 
+# ======================================================
+# EXPORT PRINCIPAL (usado pelo /meta/update)
+# ======================================================
+def fetch_today_matches() -> Dict[str, Any]:
+    """
+    Busca fixtures (hoje + próximos dias), odds e estatísticas,
+    e guarda em data/predict/predictions.json.
+    """
+    if not API_KEY:
+        msg = "❌ API_FOOTBALL_KEY não definida."
+        logger.error(msg)
+        return {"status": "error", "detail": msg, "total": 0}
 
-# ======================================================
-# TODO o resto do ficheiro (funções _fixtures_by_date, 
-# _team_stats, _odds_by_fixture, Poisson, etc.) permanece
-# igual ao teu código original — não precisas mexer.
-# ======================================================
+    target_leagues = set(_load_target_league_ids())
+    fixtures_all: List[Dict[str, Any]] = []
+
+    for d in range(DAYS_AHEAD):
+        ymd = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
+        logger.info(f"📅 A obter fixtures para {ymd}...")
+        day_fixtures = _get_api("fixtures", {"date": ymd, "season": SEASON}) or []
+        for f in day_fixtures:
+            lg = f.get("league") or {}
+            if not lg.get("id"):
+                continue
+            if target_leagues and int(lg["id"]) not in target_leagues:
+                continue
+            fixtures_all.append(f)
+
+    logger.info(f"📊 Total fixtures obtidos: {len(fixtures_all)}")
+
+    # Guardar local
+    os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
+    with open(PRED_PATH, "w", encoding="utf-8") as fp:
+        json.dump(fixtures_all, fp, ensure_ascii=False, indent=2)
+
+    try:
+        config.update_last_update()
+    except Exception as e:
+        logger.warning(f"⚠️ Falha ao atualizar Redis: {e}")
+
+    logger.info(f"✅ {len(fixtures_all)} fixtures salvas em {PRED_PATH}")
+    return {"status": "ok", "total": len(fixtures_all)}
+
+# Teste manual (local)
+if __name__ == "__main__":
+    print(fetch_today_matches())
