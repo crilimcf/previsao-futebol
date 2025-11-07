@@ -13,23 +13,19 @@ export const API_TOKEN =
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 12_000,
+  timeout: 15000,
   headers: {
     Accept: "application/json",
-    "Cache-Control": "no-cache",
-    Pragma: "no-cache",
   },
 });
 
 export const authApi = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 20_000,
+  timeout: 20000,
   headers: {
     Authorization: `Bearer ${API_TOKEN}`,
     "Content-Type": "application/json",
     Accept: "application/json",
-    "Cache-Control": "no-cache",
-    Pragma: "no-cache",
   },
 });
 
@@ -38,9 +34,7 @@ function withTs(params?: Record<string, any>) {
   return { ...(params || {}), _ts: Date.now() };
 }
 
-// ---------------------------
-// Tipos úteis (frontend)
-// ---------------------------
+// --------- Tipos usados no frontend ----------
 export type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
 
 export type OddsMap = {
@@ -51,37 +45,38 @@ export type OddsMap = {
 };
 
 export type Prediction = {
-  match_id: number | string;
-  league_id: number | string;
+  match_id?: number | string;
+  fixture_id?: number | string;
+  league_id?: number | string;
   league?: string;
   league_name?: string;
   country?: string;
-  date: string; // ISO
-  home_team: string;
-  away_team: string;
+  date?: string; // ISO
+  home_team?: string;
+  away_team?: string;
   home_logo?: string;
   away_logo?: string;
   odds?: OddsMap;
-  predictions: {
-    winner: { class: 0 | 1 | 2; confidence?: number; prob?: number };
-    over_2_5: { class: 0 | 1; confidence?: number; prob?: number };
-    over_1_5: { class: 0 | 1; confidence?: number; prob?: number };
-    double_chance: { class: DCClass; confidence?: number; prob?: number };
-    btts: { class: 0 | 1; confidence?: number; prob?: number };
-    correct_score?: { best?: string; top3?: { score: string; prob: number }[] };
-  };
-  correct_score_top3?: { score: string; prob: number }[];
-  top_scorers?: { player: string; team: string; goals: number }[];
-  // >>> novo: marcadores prováveis por jogo
-  predicted_scorers?: {
-    home?: { player: string; prob: number; xg: number; position?: string }[];
-    away?: { player: string; prob: number; xg: number; position?: string }[];
-  };
+  predictions?: any;
+  // quando vem “bruto” da API-Football:
+  fixture?: any;
+  leagueObj?: any;
+  leagueData?: any;
+  teams?: any;
 };
 
 export type LastUpdate = { last_update: string | null };
-
 export type LeagueItem = { id: number | string; name: string; country?: string };
+
+// --------- Normalização de respostas ----------
+function normalizeList(data: any): any[] {
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.response)) return data.response;
+  if (Array.isArray(data?.data)) return data.data;
+  if (Array.isArray(data?.items)) return data.items;
+  if (Array.isArray(data?.result)) return data.result;
+  return [];
+}
 
 // =====================================================
 // 📊 Funções principais para o frontend consumir
@@ -92,19 +87,45 @@ export async function getPredictions(
   params?: { date?: string; league_id?: number | string }
 ): Promise<Prediction[]> {
   try {
-    const normalized = params
-      ? {
-          ...params,
-          league_id:
-            params.league_id !== undefined && params.league_id !== null
-              ? String(params.league_id)
-              : undefined,
-        }
-      : undefined;
+    const normalizedParams =
+      params && Object.keys(params).length
+        ? {
+            ...params,
+            league_id:
+              params.league_id !== undefined && params.league_id !== null
+                ? String(params.league_id)
+                : undefined,
+          }
+        : undefined;
 
-    const r = await api.get("/predictions", { params: withTs(normalized) });
-    return Array.isArray(r.data) ? (r.data as Prediction[]) : [];
-  } catch {
+    // 1ª tentativa: com os filtros recebidos
+    const r1 = await api.get("/predictions", { params: withTs(normalizedParams) });
+    let list = normalizeList(r1.data);
+
+    // Debug leve no browser
+    if (typeof window !== "undefined") {
+      console.debug(
+        "[getPredictions] req1",
+        `${API_BASE_URL}/predictions`,
+        normalizedParams,
+        "len=",
+        list.length
+      );
+    }
+
+    // Fallback: se pediste por data e veio vazio, tenta sem filtros (para não ficar o ecrã em branco)
+    if ((!list || list.length === 0) && normalizedParams && normalizedParams.date) {
+      const r2 = await api.get("/predictions", { params: withTs() });
+      const list2 = normalizeList(r2.data);
+      if (typeof window !== "undefined") {
+        console.debug("[getPredictions] fallback sem filtros -> len=", list2.length);
+      }
+      list = list2;
+    }
+
+    return (list || []) as Prediction[];
+  } catch (err) {
+    if (typeof window !== "undefined") console.error("[getPredictions] erro:", err);
     return [];
   }
 }
@@ -156,14 +177,7 @@ export async function getApiHealth() {
 export async function getLeagues(): Promise<LeagueItem[]> {
   try {
     const r = await api.get("/meta/leagues", { params: withTs() });
-    const data = r?.data as any;
-
-    if (Array.isArray(data)) return data as LeagueItem[];
-    if (data && Array.isArray(data.items)) return data.items as LeagueItem[];
-    if (data && Array.isArray(data.data)) return data.data as LeagueItem[];
-    if (data && Array.isArray(data.leagues)) return data.leagues as LeagueItem[];
-
-    return [];
+    return normalizeList(r?.data);
   } catch {
     return [];
   }

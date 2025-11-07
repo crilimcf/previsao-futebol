@@ -19,7 +19,6 @@ import {
   type LeagueItem,
 } from "@/services/api";
 
-// ---- Utils de data
 function ymd(d: Date) {
   const off = d.getTimezoneOffset();
   const local = new Date(d.getTime() - off * 60000);
@@ -45,7 +44,6 @@ export default function HomeClient() {
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
-  // 1) Buscar ligas curadas ao backend (para dropdown)
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
@@ -58,24 +56,16 @@ export default function HomeClient() {
     })();
   }, []);
 
-  // conj. de IDs curados (para eventual filtro quando NÃO for “all”)
-  const allowedLeagueIds = useMemo(
-    () => new Set<string>(backendLeagues.map((x) => String(x.id))),
-    [backendLeagues]
-  );
-
-  // Dropdown com “Todas” + curadas
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
     const arr = backendLeagues.map((x) => ({ id: String(x.id), name: x.name }));
     return [{ id: "all", name: "🌍 Todas as Ligas" }, ...arr];
   }, [backendLeagues]);
 
-  // Sincroniza estado inicial com querystring (uma vez)
+  // hidratar estado inicial por querystring
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
     if (qpLeague) setSelectedLeague(qpLeague);
-
     if (qpDate) {
       const today = ymd(new Date());
       const tomorrow = ymd(new Date(Date.now() + 86400000));
@@ -92,7 +82,7 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Reflete filtros na URL (para partilha/bookmark)
+  // refletir filtros na URL
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
@@ -102,7 +92,6 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague]);
 
-  // ---- Carrega previsões + stats + lastUpdate
   const loadMainData = useCallback(async () => {
     setLoading(true);
     setError("");
@@ -116,24 +105,9 @@ export default function HomeClient() {
       const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
       const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
 
-      // ⚠️ Regra DOURADA:
-      // - Se “Todas as Ligas”: NUNCA filtrar por curadas — mostra tudo o que vier do backend
-      // - Se liga específica E houver lista de curadas: filtra por segurança
-      let finalPreds = predsArray;
-      if (selectedLeague !== "all" && allowedLeagueIds.size > 0) {
-        finalPreds = predsArray.filter((p: any) =>
-          allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
-        );
-      }
+      // NÃO filtramos quando "Todas as Ligas"
+      setPredictions(predsArray);
 
-      // fallback de segurança: se por algum motivo vazio, mostra preds brutos
-      if (finalPreds.length === 0 && predsArray.length > 0) {
-        finalPreds = predsArray;
-      }
-
-      setPredictions(finalPreds);
-
-      // tipagem defensiva evita o erro do Vercel
       const s: any = statsData;
       setStats(s && typeof s === "object" && Object.keys(s).length > 0 ? (s as StatsType) : null);
 
@@ -155,13 +129,11 @@ export default function HomeClient() {
     } finally {
       setLoading(false);
     }
-  }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
+  }, [selectedLeague, selectedDateISO]);
 
   useEffect(() => {
     loadMainData();
   }, [loadMainData]);
-
-  // ---- UI
 
   if (loading) {
     return (
@@ -201,7 +173,6 @@ export default function HomeClient() {
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas (curadas) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -214,7 +185,6 @@ export default function HomeClient() {
             ))}
           </select>
 
-          {/* Datas */}
           <div className="flex gap-3 md:gap-4">
             {dateTabs.map((d) => (
               <button
@@ -227,7 +197,6 @@ export default function HomeClient() {
             ))}
           </div>
 
-          {/* Atualizar */}
           <button
             onClick={async () => {
               try {
@@ -244,13 +213,11 @@ export default function HomeClient() {
             {loading ? "⏳ A atualizar…" : "🔁 Atualizar"}
           </button>
 
-          {/* Limpar */}
           <button
             onClick={() => {
               setSelectedLeague("all");
               setSelectedDateKey("today");
               setPredictions([]);
-              setError("");
               const params = new URLSearchParams();
               params.set("date", ymd(new Date()));
               router.replace(`?${params.toString()}`);
@@ -263,7 +230,7 @@ export default function HomeClient() {
           </button>
         </div>
 
-        {/* Lista de jogos */}
+        {/* Cards */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {predictions.map((p: any) => (
@@ -304,8 +271,7 @@ export default function HomeClient() {
 
                 {p.predictions && Object.keys(p.predictions).length > 0 ? (
                   <div className="rounded-xl bg-white/5 border border-white/10 p-3 text-sm text-gray-300">
-                    {/* espaço para tu recompores os mercados quando os dados de predictions estiverem cheios */}
-                    Tip sugerida disponível.
+                    Tip disponível.
                   </div>
                 ) : (
                   <div className="text-xs text-gray-500">Sem tip calculada para este jogo.</div>
