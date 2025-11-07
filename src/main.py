@@ -10,10 +10,10 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src import config
 
-# 👉 routers
+# 👉 routers existentes
 from src.api_routes import health as health_routes
 from src.api_routes import predict as predict_routes
-from src.api_routes import meta as meta_routes  # <— NOVO
+from src.api_routes import meta as meta_routes  # <— existe
 
 # ============================================================
 # ⚙️ LOGGING
@@ -88,7 +88,16 @@ api.add_middleware(
 # ============================================================
 api.include_router(health_routes.router)
 api.include_router(predict_routes.router)
-api.include_router(meta_routes.router)  # <— NOVO
+api.include_router(meta_routes.router)
+
+# 🔗 Rota experimental v2 (Bivariate Poisson) — segura
+try:
+    # ficheiro: src/api/predictions_v2.py  (com router = APIRouter())
+    from src.api import predictions_v2
+    api.include_router(predictions_v2.router)
+    logger.info("✅ predictions_v2 ativado (/predictions/v2)")
+except Exception as e:
+    logger.warning(f"⚠️ predictions_v2 desativado: {e}")
 
 # ============================================================
 # 🩺 Healthcheck
