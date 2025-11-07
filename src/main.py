@@ -63,20 +63,18 @@ def main(
 # ============================================================
 # 🌍 FASTAPI APP
 # ============================================================
-api = FastAPI(title="Previsão Futebol API", version="1.0.6")
+api = FastAPI(title="Previsão Futebol API", version="1.0.7")
 
 # ============================================================
 # 🔓 CORS — Corrigido para suportar Vercel e localhost
 # ============================================================
 ALLOWED_ORIGINS = [
     "https://previsao-futebol.vercel.app",
-    "https://*.vercel.app",
     "http://localhost:3000",
 ]
-
 api.add_middleware(
     CORSMiddleware,
-    # Durante testes deixamos aberto; depois pode-se restringir para ALLOWED_ORIGINS
+    # Em produção podes trocar para allow_origins=ALLOWED_ORIGINS
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -84,18 +82,31 @@ api.add_middleware(
 )
 
 # ============================================================
-# 🔗 Rotas
+# 🔗 Rotas (v1)
 # ============================================================
 api.include_router(health_routes.router)
 api.include_router(predict_routes.router)
 api.include_router(meta_routes.router)
 
+# ============================================================
 # 🔗 Rota experimental v2 (Bivariate Poisson) — segura
+#    Importa do sítio CERTO: src/api_routes/predictions_v2.py
+# ============================================================
 try:
-    # ficheiro: src/api/predictions_v2.py  (com router = APIRouter())
-    from src.api import predictions_v2
-    api.include_router(predictions_v2.router)
-    logger.info("✅ predictions_v2 ativado (/predictions/v2)")
+    from src.api_routes import predictions_v2 as predictions_v2_routes
+
+    # Se o router NÃO tiver prefix definido no ficheiro, aplicamos aqui:
+    if getattr(predictions_v2_routes, "router", None) is not None:
+        r = predictions_v2_routes.router
+        # Só adiciona prefix se o router não tiver um
+        has_prefix = any(getattr(route, "path", "").startswith("/predictions/v2") for route in getattr(r, "routes", []))
+        if has_prefix:
+            api.include_router(r, tags=["predictions-v2"])
+        else:
+            api.include_router(r, prefix="/predictions/v2", tags=["predictions-v2"])
+        logger.info("✅ predictions_v2 ativado (/predictions/v2)")
+    else:
+        raise RuntimeError("router não encontrado em predictions_v2")
 except Exception as e:
     logger.warning(f"⚠️ predictions_v2 desativado: {e}")
 
@@ -148,7 +159,7 @@ def root():
     return {
         "status": "online",
         "service": "previsao-futebol",
-        "version": "1.0.6",
+        "version": "1.0.7",
         "docs": "/docs",
         "health": "/healthz",
         "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
