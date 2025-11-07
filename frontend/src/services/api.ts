@@ -72,7 +72,6 @@ export type Prediction = {
   };
   correct_score_top3?: { score: string; prob: number }[];
   top_scorers?: { player: string; team: string; goals: number }[];
-  // >>> novo: marcadores prováveis por jogo
   predicted_scorers?: {
     home?: { player: string; prob: number; xg: number; position?: string }[];
     away?: { player: string; prob: number; xg: number; position?: string }[];
@@ -81,7 +80,12 @@ export type Prediction = {
 
 export type LastUpdate = { last_update: string | null };
 
-export type LeagueItem = { id: number | string; name: string; country?: string };
+export type LeagueItem = {
+  id: number | string;
+  name: string;
+  country?: string;
+  type?: "League" | "Cup" | string;
+};
 
 // =====================================================
 // 📊 Funções principais para o frontend consumir
@@ -136,9 +140,9 @@ export async function getLastUpdate(): Promise<LastUpdate> {
   }
 }
 
-/** Força atualização manual das previsões (endpoint protegido). */
-export async function triggerUpdate() {
-  const r = await authApi.post("/meta/update");
+/** (ADMIN-ONLY) Força atualização do backend — não usar no frontend público. */
+export async function triggerUpdate(body?: any) {
+  const r = await authApi.post("/meta/update", body ?? {});
   return r.data;
 }
 
@@ -152,18 +156,45 @@ export async function getApiHealth() {
   }
 }
 
-/** Lista de ligas conhecidas pelo backend. Aceita vários formatos. */
-export async function getLeagues(): Promise<LeagueItem[]> {
+/**
+ * ✅ Lista curada de ligas/taças servida pelo TEU backend a partir de ficheiros locais:
+ *    GET /leagues?season=2024|2025 -> config/leagues_${season}.json
+ * NUNCA chama a API-Football diretamente.
+ */
+export async function getLeagues(season?: string): Promise<LeagueItem[]> {
   try {
-    const r = await api.get("/meta/leagues", { params: withTs() });
+    const s = season ?? (process.env.NEXT_PUBLIC_SEASON ?? "2024");
+    const r = await api.get("/leagues", { params: withTs({ season: s }) });
     const data = r?.data as any;
 
-    if (Array.isArray(data)) return data as LeagueItem[];
-    if (data && Array.isArray(data.items)) return data.items as LeagueItem[];
-    if (data && Array.isArray(data.data)) return data.data as LeagueItem[];
-    if (data && Array.isArray(data.leagues)) return data.leagues as LeagueItem[];
+    // Normalização resiliente a diferentes formatos
+    const arr: any[] = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.items)
+      ? data.items
+      : Array.isArray(data?.data)
+      ? data.data
+      : Array.isArray(data?.leagues)
+      ? data.leagues
+      : [];
 
-    return [];
+    // Garantir {id, name, country?, type?}
+    const norm: LeagueItem[] = arr
+      .map((x) => ({
+        id: String(x.id ?? x.league_id ?? x.code ?? ""),
+        name: String(x.name ?? x.league ?? "").trim(),
+        country: x.country ? String(x.country) : undefined,
+        type: x.type ? String(x.type) : undefined,
+      }))
+      .filter((x) => x.id && x.name);
+
+    // (Opcional) ordenar por país e nome
+    norm.sort((a, b) => {
+      const ca = (a.country ?? "").localeCompare(b.country ?? "", "pt-PT");
+      return ca !== 0 ? ca : a.name.localeCompare(b.name, "pt-PT");
+    });
+
+    return norm;
   } catch {
     return [];
   }

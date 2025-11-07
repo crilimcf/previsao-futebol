@@ -13,7 +13,6 @@ import {
   getPredictions,
   getStats,
   getLastUpdate,
-  triggerUpdate,
   type Prediction,
   getLeagues,
   type LeagueItem,
@@ -46,7 +45,6 @@ const dateTabs = [
 /*   ✨ Helpers de destaque      */
 /* ----------------------------- */
 function prob01(v?: number | null): number {
-  // aceita 0..1 (preferido) ou 0..100
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
 }
@@ -55,7 +53,6 @@ function pctStr01(v?: number | null): string {
 }
 function tileClass(prob: number, isMax: boolean): string {
   const p = Math.round(prob * 100);
-  // máximo do conjunto -> ring e border mais forte
   if (isMax) return "bg-emerald-600/15 border-emerald-500/60 ring-2 ring-emerald-400";
   if (p >= 70) return "bg-emerald-500/10 border-emerald-400/40";
   if (p >= 60) return "bg-amber-500/10 border-amber-400/40";
@@ -96,7 +93,7 @@ export default function HomeClient() {
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues(); // <- deve devolver apenas as ligas curadas
+        const ls = await getLeagues(); // <- só as ligas curadas
         setBackendLeagues(ls ?? []);
       } catch {
         setBackendLeagues([]);
@@ -104,19 +101,28 @@ export default function HomeClient() {
     })();
   }, []);
 
-  // Conjunto de IDs permitidos (para "cinto e suspensórios" no render das previsões)
+  // limpar possíveis caches antigas do browser (uma vez)
+  useEffect(() => {
+    try {
+      ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
+        localStorage.removeItem(k)
+      );
+    } catch {}
+  }, []);
+
+  // conjunto de IDs permitidos (filtro extra em previsões)
   const allowedLeagueIds = useMemo(
     () => new Set<string>(backendLeagues.map((x) => String(x.id))),
     [backendLeagues]
   );
 
-  // Dropdown: só ligas curadas + opção "Todas" (agregado das curadas)
+  // dropdown de ligas (apenas curadas)
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
     const arr = backendLeagues.map((x) => ({ id: String(x.id), name: x.name }));
     return [{ id: "all", name: "🌍 Todas as Ligas" }, ...arr];
   }, [backendLeagues]);
 
-  // Sincroniza estado inicial com query params
+  // estado inicial via query params
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
@@ -138,7 +144,7 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Reflete filtros na URL
+  // reflete filtros na URL
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
@@ -148,7 +154,7 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague]);
 
-  // Carrega previsões + stats + lastUpdate
+  // carregar previsões + stats + lastUpdate
   async function loadMainData() {
     setLoading(true);
     setError("");
@@ -162,7 +168,6 @@ export default function HomeClient() {
       const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
       const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
 
-      // 🔒 Filtra previsões por ligas curadas (se houver lista do backend)
       const filteredPreds =
         allowedLeagueIds.size > 0
           ? predsArray.filter((p: any) => allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id)))
@@ -196,7 +201,7 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
 
-  // Fixtures reais por liga (proxy)
+  // fixtures reais por liga (proxy) — AGORA por data
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -205,7 +210,11 @@ export default function HomeClient() {
     }
     try {
       setLoadingFixtures(true);
-      const data = await getFixturesByLeague(Number(selectedLeague), ignoreCache ? 0 : 5);
+      const data = await getFixturesByLeague(
+        Number(selectedLeague),
+        selectedDateISO,
+        ignoreCache ? 0 : 5
+      );
       setLiveFixtures(data?.response || []);
       setLastFixturesUpdate(Date.now());
     } catch (err) {
@@ -218,7 +227,7 @@ export default function HomeClient() {
   useEffect(() => {
     loadFixtures();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLeague]);
+  }, [selectedLeague, selectedDateISO]);
 
   // Helpers UI
   const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
@@ -295,17 +304,11 @@ export default function HomeClient() {
             ))}
           </div>
 
-          {/* Atualizar (único botão) */}
+          {/* Atualizar (refresca dados locais + fixtures da liga) */}
           <button
             onClick={async () => {
-              if (selectedLeague === "all") {
-                try {
-                  await triggerUpdate();
-                  await loadMainData();
-                } catch (e) {
-                  console.error(e);
-                }
-              } else {
+              await loadMainData();
+              if (selectedLeague !== "all") {
                 await loadFixtures(true);
               }
             }}
@@ -319,6 +322,11 @@ export default function HomeClient() {
           {/* 🧹 Limpar */}
           <button
             onClick={() => {
+              try {
+                ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
+                  localStorage.removeItem(k)
+                );
+              } catch {}
               setSelectedLeague("all");
               setSelectedDateKey("today");
               setPredictions([]);
@@ -341,37 +349,43 @@ export default function HomeClient() {
         {selectedLeague !== "all" && (
           <div className="card p-6 mb-10">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-emerald-400">Jogos Reais (via API-Football)</h2>
+              <h2 className="text-lg font-semibold text-emerald-400">Jogos do dia</h2>
               <span className="text-xs text-gray-500">Use o botão “Atualizar” no topo</span>
             </div>
 
             {loadingFixtures && (
-              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">A carregar jogos reais…</div>
+              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">A carregar jogos…</div>
             )}
 
-            {liveFixtures.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {liveFixtures.map((f: any) => (
-                  <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
-                    <div className="flex items-center justify-center gap-3 mb-2">
-                      <Image src={f.teams.home.logo} alt="" width={24} height={24} />
-                      <span className="text-white font-medium">{f.teams.home.name}</span>
-                      <span className="text-gray-400">vs</span>
-                      <span className="text-white font-medium">{f.teams.away.name}</span>
-                      <Image src={f.teams.away.logo} alt="" width={24} height={24} />
+            {(() => {
+              const fixturesToday = (liveFixtures || []).filter((f: any) =>
+                new Date(f.fixture?.date).toISOString().slice(0, 10) === selectedDateISO
+              );
+
+              return fixturesToday.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {fixturesToday.map((f: any) => (
+                    <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
+                      <div className="flex items-center justify-center gap-3 mb-2">
+                        <Image src={f.teams.home.logo} alt="" width={24} height={24} />
+                        <span className="text-white font-medium">{f.teams.home.name}</span>
+                        <span className="text-gray-400">vs</span>
+                        <span className="text-white font-medium">{f.teams.away.name}</span>
+                        <Image src={f.teams.away.logo} alt="" width={24} height={24} />
+                      </div>
+                      <p className="text-sm text-center text-gray-400">
+                        {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
+                      </p>
+                      <p className="text-xs text-center text-gray-500 mt-1">
+                        {f.league.name} ({f.league.country})
+                      </p>
                     </div>
-                    <p className="text-sm text-center text-gray-400">
-                      {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
-                    </p>
-                    <p className="text-xs text-center text-gray-500 mt-1">
-                      {f.league.name} ({f.league.country})
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              !loadingFixtures && <p className="text-center text-gray-400 mt-4">Nenhum jogo encontrado.</p>
-            )}
+                  ))}
+                </div>
+              ) : (
+                !loadingFixtures && <p className="text-center text-gray-400 mt-4">Sem jogos para esta data.</p>
+              );
+            })()}
 
             {lastFixturesUpdate && (
               <div className="text-xs text-center text-gray-500 mt-4">
@@ -400,14 +414,12 @@ export default function HomeClient() {
               const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
               const oddsBTTS = p?.odds?.btts ?? {};
 
-              // 🔎 percentagens normalizadas (0..1)
               const prWinner = prob01(winner?.confidence ?? winner?.prob);
               const prDC = prob01(dc?.confidence ?? dc?.prob);
               const prO25 = prob01(over25?.confidence ?? over25?.prob);
               const prO15 = prob01(over15?.confidence ?? over15?.prob);
 
-              // ⭐ mercado "top" (maior % entre os quatro)
-              const marketEntries: [keyof any, number][] = [
+              const marketEntries: [string, number][] = [
                 ["winner", prWinner],
                 ["double", prDC],
                 ["over25", prO25],
@@ -509,7 +521,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* BTTS (mantive, sem competir no TOP pedido) */}
+                    {/* BTTS (fora do ranking TOP) */}
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
