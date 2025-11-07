@@ -32,44 +32,44 @@
       "home": 1,
       "away": 0
     },
-    "confidence": 0.6356,
+    "confidence": 0.6456,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.6356,
-        "prob": 0.6356
+        "confidence": 0.6456,
+        "prob": 0.6456
       },
       "double_chance": {
         "class": 0,
-        "confidence": 0.8482
+        "confidence": 0.8567
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.5191,
-        "prob": 0.5191
+        "confidence": 0.5094,
+        "prob": 0.5094
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7611
+        "confidence": 0.754
       },
       "btts": {
         "class": 0,
-        "confidence": 0.4788,
-        "prob": 0.4788
+        "confidence": 0.4635,
+        "prob": 0.4635
       }
     },
     "correct_score_top3": [
       {
         "score": "1-0",
-        "prob": 0.1233
+        "prob": 0.1283
       },
       {
         "score": "2-0",
-        "prob": 0.1196
+        "prob": 0.1244
       },
       {
         "score": "1-1",
-        "prob": 0.1011
+        "prob": 0.1001
       }
     ],
     "top_scorers": [
@@ -135,32 +135,32 @@
       "away": [
         {
           "player": "Guilherme",
-          "prob": 0.2296,
-          "xg": 0.261,
+          "prob": 0.2198,
+          "xg": 0.248,
           "position": "Attacker"
         },
         {
           "player": "Á. Barreal",
-          "prob": 0.1086,
-          "xg": 0.115,
+          "prob": 0.1036,
+          "xg": 0.109,
           "position": "Midfielder"
         },
         {
           "player": "Neymar",
-          "prob": 0.0858,
-          "xg": 0.09,
+          "prob": 0.0818,
+          "xg": 0.085,
           "position": "Attacker"
         },
         {
           "player": "Thaciano",
-          "prob": 0.0713,
-          "xg": 0.074,
+          "prob": 0.068,
+          "xg": 0.07,
           "position": "Midfielder"
         },
         {
           "player": "L. Díaz",
-          "prob": 0.0604,
-          "xg": 0.062,
+          "prob": 0.0576,
+          "xg": 0.059,
           "position": "Attacker"
         }
       ]
@@ -179,20 +179,20 @@
     "odds": {
       "winner": {
         "home": 1.65,
-        "draw": 3.6,
-        "away": 5.25
+        "draw": 3.5,
+        "away": 5.5
       },
       "over_2_5": {
-        "over": 4.5,
-        "under": 1.18
+        "over": 5.0,
+        "under": 1.17
       },
       "over_1_5": {
-        "over": 2.1,
-        "under": 1.67
+        "over": 2.2,
+        "under": 1.62
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 4.33,
+        "no": 1.2
       }
     },
     "predicted_score": {
@@ -345,17 +345,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/2936.png",
     "odds": {
       "winner": {
-        "home": 2.25,
-        "draw": 3.3,
-        "away": 2.75
+        "home": 2.2,
+        "draw": 3.4,
+        "away": 2.88
       },
       "over_2_5": {
-        "over": 4.0,
-        "under": 1.22
+        "over": 3.75,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 1.91,
-        "under": 1.8
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
         "yes": 3.0,
@@ -679,8 +679,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/1313.png",
     "odds": {
       "winner": {
-        "home": 2.55,
-        "draw": 3.3,
+        "home": 2.5,
+        "draw": 3.4,
         "away": 2.7
       },
       "over_2_5": {
@@ -688,8 +688,8 @@
         "under": 1.25
       },
       "over_1_5": {
-        "over": 1.8,
-        "under": 1.91
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
         "yes": 2.75,
@@ -846,9 +846,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/171.png",
     "odds": {
       "winner": {
-        "home": 2.55,
+        "home": 2.5,
         "draw": 3.6,
-        "away": 2.55
+        "away": 2.6
       },
       "over_2_5": {
         "over": 3.5,
@@ -859,8 +859,8 @@
         "under": 1.91
       },
       "btts": {
-        "yes": 2.75,
-        "no": 1.4
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -1013,21 +1013,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/2932.png",
     "odds": {
       "winner": {
-        "home": 17.0,
-        "draw": 8.0,
+        "home": 12.0,
+        "draw": 9.0,
         "away": 1.12
       },
       "over_2_5": {
-        "over": 2.1,
-        "under": 1.67
+        "over": 2.0,
+        "under": 1.73
       },
       "over_1_5": {
-        "over": 1.57,
-        "under": 2.25
+        "over": 1.53,
+        "under": 2.38
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -1335,17 +1335,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/2073.png",
     "odds": {
       "winner": {
-        "home": 2.05,
+        "home": 2.1,
         "draw": 3.6,
-        "away": 3.4
+        "away": 3.2
       },
       "over_2_5": {
-        "over": 3.5,
-        "under": 1.28
+        "over": 3.75,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 1.8,
-        "under": 1.91
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
         "yes": 2.75,
@@ -1502,9 +1502,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/3012.png",
     "odds": {
       "winner": {
-        "home": 1.8,
+        "home": 1.75,
         "draw": 3.6,
-        "away": 4.5
+        "away": 4.75
       },
       "over_2_5": {
         "over": 5.5,
@@ -1669,9 +1669,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/87.png",
     "odds": {
       "winner": {
-        "home": 1.9,
-        "draw": 3.3,
-        "away": 4.1
+        "home": 1.85,
+        "draw": 3.4,
+        "away": 4.2
       },
       "over_2_5": {
         "over": 5.0,
@@ -2005,19 +2005,19 @@
       "winner": {
         "home": 2.1,
         "draw": 3.1,
-        "away": 3.75
+        "away": 3.7
       },
       "over_2_5": {
-        "over": 6.0,
-        "under": 1.12
+        "over": 6.5,
+        "under": 1.11
       },
       "over_1_5": {
-        "over": 2.5,
-        "under": 1.5
+        "over": 2.62,
+        "under": 1.44
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 4.33,
+        "no": 1.2
       }
     },
     "predicted_score": {
@@ -2183,8 +2183,8 @@
         "under": 2.2
       },
       "btts": {
-        "yes": 3.4,
-        "no": 1.3
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -2339,15 +2339,15 @@
       "winner": {
         "home": 1.62,
         "draw": 3.7,
-        "away": 5.5
+        "away": 5.75
       },
       "over_2_5": {
         "over": 1.57,
         "under": 2.25
       },
       "over_1_5": {
-        "over": 2.1,
-        "under": 1.67
+        "over": 2.2,
+        "under": 1.62
       },
       "btts": {
         "yes": 3.75,
@@ -2504,17 +2504,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/93.png",
     "odds": {
       "winner": {
-        "home": 3.4,
+        "home": 3.25,
         "draw": 3.0,
-        "away": 2.2
+        "away": 2.35
       },
       "over_2_5": {
         "over": 6.5,
         "under": 1.11
       },
       "over_1_5": {
-        "over": 2.5,
-        "under": 1.5
+        "over": 2.62,
+        "under": 1.44
       },
       "btts": {
         "yes": 4.0,
@@ -2839,20 +2839,20 @@
     "odds": {
       "winner": {
         "home": 1.91,
-        "draw": 3.25,
-        "away": 4.2
+        "draw": 3.2,
+        "away": 4.33
       },
       "over_2_5": {
-        "over": 6.0,
-        "under": 1.12
+        "over": 7.0,
+        "under": 1.1
       },
       "over_1_5": {
-        "over": 2.5,
-        "under": 1.5
+        "over": 2.62,
+        "under": 1.44
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 4.33,
+        "no": 1.2
       }
     },
     "predicted_score": {
@@ -3007,7 +3007,7 @@
       "winner": {
         "home": 3.0,
         "draw": 3.1,
-        "away": 2.4
+        "away": 2.45
       },
       "over_2_5": {
         "over": 6.0,
@@ -3177,12 +3177,12 @@
         "away": 3.2
       },
       "over_2_5": {
-        "over": 4.33,
-        "under": 1.2
+        "over": 4.0,
+        "under": 1.22
       },
       "over_1_5": {
-        "over": 2.0,
-        "under": 1.73
+        "over": 1.91,
+        "under": 1.8
       },
       "btts": {
         "yes": 3.0,
@@ -3506,7 +3506,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/600.png",
     "odds": {
       "winner": {
-        "home": 2.38,
+        "home": 2.4,
         "draw": 3.5,
         "away": 2.75
       },
@@ -3674,20 +3674,20 @@
     "odds": {
       "winner": {
         "home": 2.05,
-        "draw": 3.5,
-        "away": 3.4
+        "draw": 3.4,
+        "away": 3.6
       },
       "over_2_5": {
-        "over": 5.0,
-        "under": 1.17
+        "over": 5.5,
+        "under": 1.14
       },
       "over_1_5": {
-        "over": 2.2,
-        "under": 1.62
+        "over": 2.25,
+        "under": 1.57
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -3840,7 +3840,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/548.png",
     "odds": {
       "winner": {
-        "home": 2.75,
+        "home": 2.7,
         "draw": 3.2,
         "away": 2.7
       },
@@ -4007,9 +4007,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/240.png",
     "odds": {
       "winner": {
-        "home": 2.0,
+        "home": 1.95,
         "draw": 3.6,
-        "away": 3.5
+        "away": 3.7
       },
       "over_2_5": {
         "over": 4.5,
@@ -4985,9 +4985,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/33.png",
     "odds": {
       "winner": {
-        "home": 2.7,
+        "home": 2.6,
         "draw": 3.6,
-        "away": 2.45
+        "away": 2.55
       },
       "over_2_5": {
         "over": 3.5,
@@ -5488,7 +5488,7 @@
       "winner": {
         "home": 1.95,
         "draw": 3.3,
-        "away": 4.0
+        "away": 3.9
       },
       "over_2_5": {
         "over": 6.0,
@@ -6321,9 +6321,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/2939.png",
     "odds": {
       "winner": {
-        "home": 6.0,
-        "draw": 4.33,
-        "away": 1.4
+        "home": 5.75,
+        "draw": 4.75,
+        "away": 1.38
       },
       "over_2_5": {
         "over": 2.75,
@@ -7125,9 +7125,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/527.png",
     "odds": {
       "winner": {
-        "home": 2.7,
+        "home": 2.6,
         "draw": 3.0,
-        "away": 2.8
+        "away": 2.9
       },
       "over_2_5": {
         "over": 6.5,
@@ -8127,7 +8127,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/180.png",
     "odds": {
       "winner": {
-        "home": 1.36,
+        "home": 1.4,
         "draw": 5.0,
         "away": 7.5
       },
@@ -8140,8 +8140,8 @@
         "under": 2.0
       },
       "btts": {
-        "yes": 3.25,
-        "no": 1.33
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -8294,9 +8294,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/165.png",
     "odds": {
       "winner": {
-        "home": 4.5,
-        "draw": 4.33,
-        "away": 1.67
+        "home": 4.33,
+        "draw": 4.2,
+        "away": 1.7
       },
       "over_2_5": {
         "over": 3.25,
@@ -8461,9 +8461,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/157.png",
     "odds": {
       "winner": {
-        "home": 15.0,
-        "draw": 7.5,
-        "away": 1.17
+        "home": 13.0,
+        "draw": 7.0,
+        "away": 1.2
       },
       "over_2_5": {
         "over": 1.67,
@@ -8474,8 +8474,8 @@
         "under": 2.2
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 3.4,
+        "no": 1.3
       }
     },
     "predicted_score": {
@@ -9630,17 +9630,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/54.png",
     "odds": {
       "winner": {
-        "home": 2.45,
-        "draw": 3.4,
-        "away": 2.8
+        "home": 2.55,
+        "draw": 3.3,
+        "away": 2.7
       },
       "over_2_5": {
         "over": 5.5,
         "under": 1.14
       },
       "over_1_5": {
-        "over": 2.25,
-        "under": 1.57
+        "over": 2.38,
+        "under": 1.53
       },
       "btts": {
         "yes": 3.75,
@@ -9797,9 +9797,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/46.png",
     "odds": {
       "winner": {
-        "home": 2.9,
+        "home": 3.0,
         "draw": 3.4,
-        "away": 2.35
+        "away": 2.25
       },
       "over_2_5": {
         "over": 4.0,
@@ -10298,9 +10298,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/260.png",
     "odds": {
       "winner": {
-        "home": 2.1,
+        "home": 2.05,
         "draw": 3.5,
-        "away": 3.4
+        "away": 3.5
       },
       "over_2_5": {
         "over": 4.33,
@@ -10632,9 +10632,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/255.png",
     "odds": {
       "winner": {
-        "home": 1.9,
+        "home": 1.85,
         "draw": 3.6,
-        "away": 3.9
+        "away": 4.1
       },
       "over_2_5": {
         "over": 4.0,
@@ -10966,8 +10966,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/727.png",
     "odds": {
       "winner": {
-        "home": 2.1,
-        "draw": 3.4,
+        "home": 2.15,
+        "draw": 3.3,
         "away": 3.5
       },
       "over_2_5": {
@@ -11055,8 +11055,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Isaac",
+          "prob": 0.1932,
+          "xg": 0.215,
+          "position": "Attacker"
+        },
+        {
+          "player": "Rafa Mir",
+          "prob": 0.1885,
+          "xg": 0.209,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Vargas",
+          "prob": 0.1628,
+          "xg": 0.178,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Adams",
+          "prob": 0.1351,
+          "xg": 0.145,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Sánchez",
+          "prob": 0.135,
+          "xg": 0.145,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Budimir",
+          "prob": 0.2741,
+          "xg": 0.32,
+          "position": "Attacker"
+        },
+        {
+          "player": "Abel Bretones",
+          "prob": 0.104,
+          "xg": 0.11,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Víctor Muñoz",
+          "prob": 0.0873,
+          "xg": 0.091,
+          "position": "Attacker"
+        },
+        {
+          "player": "Raúl García",
+          "prob": 0.0853,
+          "xg": 0.089,
+          "position": "Attacker"
+        },
+        {
+          "player": "Iker Benito",
+          "prob": 0.0808,
+          "xg": 0.084,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -11160,8 +11222,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Javi Martón",
+          "prob": 0.2862,
+          "xg": 0.337,
+          "position": "Attacker"
+        },
+        {
+          "player": "Jon Magunazelaia",
+          "prob": 0.1444,
+          "xg": 0.156,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Javi Martínez",
+          "prob": 0.1397,
+          "xg": 0.15,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jon Bautista",
+          "prob": 0.1215,
+          "xg": 0.13,
+          "position": "Attacker"
+        },
+        {
+          "player": "Malcom Adu",
+          "prob": 0.1175,
+          "xg": 0.125,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Agus Medina",
+          "prob": 0.2656,
+          "xg": 0.309,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Antonio Puertas",
+          "prob": 0.2641,
+          "xg": 0.307,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jon Morcillo",
+          "prob": 0.2193,
+          "xg": 0.248,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Dani Escriche",
+          "prob": 0.1013,
+          "xg": 0.107,
+          "position": "Attacker"
+        },
+        {
+          "player": "José Carlos Lazo",
+          "prob": 0.0565,
+          "xg": 0.058,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -11265,8 +11389,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Enol Rodríguez",
+          "prob": 0.3095,
+          "xg": 0.37,
+          "position": "Attacker"
+        },
+        {
+          "player": "Sergi Enrich",
+          "prob": 0.2258,
+          "xg": 0.256,
+          "position": "Attacker"
+        },
+        {
+          "player": "Liberto Beltrán",
+          "prob": 0.1543,
+          "xg": 0.168,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Luna",
+          "prob": 0.1543,
+          "xg": 0.168,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Ntamack Ndimba",
+          "prob": 0.1252,
+          "xg": 0.134,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Dani Villahermosa",
+          "prob": 0.2219,
+          "xg": 0.251,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. de León",
+          "prob": 0.1337,
+          "xg": 0.143,
+          "position": "Attacker"
+        },
+        {
+          "player": "Minsu Kim",
+          "prob": 0.1253,
+          "xg": 0.134,
+          "position": "Attacker"
+        },
+        {
+          "player": "Marc Domènech",
+          "prob": 0.0894,
+          "xg": 0.094,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Aingeru Olabarrieta",
+          "prob": 0.0755,
+          "xg": 0.078,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -11281,9 +11467,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/206.png",
     "odds": {
       "winner": {
-        "home": 1.85,
+        "home": 1.91,
         "draw": 4.1,
-        "away": 3.7
+        "away": 3.5
       },
       "over_2_5": {
         "over": 3.75,
@@ -11370,8 +11556,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "N. Naujoks",
+          "prob": 0.1179,
+          "xg": 0.125,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Nadje",
+          "prob": 0.1105,
+          "xg": 0.117,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Tielemans",
+          "prob": 0.1067,
+          "xg": 0.113,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Chadwick Zachary Booth",
+          "prob": 0.1051,
+          "xg": 0.111,
+          "position": "Midfielder"
+        },
+        {
+          "player": "I. Yegoian",
+          "prob": 0.0994,
+          "xg": 0.105,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "T. Bruns",
+          "prob": 0.1075,
+          "xg": 0.114,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Hrustić",
+          "prob": 0.0935,
+          "xg": 0.098,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Hornkamp",
+          "prob": 0.0735,
+          "xg": 0.076,
+          "position": "Attacker"
+        },
+        {
+          "player": "W. Ould-Chikh",
+          "prob": 0.0682,
+          "xg": 0.071,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Y. Borges Sanches",
+          "prob": 0.0572,
+          "xg": 0.059,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -11642,8 +11890,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "M. Greenwood",
+          "prob": 0.5209,
+          "xg": 0.736,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Vaz",
+          "prob": 0.3392,
+          "xg": 0.414,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Aubameyang",
+          "prob": 0.2766,
+          "xg": 0.324,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Gomes",
+          "prob": 0.2359,
+          "xg": 0.269,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Murillo",
+          "prob": 0.2359,
+          "xg": 0.269,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "R. Del Castillo",
+          "prob": 0.2657,
+          "xg": 0.309,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Doumbia",
+          "prob": 0.1754,
+          "xg": 0.193,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Labeau Lascary",
+          "prob": 0.137,
+          "xg": 0.147,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Chotard",
+          "prob": 0.1005,
+          "xg": 0.106,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Dina Ebimbe",
+          "prob": 0.0974,
+          "xg": 0.102,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -11747,8 +12057,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "J. Eggestein",
+          "prob": 0.295,
+          "xg": 0.349,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Wels",
+          "prob": 0.2491,
+          "xg": 0.287,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Malone",
+          "prob": 0.1125,
+          "xg": 0.119,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Botić",
+          "prob": 0.0989,
+          "xg": 0.104,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Radonjic",
+          "prob": 0.064,
+          "xg": 0.066,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "D. Maderner",
+          "prob": 0.2162,
+          "xg": 0.244,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Harakaté",
+          "prob": 0.1548,
+          "xg": 0.168,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Cipot",
+          "prob": 0.0875,
+          "xg": 0.092,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Hofleitner",
+          "prob": 0.0862,
+          "xg": 0.09,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Owusu",
+          "prob": 0.0411,
+          "xg": 0.042,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -11852,8 +12224,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "E. Kojzek",
+          "prob": 0.6329,
+          "xg": 1.002,
+          "position": "Attacker"
+        },
+        {
+          "player": "Marco Sulzner",
+          "prob": 0.0282,
+          "xg": 0.029,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Zukić",
+          "prob": 0.0258,
+          "xg": 0.026,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Schöpf",
+          "prob": 0.0258,
+          "xg": 0.026,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Nwaiwu",
+          "prob": 0.0256,
+          "xg": 0.026,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "E. Havel",
+          "prob": 0.4188,
+          "xg": 0.543,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Hoffmann",
+          "prob": 0.1569,
+          "xg": 0.171,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Fridrikas",
+          "prob": 0.1421,
+          "xg": 0.153,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Prokop",
+          "prob": 0.1007,
+          "xg": 0.106,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Fillafer",
+          "prob": 0.0877,
+          "xg": 0.092,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -11957,8 +12391,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "K. Mutandwa",
+          "prob": 0.3213,
+          "xg": 0.388,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Große",
+          "prob": 0.1811,
+          "xg": 0.2,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Pomer",
+          "prob": 0.1455,
+          "xg": 0.157,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Kiedl",
+          "prob": 0.1255,
+          "xg": 0.134,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Van Wyk",
+          "prob": 0.072,
+          "xg": 0.075,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "S. Weissman",
+          "prob": 0.2306,
+          "xg": 0.262,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Seidl",
+          "prob": 0.1528,
+          "xg": 0.166,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Ronivaldo",
+          "prob": 0.1283,
+          "xg": 0.137,
+          "position": "Attacker"
+        },
+        {
+          "player": "Mamadou Fofana II",
+          "prob": 0.0852,
+          "xg": 0.089,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Goiginger",
+          "prob": 0.0729,
+          "xg": 0.076,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -12062,8 +12558,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "O. Correia",
+          "prob": 0.2257,
+          "xg": 0.256,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Gabrielloni",
+          "prob": 0.1834,
+          "xg": 0.203,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Reale",
+          "prob": 0.0378,
+          "xg": 0.039,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Leone",
+          "prob": 0.0362,
+          "xg": 0.037,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Zuccon",
+          "prob": 0.0346,
+          "xg": 0.035,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Palumbo",
+          "prob": 0.2156,
+          "xg": 0.243,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Ranocchia",
+          "prob": 0.1835,
+          "xg": 0.203,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Pierozzi",
+          "prob": 0.0878,
+          "xg": 0.092,
+          "position": "Defender"
+        },
+        {
+          "player": "A. Blin",
+          "prob": 0.0757,
+          "xg": 0.079,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Gyasi",
+          "prob": 0.0493,
+          "xg": 0.051,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -12167,8 +12725,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "K. Yıldız",
+          "prob": 0.3497,
+          "xg": 0.43,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Vlahović",
+          "prob": 0.2422,
+          "xg": 0.277,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Cambiaso",
+          "prob": 0.1829,
+          "xg": 0.202,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Kostić",
+          "prob": 0.1755,
+          "xg": 0.193,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Koopmeiners",
+          "prob": 0.169,
+          "xg": 0.185,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "N. Vlašić",
+          "prob": 0.2952,
+          "xg": 0.35,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Ngonge",
+          "prob": 0.0581,
+          "xg": 0.06,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Tamèze",
+          "prob": 0.0549,
+          "xg": 0.056,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Gineitis",
+          "prob": 0.053,
+          "xg": 0.055,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Z. Aboukhlal",
+          "prob": 0.0529,
+          "xg": 0.054,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -12272,8 +12892,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "S. Zuber",
+          "prob": 0.3094,
+          "xg": 0.37,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Reverson",
+          "prob": 0.239,
+          "xg": 0.273,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Phaëton",
+          "prob": 0.2339,
+          "xg": 0.266,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Keny",
+          "prob": 0.2305,
+          "xg": 0.262,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Krasniqi",
+          "prob": 0.1122,
+          "xg": 0.119,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Grbić",
+          "prob": 0.336,
+          "xg": 0.409,
+          "position": "Attacker"
+        },
+        {
+          "player": "Lucas Ferreira",
+          "prob": 0.3259,
+          "xg": 0.394,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Di Giusto",
+          "prob": 0.2973,
+          "xg": 0.353,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Spadanuda",
+          "prob": 0.258,
+          "xg": 0.298,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. von Moos",
+          "prob": 0.1059,
+          "xg": 0.112,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -12377,8 +13059,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "P. Guèye",
+          "prob": 0.2124,
+          "xg": 0.239,
+          "position": "Attacker"
+        },
+        {
+          "player": "H. Hajradinović",
+          "prob": 0.1776,
+          "xg": 0.195,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Cláudio Winck",
+          "prob": 0.1129,
+          "xg": 0.12,
+          "position": "Defender"
+        },
+        {
+          "player": "M. Ben Ouanes",
+          "prob": 0.1018,
+          "xg": 0.107,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Kanatsızkuş",
+          "prob": 0.0832,
+          "xg": 0.087,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Juan",
+          "prob": 0.2292,
+          "xg": 0.26,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Dennis",
+          "prob": 0.1932,
+          "xg": 0.215,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Bekiroğlu",
+          "prob": 0.1882,
+          "xg": 0.209,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Olaitan",
+          "prob": 0.1744,
+          "xg": 0.192,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Dismas",
+          "prob": 0.0966,
+          "xg": 0.102,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -12482,8 +13226,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "N. Storm",
+          "prob": 0.1846,
+          "xg": 0.204,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Dikmen",
+          "prob": 0.1843,
+          "xg": 0.204,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Vural",
+          "prob": 0.1784,
+          "xg": 0.197,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Gueye",
+          "prob": 0.1353,
+          "xg": 0.145,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Čvančara",
+          "prob": 0.0876,
+          "xg": 0.092,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "C. Ünder",
+          "prob": 0.3646,
+          "xg": 0.454,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Touré",
+          "prob": 0.2759,
+          "xg": 0.323,
+          "position": "Attacker"
+        },
+        {
+          "player": "V. Černý",
+          "prob": 0.1895,
+          "xg": 0.21,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Tıknaz",
+          "prob": 0.1805,
+          "xg": 0.199,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Hadžiahmetović",
+          "prob": 0.1801,
+          "xg": 0.199,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -12587,8 +13393,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "A. Hunziker",
+          "prob": 0.3344,
+          "xg": 0.407,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Buess",
+          "prob": 0.3211,
+          "xg": 0.387,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Maluvunu",
+          "prob": 0.2805,
+          "xg": 0.329,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Gomis",
+          "prob": 0.2428,
+          "xg": 0.278,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Dansoko",
+          "prob": 0.1646,
+          "xg": 0.18,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "N. Muci",
+          "prob": 0.2978,
+          "xg": 0.354,
+          "position": "Attacker"
+        },
+        {
+          "player": "Jonathan Asp Jensen",
+          "prob": 0.1775,
+          "xg": 0.195,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Plange",
+          "prob": 0.1532,
+          "xg": 0.166,
+          "position": "Attacker"
+        },
+        {
+          "player": "Lee Young-Jun",
+          "prob": 0.1506,
+          "xg": 0.163,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Zvonarek",
+          "prob": 0.1035,
+          "xg": 0.109,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -12603,9 +13471,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/261.png",
     "odds": {
       "winner": {
-        "home": 2.05,
+        "home": 2.1,
         "draw": 3.4,
-        "away": 3.4
+        "away": 3.3
       },
       "over_2_5": {
         "over": 3.75,
@@ -12692,8 +13560,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "J. Romsaas",
+          "prob": 0.3094,
+          "xg": 0.37,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Štulić",
+          "prob": 0.2696,
+          "xg": 0.314,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Pflücke",
+          "prob": 0.1604,
+          "xg": 0.175,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Colassin",
+          "prob": 0.1311,
+          "xg": 0.141,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Guiagon",
+          "prob": 0.1304,
+          "xg": 0.14,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Nacho Ferri",
+          "prob": 0.2494,
+          "xg": 0.287,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Alcócer",
+          "prob": 0.2291,
+          "xg": 0.26,
+          "position": "Midfielder"
+        },
+        {
+          "player": "I. Sakamoto",
+          "prob": 0.2142,
+          "xg": 0.241,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Yow",
+          "prob": 0.1446,
+          "xg": 0.156,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Piedfort",
+          "prob": 0.0991,
+          "xg": 0.104,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -12797,8 +13727,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "R. Hack",
+          "prob": 0.2723,
+          "xg": 0.318,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Tabaković",
+          "prob": 0.1462,
+          "xg": 0.158,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Elvedi",
+          "prob": 0.1351,
+          "xg": 0.145,
+          "position": "Defender"
+        },
+        {
+          "player": "S. Machino",
+          "prob": 0.1301,
+          "xg": 0.139,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Reitz",
+          "prob": 0.0312,
+          "xg": 0.032,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "E. Martel",
+          "prob": 0.327,
+          "xg": 0.396,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Í. Bergmann Jóhannesson",
+          "prob": 0.3256,
+          "xg": 0.394,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Ache",
+          "prob": 0.2684,
+          "xg": 0.313,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Sebulonsen",
+          "prob": 0.0639,
+          "xg": 0.066,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. El Mala",
+          "prob": 0.0585,
+          "xg": 0.06,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -12814,8 +13806,8 @@
     "odds": {
       "winner": {
         "home": 1.22,
-        "draw": 6.25,
-        "away": 11.0
+        "draw": 6.5,
+        "away": 12.0
       },
       "over_2_5": {
         "over": 1.73,
@@ -12902,8 +13894,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Álex Baena",
+          "prob": 0.2684,
+          "xg": 0.312,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Simeone",
+          "prob": 0.2382,
+          "xg": 0.272,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Almada",
+          "prob": 0.2292,
+          "xg": 0.26,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Marcos Llorente",
+          "prob": 0.2068,
+          "xg": 0.232,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Griezmann",
+          "prob": 0.1992,
+          "xg": 0.222,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Iván Romero",
+          "prob": 0.3587,
+          "xg": 0.444,
+          "position": "Attacker"
+        },
+        {
+          "player": "Carlos Espí",
+          "prob": 0.1803,
+          "xg": 0.199,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Arriaga",
+          "prob": 0.1398,
+          "xg": 0.151,
+          "position": "Midfielder"
+        },
+        {
+          "player": "José Luis Morales",
+          "prob": 0.1221,
+          "xg": 0.13,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Unai Elgezabal",
+          "prob": 0.1151,
+          "xg": 0.122,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -13007,8 +14061,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Z. Eddahchouri",
+          "prob": 0.2867,
+          "xg": 0.338,
+          "position": "Attacker"
+        },
+        {
+          "player": "Peke",
+          "prob": 0.2464,
+          "xg": 0.283,
+          "position": "Midfielder"
+        },
+        {
+          "player": "David Mella",
+          "prob": 0.188,
+          "xg": 0.208,
+          "position": "Attacker"
+        },
+        {
+          "player": "Luismi Cruz",
+          "prob": 0.1588,
+          "xg": 0.173,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Mario Soriano",
+          "prob": 0.1469,
+          "xg": 0.159,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Luis Chacón",
+          "prob": 0.2148,
+          "xg": 0.242,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Manu Justo",
+          "prob": 0.2061,
+          "xg": 0.231,
+          "position": "Attacker"
+        },
+        {
+          "player": "Diego Collado",
+          "prob": 0.1483,
+          "xg": 0.16,
+          "position": "Attacker"
+        },
+        {
+          "player": "Paco Cortés",
+          "prob": 0.131,
+          "xg": 0.14,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Pastoriza",
+          "prob": 0.0996,
+          "xg": 0.105,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -13112,8 +14228,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "G. Xhaka",
+          "prob": 0.1885,
+          "xg": 0.209,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Talbi",
+          "prob": 0.158,
+          "xg": 0.172,
+          "position": "Attacker"
+        },
+        {
+          "player": "Eliezer Mayenda",
+          "prob": 0.153,
+          "xg": 0.166,
+          "position": "Attacker"
+        },
+        {
+          "player": "Marc Guiu",
+          "prob": 0.141,
+          "xg": 0.152,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Alderete",
+          "prob": 0.0828,
+          "xg": 0.086,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "E. Eze",
+          "prob": 0.1883,
+          "xg": 0.209,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Nelson",
+          "prob": 0.1472,
+          "xg": 0.159,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Trossard",
+          "prob": 0.1061,
+          "xg": 0.112,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gabriel Martinelli",
+          "prob": 0.0943,
+          "xg": 0.099,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Ødegaard",
+          "prob": 0.0342,
+          "xg": 0.035,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -13217,8 +14395,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "K. Benzema",
+          "prob": 0.2032,
+          "xg": 0.227,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Bergwijn",
+          "prob": 0.118,
+          "xg": 0.126,
+          "position": "Attacker"
+        },
+        {
+          "player": "Saleh Al Shehri",
+          "prob": 0.0806,
+          "xg": 0.084,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Diaby",
+          "prob": 0.0788,
+          "xg": 0.082,
+          "position": "Attacker"
+        },
+        {
+          "player": "Roger Fernandes",
+          "prob": 0.0433,
+          "xg": 0.044,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "I. Toney",
+          "prob": 0.3814,
+          "xg": 0.48,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Kessié",
+          "prob": 0.0916,
+          "xg": 0.096,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Atangana Edoa",
+          "prob": 0.0906,
+          "xg": 0.095,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Millot",
+          "prob": 0.0871,
+          "xg": 0.091,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Mahrez",
+          "prob": 0.0769,
+          "xg": 0.08,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -13322,8 +14562,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "O. Smyth",
+          "prob": 0.1831,
+          "xg": 0.202,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Phillips",
+          "prob": 0.1779,
+          "xg": 0.196,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. O&apos;Hara",
+          "prob": 0.1441,
+          "xg": 0.156,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Ayunga",
+          "prob": 0.087,
+          "xg": 0.091,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Donnelly",
+          "prob": 0.0627,
+          "xg": 0.065,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "K. Bowie",
+          "prob": 0.2814,
+          "xg": 0.33,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. McGrath",
+          "prob": 0.1806,
+          "xg": 0.199,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Levitt",
+          "prob": 0.1362,
+          "xg": 0.146,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Hoilett",
+          "prob": 0.1112,
+          "xg": 0.118,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Cadden",
+          "prob": 0.0946,
+          "xg": 0.099,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -13338,9 +14640,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/203.png",
     "odds": {
       "winner": {
-        "home": 2.55,
+        "home": 2.62,
         "draw": 3.8,
-        "away": 2.5
+        "away": 2.45
       },
       "over_2_5": {
         "over": 3.75,
@@ -13427,8 +14729,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "R. van Cruijsen",
+          "prob": 0.3336,
+          "xg": 0.406,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Descotte",
+          "prob": 0.2687,
+          "xg": 0.313,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Jacobs",
+          "prob": 0.2217,
+          "xg": 0.251,
+          "position": "Midfielder"
+        },
+        {
+          "player": "O. Kökçü",
+          "prob": 0.2007,
+          "xg": 0.224,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Kuwas",
+          "prob": 0.1755,
+          "xg": 0.193,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "B. Kemper",
+          "prob": 0.1908,
+          "xg": 0.212,
+          "position": "Defender"
+        },
+        {
+          "player": "L. Holtby",
+          "prob": 0.0812,
+          "xg": 0.085,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Sowah",
+          "prob": 0.0785,
+          "xg": 0.082,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Talvitie",
+          "prob": 0.077,
+          "xg": 0.08,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Leemans",
+          "prob": 0.07,
+          "xg": 0.073,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -13532,8 +14896,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "R. Ndiaye",
+          "prob": 0.2984,
+          "xg": 0.354,
+          "position": "Midfielder"
+        },
+        {
+          "player": "I. Soumaré",
+          "prob": 0.2359,
+          "xg": 0.269,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Touré",
+          "prob": 0.2156,
+          "xg": 0.243,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Y. Kechta",
+          "prob": 0.1243,
+          "xg": 0.133,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Doucouré",
+          "prob": 0.0958,
+          "xg": 0.101,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "Bahereba Guirassy",
+          "prob": 0.1602,
+          "xg": 0.175,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Mostafa Mohamed",
+          "prob": 0.136,
+          "xg": 0.146,
+          "position": "Attacker"
+        },
+        {
+          "player": "Y. El-Arabi",
+          "prob": 0.1322,
+          "xg": 0.142,
+          "position": "Attacker"
+        },
+        {
+          "player": "Louis Leroux",
+          "prob": 0.0919,
+          "xg": 0.096,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Mwanga",
+          "prob": 0.0916,
+          "xg": 0.096,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -13804,8 +15230,58 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Ktatau",
+          "prob": 0.2001,
+          "xg": 0.223,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Pedro Pinho",
+          "prob": 0.2001,
+          "xg": 0.223,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Paulo Victor",
+          "prob": 0.1969,
+          "xg": 0.219,
+          "position": "Midfielder"
+        },
+        {
+          "player": "U. Milovanović",
+          "prob": 0.1698,
+          "xg": 0.186,
+          "position": "Attacker"
+        },
+        {
+          "player": "David Kusso",
+          "prob": 0.1303,
+          "xg": 0.14,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "L. Vonić",
+          "prob": 0.1867,
+          "xg": 0.207,
+          "position": "Attacker"
+        },
+        {
+          "player": "Ángel Alarcón",
+          "prob": 0.1867,
+          "xg": 0.207,
+          "position": "Attacker"
+        },
+        {
+          "player": "Diogo Fernandes",
+          "prob": 0.1867,
+          "xg": 0.207,
+          "position": "Goalkeeper"
+        }
+      ]
     }
   },
   {
@@ -13909,8 +15385,46 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Rafael Obrador",
+          "prob": 0.3386,
+          "xg": 0.413,
+          "position": "Defender"
+        },
+        {
+          "player": "Nuno Félix",
+          "prob": 0.3386,
+          "xg": 0.413,
+          "position": "Midfielder"
+        },
+        {
+          "player": "João Veloso",
+          "prob": 0.3386,
+          "xg": 0.413,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "L. Pierre",
+          "prob": 0.356,
+          "xg": 0.44,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Mörschel",
+          "prob": 0.356,
+          "xg": 0.44,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jójó",
+          "prob": 0.356,
+          "xg": 0.44,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -14014,8 +15528,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "I. Doumbia",
+          "prob": 0.5678,
+          "xg": 0.839,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Nicolussi",
+          "prob": 0.0805,
+          "xg": 0.084,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Haps",
+          "prob": 0.0801,
+          "xg": 0.084,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Lella",
+          "prob": 0.0795,
+          "xg": 0.083,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Oristanio",
+          "prob": 0.0791,
+          "xg": 0.082,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "S. Pafundi",
+          "prob": 0.1753,
+          "xg": 0.193,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Henderson",
+          "prob": 0.1336,
+          "xg": 0.143,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Abildgaard",
+          "prob": 0.0326,
+          "xg": 0.033,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Cherubini",
+          "prob": 0.0323,
+          "xg": 0.033,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Barák",
+          "prob": 0.0319,
+          "xg": 0.032,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14119,8 +15695,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "T. Bentayeb",
+          "prob": 0.4675,
+          "xg": 0.63,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Assoumou",
+          "prob": 0.3008,
+          "xg": 0.358,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Adeline",
+          "prob": 0.2568,
+          "xg": 0.297,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. El Idrissy",
+          "prob": 0.2175,
+          "xg": 0.245,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Ifnaoui",
+          "prob": 0.1805,
+          "xg": 0.199,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Z. Davitashvili",
+          "prob": 0.2109,
+          "xg": 0.237,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Stassin",
+          "prob": 0.1478,
+          "xg": 0.16,
+          "position": "Attacker"
+        },
+        {
+          "player": "I. Cardona",
+          "prob": 0.1145,
+          "xg": 0.122,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Duffus",
+          "prob": 0.1116,
+          "xg": 0.118,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Tardieu",
+          "prob": 0.1084,
+          "xg": 0.115,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14135,9 +15773,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/1062.png",
     "odds": {
       "winner": {
-        "home": 3.5,
+        "home": 3.6,
         "draw": 3.1,
-        "away": 2.25
+        "away": 2.2
       },
       "over_2_5": {
         "over": 5.5,
@@ -14224,8 +15862,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Carlos Alberto",
+          "prob": 0.2493,
+          "xg": 0.287,
+          "position": "Attacker"
+        },
+        {
+          "player": "Chico",
+          "prob": 0.1411,
+          "xg": 0.152,
+          "position": "Defender"
+        },
+        {
+          "player": "Marcelo Ajul",
+          "prob": 0.1378,
+          "xg": 0.148,
+          "position": "Defender"
+        },
+        {
+          "player": "João Silva",
+          "prob": 0.1375,
+          "xg": 0.148,
+          "position": "Defender"
+        },
+        {
+          "player": "Hyoran",
+          "prob": 0.0575,
+          "xg": 0.059,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Igor Gomes",
+          "prob": 0.2478,
+          "xg": 0.285,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Júnior Santos",
+          "prob": 0.1467,
+          "xg": 0.159,
+          "position": "Attacker"
+        },
+        {
+          "player": "Rony",
+          "prob": 0.1454,
+          "xg": 0.157,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gabriel Menino",
+          "prob": 0.101,
+          "xg": 0.106,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Vera",
+          "prob": 0.1009,
+          "xg": 0.106,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14329,8 +16029,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "K. Peterson",
+          "prob": 0.3162,
+          "xg": 0.38,
+          "position": "Attacker"
+        },
+        {
+          "player": "É. Michut",
+          "prob": 0.1089,
+          "xg": 0.115,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Brittijn",
+          "prob": 0.0975,
+          "xg": 0.103,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Fosso",
+          "prob": 0.0975,
+          "xg": 0.103,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Lonwijk",
+          "prob": 0.0917,
+          "xg": 0.096,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "R. Meerveld",
+          "prob": 0.328,
+          "xg": 0.398,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Sejk",
+          "prob": 0.282,
+          "xg": 0.331,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. van Overeem",
+          "prob": 0.0641,
+          "xg": 0.066,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Brouwers",
+          "prob": 0.0599,
+          "xg": 0.062,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Smans",
+          "prob": 0.0575,
+          "xg": 0.059,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14434,8 +16196,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "N. Skyttä",
+          "prob": 0.3129,
+          "xg": 0.375,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Emreli",
+          "prob": 0.3087,
+          "xg": 0.369,
+          "position": "Attacker"
+        },
+        {
+          "player": "Kim Ji-Soo",
+          "prob": 0.1711,
+          "xg": 0.188,
+          "position": "Defender"
+        },
+        {
+          "player": "M. Ritter",
+          "prob": 0.0782,
+          "xg": 0.081,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Joly",
+          "prob": 0.0712,
+          "xg": 0.074,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "M. Cuisance",
+          "prob": 0.2859,
+          "xg": 0.337,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Grønning",
+          "prob": 0.227,
+          "xg": 0.257,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Þorsteinsson",
+          "prob": 0.2216,
+          "xg": 0.251,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Eitschberger",
+          "prob": 0.0546,
+          "xg": 0.056,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Winkler",
+          "prob": 0.0518,
+          "xg": 0.053,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14539,8 +16363,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "F. Ayé",
+          "prob": 0.4324,
+          "xg": 0.566,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Stevanović",
+          "prob": 0.2521,
+          "xg": 0.29,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Njoh",
+          "prob": 0.1139,
+          "xg": 0.121,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Keyan Varela",
+          "prob": 0.1017,
+          "xg": 0.107,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Douline",
+          "prob": 0.0933,
+          "xg": 0.098,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "L. Bertone",
+          "prob": 0.3777,
+          "xg": 0.474,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Labeau",
+          "prob": 0.2363,
+          "xg": 0.27,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Imeri",
+          "prob": 0.2324,
+          "xg": 0.265,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Ibayi",
+          "prob": 0.1789,
+          "xg": 0.197,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Reichmuth",
+          "prob": 0.1357,
+          "xg": 0.146,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14644,8 +16530,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Mateo Pellegrino",
+          "prob": 0.2355,
+          "xg": 0.268,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Britschgi",
+          "prob": 0.1062,
+          "xg": 0.112,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Løvik",
+          "prob": 0.0201,
+          "xg": 0.02,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Estévez",
+          "prob": 0.0187,
+          "xg": 0.019,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Valeri",
+          "prob": 0.0184,
+          "xg": 0.019,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "S. Giménez",
+          "prob": 0.3376,
+          "xg": 0.412,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Nkunku",
+          "prob": 0.1987,
+          "xg": 0.222,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Ricci",
+          "prob": 0.1029,
+          "xg": 0.109,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Pavlović",
+          "prob": 0.061,
+          "xg": 0.063,
+          "position": "Defender"
+        },
+        {
+          "player": "T. Reijnders",
+          "prob": 0.0524,
+          "xg": 0.054,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14749,8 +16697,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "M. Doumbia",
+          "prob": 0.2202,
+          "xg": 0.249,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Adekami",
+          "prob": 0.2183,
+          "xg": 0.246,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Janssen",
+          "prob": 0.148,
+          "xg": 0.16,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Benítez",
+          "prob": 0.1267,
+          "xg": 0.135,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Balikwisha",
+          "prob": 0.1052,
+          "xg": 0.111,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "J. Afriyie",
+          "prob": 0.2062,
+          "xg": 0.231,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Mendy",
+          "prob": 0.1182,
+          "xg": 0.126,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Pau",
+          "prob": 0.1172,
+          "xg": 0.125,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Nagera",
+          "prob": 0.114,
+          "xg": 0.121,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Liongola",
+          "prob": 0.1133,
+          "xg": 0.12,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -14854,8 +16864,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "K. Páez",
+          "prob": 0.2038,
+          "xg": 0.228,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Fofana",
+          "prob": 0.174,
+          "xg": 0.191,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Palmer",
+          "prob": 0.1588,
+          "xg": 0.173,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Pedro Neto",
+          "prob": 0.134,
+          "xg": 0.144,
+          "position": "Attacker"
+        },
+        {
+          "player": "João Pedro",
+          "prob": 0.1254,
+          "xg": 0.134,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "J. Strand Larsen",
+          "prob": 0.1151,
+          "xg": 0.122,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Arokodare",
+          "prob": 0.1136,
+          "xg": 0.121,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Munetsi",
+          "prob": 0.0779,
+          "xg": 0.081,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Rodrigo Gomes",
+          "prob": 0.0774,
+          "xg": 0.081,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Møller Wolfe",
+          "prob": 0.0573,
+          "xg": 0.059,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -14959,8 +17031,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "T. Oosting",
+          "prob": 0.2989,
+          "xg": 0.355,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Shoretire",
+          "prob": 0.1725,
+          "xg": 0.189,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. de Rooij",
+          "prob": 0.1664,
+          "xg": 0.182,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Thomas",
+          "prob": 0.0371,
+          "xg": 0.038,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Z. Buurmeester",
+          "prob": 0.0341,
+          "xg": 0.035,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "J. Kitolano",
+          "prob": 0.4168,
+          "xg": 0.539,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Oufkir",
+          "prob": 0.2312,
+          "xg": 0.263,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Ltaief",
+          "prob": 0.1856,
+          "xg": 0.205,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Lauritsen",
+          "prob": 0.1789,
+          "xg": 0.197,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Martins Indi",
+          "prob": 0.0993,
+          "xg": 0.105,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -15064,8 +17198,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Chupe",
+          "prob": 0.2984,
+          "xg": 0.354,
+          "position": "Attacker"
+        },
+        {
+          "player": "Rafa Rodríguez",
+          "prob": 0.2737,
+          "xg": 0.32,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Eneko Jauregi",
+          "prob": 0.2254,
+          "xg": 0.255,
+          "position": "Attacker"
+        },
+        {
+          "player": "Dani Lorenzo",
+          "prob": 0.1144,
+          "xg": 0.122,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Julen Lobete",
+          "prob": 0.1134,
+          "xg": 0.12,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Fuentes",
+          "prob": 0.262,
+          "xg": 0.304,
+          "position": "Attacker"
+        },
+        {
+          "player": "Jacobo González",
+          "prob": 0.1969,
+          "xg": 0.219,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Cristian Carracedo",
+          "prob": 0.0818,
+          "xg": 0.085,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Reque",
+          "prob": 0.0812,
+          "xg": 0.085,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Dali",
+          "prob": 0.0801,
+          "xg": 0.083,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -15082,19 +17278,19 @@
       "winner": {
         "home": 2.8,
         "draw": 3.5,
-        "away": 2.4
+        "away": 2.38
       },
       "over_2_5": {
         "over": 4.0,
         "under": 1.22
       },
       "over_1_5": {
-        "over": 1.91,
-        "under": 1.8
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
-        "yes": 3.0,
-        "no": 1.36
+        "yes": 2.75,
+        "no": 1.4
       }
     },
     "predicted_score": {
@@ -15169,8 +17365,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Pere Milla",
+          "prob": 0.361,
+          "xg": 0.448,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Javi Puado",
+          "prob": 0.2094,
+          "xg": 0.235,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Roberto Fernández",
+          "prob": 0.1784,
+          "xg": 0.197,
+          "position": "Attacker"
+        },
+        {
+          "player": "Kike García",
+          "prob": 0.1754,
+          "xg": 0.193,
+          "position": "Attacker"
+        },
+        {
+          "player": "Pol Lozano",
+          "prob": 0.121,
+          "xg": 0.129,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "T. Oluwaseyi",
+          "prob": 0.276,
+          "xg": 0.323,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gerard Moreno",
+          "prob": 0.2196,
+          "xg": 0.248,
+          "position": "Attacker"
+        },
+        {
+          "player": "Ilias Akhomach",
+          "prob": 0.1353,
+          "xg": 0.145,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Danjuma",
+          "prob": 0.1316,
+          "xg": 0.141,
+          "position": "Attacker"
+        },
+        {
+          "player": "Carlos Romero",
+          "prob": 0.0675,
+          "xg": 0.07,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -15274,8 +17532,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Ansu Fati",
+          "prob": 0.5078,
+          "xg": 0.709,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Zakaria",
+          "prob": 0.3588,
+          "xg": 0.444,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Al Musrati",
+          "prob": 0.1444,
+          "xg": 0.156,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Dier",
+          "prob": 0.0801,
+          "xg": 0.084,
+          "position": "Defender"
+        },
+        {
+          "player": "M. Salisu",
+          "prob": 0.0801,
+          "xg": 0.084,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "N. El Aynaoui",
+          "prob": 0.216,
+          "xg": 0.243,
+          "position": "Midfielder"
+        },
+        {
+          "player": "O. Édouard",
+          "prob": 0.1649,
+          "xg": 0.18,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Thauvin",
+          "prob": 0.0916,
+          "xg": 0.096,
+          "position": "Attacker"
+        },
+        {
+          "player": "H. Ojediran",
+          "prob": 0.0597,
+          "xg": 0.062,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Thomasson",
+          "prob": 0.0571,
+          "xg": 0.059,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -15290,9 +17610,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/228.png",
     "odds": {
       "winner": {
-        "home": 7.5,
+        "home": 7.0,
         "draw": 4.5,
-        "away": 1.4
+        "away": 1.44
       },
       "over_2_5": {
         "over": 5.0,
@@ -15303,8 +17623,8 @@
         "under": 1.62
       },
       "btts": {
-        "yes": 4.33,
-        "no": 1.2
+        "yes": 4.5,
+        "no": 1.18
       }
     },
     "predicted_score": {
@@ -15457,8 +17777,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/152.png",
     "odds": {
       "winner": {
-        "home": 1.44,
-        "draw": 4.33,
+        "home": 1.42,
+        "draw": 4.5,
         "away": 7.5
       },
       "over_2_5": {
@@ -15546,8 +17866,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Paulo Henrique",
+          "prob": 0.43,
+          "xg": 0.562,
+          "position": "Defender"
+        },
+        {
+          "player": "Mateus Cocão",
+          "prob": 0.1138,
+          "xg": 0.121,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Dominguez",
+          "prob": 0.1113,
+          "xg": 0.118,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Souza",
+          "prob": 0.1111,
+          "xg": 0.118,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jair",
+          "prob": 0.1102,
+          "xg": 0.117,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "W. Ángel",
+          "prob": 0.2919,
+          "xg": 0.345,
+          "position": "Defender"
+        },
+        {
+          "player": "D. Giraldo",
+          "prob": 0.1492,
+          "xg": 0.162,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Gilberto",
+          "prob": 0.1255,
+          "xg": 0.134,
+          "position": "Attacker"
+        },
+        {
+          "player": "Giovanny",
+          "prob": 0.1235,
+          "xg": 0.132,
+          "position": "Attacker"
+        },
+        {
+          "player": "Pernambuco",
+          "prob": 0.1017,
+          "xg": 0.107,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -15562,17 +17944,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/118.png",
     "odds": {
       "winner": {
-        "home": 2.3,
+        "home": 2.25,
         "draw": 3.2,
-        "away": 3.25
+        "away": 3.4
       },
       "over_2_5": {
         "over": 5.5,
         "under": 1.14
       },
       "over_1_5": {
-        "over": 2.2,
-        "under": 1.62
+        "over": 2.25,
+        "under": 1.57
       },
       "btts": {
         "yes": 3.5,
@@ -15651,8 +18033,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Alan Patrick",
+          "prob": 0.6146,
+          "xg": 0.953,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Bernabéi",
+          "prob": 0.1391,
+          "xg": 0.15,
+          "position": "Defender"
+        },
+        {
+          "player": "Victor Gabriel",
+          "prob": 0.1234,
+          "xg": 0.132,
+          "position": "Defender"
+        },
+        {
+          "player": "Thiago Maia",
+          "prob": 0.0569,
+          "xg": 0.059,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Yago",
+          "prob": 0.04,
+          "xg": 0.041,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "N. Acevedo",
+          "prob": 0.2897,
+          "xg": 0.342,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Kanu",
+          "prob": 0.2309,
+          "xg": 0.263,
+          "position": "Defender"
+        },
+        {
+          "player": "Yago Felipe",
+          "prob": 0.0557,
+          "xg": 0.057,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jota",
+          "prob": 0.0537,
+          "xg": 0.055,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Sidney",
+          "prob": 0.0536,
+          "xg": 0.055,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -15788,7 +18232,38 @@
           "position": "Defender"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "Jhon Jhon",
+          "prob": 0.2728,
+          "xg": 0.319,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Gabriel",
+          "prob": 0.0515,
+          "xg": 0.053,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jadsom Silva",
+          "prob": 0.0509,
+          "xg": 0.052,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Gustavinho",
+          "prob": 0.0496,
+          "xg": 0.051,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Matheus Fernandes",
+          "prob": 0.0485,
+          "xg": 0.05,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -15892,8 +18367,58 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Salvador Agra",
+          "prob": 0.356,
+          "xg": 0.44,
+          "position": "Attacker"
+        },
+        {
+          "player": "Henrique",
+          "prob": 0.356,
+          "xg": 0.44,
+          "position": "Defender"
+        },
+        {
+          "player": "B. Kanurić",
+          "prob": 0.356,
+          "xg": 0.44,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "M. Diadie",
+          "prob": 0.765,
+          "xg": 1.448,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Ahouonon",
+          "prob": 0.547,
+          "xg": 0.792,
+          "position": "Defender"
+        },
+        {
+          "player": "Stopira",
+          "prob": 0.0,
+          "xg": 0.0,
+          "position": "Defender"
+        },
+        {
+          "player": "Costinha",
+          "prob": 0.0,
+          "xg": 0.0,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Jean",
+          "prob": 0.0,
+          "xg": 0.0,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -16029,7 +18554,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "O. Gloukh",
+          "prob": 0.5631,
+          "xg": 0.828,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Akpom",
+          "prob": 0.135,
+          "xg": 0.145,
+          "position": "Attacker"
+        },
+        {
+          "player": "Don-Angelo Christoffel Annum-Assamoah Konadu",
+          "prob": 0.1323,
+          "xg": 0.142,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Itakura",
+          "prob": 0.0934,
+          "xg": 0.098,
+          "position": "Defender"
+        },
+        {
+          "player": "J. McConnell",
+          "prob": 0.0339,
+          "xg": 0.034,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -16044,9 +18600,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/488.png",
     "odds": {
       "winner": {
-        "home": 1.45,
+        "home": 1.44,
         "draw": 4.5,
-        "away": 6.5
+        "away": 7.0
       },
       "over_2_5": {
         "over": 1.73,
@@ -16133,8 +18689,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "C. De Ketelaere",
+          "prob": 0.1986,
+          "xg": 0.221,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Krstović",
+          "prob": 0.1974,
+          "xg": 0.22,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Pašalić",
+          "prob": 0.1365,
+          "xg": 0.147,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Zalewski",
+          "prob": 0.1339,
+          "xg": 0.144,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Samardžić",
+          "prob": 0.1333,
+          "xg": 0.143,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "J. Doig",
+          "prob": 0.1413,
+          "xg": 0.152,
+          "position": "Defender"
+        },
+        {
+          "player": "N. Matić",
+          "prob": 0.069,
+          "xg": 0.072,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Boloca",
+          "prob": 0.0635,
+          "xg": 0.066,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Lipani",
+          "prob": 0.0604,
+          "xg": 0.062,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Iannoni",
+          "prob": 0.0602,
+          "xg": 0.062,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -16238,8 +18856,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "D. Fofana",
+          "prob": 0.2137,
+          "xg": 0.24,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Johnson",
+          "prob": 0.1051,
+          "xg": 0.111,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Tarık Buğra Kalpaklı",
+          "prob": 0.1051,
+          "xg": 0.111,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Serginho",
+          "prob": 0.1045,
+          "xg": 0.11,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Larsson",
+          "prob": 0.1034,
+          "xg": 0.109,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "U. Nayir",
+          "prob": 0.3474,
+          "xg": 0.427,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Aleksić",
+          "prob": 0.3231,
+          "xg": 0.39,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Bardhi",
+          "prob": 0.2413,
+          "xg": 0.276,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Ndao",
+          "prob": 0.1727,
+          "xg": 0.19,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Bostan",
+          "prob": 0.1411,
+          "xg": 0.152,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -16343,8 +19023,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "R. Ghrieb",
+          "prob": 0.1997,
+          "xg": 0.223,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Mathisen",
+          "prob": 0.1267,
+          "xg": 0.135,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Kaars",
+          "prob": 0.1067,
+          "xg": 0.113,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Breunig",
+          "prob": 0.1067,
+          "xg": 0.113,
+          "position": "Attacker"
+        },
+        {
+          "player": "Noah Pesch",
+          "prob": 0.1006,
+          "xg": 0.106,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Grimaldi",
+          "prob": 0.3545,
+          "xg": 0.438,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Bilbija",
+          "prob": 0.2445,
+          "xg": 0.28,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Marino",
+          "prob": 0.2247,
+          "xg": 0.255,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Michel",
+          "prob": 0.1869,
+          "xg": 0.207,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Obermair",
+          "prob": 0.0557,
+          "xg": 0.057,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -16448,8 +19190,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "A. Bernhardsson",
+          "prob": 0.3221,
+          "xg": 0.389,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Tolkin",
+          "prob": 0.2423,
+          "xg": 0.277,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Gigović",
+          "prob": 0.1892,
+          "xg": 0.21,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Knudsen",
+          "prob": 0.0444,
+          "xg": 0.045,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Wagner",
+          "prob": 0.0427,
+          "xg": 0.044,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "S. Appelkamp",
+          "prob": 0.3053,
+          "xg": 0.364,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Muslija",
+          "prob": 0.1804,
+          "xg": 0.199,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. El Azzouzi",
+          "prob": 0.1804,
+          "xg": 0.199,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Itten",
+          "prob": 0.1445,
+          "xg": 0.156,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Breithaupt",
+          "prob": 0.0302,
+          "xg": 0.031,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -16553,8 +19357,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "M. Stroeykens",
+          "prob": 0.218,
+          "xg": 0.246,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Huerta",
+          "prob": 0.2157,
+          "xg": 0.243,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Vázquez",
+          "prob": 0.2035,
+          "xg": 0.227,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. CvetkoviÄ",
+          "prob": 0.1227,
+          "xg": 0.131,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Dolberg",
+          "prob": 0.1209,
+          "xg": 0.129,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "C. Tzolis",
+          "prob": 0.1475,
+          "xg": 0.16,
+          "position": "Attacker"
+        },
+        {
+          "player": "G. Nilsson",
+          "prob": 0.128,
+          "xg": 0.137,
+          "position": "Attacker"
+        },
+        {
+          "player": "H. Vanaken",
+          "prob": 0.1246,
+          "xg": 0.133,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Vetlesen",
+          "prob": 0.1095,
+          "xg": 0.116,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Reis",
+          "prob": 0.1089,
+          "xg": 0.115,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -16658,8 +19524,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "F. Di Michele Sanchez",
+          "prob": 0.4314,
+          "xg": 0.564,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Köhler",
+          "prob": 0.2626,
+          "xg": 0.305,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Conteh",
+          "prob": 0.1936,
+          "xg": 0.215,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Tempelmann",
+          "prob": 0.0572,
+          "xg": 0.059,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Aydın",
+          "prob": 0.0508,
+          "xg": 0.052,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "M. Bero",
+          "prob": 0.2186,
+          "xg": 0.247,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Broschinski",
+          "prob": 0.1883,
+          "xg": 0.209,
+          "position": "Attacker"
+        },
+        {
+          "player": "G. Holtmann",
+          "prob": 0.1881,
+          "xg": 0.208,
+          "position": "Attacker"
+        },
+        {
+          "player": "I. Sissoko",
+          "prob": 0.188,
+          "xg": 0.208,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Bamba",
+          "prob": 0.1645,
+          "xg": 0.18,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -16674,9 +19602,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/400.png",
     "odds": {
       "winner": {
-        "home": 5.25,
+        "home": 5.5,
         "draw": 4.2,
-        "away": 1.57
+        "away": 1.55
       },
       "over_2_5": {
         "over": 4.0,
@@ -16763,8 +19691,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "C. Gammelgaard",
+          "prob": 0.2658,
+          "xg": 0.309,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Duelund",
+          "prob": 0.2432,
+          "xg": 0.279,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Amin Chiakha",
+          "prob": 0.2052,
+          "xg": 0.23,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Lauritsen",
+          "prob": 0.142,
+          "xg": 0.153,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Abdoulaye Camara",
+          "prob": 0.1032,
+          "xg": 0.109,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "M. Elyounoussi",
+          "prob": 0.269,
+          "xg": 0.313,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Larsson",
+          "prob": 0.266,
+          "xg": 0.309,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Claesson",
+          "prob": 0.2265,
+          "xg": 0.257,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Achouri",
+          "prob": 0.2261,
+          "xg": 0.256,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Y. Moukoko",
+          "prob": 0.1926,
+          "xg": 0.214,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -16868,8 +19858,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Urko Izeta",
+          "prob": 0.575,
+          "xg": 0.856,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gorka Guruzeta",
+          "prob": 0.1598,
+          "xg": 0.174,
+          "position": "Attacker"
+        },
+        {
+          "player": "Ruíz de Galarreta",
+          "prob": 0.0345,
+          "xg": 0.035,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Mikel Vesga",
+          "prob": 0.0323,
+          "xg": 0.033,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Unai Vencedor",
+          "prob": 0.0296,
+          "xg": 0.03,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "S. Rondón",
+          "prob": 0.2617,
+          "xg": 0.303,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Brekalo",
+          "prob": 0.143,
+          "xg": 0.154,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Ilić",
+          "prob": 0.1243,
+          "xg": 0.133,
+          "position": "Attacker"
+        },
+        {
+          "player": "David Carmo",
+          "prob": 0.0794,
+          "xg": 0.083,
+          "position": "Defender"
+        },
+        {
+          "player": "Santi Cazorla",
+          "prob": 0.0307,
+          "xg": 0.031,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -16973,8 +20025,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Ale García",
+          "prob": 0.3593,
+          "xg": 0.445,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Luković",
+          "prob": 0.2661,
+          "xg": 0.309,
+          "position": "Attacker"
+        },
+        {
+          "player": "Iván Gil",
+          "prob": 0.2244,
+          "xg": 0.254,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Enrique Clemente",
+          "prob": 0.1014,
+          "xg": 0.107,
+          "position": "Defender"
+        },
+        {
+          "player": "Sergio Barcia",
+          "prob": 0.0476,
+          "xg": 0.049,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "Jeremy Arévalo",
+          "prob": 0.3204,
+          "xg": 0.386,
+          "position": "Attacker"
+        },
+        {
+          "player": "Andrés Martín",
+          "prob": 0.2881,
+          "xg": 0.34,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Asier Villalibre",
+          "prob": 0.2822,
+          "xg": 0.332,
+          "position": "Attacker"
+        },
+        {
+          "player": "Peio Canales",
+          "prob": 0.1863,
+          "xg": 0.206,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Marco Sangalli",
+          "prob": 0.1324,
+          "xg": 0.142,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -17110,7 +20224,38 @@
           "position": "Attacker"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "G. Koutsias",
+          "prob": 0.1801,
+          "xg": 0.199,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Behrens",
+          "prob": 0.1667,
+          "xg": 0.182,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Steffen",
+          "prob": 0.1406,
+          "xg": 0.152,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Pihlström",
+          "prob": 0.0903,
+          "xg": 0.095,
+          "position": "Attacker"
+        },
+        {
+          "player": "U. Bislimi",
+          "prob": 0.0748,
+          "xg": 0.078,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -17214,8 +20359,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Loren Morón",
+          "prob": 0.3268,
+          "xg": 0.396,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Quaison",
+          "prob": 0.1708,
+          "xg": 0.187,
+          "position": "Attacker"
+        },
+        {
+          "player": "G. Misehouy",
+          "prob": 0.1387,
+          "xg": 0.149,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Á. Zamora",
+          "prob": 0.1154,
+          "xg": 0.123,
+          "position": "Attacker"
+        },
+        {
+          "player": "Dudu",
+          "prob": 0.1121,
+          "xg": 0.119,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "F. Macheda",
+          "prob": 0.1275,
+          "xg": 0.136,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Bartolo",
+          "prob": 0.1266,
+          "xg": 0.135,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Kaltsas",
+          "prob": 0.0593,
+          "xg": 0.061,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Eder González",
+          "prob": 0.0591,
+          "xg": 0.061,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Emmanouilidis",
+          "prob": 0.0588,
+          "xg": 0.061,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -17319,8 +20526,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "A. Muçolli",
+          "prob": 0.2611,
+          "xg": 0.303,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Buch",
+          "prob": 0.2021,
+          "xg": 0.226,
+          "position": "Attacker"
+        },
+        {
+          "player": "G. Marcussen",
+          "prob": 0.173,
+          "xg": 0.19,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Simonsen",
+          "prob": 0.0962,
+          "xg": 0.101,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Egelund",
+          "prob": 0.0805,
+          "xg": 0.084,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Y. Njoh",
+          "prob": 0.247,
+          "xg": 0.284,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Nouck",
+          "prob": 0.211,
+          "xg": 0.237,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Brahimi",
+          "prob": 0.1605,
+          "xg": 0.175,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Frederik Damkjer",
+          "prob": 0.1352,
+          "xg": 0.145,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Ementa",
+          "prob": 0.117,
+          "xg": 0.124,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -17424,8 +20693,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "P. Pantelidis",
+          "prob": 0.3005,
+          "xg": 0.357,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Tetteh",
+          "prob": 0.2529,
+          "xg": 0.292,
+          "position": "Attacker"
+        },
+        {
+          "player": "Jorge Pombo",
+          "prob": 0.2331,
+          "xg": 0.265,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Antonisse",
+          "prob": 0.0948,
+          "xg": 0.1,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Hugo Sousa",
+          "prob": 0.0406,
+          "xg": 0.041,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "Chiquinho",
+          "prob": 0.4057,
+          "xg": 0.52,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Taremi",
+          "prob": 0.3343,
+          "xg": 0.407,
+          "position": "Attacker"
+        },
+        {
+          "player": "Daniel Podence",
+          "prob": 0.2013,
+          "xg": 0.225,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Retsos",
+          "prob": 0.1076,
+          "xg": 0.114,
+          "position": "Defender"
+        },
+        {
+          "player": "F. Ortega",
+          "prob": 0.0599,
+          "xg": 0.062,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -17440,9 +20771,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/202.png",
     "odds": {
       "winner": {
-        "home": 1.91,
-        "draw": 3.9,
-        "away": 3.7
+        "home": 1.95,
+        "draw": 3.8,
+        "away": 3.6
       },
       "over_2_5": {
         "over": 3.75,
@@ -17529,8 +20860,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Koki Ogawa",
+          "prob": 0.4553,
+          "xg": 0.607,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Chery",
+          "prob": 0.3734,
+          "xg": 0.467,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Linssen",
+          "prob": 0.3721,
+          "xg": 0.465,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Önal",
+          "prob": 0.3156,
+          "xg": 0.379,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Lebreton",
+          "prob": 0.2302,
+          "xg": 0.262,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "T. Oosting",
+          "prob": 0.3472,
+          "xg": 0.427,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Y. Taha",
+          "prob": 0.3045,
+          "xg": 0.363,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. van Bergen",
+          "prob": 0.2611,
+          "xg": 0.303,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Resink",
+          "prob": 0.06,
+          "xg": 0.062,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Schreuders",
+          "prob": 0.06,
+          "xg": 0.062,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -17634,8 +21027,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "S. Adeniran",
+          "prob": 0.2135,
+          "xg": 0.24,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Havel",
+          "prob": 0.2121,
+          "xg": 0.238,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Usor",
+          "prob": 0.1754,
+          "xg": 0.193,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Lang",
+          "prob": 0.1744,
+          "xg": 0.192,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Daněk",
+          "prob": 0.102,
+          "xg": 0.108,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "P. Greil",
+          "prob": 0.2831,
+          "xg": 0.333,
+          "position": "Midfielder"
+        },
+        {
+          "player": "O. Diawara",
+          "prob": 0.1976,
+          "xg": 0.22,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Gorgon",
+          "prob": 0.0871,
+          "xg": 0.091,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Hrstić",
+          "prob": 0.0753,
+          "xg": 0.078,
+          "position": "Attacker"
+        },
+        {
+          "player": "Erkin Yalcin",
+          "prob": 0.0746,
+          "xg": 0.078,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -17739,7 +21194,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "M. Wels",
+          "prob": 0.3544,
+          "xg": 0.438,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Böckle",
+          "prob": 0.2971,
+          "xg": 0.353,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Müller",
+          "prob": 0.1544,
+          "xg": 0.168,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Anselm",
+          "prob": 0.1503,
+          "xg": 0.163,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Hinterseer",
+          "prob": 0.1403,
+          "xg": 0.151,
+          "position": "Attacker"
+        }
+      ],
       "away": [
         {
           "player": "M. Seidl",
@@ -17907,7 +21393,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "D. Gómez",
+          "prob": 0.3833,
+          "xg": 0.483,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Tzimas",
+          "prob": 0.1548,
+          "xg": 0.168,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Gruda",
+          "prob": 0.096,
+          "xg": 0.101,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Y. Ayari",
+          "prob": 0.0946,
+          "xg": 0.099,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Watson",
+          "prob": 0.0853,
+          "xg": 0.089,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -18011,8 +21528,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Fábio Carvalho",
+          "prob": 0.2625,
+          "xg": 0.304,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Jensen",
+          "prob": 0.176,
+          "xg": 0.194,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Hickey",
+          "prob": 0.1711,
+          "xg": 0.188,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Lewis-Potter",
+          "prob": 0.1371,
+          "xg": 0.147,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Nelson",
+          "prob": 0.1371,
+          "xg": 0.147,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "N. Woltemade",
+          "prob": 0.1693,
+          "xg": 0.186,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Gordon",
+          "prob": 0.167,
+          "xg": 0.183,
+          "position": "Attacker"
+        },
+        {
+          "player": "Bruno Guimarães",
+          "prob": 0.0359,
+          "xg": 0.037,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Tonali",
+          "prob": 0.0359,
+          "xg": 0.037,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Willock",
+          "prob": 0.0344,
+          "xg": 0.035,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -18148,7 +21727,38 @@
           "position": "Defender"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "L. Nmecha",
+          "prob": 0.2417,
+          "xg": 0.277,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Bijol",
+          "prob": 0.1276,
+          "xg": 0.136,
+          "position": "Defender"
+        },
+        {
+          "player": "I. Schmidt",
+          "prob": 0.1081,
+          "xg": 0.114,
+          "position": "Defender"
+        },
+        {
+          "player": "I. Gruev",
+          "prob": 0.0556,
+          "xg": 0.057,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Tanaka",
+          "prob": 0.0546,
+          "xg": 0.056,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -18284,7 +21894,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "T. Adams",
+          "prob": 0.105,
+          "xg": 0.111,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Ben Winterburn",
+          "prob": 0.1005,
+          "xg": 0.106,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Adli",
+          "prob": 0.0948,
+          "xg": 0.1,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Christie",
+          "prob": 0.0939,
+          "xg": 0.099,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Scott",
+          "prob": 0.0919,
+          "xg": 0.096,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -18301,7 +21942,7 @@
       "winner": {
         "home": 3.0,
         "draw": 3.3,
-        "away": 2.38
+        "away": 2.4
       },
       "over_2_5": {
         "over": 5.5,
@@ -18388,8 +22029,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "A. Tosin",
+          "prob": 0.3004,
+          "xg": 0.357,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Pagis",
+          "prob": 0.2972,
+          "xg": 0.353,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Le Bris",
+          "prob": 0.2551,
+          "xg": 0.294,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Soumano",
+          "prob": 0.2142,
+          "xg": 0.241,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Kouassi",
+          "prob": 0.1476,
+          "xg": 0.16,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Emersonn",
+          "prob": 0.3131,
+          "xg": 0.376,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Edjouma",
+          "prob": 0.2991,
+          "xg": 0.355,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Vossah",
+          "prob": 0.1782,
+          "xg": 0.196,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Cresswell",
+          "prob": 0.0854,
+          "xg": 0.089,
+          "position": "Defender"
+        },
+        {
+          "player": "M. Sauer",
+          "prob": 0.0407,
+          "xg": 0.042,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -18493,7 +22196,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "N. Stanciu",
+          "prob": 0.0865,
+          "xg": 0.09,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Frendrup",
+          "prob": 0.0861,
+          "xg": 0.09,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Carboni",
+          "prob": 0.0859,
+          "xg": 0.09,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Ekhator",
+          "prob": 0.0532,
+          "xg": 0.055,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Marcandalli",
+          "prob": 0.037,
+          "xg": 0.038,
+          "position": "Defender"
+        }
+      ],
       "away": [
         {
           "player": "M. Kean",
@@ -18541,7 +22275,7 @@
     "odds": {
       "winner": {
         "home": 3.0,
-        "draw": 3.1,
+        "draw": 3.0,
         "away": 2.55
       },
       "over_2_5": {
@@ -18549,8 +22283,8 @@
         "under": 1.11
       },
       "over_1_5": {
-        "over": 2.62,
-        "under": 1.44
+        "over": 2.5,
+        "under": 1.5
       },
       "btts": {
         "yes": 4.0,
@@ -18661,7 +22395,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "A. Zambo Anguissa",
+          "prob": 0.2093,
+          "xg": 0.235,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. De Bruyne",
+          "prob": 0.2075,
+          "xg": 0.233,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. McTominay",
+          "prob": 0.1154,
+          "xg": 0.123,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Højlund",
+          "prob": 0.0956,
+          "xg": 0.1,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Gilmour",
+          "prob": 0.0636,
+          "xg": 0.066,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -18765,8 +22530,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "M. Castagnetti",
+          "prob": 0.3962,
+          "xg": 0.504,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Bastoni",
+          "prob": 0.0816,
+          "xg": 0.085,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Calò",
+          "prob": 0.0806,
+          "xg": 0.084,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Ciervo",
+          "prob": 0.0796,
+          "xg": 0.083,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Berti",
+          "prob": 0.0796,
+          "xg": 0.083,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "T. Biasci",
+          "prob": 0.3455,
+          "xg": 0.424,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Palumbo",
+          "prob": 0.1719,
+          "xg": 0.189,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Insigne",
+          "prob": 0.1465,
+          "xg": 0.158,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Lescano",
+          "prob": 0.1445,
+          "xg": 0.156,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Šimić",
+          "prob": 0.0659,
+          "xg": 0.068,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -18871,7 +22698,38 @@
     ],
     "predicted_scorers": {
       "home": [],
-      "away": []
+      "away": [
+        {
+          "player": "S. Koné",
+          "prob": 0.4236,
+          "xg": 0.551,
+          "position": "Midfielder"
+        },
+        {
+          "player": "André Clóvis",
+          "prob": 0.3676,
+          "xg": 0.458,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Messeguem",
+          "prob": 0.0877,
+          "xg": 0.092,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Nils Mortimer",
+          "prob": 0.0858,
+          "xg": 0.09,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Á. Zamora",
+          "prob": 0.0844,
+          "xg": 0.088,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -18886,9 +22744,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/645.png",
     "odds": {
       "winner": {
-        "home": 5.75,
+        "home": 6.0,
         "draw": 4.75,
-        "away": 1.48
+        "away": 1.45
       },
       "over_2_5": {
         "over": 3.5,
@@ -18975,8 +22833,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "B. Petković",
+          "prob": 0.1743,
+          "xg": 0.192,
+          "position": "Attacker"
+        },
+        {
+          "player": "Ryan Mendes",
+          "prob": 0.0861,
+          "xg": 0.09,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Sağat",
+          "prob": 0.0752,
+          "xg": 0.078,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Bingöl",
+          "prob": 0.0719,
+          "xg": 0.075,
+          "position": "Defender"
+        },
+        {
+          "player": "D. Agyei",
+          "prob": 0.0693,
+          "xg": 0.072,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "M. Icardi",
+          "prob": 0.3874,
+          "xg": 0.49,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Sané",
+          "prob": 0.2657,
+          "xg": 0.309,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Osimhen",
+          "prob": 0.224,
+          "xg": 0.254,
+          "position": "Attacker"
+        },
+        {
+          "player": "Y. Akgün",
+          "prob": 0.1906,
+          "xg": 0.211,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Elmalı",
+          "prob": 0.1203,
+          "xg": 0.128,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -19112,7 +23032,38 @@
           "position": "Attacker"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "Mathias Pereira Lage",
+          "prob": 0.2416,
+          "xg": 0.277,
+          "position": "Attacker"
+        },
+        {
+          "player": "H. Wahl",
+          "prob": 0.1359,
+          "xg": 0.146,
+          "position": "Defender"
+        },
+        {
+          "player": "J. Fujita",
+          "prob": 0.0568,
+          "xg": 0.058,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Oppie",
+          "prob": 0.0568,
+          "xg": 0.058,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Sands",
+          "prob": 0.0562,
+          "xg": 0.058,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -19248,7 +23199,38 @@
           "position": "Attacker"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "A. Stamatelopoulos",
+          "prob": 0.2432,
+          "xg": 0.279,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Sparrow",
+          "prob": 0.1743,
+          "xg": 0.191,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Tawanda Jethro Maswanhise",
+          "prob": 0.172,
+          "xg": 0.189,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Charles-Cook",
+          "prob": 0.1276,
+          "xg": 0.137,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Slattery",
+          "prob": 0.119,
+          "xg": 0.127,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -19352,7 +23334,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "S. Murray",
+          "prob": 0.2254,
+          "xg": 0.255,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Westley",
+          "prob": 0.133,
+          "xg": 0.143,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Acquah",
+          "prob": 0.1274,
+          "xg": 0.136,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Robertson",
+          "prob": 0.115,
+          "xg": 0.122,
+          "position": "Defender"
+        },
+        {
+          "player": "L. Graham",
+          "prob": 0.0664,
+          "xg": 0.069,
+          "position": "Defender"
+        }
+      ],
       "away": [
         {
           "player": "C. Dessers",
@@ -19488,8 +23501,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "L. Shankland",
+          "prob": 0.3882,
+          "xg": 0.491,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Kyziridis",
+          "prob": 0.3646,
+          "xg": 0.453,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Kartum",
+          "prob": 0.2276,
+          "xg": 0.258,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Cláudio Braga",
+          "prob": 0.1896,
+          "xg": 0.21,
+          "position": "Attacker"
+        },
+        {
+          "player": "Y. Dhanda",
+          "prob": 0.1736,
+          "xg": 0.191,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "M. Watters",
+          "prob": 0.3606,
+          "xg": 0.447,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Trapanovski",
+          "prob": 0.2428,
+          "xg": 0.278,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Luca Stephenson",
+          "prob": 0.1109,
+          "xg": 0.118,
+          "position": "Defender"
+        },
+        {
+          "player": "J. Eskesen",
+          "prob": 0.1054,
+          "xg": 0.111,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Strain",
+          "prob": 0.0703,
+          "xg": 0.073,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -19504,9 +23579,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/397.png",
     "odds": {
       "winner": {
-        "home": 4.1,
-        "draw": 3.9,
-        "away": 1.75
+        "home": 4.33,
+        "draw": 4.0,
+        "away": 1.7
       },
       "over_2_5": {
         "over": 3.5,
@@ -19593,7 +23668,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "M. Touré",
+          "prob": 0.2274,
+          "xg": 0.258,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Campbell",
+          "prob": 0.1484,
+          "xg": 0.161,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Danho",
+          "prob": 0.1234,
+          "xg": 0.132,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Mahmoud",
+          "prob": 0.0652,
+          "xg": 0.067,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Olsen",
+          "prob": 0.0536,
+          "xg": 0.055,
+          "position": "Defender"
+        }
+      ],
       "away": [
         {
           "player": "A. Buksa",
@@ -19641,7 +23747,7 @@
     "odds": {
       "winner": {
         "home": 2.0,
-        "draw": 3.3,
+        "draw": 3.4,
         "away": 3.6
       },
       "over_2_5": {
@@ -19653,8 +23759,8 @@
         "under": 1.67
       },
       "btts": {
-        "yes": 3.4,
-        "no": 1.3
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -19729,8 +23835,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "R. Ito",
+          "prob": 0.3331,
+          "xg": 0.405,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Goto",
+          "prob": 0.2253,
+          "xg": 0.255,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Ferrari",
+          "prob": 0.162,
+          "xg": 0.177,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Yamamoto",
+          "prob": 0.1537,
+          "xg": 0.167,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Vanwesemael",
+          "prob": 0.1018,
+          "xg": 0.107,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "R. Saïd",
+          "prob": 0.1738,
+          "xg": 0.191,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Henry",
+          "prob": 0.1707,
+          "xg": 0.187,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Ilaimaharitra",
+          "prob": 0.1342,
+          "xg": 0.144,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Nielsen",
+          "prob": 0.0845,
+          "xg": 0.088,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Abid",
+          "prob": 0.0842,
+          "xg": 0.088,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -19834,8 +24002,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "F. Pedrozo",
+          "prob": 0.4174,
+          "xg": 0.54,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Palacios",
+          "prob": 0.3359,
+          "xg": 0.409,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Layous",
+          "prob": 0.3314,
+          "xg": 0.403,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Simelidis",
+          "prob": 0.3282,
+          "xg": 0.398,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Ožbolt",
+          "prob": 0.286,
+          "xg": 0.337,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Aleksa Maraš",
+          "prob": 0.1692,
+          "xg": 0.185,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Ivan",
+          "prob": 0.1008,
+          "xg": 0.106,
+          "position": "Attacker"
+        },
+        {
+          "player": "V. De Marco",
+          "prob": 0.0516,
+          "xg": 0.053,
+          "position": "Defender"
+        },
+        {
+          "player": "Zidane Banjaqui",
+          "prob": 0.0209,
+          "xg": 0.021,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Liasos",
+          "prob": 0.0209,
+          "xg": 0.021,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -19850,9 +24080,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/541.png",
     "odds": {
       "winner": {
-        "home": 5.5,
+        "home": 5.25,
         "draw": 5.0,
-        "away": 1.48
+        "away": 1.5
       },
       "over_2_5": {
         "over": 3.5,
@@ -19971,7 +24201,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "Gonzalo García",
+          "prob": 0.4662,
+          "xg": 0.628,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Bellingham",
+          "prob": 0.1936,
+          "xg": 0.215,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Güler",
+          "prob": 0.1932,
+          "xg": 0.215,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Vinícius Júnior",
+          "prob": 0.1643,
+          "xg": 0.179,
+          "position": "Attacker"
+        },
+        {
+          "player": "Kylian Mbappé",
+          "prob": 0.1517,
+          "xg": 0.165,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -20075,8 +24336,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Marcos Fernández",
+          "prob": 0.2453,
+          "xg": 0.281,
+          "position": "Attacker"
+        },
+        {
+          "player": "Jamelli",
+          "prob": 0.1757,
+          "xg": 0.193,
+          "position": "Attacker"
+        },
+        {
+          "player": "Y. Didi",
+          "prob": 0.119,
+          "xg": 0.127,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Koné",
+          "prob": 0.0995,
+          "xg": 0.105,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. de La Fuente",
+          "prob": 0.0958,
+          "xg": 0.101,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Adri Embarba",
+          "prob": 0.2252,
+          "xg": 0.255,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Sergio Arribas",
+          "prob": 0.1822,
+          "xg": 0.201,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Nico Melamed",
+          "prob": 0.0865,
+          "xg": 0.09,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Léo Baptistão",
+          "prob": 0.0863,
+          "xg": 0.09,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Arnau Puigmal",
+          "prob": 0.0854,
+          "xg": 0.089,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -20180,8 +24503,58 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Adrián Butzke",
+          "prob": 0.2953,
+          "xg": 0.35,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Madsen",
+          "prob": 0.1694,
+          "xg": 0.186,
+          "position": "Defender"
+        },
+        {
+          "player": "Raphael Guzzo",
+          "prob": 0.0715,
+          "xg": 0.074,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Danilović",
+          "prob": 0.068,
+          "xg": 0.07,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Marco Cruz",
+          "prob": 0.068,
+          "xg": 0.07,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Ronaldo Afonso",
+          "prob": 0.2641,
+          "xg": 0.307,
+          "position": "Attacker"
+        },
+        {
+          "player": "I. Pavlić",
+          "prob": 0.2641,
+          "xg": 0.307,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Matheus Martins",
+          "prob": 0.2641,
+          "xg": 0.307,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -20285,7 +24658,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "C. Boukhalfa",
+          "prob": 0.4754,
+          "xg": 0.645,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Vladi",
+          "prob": 0.3793,
+          "xg": 0.477,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Görtler",
+          "prob": 0.3781,
+          "xg": 0.475,
+          "position": "Midfielder"
+        },
+        {
+          "player": "W. Geubbels",
+          "prob": 0.2182,
+          "xg": 0.246,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Witzig",
+          "prob": 0.1859,
+          "xg": 0.206,
+          "position": "Midfielder"
+        }
+      ],
       "away": [
         {
           "player": "C. Itten",
@@ -20453,7 +24857,38 @@
           "position": "Attacker"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "R. Nivokazi",
+          "prob": 0.4165,
+          "xg": 0.539,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Rrudhani",
+          "prob": 0.3985,
+          "xg": 0.508,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Kololli",
+          "prob": 0.2428,
+          "xg": 0.278,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Winsley Boteli Mokango",
+          "prob": 0.0972,
+          "xg": 0.102,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Kabacalman",
+          "prob": 0.081,
+          "xg": 0.085,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -20557,7 +24992,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "E. Salcedo",
+          "prob": 0.2332,
+          "xg": 0.266,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Neira",
+          "prob": 0.2278,
+          "xg": 0.259,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Nuss",
+          "prob": 0.1605,
+          "xg": 0.175,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Androutsos",
+          "prob": 0.1603,
+          "xg": 0.175,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Apostolakis",
+          "prob": 0.158,
+          "xg": 0.172,
+          "position": "Midfielder"
+        }
+      ],
       "away": [
         {
           "player": "Dimitrios Kaloskamis",
@@ -21028,7 +25494,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "I. Babadi",
+          "prob": 0.5005,
+          "xg": 0.694,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Man",
+          "prob": 0.3679,
+          "xg": 0.459,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Fernandez",
+          "prob": 0.2535,
+          "xg": 0.292,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. van Bommel",
+          "prob": 0.1948,
+          "xg": 0.217,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Boadu",
+          "prob": 0.1403,
+          "xg": 0.151,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -21164,7 +25661,38 @@
           "position": "Attacker"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "Ben Brannan",
+          "prob": 0.2079,
+          "xg": 0.233,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Anderson",
+          "prob": 0.1754,
+          "xg": 0.193,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Magennis",
+          "prob": 0.1534,
+          "xg": 0.166,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Tiffoney",
+          "prob": 0.1152,
+          "xg": 0.122,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Lyons",
+          "prob": 0.0867,
+          "xg": 0.091,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -21435,8 +25963,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "S. Cherif",
+          "prob": 0.3419,
+          "xg": 0.418,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Peter",
+          "prob": 0.2494,
+          "xg": 0.287,
+          "position": "Attacker"
+        },
+        {
+          "player": "H. Abdelli",
+          "prob": 0.171,
+          "xg": 0.188,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Lepaul",
+          "prob": 0.1363,
+          "xg": 0.147,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Camara",
+          "prob": 0.0761,
+          "xg": 0.079,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "L. Sinayoko",
+          "prob": 0.2159,
+          "xg": 0.243,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Namaso",
+          "prob": 0.1572,
+          "xg": 0.171,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Sierralta",
+          "prob": 0.0456,
+          "xg": 0.047,
+          "position": "Defender"
+        },
+        {
+          "player": "E. Owusu",
+          "prob": 0.0185,
+          "xg": 0.019,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Danois",
+          "prob": 0.0185,
+          "xg": 0.019,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -21707,7 +26297,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "G. Hein",
+          "prob": 0.3026,
+          "xg": 0.36,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Diallo",
+          "prob": 0.1864,
+          "xg": 0.206,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Traoré",
+          "prob": 0.1259,
+          "xg": 0.135,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Abuashvili",
+          "prob": 0.1027,
+          "xg": 0.108,
+          "position": "Attacker"
+        },
+        {
+          "player": "Ibou Sané",
+          "prob": 0.1024,
+          "xg": 0.108,
+          "position": "Attacker"
+        }
+      ],
       "away": [
         {
           "player": "S. Diop",
@@ -21843,8 +26464,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Antonio Di Nardo",
+          "prob": 0.4176,
+          "xg": 0.541,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Oliveri",
+          "prob": 0.236,
+          "xg": 0.269,
+          "position": "Defender"
+        },
+        {
+          "player": "R. Capellini",
+          "prob": 0.096,
+          "xg": 0.101,
+          "position": "Defender"
+        },
+        {
+          "player": "T. Corazza",
+          "prob": 0.0394,
+          "xg": 0.04,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Caligara",
+          "prob": 0.0357,
+          "xg": 0.036,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Álvarez",
+          "prob": 0.3626,
+          "xg": 0.45,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Ciurria",
+          "prob": 0.2571,
+          "xg": 0.297,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Galazzi",
+          "prob": 0.2127,
+          "xg": 0.239,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Brorsson",
+          "prob": 0.0737,
+          "xg": 0.077,
+          "position": "Defender"
+        },
+        {
+          "player": "L. Lucchesi",
+          "prob": 0.0375,
+          "xg": 0.038,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -21948,8 +26631,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "P. Foden",
+          "prob": 0.4612,
+          "xg": 0.618,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Doku",
+          "prob": 0.3211,
+          "xg": 0.387,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Haaland",
+          "prob": 0.3125,
+          "xg": 0.375,
+          "position": "Attacker"
+        },
+        {
+          "player": "Bernardo Silva",
+          "prob": 0.2204,
+          "xg": 0.249,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Sávio",
+          "prob": 0.1925,
+          "xg": 0.214,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "H. Ekitike",
+          "prob": 0.2267,
+          "xg": 0.257,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Isak",
+          "prob": 0.2057,
+          "xg": 0.23,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Frimpong",
+          "prob": 0.1269,
+          "xg": 0.136,
+          "position": "Defender"
+        },
+        {
+          "player": "Tommy Pilling",
+          "prob": 0.0547,
+          "xg": 0.056,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Szoboszlai",
+          "prob": 0.0528,
+          "xg": 0.054,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -22085,7 +26830,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "S. Mounié",
+          "prob": 0.2046,
+          "xg": 0.229,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Essende",
+          "prob": 0.1917,
+          "xg": 0.213,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Jakić",
+          "prob": 0.0482,
+          "xg": 0.049,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Wolf",
+          "prob": 0.0475,
+          "xg": 0.049,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Kömür",
+          "prob": 0.0461,
+          "xg": 0.047,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -22100,9 +26876,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/396.png",
     "odds": {
       "winner": {
-        "home": 1.5,
-        "draw": 4.2,
-        "away": 6.0
+        "home": 1.57,
+        "draw": 4.1,
+        "away": 5.5
       },
       "over_2_5": {
         "over": 1.67,
@@ -22113,8 +26889,8 @@
         "under": 1.91
       },
       "btts": {
-        "yes": 3.0,
-        "no": 1.36
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -22189,8 +26965,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "P. Mortensen",
+          "prob": 0.3286,
+          "xg": 0.398,
+          "position": "Attacker"
+        },
+        {
+          "player": "Kristian Fredrik Malt Arnstad",
+          "prob": 0.3006,
+          "xg": 0.358,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Anderson",
+          "prob": 0.1925,
+          "xg": 0.214,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Kevin Yakob",
+          "prob": 0.1488,
+          "xg": 0.161,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Beijmo",
+          "prob": 0.1381,
+          "xg": 0.149,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "K. Ingason",
+          "prob": 0.1464,
+          "xg": 0.158,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Lyng",
+          "prob": 0.1443,
+          "xg": 0.156,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Hoppe",
+          "prob": 0.1032,
+          "xg": 0.109,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Qamili",
+          "prob": 0.0992,
+          "xg": 0.104,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Vinderslev",
+          "prob": 0.0681,
+          "xg": 0.071,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -22326,7 +27164,38 @@
           "position": "Attacker"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "A. Atta",
+          "prob": 0.2073,
+          "xg": 0.232,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Zaniolo",
+          "prob": 0.1999,
+          "xg": 0.223,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Miller",
+          "prob": 0.1999,
+          "xg": 0.223,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Karlström",
+          "prob": 0.0414,
+          "xg": 0.042,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Zanoli",
+          "prob": 0.0382,
+          "xg": 0.039,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -22462,7 +27331,38 @@
           "position": "Defender"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "Miguel Cardoso",
+          "prob": 0.137,
+          "xg": 0.147,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Onugkha",
+          "prob": 0.1297,
+          "xg": 0.139,
+          "position": "Attacker"
+        },
+        {
+          "player": "Carlos Mané",
+          "prob": 0.1272,
+          "xg": 0.136,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Bénes",
+          "prob": 0.1091,
+          "xg": 0.115,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Nazon",
+          "prob": 0.092,
+          "xg": 0.097,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -22598,7 +27498,38 @@
           "position": "Attacker"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "M. Thiam",
+          "prob": 0.1716,
+          "xg": 0.188,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Sešlar",
+          "prob": 0.0603,
+          "xg": 0.062,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Akbunar",
+          "prob": 0.05,
+          "xg": 0.051,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Ampem",
+          "prob": 0.0499,
+          "xg": 0.051,
+          "position": "Attacker"
+        },
+        {
+          "player": "U. Bozok",
+          "prob": 0.049,
+          "xg": 0.05,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -22702,8 +27633,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "O. Ožegović",
+          "prob": 0.2042,
+          "xg": 0.228,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Jubitana",
+          "prob": 0.2031,
+          "xg": 0.227,
+          "position": "Attacker"
+        },
+        {
+          "player": "Panagiotis Tsantilas",
+          "prob": 0.1989,
+          "xg": 0.222,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Michorl",
+          "prob": 0.1401,
+          "xg": 0.151,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Baku",
+          "prob": 0.1398,
+          "xg": 0.151,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "L. Lamprou",
+          "prob": 0.3249,
+          "xg": 0.393,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Añor",
+          "prob": 0.2368,
+          "xg": 0.27,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Joca",
+          "prob": 0.2368,
+          "xg": 0.27,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Hamulić",
+          "prob": 0.2011,
+          "xg": 0.224,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Comba",
+          "prob": 0.1366,
+          "xg": 0.147,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -22807,7 +27800,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "A. Danjuma",
+          "prob": 0.2836,
+          "xg": 0.334,
+          "position": "Attacker"
+        },
+        {
+          "player": "Hugo Duro",
+          "prob": 0.2817,
+          "xg": 0.331,
+          "position": "Attacker"
+        },
+        {
+          "player": "Diego López",
+          "prob": 0.2405,
+          "xg": 0.275,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Santamaría",
+          "prob": 0.1386,
+          "xg": 0.149,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Diakhaby",
+          "prob": 0.0596,
+          "xg": 0.061,
+          "position": "Defender"
+        }
+      ],
       "away": [
         {
           "player": "Antony",
@@ -22867,8 +27891,8 @@
         "under": 1.91
       },
       "btts": {
-        "yes": 2.62,
-        "no": 1.44
+        "yes": 2.75,
+        "no": 1.4
       }
     },
     "predicted_score": {
@@ -22943,7 +27967,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "O. Gandelman",
+          "prob": 0.4077,
+          "xg": 0.524,
+          "position": "Midfielder"
+        },
+        {
+          "player": "W. Kanga",
+          "prob": 0.1988,
+          "xg": 0.222,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Ito",
+          "prob": 0.1895,
+          "xg": 0.21,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Skóraś",
+          "prob": 0.1673,
+          "xg": 0.183,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Goore",
+          "prob": 0.1421,
+          "xg": 0.153,
+          "position": "Attacker"
+        }
+      ],
       "away": [
         {
           "player": "T. Arokodare",
@@ -23079,8 +28134,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Pedro Alemañ",
+          "prob": 0.1974,
+          "xg": 0.22,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Faye",
+          "prob": 0.1891,
+          "xg": 0.21,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Rubén Alcaraz",
+          "prob": 0.1125,
+          "xg": 0.119,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Pablo Sáenz",
+          "prob": 0.1112,
+          "xg": 0.118,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Hongla",
+          "prob": 0.1083,
+          "xg": 0.115,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Dani Gómez",
+          "prob": 0.2026,
+          "xg": 0.226,
+          "position": "Attacker"
+        },
+        {
+          "player": "Sebas Moyano",
+          "prob": 0.1382,
+          "xg": 0.149,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Mario Soberón",
+          "prob": 0.1138,
+          "xg": 0.121,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Kodro",
+          "prob": 0.1117,
+          "xg": 0.118,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Baždar",
+          "prob": 0.1111,
+          "xg": 0.118,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -23095,9 +28212,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/546.png",
     "odds": {
       "winner": {
-        "home": 2.55,
+        "home": 2.5,
         "draw": 2.9,
-        "away": 3.1
+        "away": 3.2
       },
       "over_2_5": {
         "over": 9.0,
@@ -23184,8 +28301,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "V. Muriqi",
+          "prob": 0.3328,
+          "xg": 0.405,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Joseph",
+          "prob": 0.1562,
+          "xg": 0.17,
+          "position": "Attacker"
+        },
+        {
+          "player": "Samú Costa",
+          "prob": 0.1052,
+          "xg": 0.111,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Asano",
+          "prob": 0.1022,
+          "xg": 0.108,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Pablo Maffeo",
+          "prob": 0.0452,
+          "xg": 0.046,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "Borja Mayoral",
+          "prob": 0.2583,
+          "xg": 0.299,
+          "position": "Attacker"
+        },
+        {
+          "player": "Adrian Liso",
+          "prob": 0.2047,
+          "xg": 0.229,
+          "position": "Attacker"
+        },
+        {
+          "player": "Mario Martín",
+          "prob": 0.172,
+          "xg": 0.189,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Arambarri",
+          "prob": 0.0918,
+          "xg": 0.096,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Christantus Uche",
+          "prob": 0.0793,
+          "xg": 0.083,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -23200,9 +28379,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/212.png",
     "odds": {
       "winner": {
-        "home": 5.25,
+        "home": 5.5,
         "draw": 3.9,
-        "away": 1.62
+        "away": 1.6
       },
       "over_2_5": {
         "over": 4.5,
@@ -23456,8 +28635,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "L. Lauberbach",
+          "prob": 0.2231,
+          "xg": 0.253,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Schoofs",
+          "prob": 0.1423,
+          "xg": 0.154,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Mrabti",
+          "prob": 0.1204,
+          "xg": 0.128,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. van Brederode",
+          "prob": 0.1195,
+          "xg": 0.127,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Konaté",
+          "prob": 0.081,
+          "xg": 0.084,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "P. David",
+          "prob": 0.3572,
+          "xg": 0.442,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Ait El Hadj",
+          "prob": 0.1518,
+          "xg": 0.165,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Ivanović",
+          "prob": 0.1095,
+          "xg": 0.116,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Fuseini",
+          "prob": 0.1009,
+          "xg": 0.106,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Zorgane",
+          "prob": 0.0885,
+          "xg": 0.093,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -23561,7 +28802,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "R. Dōan",
+          "prob": 0.4782,
+          "xg": 0.65,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Bahoya",
+          "prob": 0.2763,
+          "xg": 0.323,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Knauff",
+          "prob": 0.2446,
+          "xg": 0.281,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Wahi",
+          "prob": 0.1864,
+          "xg": 0.206,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Aaronson",
+          "prob": 0.1556,
+          "xg": 0.169,
+          "position": "Midfielder"
+        }
+      ],
       "away": [
         {
           "player": "N. Amiri",
@@ -23697,7 +28969,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "Yuri Alberto",
+          "prob": 0.2498,
+          "xg": 0.287,
+          "position": "Attacker"
+        },
+        {
+          "player": "Á. Romero",
+          "prob": 0.207,
+          "xg": 0.232,
+          "position": "Attacker"
+        },
+        {
+          "player": "Talles Magno",
+          "prob": 0.2034,
+          "xg": 0.227,
+          "position": "Attacker"
+        },
+        {
+          "player": "Igor Coronado",
+          "prob": 0.1348,
+          "xg": 0.145,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Alex Santana",
+          "prob": 0.1324,
+          "xg": 0.142,
+          "position": "Midfielder"
+        }
+      ],
       "away": [
         {
           "player": "Pedro Raul",
@@ -23833,7 +29136,38 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
+      "home": [
+        {
+          "player": "Kaio Jorge",
+          "prob": 0.4954,
+          "xg": 0.684,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gabriel Barbosa",
+          "prob": 0.3435,
+          "xg": 0.421,
+          "position": "Attacker"
+        },
+        {
+          "player": "Christian",
+          "prob": 0.2153,
+          "xg": 0.242,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Romero",
+          "prob": 0.11,
+          "xg": 0.116,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Eduardo",
+          "prob": 0.1099,
+          "xg": 0.116,
+          "position": "Midfielder"
+        }
+      ],
       "away": [
         {
           "player": "G. Cano",
@@ -23969,8 +29303,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Bruno Xavier",
+          "prob": 0.1982,
+          "xg": 0.221,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Carlinhos",
+          "prob": 0.1591,
+          "xg": 0.173,
+          "position": "Attacker"
+        },
+        {
+          "player": "Matheuzinho",
+          "prob": 0.1106,
+          "xg": 0.117,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Lucas Braga",
+          "prob": 0.0919,
+          "xg": 0.096,
+          "position": "Attacker"
+        },
+        {
+          "player": "Jamerson",
+          "prob": 0.049,
+          "xg": 0.05,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "Kauê",
+          "prob": 0.1982,
+          "xg": 0.221,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Igor Jesus",
+          "prob": 0.1684,
+          "xg": 0.184,
+          "position": "Attacker"
+        },
+        {
+          "player": "Álvaro Montoro",
+          "prob": 0.1074,
+          "xg": 0.114,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Arthur Cabral",
+          "prob": 0.0937,
+          "xg": 0.098,
+          "position": "Attacker"
+        },
+        {
+          "player": "Serafim",
+          "prob": 0.05,
+          "xg": 0.051,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -24074,8 +29470,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "N. Nartey",
+          "prob": 0.3084,
+          "xg": 0.369,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Vallys",
+          "prob": 0.2797,
+          "xg": 0.328,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Bundgaard",
+          "prob": 0.2642,
+          "xg": 0.307,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Spierings",
+          "prob": 0.174,
+          "xg": 0.191,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Divković",
+          "prob": 0.1504,
+          "xg": 0.163,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "P. Amoako",
+          "prob": 0.348,
+          "xg": 0.428,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Lind",
+          "prob": 0.25,
+          "xg": 0.288,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Solbakken",
+          "prob": 0.1794,
+          "xg": 0.198,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Egeli",
+          "prob": 0.1789,
+          "xg": 0.197,
+          "position": "Attacker"
+        },
+        {
+          "player": "Caleb Marfo Yirenkyi",
+          "prob": 0.0985,
+          "xg": 0.104,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -24545,7 +30003,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "O. Dembélé",
+          "prob": 0.2765,
+          "xg": 0.324,
+          "position": "Attacker"
+        },
+        {
+          "player": "Fabián Ruiz",
+          "prob": 0.2394,
+          "xg": 0.274,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Kolo Muani",
+          "prob": 0.2011,
+          "xg": 0.224,
+          "position": "Attacker"
+        },
+        {
+          "player": "Renato Sanches",
+          "prob": 0.1332,
+          "xg": 0.143,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Doué",
+          "prob": 0.1184,
+          "xg": 0.126,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -24649,8 +30138,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "F. Dimarco",
+          "prob": 0.3951,
+          "xg": 0.503,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Lautaro Martínez",
+          "prob": 0.3353,
+          "xg": 0.408,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Barella",
+          "prob": 0.2403,
+          "xg": 0.275,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Esposito",
+          "prob": 0.1992,
+          "xg": 0.222,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Bastoni",
+          "prob": 0.1083,
+          "xg": 0.115,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "B. Dia",
+          "prob": 0.1232,
+          "xg": 0.131,
+          "position": "Attacker"
+        },
+        {
+          "player": "V. Castellanos",
+          "prob": 0.0986,
+          "xg": 0.104,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Zaccagni",
+          "prob": 0.0695,
+          "xg": 0.072,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Cancellieri",
+          "prob": 0.0682,
+          "xg": 0.071,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Noslin",
+          "prob": 0.064,
+          "xg": 0.066,
+          "position": "Attacker"
+        }
+      ]
     }
   },
   {
@@ -24786,7 +30337,38 @@
           "position": "Midfielder"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "M. Rashford",
+          "prob": 0.3226,
+          "xg": 0.39,
+          "position": "Attacker"
+        },
+        {
+          "player": "Lamine Yamal",
+          "prob": 0.2939,
+          "xg": 0.348,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gavi",
+          "prob": 0.2055,
+          "xg": 0.23,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Araújo",
+          "prob": 0.1755,
+          "xg": 0.193,
+          "position": "Defender"
+        },
+        {
+          "player": "Eric García",
+          "prob": 0.1011,
+          "xg": 0.107,
+          "position": "Defender"
+        }
+      ]
     }
   },
   {
@@ -24890,8 +30472,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "I. Tabatadze",
+          "prob": 0.2423,
+          "xg": 0.278,
+          "position": "Attacker"
+        },
+        {
+          "player": "B. Ocampo",
+          "prob": 0.1299,
+          "xg": 0.139,
+          "position": "Attacker"
+        },
+        {
+          "player": "Sergio Ortu",
+          "prob": 0.0916,
+          "xg": 0.096,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Javi Ontiveros",
+          "prob": 0.0902,
+          "xg": 0.094,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Suso",
+          "prob": 0.0771,
+          "xg": 0.08,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Ndiaye",
+          "prob": 0.1366,
+          "xg": 0.147,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Chuky San José",
+          "prob": 0.1363,
+          "xg": 0.147,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Juanmi Latasa",
+          "prob": 0.1133,
+          "xg": 0.12,
+          "position": "Attacker"
+        },
+        {
+          "player": "Víctor Meseguer",
+          "prob": 0.054,
+          "xg": 0.056,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Ponceau",
+          "prob": 0.0534,
+          "xg": 0.055,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -25329,8 +30973,70 @@
       }
     ],
     "predicted_scorers": {
-      "home": [],
-      "away": []
+      "home": [
+        {
+          "player": "Tiago Dias",
+          "prob": 0.2821,
+          "xg": 0.331,
+          "position": "Attacker"
+        },
+        {
+          "player": "Tokinho",
+          "prob": 0.0641,
+          "xg": 0.066,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Miguel Teixeira",
+          "prob": 0.0621,
+          "xg": 0.064,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Arsénio",
+          "prob": 0.062,
+          "xg": 0.064,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Daniel",
+          "prob": 0.0552,
+          "xg": 0.057,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Zé Pedro",
+          "prob": 0.2178,
+          "xg": 0.246,
+          "position": "Defender"
+        },
+        {
+          "player": "J. Mendes",
+          "prob": 0.0936,
+          "xg": 0.098,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. van der Gaag",
+          "prob": 0.0936,
+          "xg": 0.098,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Miguel Pires",
+          "prob": 0.0873,
+          "xg": 0.091,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Daniel Borges",
+          "prob": 0.0808,
+          "xg": 0.084,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
@@ -25633,7 +31339,38 @@
           "position": "Defender"
         }
       ],
-      "away": []
+      "away": [
+        {
+          "player": "Gustavo Martins",
+          "prob": 0.2382,
+          "xg": 0.272,
+          "position": "Defender"
+        },
+        {
+          "player": "Jemerson",
+          "prob": 0.1386,
+          "xg": 0.149,
+          "position": "Defender"
+        },
+        {
+          "player": "F. Cristaldo",
+          "prob": 0.0579,
+          "xg": 0.06,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Camilo",
+          "prob": 0.0576,
+          "xg": 0.059,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Igor",
+          "prob": 0.0573,
+          "xg": 0.059,
+          "position": "Midfielder"
+        }
+      ]
     }
   },
   {
