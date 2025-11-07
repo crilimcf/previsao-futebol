@@ -2,15 +2,22 @@ name: ⚽ Daily Football Predictions
 
 on:
   schedule:
-    - cron: '30 0 * * *'  # todos os dias às 06h00 UTC
-  workflow_dispatch:      # também pode ser executado manualmente
+    - cron: '30 0 * * *'  # todos os dias às 00:30 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write     # permite commit/push automático
 
 jobs:
   run-daily:
     runs-on: ubuntu-latest
+
     steps:
       - name: 🧩 Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
@@ -19,6 +26,7 @@ jobs:
 
       - name: ⚙️ Install dependencies
         run: |
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: 🔍 Check backend health
@@ -27,23 +35,44 @@ jobs:
           echo "🩺 Checking backend health endpoint..."
           STATUS=$(curl -s https://previsao-futebol.onrender.com/healthz || echo "fail")
           echo "Healthz response: $STATUS"
-
           if echo "$STATUS" | grep -q '"status": "ok"'; then
             echo "✅ Backend saudável, prosseguindo..."
-            echo "ok" > health.txt
           else
             echo "❌ Backend não está saudável."
-            echo "fail" > health.txt
+            exit 1
           fi
 
-      - name: 🚀 Run daily update
-        if: ${{ hashFiles('health.txt') == 'ok' }}
+      - name: 🚀 Run daily update (pull games + train + predict)
+        if: ${{ success() && steps.health.conclusion == 'success' }}
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          API_FOOTBALL_BASE: ${{ secrets.API_FOOTBALL_BASE }}
+          API_FOOTBALL_SEASON: ${{ secrets.API_FOOTBALL_SEASON }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
+          UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
           echo "Running daily prediction update..."
           python run_daily.py
 
+      - name: 💾 Commit & push predictions if changed
+        if: ${{ success() && steps.health.conclusion == 'success' }}
+        run: |
+          echo "Checking for prediction updates..."
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/predictions.json results/*.json || true
+          if git diff --cached --quiet; then
+            echo "🟢 Nenhuma alteração em predictions."
+          else
+            git commit -m "chore: update daily football predictions ($(date -u +'%Y-%m-%d'))"
+            git push
+            echo "✅ Predictions committed & pushed."
+          fi
+
       - name: 🚨 Send Telegram alert if backend down
-        if: ${{ hashFiles('health.txt') != 'ok' }}
+        if: failure()
         run: |
           echo "Backend offline — enviando alerta Telegram..."
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
