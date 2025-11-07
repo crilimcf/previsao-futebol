@@ -1,4 +1,4 @@
-name: Train bivariate correlation (weekly + manual)
+name: Train bivariate correlation (weekly)
 
 on:
   schedule:
@@ -12,16 +12,14 @@ jobs:
   train:
     runs-on: ubuntu-latest
     env:
-      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
       API_FOOTBALL_BASE: https://v3.football.api-sports.io/
-      # podes ajustar:
-      API_FOOTBALL_SEASONS: "2024,2025"
-      MAX_FIXTURES_PER_LEAGUE: "400"
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup Python 3.11 (cache pip)
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -29,43 +27,52 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euxo pipefail
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          # tenta requirements.txt; se não existir/estiver incompleto, instala mínimos
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          pip install --upgrade pandas numpy scipy requests python-dateutil || true
 
-      - name: Export Poisson inputs from API-Football
+      - name: Export Poisson inputs CSV (from API-Football)
         run: |
           set -euxo pipefail
-          python scripts/export_poisson_inputs_from_api.py
-
-      - name: Commit dataset (optional)
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/train/poisson_inputs.csv
-          if git diff --cached --quiet; then
-            echo "Sem alterações no dataset."
-          else
-            git fetch origin main
-            git rebase origin/main || true
-            git commit -m "chore(data): refresh poisson_inputs.csv (auto)"
-            git push
-          fi
+          mkdir -p data/train
+          python scripts/export_poisson_inputs_from_api.py --seasons 2024,2025 --min-matches 6
+          # falha cedo se não existir
+          test -f data/train/poisson_inputs.csv || (echo "CSV not generated"; exit 1)
 
       - name: Train λ3 per league
         run: |
           set -euxo pipefail
           python scripts/train_lambda3_per_league.py
 
-      - name: Commit λ3
+      - name: Commit λ3 (and CSV if present) with rebase
         run: |
+          set -euxo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # adiciona modelo; CSV só se existir
           git add models/bivar_lambda3.json
+          if [ -f data/train/poisson_inputs.csv ]; then
+            git add -f data/train/poisson_inputs.csv
+          fi
+
           if git diff --cached --quiet; then
-            echo "Sem alterações."
-          else
-            git fetch origin main
-            git rebase origin/main || true
-            git commit -m "chore(models): refresh λ3 por liga"
-            git push
+            echo "Sem alterações a commitar."
+            exit 0
+          fi
+
+          git commit -m "chore(models): refresh λ3 por liga (e inputs, se existirem)"
+
+          # rebase para evitar rejeição no push
+          git pull --rebase origin main || true
+
+          # tenta push (uma ou duas tentativas)
+          if ! git push origin main; then
+            echo "Push falhou, a rebasear e tentar novamente..."
+            git pull --rebase origin main || true
+            git push origin main
           fi
