@@ -1,9 +1,16 @@
-name: Refresh leagues.json (weekly)
+name: Refresh curated leagues
 
 on:
+  workflow_dispatch: {}
   schedule:
-    - cron: "0 4 * * 0"   # todos os domingos 04:00 UTC
-  workflow_dispatch:
+    - cron: "0 4 * * 0"   # domingo 04:00 UTC
+
+concurrency:
+  group: refresh-leagues
+  cancel-in-progress: true
+
+permissions:
+  contents: write
 
 jobs:
   refresh:
@@ -11,20 +18,35 @@ jobs:
     env:
       API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
       API_FOOTBALL_BASE: https://v3.football.api-sports.io/
-      API_FOOTBALL_SEASON: "2025"
+      API_FOOTBALL_SEASONS: "2024,2025"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: python scripts/update_leagues.py
+          cache: "pip"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run seeder
+        run: |
+          set -euxo pipefail
+          python scripts/seed_leagues.py
+
       - name: Commit & push if changed
         run: |
-          git config user.name  "gh-bot"
-          git config user.email "gh-bot@users.noreply.github.com"
-          git add config/leagues.json || true
+          set -euxo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add config/leagues*.json
           if ! git diff --cached --quiet; then
-            git commit -m "chore: weekly leagues.json refresh"
+            git commit -m "chore(config): refresh curated leagues (seed)"
             git push
           else
             echo "No changes."
