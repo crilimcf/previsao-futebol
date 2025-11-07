@@ -1,4 +1,6 @@
+# ============================================================
 # src/main.py
+# ============================================================
 import os
 import datetime
 import logging
@@ -61,27 +63,36 @@ def main(
 # ============================================================
 # 🌍 FASTAPI APP
 # ============================================================
-api = FastAPI(title="Previsão Futebol API", version="1.0.5")
+api = FastAPI(title="Previsão Futebol API", version="1.0.6")
 
-# 🔓 CORS
+# ============================================================
+# 🔓 CORS — Corrigido para suportar Vercel e localhost
+# ============================================================
 ALLOWED_ORIGINS = [
     "https://previsao-futebol.vercel.app",
+    "https://*.vercel.app",
     "http://localhost:3000",
 ]
+
 api.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_origin_regex=r"^https://.+\.vercel\.app$",  # previews Vercel
+    # Durante testes deixamos aberto; depois pode-se restringir para ALLOWED_ORIGINS
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # inclui OPTIONS
-    allow_headers=["*"],  # inclui Authorization
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# 👉 inclui routers
+# ============================================================
+# 🔗 Rotas
+# ============================================================
 api.include_router(health_routes.router)
 api.include_router(predict_routes.router)
 api.include_router(meta_routes.router)  # <— NOVO
 
+# ============================================================
+# 🩺 Healthcheck
+# ============================================================
 @api.api_route("/healthz", methods=["GET", "HEAD"], tags=["system"])
 def healthz():
     status = {"status": "ok"}
@@ -99,7 +110,7 @@ def healthz():
         else:
             status["redis"] = "missing"
 
-        # Ficheiro
+        # Ficheiro de previsões
         pred_path = "data/predict/predictions.json"
         status["predictions_file"] = "exists" if os.path.exists(pred_path) else "missing"
 
@@ -119,13 +130,16 @@ def healthz():
         logger.error(f"❌ Erro em /healthz: {e}")
         return JSONResponse({"status": "error", "detail": str(e)}, status_code=500)
 
+# ============================================================
+# 🏠 Root endpoint
+# ============================================================
 @api.api_route("/", methods=["GET", "HEAD"])
 def root():
     logger.info("📡 Ping recebido na rota raiz /")
     return {
         "status": "online",
         "service": "previsao-futebol",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "docs": "/docs",
         "health": "/healthz",
         "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
