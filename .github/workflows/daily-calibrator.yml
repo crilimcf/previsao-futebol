@@ -1,68 +1,69 @@
 name: Daily calibrator
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
   schedule:
-    # todos os dias às 03:15 UTC (ajusta se quiseres)
-    - cron: "15 3 * * *"
+    - cron: "05 02 * * *"   # 02:05 UTC diário
+
+concurrency:
+  group: daily-calibrator
+  cancel-in-progress: true
 
 permissions:
   contents: write
 
+env:
+  API_FOOTBALL_BASE: https://v3.football.api-sports.io/
+  API_FOOTBALL_SEASON: "2025"
+  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+
 jobs:
   calibrate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # mínimos para harvest + calibrate
-          pip install --upgrade requests numpy pandas scikit-learn joblib
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - name: Harvest yesterday results (retry)
-        env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          # podes definir estes como "Repository variables" (Settings > Variables) — senão usa os defaults
-          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
-          API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON || '2025' }}
+      - name: Install deps
         run: |
-          set -e
-          for i in 1 2 3; do
-            echo "Attempt $i ..."
-            python scripts/harvest_results.py && break || sleep $((i*10))
-          done
-
-      - name: Calibrate models
-        run: |
-          set -e
-          if [ -f scripts/calibrate.py ]; then
-            python scripts/calibrate.py --input data/training/history.jsonl --output data/model
+          set -euxo pipefail
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
           else
-            echo "scripts/calibrate.py not found; skipping calibrate."
+            pip install requests joblib scikit-learn numpy scipy
           fi
+
+      - name: Harvest & calibrate (best-effort)
+        run: |
+          set -euxo pipefail
+          if [ -f scripts/harvest_results.py ]; then
+            python scripts/harvest_results.py || echo "harvest falhou (segue)"
+          fi
+          if [ -f scripts/calibrate.py ]; then
+            python scripts/calibrate.py || echo "calibrate falhou (segue)"
+          fi
+          mkdir -p data/model
+          [ -s data/model/calibration.json ] || echo '{}' > data/model/calibration.json
 
       - name: Commit & push if changed
         run: |
-          set -e
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          set -euxo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "ci: harvest & calibrate (auto) [skip ci]"
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(ci): daily calibrator artifacts"
             git push
+          else
+            echo "Sem alterações."
           fi
