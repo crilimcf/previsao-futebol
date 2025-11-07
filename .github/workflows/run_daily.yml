@@ -35,7 +35,7 @@ jobs:
           echo "🩺 Checking backend health endpoint..."
           STATUS=$(curl -s https://previsao-futebol.onrender.com/healthz || echo "fail")
           echo "Healthz response: $STATUS"
-          if echo "$STATUS" | grep -q '"status": "ok"'; then
+          if echo "$STATUS" | grep -q '"status":"ok"'; then
             echo "✅ Backend saudável, prosseguindo..."
           else
             echo "❌ Backend não está saudável."
