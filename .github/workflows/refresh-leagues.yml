@@ -1,9 +1,9 @@
-name: Refresh leagues.json (weekly)
+name: 🔄 Refresh leagues.json (weekly)
 
 on:
   schedule:
-    - cron: "0 3 * * 1"   # segunda 03:00 UTC
-  workflow_dispatch: {}
+    - cron: "0 3 * * 1"   # segunda-feira às 03:00 UTC
+  workflow_dispatch: {}   # permite execução manual
   push:
     branches: [ main ]
     paths:
@@ -24,36 +24,35 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Checkout
+      - name: 🧩 Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
           cache-dependency-path: "requirements.txt"
 
-      - name: Install dependencies
+      - name: ⚙️ Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run update_leagues.py
+      - name: 🔁 Run update_leagues.py
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}     # obrigatório
           API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE }}       # opcional (tem default no script)
           API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON }}   # opcional (tem default no script)
         run: python scripts/update_leagues.py
 
-- name: Commit & push if tracked files changed
-  run: |
-    if git status --porcelain --untracked-files=no | grep .; then
-      git config user.name  "github-actions[bot]"
-      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      git add -A
-      git commit -m "chore: refresh tracked leagues (CI) $(date -u +'%Y-%m-%d')" || echo "Nada a commitar"
-      git push || echo "Nada para enviar"
-    else
-      echo "Sem alterações em ficheiros já versionados."
-    fi
+      - name: 💾 Commit & push if tracked files changed
+        run: |
+          if git status --porcelain --untracked-files=no | grep .; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: refresh tracked leagues (CI) $(date -u +'%Y-%m-%d')" || echo "Nada a commitar"
+            git push || echo "Nada para enviar"
+          else
+            echo "Sem alterações em ficheiros já versionados."
