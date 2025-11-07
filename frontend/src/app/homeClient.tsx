@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import Header from "@/components/header";
@@ -32,27 +33,23 @@ const dateTabs = [
 ];
 
 export default function HomeClient() {
-  // loading / erro
-  const [loading, setLoading] = useState(true);
-  const [loadingFixtures, setLoadingFixtures] = useState(false);
-  const [error, setError] = useState<string>("");
+  const router = useRouter();
+  const search = useSearchParams();
 
-  // dados principais
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>("");
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [stats, setStats] = useState<StatsType | null>(null);
   const [lastUpdate, setLastUpdate] = useState("");
 
-  // filtros
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
-  // ligas “curadas” pelo backend
-  const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
-
-  // fixtures reais (quando filtra por liga)
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
+  const [loadingFixtures, setLoadingFixtures] = useState(false);
 
-  // carregar ligas do backend (uma vez)
+  // 🔹 Ligas curadas (podes deixar aqui, mesmo que não filtres)
+  const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
       try {
@@ -64,105 +61,104 @@ export default function HomeClient() {
     })();
   }, []);
 
-  // conjuntos derivados
-  const allowedLeagueIds = useMemo(
-    () => new Set<string>(backendLeagues.map((x) => String(x.id))),
-    [backendLeagues]
-  );
-
   const allLeagues = useMemo(() => {
     const arr = backendLeagues.map((x) => ({ id: String(x.id), name: x.name }));
     return [{ id: "all", name: "🌍 Todas as Ligas" }, ...arr];
   }, [backendLeagues]);
+
+  // 🔹 Sincroniza filtros com a URL
+  useEffect(() => {
+    const qpLeague = search.get("league_id");
+    const qpDate = search.get("date");
+    if (qpLeague) setSelectedLeague(qpLeague);
+    if (qpDate) setSelectedDateKey(qpDate);
+  }, []);
 
   const selectedDateISO = useMemo(() => {
     const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // carregar previsões + stats + lastUpdate sempre que filtros mudem
+  // 🔹 Atualiza URL conforme filtros
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      setLoading(true);
-      setError("");
-      try {
-        const params =
-          selectedLeague === "all"
-            ? { date: selectedDateISO }
-            : { date: selectedDateISO, league_id: selectedLeague };
+    const params = new URLSearchParams(search.toString());
+    params.set("date", selectedDateISO);
+    if (selectedLeague && selectedLeague !== "all") params.set("league_id", String(selectedLeague));
+    else params.delete("league_id");
+    router.replace(`?${params.toString()}`);
+  }, [selectedDateISO, selectedLeague]);
 
-        const [preds, statsData, lastU] = await Promise.all([
-          getPredictions(params),
-          getStats(),
-          getLastUpdate(),
-        ]);
+  // ============================================================
+  // 📡 Carrega previsões e estatísticas
+  // ============================================================
+  async function loadMainData() {
+    setLoading(true);
+    setError("");
 
-        if (cancelled) return;
+    try {
+      const params =
+        selectedLeague === "all"
+          ? { date: selectedDateISO }
+          : { date: selectedDateISO, league_id: selectedLeague };
 
-        const predsArray: any[] = Array.isArray(preds) ? (preds as any[]) : [];
-        const filtered =
-          allowedLeagueIds.size > 0
-            ? predsArray.filter((p) =>
-                allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
-              )
-            : predsArray;
+      const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
+      const predsArray = Array.isArray(preds) ? preds : [];
 
-        setPredictions(filtered as Prediction[]);
-        setStats(statsData && Object.keys(statsData || {}).length > 0 ? (statsData as StatsType) : null);
+      // ✅ AGORA MOSTRA TODAS AS LIGAS (sem filtro)
+      setPredictions(predsArray);
 
-        const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
-        if (typeof lastUpdateRaw === "string" && lastUpdateRaw) {
-          const d = new Date(lastUpdateRaw.replace(" ", "T"));
-          setLastUpdate(
-            `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}`
-          );
-        } else {
-          setLastUpdate("");
-        }
-      } catch (e) {
-        if (!cancelled) {
-          console.error(e);
-          setError("Falha ao carregar dados. Tenta novamente mais tarde.");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
+      setStats(statsData && Object.keys(statsData).length > 0 ? statsData : null);
+
+      const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
+      if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
+        const d = new Date(lastUpdateRaw.replace(" ", "T"));
+        setLastUpdate(
+          `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString(
+            "pt-PT",
+            { hour: "2-digit", minute: "2-digit" }
+          )}`
+        );
+      } else {
+        setLastUpdate("");
       }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
-
-  // carregar fixtures reais quando seleciona liga específica
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      if (selectedLeague === "all") {
-        setLiveFixtures([]);
-        return;
-      }
-      try {
-        setLoadingFixtures(true);
-        const data = await getFixturesByLeague(Number(selectedLeague), 2); // 2 dias
-        if (!cancelled) setLiveFixtures(data?.response || []);
-      } catch (err) {
-        if (!cancelled) console.error("Erro ao carregar fixtures:", err);
-      } finally {
-        if (!cancelled) setLoadingFixtures(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedLeague]);
-
-  function fixtureDateSafe(d?: string) {
-    const t = d ? Date.parse(d) : NaN;
-    return Number.isFinite(t) ? new Date(d as string) : new Date();
+    } catch (e) {
+      console.error(e);
+      setError("Falha ao carregar dados. Tenta novamente mais tarde.");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // loading
+  useEffect(() => {
+    loadMainData();
+  }, [selectedLeague, selectedDateISO]);
+
+  // ============================================================
+  // ⚽ Fixtures em tempo real (liga selecionada)
+  // ============================================================
+  async function loadFixtures(ignoreCache = false) {
+    if (selectedLeague === "all") {
+      setLiveFixtures([]);
+      return;
+    }
+    try {
+      setLoadingFixtures(true);
+      const data = await getFixturesByLeague(Number(selectedLeague), ignoreCache ? 0 : 2);
+      setLiveFixtures(data?.response || []);
+    } catch (err) {
+      console.error("Erro ao carregar fixtures:", err);
+    } finally {
+      setLoadingFixtures(false);
+    }
+  }
+
+  useEffect(() => {
+    loadFixtures();
+  }, [selectedLeague]);
+
+  // ============================================================
+  // 🧱 UI
+  // ============================================================
   if (loading) {
     return (
       <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -180,7 +176,6 @@ export default function HomeClient() {
     );
   }
 
-  // erro
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -190,13 +185,16 @@ export default function HomeClient() {
     );
   }
 
-  // UI
+  // ============================================================
+  // 🧩 Render principal
+  // ============================================================
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
       <Header />
       <main className="space-y-12 md:space-y-16">
         <InfoCard />
-        {stats && <StatsAverage stats={stats} />}
+
+        {stats ? <StatsAverage stats={stats} /> : null}
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
@@ -212,6 +210,7 @@ export default function HomeClient() {
             ))}
           </select>
 
+          {/* Datas */}
           <div className="flex gap-3 md:gap-4">
             {dateTabs.map((d) => (
               <button
@@ -224,52 +223,14 @@ export default function HomeClient() {
             ))}
           </div>
 
+          {/* Botão Atualizar */}
           <button
             onClick={async () => {
               if (selectedLeague === "all") {
                 await triggerUpdate();
-                // recarrega dados após o backend atualizar
-                setLoading(true);
-                try {
-                  const params = { date: ymd(new Date()) };
-                  const [preds, statsData, lastU] = await Promise.all([
-                    getPredictions(params),
-                    getStats(),
-                    getLastUpdate(),
-                  ]);
-                  const predsArray: any[] = Array.isArray(preds) ? (preds as any[]) : [];
-                  const filtered =
-                    allowedLeagueIds.size > 0
-                      ? predsArray.filter((p) =>
-                          allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
-                        )
-                      : predsArray;
-                  setPredictions(filtered as Prediction[]);
-                  setStats(statsData && Object.keys(statsData || {}).length > 0 ? (statsData as StatsType) : null);
-
-                  const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
-                  if (typeof lastUpdateRaw === "string" && lastUpdateRaw) {
-                    const d = new Date(lastUpdateRaw.replace(" ", "T"));
-                    setLastUpdate(
-                      `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}`
-                    );
-                  }
-                } catch (e) {
-                  console.error(e);
-                } finally {
-                  setLoading(false);
-                }
+                await loadMainData();
               } else {
-                // se estiver por liga específica, atualiza apenas fixtures
-                setLoadingFixtures(true);
-                try {
-                  const data = await getFixturesByLeague(Number(selectedLeague), 2);
-                  setLiveFixtures(data?.response || []);
-                } catch (e) {
-                  console.error(e);
-                } finally {
-                  setLoadingFixtures(false);
-                }
+                await loadFixtures(true);
               }
             }}
             className="btn btn-ghost"
@@ -279,39 +240,29 @@ export default function HomeClient() {
           </button>
         </div>
 
-        {/* Jogos reais */}
-        {selectedLeague !== "all" && liveFixtures.length > 0 && (
-          <div className="card p-6 mb-10">
-            <h2 className="text-lg font-semibold text-emerald-400 mb-4">
-              Jogos Reais (via API-Football)
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {liveFixtures.map((f: any) => (
-                <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
-                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <Image src={f.teams.home.logo} alt="" width={24} height={24} />
-                    <span className="text-white font-medium">{f.teams.home.name}</span>
-                    <span className="text-gray-400">vs</span>
-                    <span className="text-white font-medium">{f.teams.away.name}</span>
-                    <Image src={f.teams.away.logo} alt="" width={24} height={24} />
-                  </div>
-                  <p className="text-sm text-center text-gray-400">
-                    {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
-                  </p>
-                  <p className="text-xs text-center text-gray-500 mt-1">
-                    {f.league.name} ({f.league.country})
-                  </p>
+        {/* 🔹 Lista de previsões */}
+        {predictions.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {predictions.slice(0, 50).map((p: any) => (
+              <div key={p.fixture?.id} className="card p-5 hover:border-emerald-400 transition">
+                <div className="text-sm text-gray-400 mb-1">
+                  {p.league?.name} ({p.league?.country})
                 </div>
-              ))}
-            </div>
+                <div className="flex items-center justify-center gap-2">
+                  <Image src={p.teams?.home?.logo} alt="" width={24} height={24} />
+                  <span className="text-white font-medium">{p.teams?.home?.name}</span>
+                  <span className="text-gray-400">vs</span>
+                  <span className="text-white font-medium">{p.teams?.away?.name}</span>
+                  <Image src={p.teams?.away?.logo} alt="" width={24} height={24} />
+                </div>
+                <div className="text-xs text-gray-500 mt-1 text-center">
+                  {new Date(p.fixture?.date).toLocaleString("pt-PT")}
+                </div>
+              </div>
+            ))}
           </div>
-        )}
-
-        {/* Mensagem simples (para evitar helpers não usados) */}
-        {Array.isArray(predictions) && predictions.length > 0 ? (
-          <p className="text-center text-gray-400 mt-10">Previsões carregadas com sucesso!</p>
         ) : (
-          <p className="text-center text-gray-400 mt-10">Nenhum jogo encontrado para os filtros.</p>
+          <p className="text-center text-gray-400 mt-10">Nenhum jogo encontrado.</p>
         )}
 
         {lastUpdate && (
