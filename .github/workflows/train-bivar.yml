@@ -11,13 +11,17 @@ permissions:
 jobs:
   train:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout (full history para rebase)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    env:
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_BASE: https://v3.football.api-sports.io/
+      # podes ajustar:
+      API_FOOTBALL_SEASONS: "2024,2025"
+      MAX_FIXTURES_PER_LEAGUE: "400"
 
-      - name: Setup Python 3.11 (com cache pip)
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.11 (cache pip)
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -25,21 +29,35 @@ jobs:
 
       - name: Install deps
         run: |
-          set -euxo pipefail
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -r requirements.txt
 
-      - name: Ensure PYTHONPATH aponta à raiz do repo
-        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+      - name: Export Poisson inputs from API-Football
+        run: |
+          set -euxo pipefail
+          python scripts/export_poisson_inputs_from_api.py
+
+      - name: Commit dataset (optional)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/train/poisson_inputs.csv
+          if git diff --cached --quiet; then
+            echo "Sem alterações no dataset."
+          else
+            git fetch origin main
+            git rebase origin/main || true
+            git commit -m "chore(data): refresh poisson_inputs.csv (auto)"
+            git push
+          fi
 
       - name: Train λ3 per league
         run: |
           set -euxo pipefail
           python scripts/train_lambda3_per_league.py
 
-      - name: Commit & push λ3 (com rebase seguro)
+      - name: Commit λ3
         run: |
-          set -euxo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add models/bivar_lambda3.json
@@ -47,7 +65,7 @@ jobs:
             echo "Sem alterações."
           else
             git fetch origin main
-            git rebase origin/main
+            git rebase origin/main || true
             git commit -m "chore(models): refresh λ3 por liga"
             git push
           fi
