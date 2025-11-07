@@ -33,3 +33,5 @@ dist/
 
 # Dados e modelos
 artifacts/
+*.yml_old
+frontend/public/*_old
