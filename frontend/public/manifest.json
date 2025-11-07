@@ -1,11 +1,11 @@
 {
-  "name": "Football Prediction AI",
-  "short_name": "FP AI",
+  "name": "Previsão de Futebol IA",
+  "short_name": "PF IA",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#111827",
   "theme_color": "#111827",
-  "description": "Get the most accurate football predictions powered by AI.",
+  "description": "Obtenha as previsões de futebol mais precisas, impulsionadas por inteligência artificial.",
   "icons": [
     {
       "src": "/favicon.ico",
