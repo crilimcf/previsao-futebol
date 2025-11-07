@@ -3,7 +3,7 @@ name: Update predictions (daily + on-push)
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: "30 0 * * *"  # 00:30 UTC diário
+    - cron: "5 0 * * *"   # 00:05 UTC diariamente
   push:
     branches: [ main ]
     paths:
