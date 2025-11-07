@@ -157,45 +157,68 @@ export async function getApiHealth() {
 }
 
 /**
- * ✅ Lista curada de ligas/taças servida pelo TEU backend a partir de ficheiros locais:
- *    GET /leagues?season=2024|2025 -> config/leagues_${season}.json
+ * ✅ Lista curada de ligas/taças servida pelo TEU backend.
+ * Primeiro tenta /meta/leagues (o que já tens no Render). Se não existir, cai para /leagues.
  * NUNCA chama a API-Football diretamente.
  */
 export async function getLeagues(season?: string): Promise<LeagueItem[]> {
   try {
     const s = season ?? (process.env.NEXT_PUBLIC_SEASON ?? "2024");
-    const r = await api.get("/leagues", { params: withTs({ season: s }) });
-    const data = r?.data as any;
 
-    // Normalização resiliente a diferentes formatos
-    const arr: any[] = Array.isArray(data)
-      ? data
-      : Array.isArray(data?.items)
-      ? data.items
-      : Array.isArray(data?.data)
-      ? data.data
-      : Array.isArray(data?.leagues)
-      ? data.leagues
+    // 1) tenta /meta/leagues
+    try {
+      const r1 = await api.get("/meta/leagues", { params: withTs({ season: s }) });
+      const data1 = r1?.data as any;
+      const arr1: any[] = Array.isArray(data1)
+        ? data1
+        : Array.isArray(data1?.items)
+        ? data1.items
+        : Array.isArray(data1?.data)
+        ? data1.data
+        : Array.isArray(data1?.leagues)
+        ? data1.leagues
+        : [];
+
+      if (arr1.length) {
+        return normalizeLeagues(arr1);
+      }
+    } catch {
+      /* continua para /leagues */
+    }
+
+    // 2) fallback /leagues
+    const r2 = await api.get("/leagues", { params: withTs({ season: s }) });
+    const data2 = r2?.data as any;
+    const arr2: any[] = Array.isArray(data2)
+      ? data2
+      : Array.isArray(data2?.items)
+      ? data2.items
+      : Array.isArray(data2?.data)
+      ? data2.data
+      : Array.isArray(data2?.leagues)
+      ? data2.leagues
       : [];
 
-    // Garantir {id, name, country?, type?}
-    const norm: LeagueItem[] = arr
-      .map((x) => ({
-        id: String(x.id ?? x.league_id ?? x.code ?? ""),
-        name: String(x.name ?? x.league ?? "").trim(),
-        country: x.country ? String(x.country) : undefined,
-        type: x.type ? String(x.type) : undefined,
-      }))
-      .filter((x) => x.id && x.name);
-
-    // (Opcional) ordenar por país e nome
-    norm.sort((a, b) => {
-      const ca = (a.country ?? "").localeCompare(b.country ?? "", "pt-PT");
-      return ca !== 0 ? ca : a.name.localeCompare(b.name, "pt-PT");
-    });
-
-    return norm;
+    return normalizeLeagues(arr2);
   } catch {
     return [];
   }
+}
+
+function normalizeLeagues(arr: any[]): LeagueItem[] {
+  const norm: LeagueItem[] = arr
+    .map((x) => ({
+      id: String(x.id ?? x.league_id ?? x.code ?? ""),
+      name: String(x.name ?? x.league ?? "").trim(),
+      country: x.country ? String(x.country) : undefined,
+      type: x.type ? String(x.type) : undefined,
+    }))
+    .filter((x) => x.id && x.name);
+
+  norm.sort((a, b) => {
+    const ca = (a.country ?? "").localeCompare(b.country ?? "", "pt-PT");
+    return ca !== 0 ? ca : a.name.localeCompare(b.name, "pt-PT");
+  });
+
+  return norm;
 }

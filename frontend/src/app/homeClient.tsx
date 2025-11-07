@@ -1,3 +1,4 @@
+// frontend/src/app/homeClient.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -33,6 +34,11 @@ function ymd(d: Date) {
   const off = d.getTimezoneOffset();
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().split("T")[0];
+}
+// Evita crash se a API der date inválida
+function fixtureDateSafe(d?: string) {
+  const t = d ? Date.parse(d) : NaN;
+  return Number.isFinite(t) ? new Date(d as string) : new Date();
 }
 
 const dateTabs = [
@@ -116,10 +122,13 @@ export default function HomeClient() {
     [backendLeagues]
   );
 
-  // dropdown de ligas (apenas curadas)
+  // dropdown de ligas (apenas curadas) — mostra País — Liga
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
-    const arr = backendLeagues.map((x) => ({ id: String(x.id), name: x.name }));
-    return [{ id: "all", name: "🌍 Todas as Ligas" }, ...arr];
+    const arr = backendLeagues.map((x) => ({
+      id: String(x.id),
+      name: `${x.country ?? "—"} — ${x.name}`,
+    }));
+    return [{ id: "all", name: "🌍 Todos os países / ligas" }, ...arr];
   }, [backendLeagues]);
 
   // estado inicial via query params
@@ -201,7 +210,7 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
 
-  // fixtures reais por liga (proxy) — AGORA por data
+  // fixtures reais por liga (proxy) — por data (evita jogos “de outro dia”)
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -345,7 +354,7 @@ export default function HomeClient() {
           </button>
         </div>
 
-        {/* Jogos reais (liga específica) */}
+        {/* Jogos do dia (liga específica) */}
         {selectedLeague !== "all" && (
           <div className="card p-6 mb-10">
             <div className="flex justify-between items-center mb-4">
@@ -358,13 +367,14 @@ export default function HomeClient() {
             )}
 
             {(() => {
-              const fixturesToday = (liveFixtures || []).filter((f: any) =>
-                new Date(f.fixture?.date).toISOString().slice(0, 10) === selectedDateISO
+              // compara pelos Y-M-D em horário local
+              const fixturesDay = (liveFixtures || []).filter(
+                (f: any) => ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
               );
 
-              return fixturesToday.length > 0 ? (
+              return fixturesDay.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {fixturesToday.map((f: any) => (
+                  {fixturesDay.map((f: any) => (
                     <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
                       <div className="flex items-center justify-center gap-3 mb-2">
                         <Image src={f.teams.home.logo} alt="" width={24} height={24} />
@@ -628,10 +638,4 @@ export default function HomeClient() {
       </main>
     </div>
   );
-}
-
-// Evita crash se a API der date inválida
-function fixtureDateSafe(d?: string) {
-  const t = d ? Date.parse(d) : NaN;
-  return Number.isFinite(t) ? new Date(d as string) : new Date();
 }

@@ -1,7 +1,7 @@
 // =====================================================
 // src/services/proxy.ts
 // Proxy seguro para a API-Football via Render/Python-Proxy
-// Agora com suporte a "date" + "timezone" e compat com "next"
+// Suporta "date" + "timezone" e é retro-compatível com "next"
 // =====================================================
 
 const API_PROXY_URL =
@@ -80,7 +80,9 @@ async function fetchFromProxy(
     if (cached) return cached;
   }
 
-  const url = new URL(`${API_PROXY_URL}${endpoint}`);
+  const base = API_PROXY_URL.replace(/\/+$/, "");
+  const path = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  const url = new URL(`${base}${path}`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => {
       if (v !== undefined && v !== null) url.searchParams.append(k, String(v));
@@ -100,10 +102,11 @@ async function fetchFromProxy(
     clearTimeout(timeout);
 
     if (!res.ok) {
-      throw new Error(`Erro ${res.status}: ${await res.text()}`);
+      const text = await res.text().catch(() => "");
+      throw new Error(`Erro ${res.status}: ${text || res.statusText}`);
     }
 
-    const data = await res.json();
+    const data = await res.json().catch(() => null);
 
     if (!opts.noStore) setCache(key, data, ttlMs);
     setFallback(key, data);
@@ -121,12 +124,12 @@ async function fetchFromProxy(
 // ---------------------------
 
 /**
- * NOVO uso (recomendado):
+ * Uso preferido (por data):
  *   getFixturesByLeague(61, "2025-11-08", 5)
- *     -> usa ?league=61&date=YYYY-MM-DD&timezone=Europe/Lisbon&_ts=<bucket>
+ *     -> ?league=61&date=YYYY-MM-DD&timezone=Europe/Lisbon&_ts=<bucket>
  *
- * Retro-compat:
- *   getFixturesByLeague(61, 5)   // usa ?next=5 (antigo)
+ * Retro-compat ("next"):
+ *   getFixturesByLeague(61, 5)   // usa ?next=5
  *   getFixturesByLeague(61, 0)   // força noStore
  */
 export function getFixturesByLeague(
@@ -156,7 +159,7 @@ export async function getFixturesByLeague(
         league: leagueId,
         date: dateOrNext,         // YYYY-MM-DD
         timezone: DEFAULT_TZ,     // horas certas
-        _ts: bucket,              // bust de cache de rede
+        _ts: bucket,              // bust de cache de rede (server/proxy/CDN)
       },
       {
         noStore: cacheMinutes === 0,
@@ -165,7 +168,7 @@ export async function getFixturesByLeague(
     );
   }
 
-  // Retro-compatibilidade (modo "next")
+  // Retro-compat (modo "next")
   const next = dateOrNext;
   return fetchFromProxy(
     "/fixtures",
