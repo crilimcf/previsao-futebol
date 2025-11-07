@@ -19,8 +19,6 @@ import {
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
-type DCClass = 0 | 1 | 2;
-
 function ymd(d: Date) {
   const off = d.getTimezoneOffset();
   const local = new Date(d.getTime() - off * 60000);
@@ -33,26 +31,28 @@ const dateTabs = [
   { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
 ];
 
-function prob01(v?: number | null): number {
-  if (typeof v !== "number" || !isFinite(v)) return 0;
-  return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
-}
-
 export default function HomeClient() {
+  // loading / erro
   const [loading, setLoading] = useState(true);
   const [loadingFixtures, setLoadingFixtures] = useState(false);
   const [error, setError] = useState<string>("");
 
+  // dados principais
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [stats, setStats] = useState<StatsType | null>(null);
   const [lastUpdate, setLastUpdate] = useState("");
 
+  // filtros
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
-  const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
+  // ligas “curadas” pelo backend
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
 
+  // fixtures reais (quando filtra por liga)
+  const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
+
+  // carregar ligas do backend (uma vez)
   useEffect(() => {
     (async () => {
       try {
@@ -64,6 +64,7 @@ export default function HomeClient() {
     })();
   }, []);
 
+  // conjuntos derivados
   const allowedLeagueIds = useMemo(
     () => new Set<string>(backendLeagues.map((x) => String(x.id))),
     [backendLeagues]
@@ -79,81 +80,81 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  const loadMainData = async () => {
-    setLoading(true);
-    setError("");
-
-    try {
-      const params =
-        selectedLeague === "all"
-          ? { date: selectedDateISO }
-          : { date: selectedDateISO, league_id: selectedLeague };
-
-      const [preds, statsData, lastU] = await Promise.all([
-        getPredictions(params),
-        getStats(),
-        getLastUpdate(),
-      ]);
-
-      const predsArray = Array.isArray(preds) ? preds : [];
-      const filteredPreds =
-        allowedLeagueIds.size > 0
-          ? predsArray.filter((p: any) =>
-              allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
-            )
-          : predsArray;
-
-      setPredictions(filteredPreds);
-      setStats(statsData && Object.keys(statsData).length > 0 ? statsData : null);
-
-      const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
-      if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
-        const d = new Date(lastUpdateRaw.replace(" ", "T"));
-        setLastUpdate(
-          `${d.toLocaleDateString("pt-PT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })} ${d.toLocaleTimeString("pt-PT", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}`
-        );
-      } else {
-        setLastUpdate("");
-      }
-    } catch (e) {
-      console.error(e);
-      setError("Falha ao carregar dados. Tenta novamente mais tarde.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadFixtures = async (ignoreCache = false) => {
-    if (selectedLeague === "all") {
-      setLiveFixtures([]);
-      return;
-    }
-    try {
-      setLoadingFixtures(true);
-      const data = await getFixturesByLeague(Number(selectedLeague), ignoreCache ? 0 : 2);
-      setLiveFixtures(data?.response || []);
-    } catch (err) {
-      console.error("Erro ao carregar fixtures:", err);
-    } finally {
-      setLoadingFixtures(false);
-    }
-  };
-
+  // carregar previsões + stats + lastUpdate sempre que filtros mudem
   useEffect(() => {
-    loadMainData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const params =
+          selectedLeague === "all"
+            ? { date: selectedDateISO }
+            : { date: selectedDateISO, league_id: selectedLeague };
+
+        const [preds, statsData, lastU] = await Promise.all([
+          getPredictions(params),
+          getStats(),
+          getLastUpdate(),
+        ]);
+
+        if (cancelled) return;
+
+        const predsArray: any[] = Array.isArray(preds) ? (preds as any[]) : [];
+        const filtered =
+          allowedLeagueIds.size > 0
+            ? predsArray.filter((p) =>
+                allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
+              )
+            : predsArray;
+
+        setPredictions(filtered as Prediction[]);
+        setStats(statsData && Object.keys(statsData || {}).length > 0 ? (statsData as StatsType) : null);
+
+        const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
+        if (typeof lastUpdateRaw === "string" && lastUpdateRaw) {
+          const d = new Date(lastUpdateRaw.replace(" ", "T"));
+          setLastUpdate(
+            `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}`
+          );
+        } else {
+          setLastUpdate("");
+        }
+      } catch (e) {
+        if (!cancelled) {
+          console.error(e);
+          setError("Falha ao carregar dados. Tenta novamente mais tarde.");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
 
+  // carregar fixtures reais quando seleciona liga específica
   useEffect(() => {
-    loadFixtures();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let cancelled = false;
+    (async () => {
+      if (selectedLeague === "all") {
+        setLiveFixtures([]);
+        return;
+      }
+      try {
+        setLoadingFixtures(true);
+        const data = await getFixturesByLeague(Number(selectedLeague), 2); // 2 dias
+        if (!cancelled) setLiveFixtures(data?.response || []);
+      } catch (err) {
+        if (!cancelled) console.error("Erro ao carregar fixtures:", err);
+      } finally {
+        if (!cancelled) setLoadingFixtures(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [selectedLeague]);
 
   function fixtureDateSafe(d?: string) {
@@ -161,6 +162,7 @@ export default function HomeClient() {
     return Number.isFinite(t) ? new Date(d as string) : new Date();
   }
 
+  // loading
   if (loading) {
     return (
       <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -178,6 +180,7 @@ export default function HomeClient() {
     );
   }
 
+  // erro
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -187,6 +190,7 @@ export default function HomeClient() {
     );
   }
 
+  // UI
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
       <Header />
@@ -194,6 +198,7 @@ export default function HomeClient() {
         <InfoCard />
         {stats && <StatsAverage stats={stats} />}
 
+        {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
           <select
             value={selectedLeague}
@@ -212,9 +217,7 @@ export default function HomeClient() {
               <button
                 key={d.key}
                 onClick={() => setSelectedDateKey(d.key)}
-                className={`btn ${
-                  selectedDateKey === d.key ? "btn-primary" : "btn-ghost"
-                }`}
+                className={`btn ${selectedDateKey === d.key ? "btn-primary" : "btn-ghost"}`}
               >
                 {d.label}
               </button>
@@ -225,9 +228,48 @@ export default function HomeClient() {
             onClick={async () => {
               if (selectedLeague === "all") {
                 await triggerUpdate();
-                await loadMainData();
+                // recarrega dados após o backend atualizar
+                setLoading(true);
+                try {
+                  const params = { date: ymd(new Date()) };
+                  const [preds, statsData, lastU] = await Promise.all([
+                    getPredictions(params),
+                    getStats(),
+                    getLastUpdate(),
+                  ]);
+                  const predsArray: any[] = Array.isArray(preds) ? (preds as any[]) : [];
+                  const filtered =
+                    allowedLeagueIds.size > 0
+                      ? predsArray.filter((p) =>
+                          allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
+                        )
+                      : predsArray;
+                  setPredictions(filtered as Prediction[]);
+                  setStats(statsData && Object.keys(statsData || {}).length > 0 ? (statsData as StatsType) : null);
+
+                  const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
+                  if (typeof lastUpdateRaw === "string" && lastUpdateRaw) {
+                    const d = new Date(lastUpdateRaw.replace(" ", "T"));
+                    setLastUpdate(
+                      `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}`
+                    );
+                  }
+                } catch (e) {
+                  console.error(e);
+                } finally {
+                  setLoading(false);
+                }
               } else {
-                await loadFixtures(true);
+                // se estiver por liga específica, atualiza apenas fixtures
+                setLoadingFixtures(true);
+                try {
+                  const data = await getFixturesByLeague(Number(selectedLeague), 2);
+                  setLiveFixtures(data?.response || []);
+                } catch (e) {
+                  console.error(e);
+                } finally {
+                  setLoadingFixtures(false);
+                }
               }
             }}
             className="btn btn-ghost"
@@ -237,6 +279,7 @@ export default function HomeClient() {
           </button>
         </div>
 
+        {/* Jogos reais */}
         {selectedLeague !== "all" && liveFixtures.length > 0 && (
           <div className="card p-6 mb-10">
             <h2 className="text-lg font-semibold text-emerald-400 mb-4">
@@ -264,19 +307,16 @@ export default function HomeClient() {
           </div>
         )}
 
+        {/* Mensagem simples (para evitar helpers não usados) */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <p className="text-center text-gray-400 mt-10">Previsões carregadas com sucesso!</p>
         ) : (
-          <p className="text-center text-gray-400 mt-10">
-            Nenhum jogo encontrado para os filtros.
-          </p>
+          <p className="text-center text-gray-400 mt-10">Nenhum jogo encontrado para os filtros.</p>
         )}
 
         {lastUpdate && (
           <div className="w-full text-center mt-10">
-            <span className="text-xs text-gray-400">
-              Última atualização global: {lastUpdate}
-            </span>
+            <span className="text-xs text-gray-400">Última atualização global: {lastUpdate}</span>
           </div>
         )}
       </main>
