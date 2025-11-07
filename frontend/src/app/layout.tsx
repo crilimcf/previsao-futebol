@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata, Viewport } from "next";
 import { Inter, Bebas_Neue } from "next/font/google";
 import Script from "next/script";
@@ -17,45 +18,50 @@ const bebas = Bebas_Neue({
   display: "swap",
 });
 
+// URL do site (podes definir NEXT_PUBLIC_SITE_URL no .env.local)
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://football-prediction-murex.vercel.app";
 
+// Versão para matar cache de assets públicos (/public)
+const contentVersion = process.env.NEXT_PUBLIC_CONTENT_VERSION || "3";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Football Prediction AI | Accurate Soccer Tips",
+  title: "Previsão de Futebol | IA de Prognósticos",
   description:
-    "Get the most accurate football predictions powered by AI. Check match tips and confidence levels for your favorite teams. Updated daily.",
+    "Previsões de futebol com IA: dicas, probabilidades e níveis de confiança. Atualizado diariamente.",
   keywords: [
-    "football prediction",
-    "soccer tips",
-    "AI predictions",
-    "match stats",
-    "betting tips",
-    "sports analytics",
-    "football stats",
+    "previsão de futebol",
+    "palpites futebol",
+    "IA futebol",
+    "estatísticas de jogos",
+    "tips futebol",
+    "análise desportiva",
+    "probabilidades",
   ],
-  authors: [{ name: "Fernando Casas", url: "https://github.com/fernandosc14" }],
-  creator: "Fernando Casas",
+  authors: [{ name: "Carlos Fernandes" }],
+  creator: "Carlos Fernandes",
   openGraph: {
-    title: "Football Prediction AI | Accurate Soccer Tips",
+    title: "Previsão de Futebol | IA de Prognósticos",
     description:
-      "Get the most accurate football predictions powered by AI. Check match tips and confidence levels for your favorite teams. Updated daily.",
+      "Previsões de futebol com IA: dicas, probabilidades e níveis de confiança. Atualizado diariamente.",
     url: siteUrl,
-    siteName: "Football Prediction AI",
-    images: [{ url: "/file.png", width: 1200, height: 630, alt: "Football Prediction AI" }],
-    locale: "en_US",
+    siteName: "Previsão de Futebol",
+    images: [
+      { url: `/file.png?v=${contentVersion}`, width: 1200, height: 630, alt: "Previsão de Futebol" },
+    ],
+    locale: "pt_PT",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Football Prediction AI | Accurate Soccer Tips",
+    title: "Previsão de Futebol | IA de Prognósticos",
     description:
-      "Get the most accurate football predictions powered by AI. Check match tips and confidence levels for your favorite teams. Updated daily.",
-    images: ["/file.png"],
-    creator: "@FernandoCasass_",
+      "Previsões de futebol com IA: dicas, probabilidades e níveis de confiança. Atualizado diariamente.",
+    images: [`/file.png?v=${contentVersion}`],
   },
   robots: { index: true, follow: true, nocache: false },
-  manifest: "/manifest.json",
+  manifest: `/manifest.json?v=${contentVersion}`,
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
@@ -73,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt">
       <head>
-        {/* Google Analytics via next/script (melhor prática) */}
+        {/* Google Analytics */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-NNKXJQDTQ3" />
         <Script id="ga" strategy="afterInteractive">
           {`
