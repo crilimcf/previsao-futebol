@@ -1,101 +1,79 @@
-name: Daily refresh (update + calibrate)
+name: ⚽ Daily Football Predictions
 
 on:
-  workflow_dispatch: {}
   schedule:
-    - cron: "17 03 * * *"   # 03:17 UTC diário
-
-concurrency:
-  group: daily-refresh
-  cancel-in-progress: true
+    - cron: '30 0 * * *'  # todos os dias às 00:30 UTC
+  workflow_dispatch:
 
 permissions:
   contents: write
 
-env:
-  # === API-Football ===
-  API_FOOTBALL_BASE: https://v3.football.api-sports.io/
-  API_FOOTBALL_SEASON: "2025"
-  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-  # === Redis (opcional) ===
-  UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
-  UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN }}
-
 jobs:
-  refresh:
+  run-daily:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: 🧩 Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install deps
+      - name: ⚙️ Install dependencies
         run: |
-          set -euxo pipefail
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔍 Check backend health
+        id: health
+        run: |
+          echo "🩺 Checking backend health endpoint..."
+          STATUS=$(curl -s https://previsao-futebol.onrender.com/healthz || echo "fail")
+          echo "Healthz response: $STATUS"
+          if echo "$STATUS" | grep -q '"status": "ok"'; then
+            echo "✅ Backend saudável, prosseguindo..."
           else
-            pip install requests joblib scikit-learn numpy scipy
+            echo "❌ Backend não está saudável."
+            exit 1
           fi
 
-      - name: Sanity env
+      - name: 🚀 Run daily pipeline (main.py)
+        if: ${{ success() && steps.health.conclusion == 'success' }}
+        env:
+          ENDPOINT_API_KEY: ${{ secrets.API_TOKEN }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          set -euxo pipefail
-          python - <<'PY'
-          import os
-          base = os.environ.get("API_FOOTBALL_BASE","")
-          key  = os.environ.get("API_FOOTBALL_KEY","")
-          assert base.startswith("http"), f"API_FOOTBALL_BASE inválida: {base}"
-          assert key, "API_FOOTBALL_KEY vazio"
-          print("✅ env OK:", base)
-          PY
+          echo "🚀 Executando run_daily.py (chama main.py --mode full e /meta/update)..."
+          python run_daily.py
 
-      - name: Build predictions (today + próximos dias)
+      - name: 💾 Commit & push predictions if changed
+        if: ${{ success() && steps.health.conclusion == 'success' }}
         run: |
-          set -euxo pipefail
-          python - <<'PY'
-          from src.fetch_matches import fetch_today_matches
-          r = fetch_today_matches()
-          print(r)
-          PY
-
-      - name: Optional calibrator (se existir)
-        run: |
-          set -euxo pipefail
-          if [ -f scripts/harvest_results.py ]; then
-            python scripts/harvest_results.py || echo "harvest falhou (segue)"
-          fi
-          if [ -f scripts/calibrate.py ]; then
-            python scripts/calibrate.py || echo "calibrate falhou (segue)"
-          fi
-          # garante JSON válido para não partir o backend
-          mkdir -p data/model
-          if [ ! -s data/model/calibration.json ]; then
-            echo '{}' > data/model/calibration.json
-          fi
-
-      - name: Commit & push if changed
-        run: |
-          set -euxo pipefail
+          echo "🔍 Verificando se houve alterações..."
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if ! git diff --cached --quiet; then
-            git commit -m "chore(ci): daily refresh (predictions + optional calibrator)"
-            git push
+
+          # Adiciona ficheiros de previsões e resultados (ajusta conforme tua estrutura)
+          git add -A data/ results/ || true
+
+          if git diff --cached --quiet; then
+            echo "🟢 Nenhuma alteração a commitar."
           else
-            echo "Sem alterações."
+            git commit -m "chore: update daily predictions ($(date -u +'%Y-%m-%d'))"
+            git push
+            echo "✅ Alterações commitadas e enviadas."
           fi
+
+      - name: 🚨 Send Telegram alert if backend down
+        if: failure()
+        run: |
+          echo "Backend offline — enviando alerta Telegram..."
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=⚠️ O backend está offline! O cron não foi executado. (healthz falhou)"
