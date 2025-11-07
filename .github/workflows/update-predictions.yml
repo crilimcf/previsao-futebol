@@ -23,6 +23,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     env:
       API_BASE_URL: https://previsao-futebol.onrender.com
@@ -31,23 +32,53 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0            # necessário para rebase/merge
-          persist-credentials: true # usa o GITHUB_TOKEN para o push
 
-      - name: Health check backend
+      # Acorda o serviço (não falha o job)
+      - name: Wake backend (HEAD /)
         run: |
           set -euxo pipefail
-          curl -fsS "$API_BASE_URL/healthz" || (echo "Backend offline" && exit 1)
+          curl -I -sS --max-time 10 "$API_BASE_URL" || true
 
-      - name: Trigger backend update
+      # Espera pelo /healthz com várias tentativas (evita 502)
+      - name: Health check backend (retry)
+        id: health
         run: |
           set -euxo pipefail
-          curl -fsS -X POST "$API_BASE_URL/meta/update" \
-               -H "Authorization: Bearer $API_TOKEN" \
-               -H "Accept: application/json"
+          ok=false
+          for i in $(seq 1 18); do   # ~3 minutos (18 x 10s)
+            code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$API_BASE_URL/healthz" || echo 000)"
+            echo "try #$i -> /healthz => $code"
+            if [ "$code" = "200" ]; then
+              ok=true
+              break
+            fi
+            sleep 10
+          done
+          echo "ok=$ok" >> "$GITHUB_OUTPUT"
+          if [ "$ok" != "true" ]; then
+            echo "Backend offline após retries."
+            exit 1
+          fi
 
-      # -------- Opcional: export local de JSONs --------
+      # Dispara o update com retry (protege contra 502 intermitente)
+      - name: Trigger backend update (retry)
+        run: |
+          set -euxo pipefail
+          for i in $(seq 1 6); do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' \
+              -X POST "$API_BASE_URL/meta/update" \
+              -H "Authorization: Bearer $API_TOKEN" \
+              -H "Accept: application/json" || echo 000)"
+            echo "try #$i -> POST /meta/update => $code"
+            if [ "$code" = "200" ]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Falha a chamar /meta/update depois de retries."
+          exit 1
+
+      # (Opcional) Exporta artefactos locais se o repo guardar JSONs
       - name: Setup Python (optional)
         if: ${{ always() }}
         uses: actions/setup-python@v5
@@ -56,7 +87,7 @@ jobs:
           cache: "pip"
 
       - name: Install deps (optional)
-        if: ${{ always() && hashFiles('requirements.txt') != '' }}
+        if: ${{ always() }}
         run: |
           set -euxo pipefail
           python -m pip install --upgrade pip
@@ -72,43 +103,21 @@ jobs:
           python scripts/export_predictions.py || true
 
       - name: Commit & push (auto-rebase com retry)
-        shell: bash
         run: |
           set -euxo pipefail
-
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # adiciona ficheiros gerados se existirem
-          git add data/predict/predictions.json \
-                  data/predict/predictions_history.json \
-                  data/stats/prediction_stats.json 2>/dev/null || true
-
-          # se não há alterações, terminar limpo
+          git add data/predict/*.json data/stats/*.json 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "Sem alterações para exportar."
+            echo "Sem alterações."
             exit 0
           fi
-
           git commit -m "chore(data): export predictions & stats (post-update)"
-
-          # sincroniza com a main remota
-          git fetch origin main
-
-          # tenta rebase; se falhar, aborta e faz merge favorecendo 'ours' (ficheiros gerados)
-          git pull --rebase origin main || (git rebase --abort || true; git pull --no-rebase -X ours origin main)
-
-          # tenta push até 3x (para lidar com corridas)
+          # rebase defensivo para evitar rejeições
           for i in 1 2 3; do
-            if git push; then
-              echo "Push OK na tentativa $i"
-              exit 0
+            if git pull --rebase origin main; then
+              break
             fi
-            echo "Push rejeitado; a sincronizar e tentar de novo ($i/3)..."
-            git fetch origin main
-            git pull --rebase origin main || (git rebase --abort || true; git pull --no-rebase -X ours origin main)
-            sleep $((i*3))
+            sleep 2
           done
-
-          # última tentativa (deixa o job falhar se ainda assim não conseguir)
-          git push
+          git push origin main
