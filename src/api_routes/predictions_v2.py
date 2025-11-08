@@ -1,6 +1,13 @@
 # ============================================================
 # src/api_routes/predictions_v2.py
+# Rota v2 com toggle/env e fallback por registo.
+# - Lê predictions do ficheiro (ou do dict com chaves comuns)
+# - Filtra por data/league_id
+# - Se V2_MODELS_ENABLED=true ou source=model, tenta enriquecer
+#   com predictor_bivar.enrich_from_file_record; se não existir,
+#   ou der erro por jogo, faz fallback ao registo original.
 # ============================================================
+
 from __future__ import annotations
 import os
 import json
@@ -10,134 +17,112 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-# Enriquecimento bivariado (usa o que já tens)
-from src.predictor_bivar import enrich_from_file_record
-
-# --- Toggle / Kill-switch (usa flags.py se existir, senão ENV) ---
-try:
-    from src.utils.flags import is_v2_enabled as _is_v2_enabled
-    from src.utils.flags import note_v2_failure as _note_v2_failure
-except Exception:
-    def _is_v2_enabled() -> bool:
-        return os.getenv("V2_MODELS_ENABLED", "false").lower() == "true"
-    def _note_v2_failure() -> None:
-        return None
-
 router = APIRouter(prefix="/predictions/v2", tags=["predictions-v2"])
 
-_PRED_PATH = Path("data/predict/predictions.json")
+# Caminho do ficheiro pode vir do ambiente (render.yaml)
+_PRED_PATH = Path(os.getenv("PREDICTIONS_PATH", "data/predict/predictions.json"))
 
+# ------------------------------------------------------------
+# Import "suave" do enriquecedor bivariado
+# ------------------------------------------------------------
+_HAS_ENRICH = False
+def _enrich_passthrough(rec: Dict[str, Any]) -> Dict[str, Any]:
+    # devolve o próprio registo (fallback)
+    return rec
+
+try:
+    # Se existir e exportar a função, usamos
+    from src.predictor_bivar import enrich_from_file_record as _enrich  # type: ignore
+    _HAS_ENRICH = True
+except Exception:
+    # Fallback: não bloqueia o arranque
+    _enrich = _enrich_passthrough  # type: ignore
+    _HAS_ENRICH = False
+
+
+# ------------------------------------------------------------
+# Helpers
+# ------------------------------------------------------------
 def _safe_date(s: Optional[str]) -> str:
-    """YYYY-MM-DD. Se None, usa hoje (UTC)."""
+    # YYYY-MM-DD; se None, usa hoje UTC
     if not s:
         from datetime import datetime, timezone
         return datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    return s[:10]
+    return str(s)[:10]
 
 def _read_predictions_file() -> List[Dict[str, Any]]:
-    """Lê o ficheiro de previsões (v1). Aceita list direta ou chaves comuns."""
     if not _PRED_PATH.exists():
         return []
     try:
-        data = json.loads(_PRED_PATH.read_text(encoding="utf-8"))
+        raw = _PRED_PATH.read_text(encoding="utf-8")
+        data = json.loads(raw)
         if isinstance(data, list):
             return data
         if isinstance(data, dict):
-            for k in ("items", "data", "predictions"):
-                arr = data.get(k)
-                if isinstance(arr, list):
-                    return arr
+            for k in ("items", "data", "predictions", "records"):
+                v = data.get(k)
+                if isinstance(v, list):
+                    return v
         return []
     except Exception:
         return []
 
-def _extract_league_id(it: Dict[str, Any]) -> str:
-    """
-    Extrai league_id em vários formatos possíveis:
-    - top-level: league_id, leagueId, league (string)
-    - nested: league: { id: ... }
-    """
-    # nested object
-    lg = it.get("league")
-    if isinstance(lg, dict) and "id" in lg:
-        return str(lg.get("id") or "")
-    # direct keys
-    for k in ("league_id", "leagueId", "league"):
-        v = it.get(k)
-        if v is None:
-            continue
-        return str(v)
-    return ""
-
-def _extract_date_iso(it: Dict[str, Any]) -> str:
-    """
-    Extrai data ISO (YYYY-MM-DD) a partir de várias chaves possíveis.
-    """
-    for k in ("date", "match_date", "fixture_date"):
-        v = it.get(k)
-        if isinstance(v, str) and len(v) >= 10:
-            return v[:10]
-    # Último recurso: tentar converter se vier num campo 'fixture'->'date'
-    fx = it.get("fixture")
-    if isinstance(fx, dict) and isinstance(fx.get("date"), str) and len(fx["date"]) >= 10:
-        return fx["date"][:10]
-    return ""
-
-def _filter_by_date_and_league(items: List[Dict[str, Any]], date_iso: str, league_id: Optional[str]) -> List[Dict[str, Any]]:
+def _filter_by_date_and_league(
+    items: List[Dict[str, Any]],
+    date_iso: str,
+    league_id: Optional[str],
+) -> List[Dict[str, Any]]:
     out: List[Dict[str, Any]] = []
-    lg_target = str(league_id) if league_id is not None else None
     for it in items:
-        d = _extract_date_iso(it)
-        if d != date_iso:
+        d = str(it.get("date") or it.get("match_date") or "")
+        if d[:10] != date_iso:
             continue
-        if lg_target is not None:
-            lid = _extract_league_id(it)
-            if lid != lg_target:
+        if league_id:
+            lid = str(
+                it.get("league_id")
+                or it.get("leagueId")
+                or it.get("league")
+                or it.get("league_code")
+                or ""
+            )
+            if str(league_id) != lid:
                 continue
         out.append(it)
     return out
 
-@router.get("", summary="Predições v2 (modelo bivariado + fallback)")
+
+# ------------------------------------------------------------
+# Endpoint
+# ------------------------------------------------------------
+@router.get("", summary="Predições v2 (toggle modelo/file + fallback por jogo)")
 def get_predictions_v2(
     date: Optional[str] = Query(None, description="YYYY-MM-DD"),
     league_id: Optional[str] = Query(None),
     source: Optional[str] = Query(
         None,
-        description="'model' para forçar bivariado; 'file' para forçar ficheiro; default usa flag/env"
+        description="'model' força bivariado; 'file' força ficheiro; vazio usa env V2_MODELS_ENABLED",
     ),
 ):
     date_iso = _safe_date(date)
-
-    # origem: file | model | (auto por flag/env)
-    if source == "file":
-        use_model = False
-    elif source == "model":
-        use_model = True
-    else:
-        use_model = _is_v2_enabled()
+    env_toggle = os.getenv("V2_MODELS_ENABLED", "false").lower() == "true"
+    use_model = (source == "model") or (source is None and env_toggle)
 
     base = _filter_by_date_and_league(_read_predictions_file(), date_iso, league_id)
 
-    # Se não houver nada no ficheiro, devolve vazio (não 404)
+    # Sem jogos -> lista vazia
     if not base:
         return JSONResponse([], status_code=200)
 
-    # Se v2 OFF → devolve ficheiro tal como está
-    if not use_model:
+    # Se não queremos modelo, ou não temos enriquecedor carregado, devolve base
+    if not use_model or not _HAS_ENRICH:
         return JSONResponse(base, status_code=200)
 
-    # Tenta enriquecer com bivariado; qualquer erro num jogo → fallback para esse jogo
+    # Enriquecimento por jogo com fallback
     out: List[Dict[str, Any]] = []
-    try:
-        for rec in base:
-            try:
-                enr = enrich_from_file_record(rec)
-                out.append(enr if enr else rec)
-            except Exception:
-                # erro pontual naquele registo → conta mas não quebra
-                out.append(rec)
-        return JSONResponse(out, status_code=200)
-    except Exception:
-        # erro global → conta falha e devolve ficheiro “cru”
-        _note_v2_failure()
-        return JSONResponse(base, status_code=200)
+    for rec in base:
+        try:
+            out.append(_enrich(rec))  # type: ignore[misc]
+        except Exception:
+            out.append(rec)  # fallback silencioso por registo
+
+    return JSONResponse(out, status_code=200)
