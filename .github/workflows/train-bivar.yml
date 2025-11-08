@@ -13,7 +13,6 @@ on:
 permissions:
   contents: write
 
-# Defaults e segredos (podem ser sobrepostos por env/vars do repo)
 env:
   API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
   API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
@@ -22,8 +21,6 @@ env:
 jobs:
   train:
     runs-on: ubuntu-latest
-
-    # permite override das épocas via "Run workflow"
     env:
       API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
       API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
@@ -43,12 +40,33 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Echo config
+      - name: Ensure curated leagues (fallback if missing)
         run: |
-          echo "BASE=${API_FOOTBALL_BASE}"
-          echo "SEASONS=${SEASONS}"
+          set -euxo pipefail
+          mkdir -p config
+          if ! ls config/leagues_*.json >/dev/null 2>&1; then
+            cat > config/leagues_main.json <<'JSON'
+            {
+              "leagues": [
+                {"id": 39,  "name": "Premier League"},
+                {"id": 140, "name": "La Liga"},
+                {"id": 135, "name": "Serie A"},
+                {"id": 78,  "name": "Bundesliga"},
+                {"id": 61,  "name": "Ligue 1"},
+                {"id": 94,  "name": "Primeira Liga"},
+                {"id": 88,  "name": "Eredivisie"},
+                {"id": 2,   "name": "UEFA Champions League"},
+                {"id": 3,   "name": "UEFA Europa League"},
+                {"id": 848, "name": "Saudi Pro League"}
+              ]
+            }
+            JSON
+          fi
+          echo "Leagues config:"
+          ls -la config || true
+          head -n 50 config/*.json || true
 
-      - name: Export CSV for λ3 (paginação + FT + fallback datas)
+      - name: Export CSV for λ3
         run: |
           set -euxo pipefail
           mkdir -p data/train
@@ -74,7 +92,7 @@ jobs:
             git push origin HEAD:main
           fi
 
-      - name: Upload artifacts (CSV + modelo)
+      - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
