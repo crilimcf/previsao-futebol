@@ -1,182 +1,118 @@
 # ============================================================
 # src/predictor_bivar.py
-# Enriquecimento de um registo de predictions.json com
-# probabilidades via Bivariate Poisson (λ1, λ2, λ3).
-# - Lê λ3 por liga de models/bivar_lambda3.json (fallback 0.08).
-# - Requer λ_home/λ_away no próprio registo; se faltarem -> devolve sem mexer.
-# - Calcula 1X2, Over 2.5/1.5, BTTS e Top-3 Correct Score.
-# - Nunca lança exceção para não partir o serviço.
 # ============================================================
-
 from __future__ import annotations
-import json
-from math import isfinite
+import json, math
 from pathlib import Path
-from typing import Any, Dict, Tuple, Optional, List
+from typing import Dict, Any, Tuple, List
 
-try:
-    # já está no repo
-    from src.ml.bivar import bivar_pmf  # type: ignore
-except Exception:
-    # fallback super defensivo (não deve acontecer)
-    def bivar_pmf(l1: float, l2: float, l3: float, x: int, y: int) -> float:  # type: ignore
-        return 0.0
+import numpy as np
 
-_L3_PATH = Path("models/bivar_lambda3.json")
-_L3_CACHE: Optional[Tuple[dict, float]] = None  # (mapa, mtime)
+from src.ml.bivar import bivar_pmf
+from src.ml.calibrator import calibrate_1x2, calibrate_binary  # << NOVO
 
+L3_PATH = Path("models/bivar_lambda3.json")
 
-def _load_lambda3_map() -> dict:
-    global _L3_CACHE
-    try:
-        mtime = _L3_PATH.stat().st_mtime
-        if _L3_CACHE and _L3_CACHE[1] == mtime:
-            return _L3_CACHE[0]
-        data = json.loads(_L3_PATH.read_text(encoding="utf-8"))
-        # aceita {"lambda3_per_league": {...}} ou só {"123": 0.12}
-        if isinstance(data, dict) and "lambda3_per_league" in data:
-            m = data["lambda3_per_league"] or {}
-        else:
-            m = data if isinstance(data, dict) else {}
-        _L3_CACHE = (m, mtime)
-        return m
-    except Exception:
-        return {}
-
-
-def _get_str(o: Any, *keys: str) -> str:
-    for k in keys:
-        v = o.get(k)
-        if v is None:
-            continue
-        s = str(v).strip()
-        if s:
-            return s
-    return ""
-
-
-def _get_float(o: Any, *keys: str) -> Optional[float]:
-    for k in keys:
-        v = o.get(k)
-        if v is None:
-            continue
+def _load_lambda3() -> Dict[str, float]:
+    if L3_PATH.exists():
         try:
-            f = float(v)
-            if isfinite(f):
-                return f
+            obj = json.loads(L3_PATH.read_text(encoding="utf-8"))
+            d = obj.get("lambda3_per_league", obj)
+            return {str(k): float(v) for k, v in d.items()}
         except Exception:
-            continue
-    return None
+            pass
+    return {}
 
+def _default_lambda3(league_id: str) -> float:
+    return 0.10
 
-def _sum_probs(l1: float, l2: float, l3: float, max_goals: int = 10) -> Dict[str, Any]:
-    """Gera distribuição conjunta e resume mercados."""
-    mat: List[List[float]] = []
-    p_home = p_draw = p_away = 0.0
-    p_over25 = p_over15 = 0.0
-    p_btts = 0.0
-    top: List[Tuple[str, float]] = []
-
+def _grid_probs(l1: float, l2: float, l3: float, max_goals: int = 10) -> np.ndarray:
+    g = np.zeros((max_goals + 1, max_goals + 1), dtype=float)
     for x in range(max_goals + 1):
-        row = []
         for y in range(max_goals + 1):
-            p = bivar_pmf(l1, l2, l3, x, y)
-            row.append(p)
-            if x > y:
-                p_home += p
-            elif x == y:
-                p_draw += p
-            else:
-                p_away += p
-            if (x + y) >= 3:
-                p_over25 += p
-            if (x + y) >= 2:
-                p_over15 += p
-            if x >= 1 and y >= 1:
-                p_btts += p
-            top.append((f"{x}-{y}", p))
-        mat.append(row)
+            g[x, y] = bivar_pmf(l1, l2, l3, x, y)
+    s = g.sum()
+    if s > 0:
+        g /= s
+    return g
 
-    # top-3 correct scores
-    top.sort(key=lambda t: t[1], reverse=True)
-    top3 = [{"score": s, "prob": round(max(0.0, min(1.0, p)), 6)} for s, p in top[:3]]
+def _probs_1x2(g: np.ndarray) -> Tuple[float, float, float]:
+    ph = np.triu(g, k=1).sum()   # home wins: x>y
+    pa = np.tril(g, k=-1).sum()  # away wins: x<y
+    pd = np.trace(g)
+    return float(ph), float(pd), float(pa)
 
-    return {
-        "p_home": p_home,
-        "p_draw": p_draw,
-        "p_away": p_away,
-        "p_over25": p_over25,
-        "p_over15": p_over15,
-        "p_btts": p_btts,
+def _prob_btts(g: np.ndarray) -> float:
+    return float(g[1:, 1:].sum())
+
+def _prob_over(g: np.ndarray, line: float) -> float:
+    s = 0.0
+    max_g = g.shape[0] - 1
+    for x in range(max_g + 1):
+        for y in range(max_g + 1):
+            if (x + y) > line:
+                s += g[x, y]
+    return float(s)
+
+def _top3_correct_scores(g: np.ndarray) -> List[Dict[str, Any]]:
+    flat = []
+    max_g = g.shape[0] - 1
+    for x in range(max_g + 1):
+        for y in range(max_g + 1):
+            flat.append((f"{x}-{y}", g[x, y]))
+    flat.sort(key=lambda t: t[1], reverse=True)
+    res = [{"score": s, "prob": float(p)} for s, p in flat[:3]]
+    return res
+
+def enrich_from_file_record(rec: Dict[str, Any]) -> Dict[str, Any]:
+    lid = str(rec.get("league_id") or rec.get("leagueId") or "")
+    lam_h = float(rec.get("lambda_home") or rec.get("lambdaHome") or 0.0)
+    lam_a = float(rec.get("lambda_away") or rec.get("lambdaAway") or 0.0)
+    if lam_h <= 0 or lam_a <= 0:
+        return rec
+
+    l3map = _load_lambda3()
+    l3 = float(l3map.get(lid, _default_lambda3(lid)))
+
+    l1 = max(1e-6, lam_h - l3)
+    l2 = max(1e-6, lam_a - l3)
+
+    g = _grid_probs(l1, l2, l3, max_goals=10)
+
+    # --- probs "cruas" do bivariado
+    ph_raw, pd_raw, pa_raw = _probs_1x2(g)
+    p_btts_raw = _prob_btts(g)
+    p_ou25_raw = _prob_over(g, 2.5)
+    p_ou15_raw = _prob_over(g, 1.5)
+
+    # --- calibração isotónica por liga (fallback identity)
+    ph, pd, pa = calibrate_1x2(lid, ph_raw, pd_raw, pa_raw)
+    p_btts = calibrate_binary(lid, "btts",  p_btts_raw)
+    p_ou25 = calibrate_binary(lid, "over25", p_ou25_raw)
+    p_ou15 = calibrate_binary(lid, "over15", p_ou15_raw)
+
+    top3 = _top3_correct_scores(g)
+
+    out = dict(rec)
+    out.setdefault("predictions", {})
+
+    out["predictions"]["winner"] = {
+        "class": int(np.argmax([ph, pd, pa])),
+        "prob": max(ph, pd, pa),
+        "confidence": max(ph, pd, pa),
+    }
+    out["predictions"]["double_chance"] = {
+        "class": int(np.argmax([ph+pd, ph+pa, pd+pa])),
+        "prob": max(ph+pd, ph+pa, pd+pa),
+    }
+    out["predictions"]["over_2_5"] = {"class": int(p_ou25 >= 0.5), "prob": p_ou25}
+    out["predictions"]["over_1_5"] = {"class": int(p_ou15 >= 0.5), "prob": p_ou15}
+    out["predictions"]["btts"]     = {"class": int(p_btts >= 0.5), "prob": p_btts}
+    out["predictions"]["correct_score"] = {
+        "best": top3[0]["score"] if top3 else None,
         "top3": top3,
     }
 
-
-def _double_chance(p_home: float, p_draw: float, p_away: float) -> Tuple[int, float]:
-    """Retorna (classe, prob) onde classe: 0=1X, 1=12, 2=X2."""
-    opts = [
-        (0, p_home + p_draw),  # 1X
-        (1, p_home + p_away),  # 12
-        (2, p_draw + p_away),  # X2
-    ]
-    opts.sort(key=lambda t: t[1], reverse=True)
-    return opts[0]
-
-
-def enrich_from_file_record(rec: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Enriquecimento seguro. Se faltar algo essencial, devolve o registo inalterado.
-    Espera:
-      - rec["lambda_home"], rec["lambda_away"]  (marginais já calculados no teu pipeline)
-      - league_id para buscar λ3; fallback l3=0.08
-    """
-    try:
-        lam_h = _get_float(rec, "lambda_home", "lam_home", "lambdaH")
-        lam_a = _get_float(rec, "lambda_away", "lam_away", "lambdaA")
-        if lam_h is None or lam_a is None or lam_h <= 0 or lam_a <= 0:
-            return rec  # sem marginais, não faço nada
-
-        # λ3 por liga
-        lg = _get_str(rec, "league_id", "leagueId", "league", "league_code")
-        l3_map = _load_lambda3_map()
-        lam3 = float(l3_map.get(str(lg), 0.08))
-        lam1 = max(1e-6, lam_h - lam3)
-        lam2 = max(1e-6, lam_a - lam3)
-
-        s = _sum_probs(lam1, lam2, lam3, max_goals=10)
-        p_home = s["p_home"]
-        p_draw = s["p_draw"]
-        p_away = s["p_away"]
-
-        # Winner
-        winner_class = int(max(enumerate([p_home, p_draw, p_away]), key=lambda t: t[1])[0])  # 0=Casa,1=Empate,2=Fora
-        winner_prob = [p_home, p_draw, p_away][winner_class]
-
-        # Double chance
-        dc_class, dc_prob = _double_chance(p_home, p_draw, p_away)
-
-        # O/U & BTTS
-        p_o25 = s["p_over25"]
-        p_o15 = s["p_over15"]
-        p_btts = s["p_btts"]
-
-        # Monta estrutura de saída compatível com o frontend
-        out = dict(rec)  # shallow copy
-        preds = dict(out.get("predictions") or {})
-
-        preds["winner"] = {"class": winner_class, "prob": round(winner_prob, 6)}
-        preds["double_chance"] = {"class": dc_class, "prob": round(dc_prob, 6)}
-        preds["over_2_5"] = {"class": int(p_o25 >= 0.5), "prob": round(p_o25, 6)}
-        preds["over_1_5"] = {"class": int(p_o15 >= 0.5), "prob": round(p_o15, 6)}
-        preds["btts"] = {"class": int(p_btts >= 0.5), "prob": round(p_btts, 6)}
-        preds["correct_score"] = {
-            "best": s["top3"][0]["score"] if s["top3"] else None,
-            "top3": s["top3"],
-        }
-
-        out["predictions"] = preds
-        out["model"] = "v2-bivar"
-        out["lambda_used"] = {"home": lam_h, "away": lam_a, "l3": lam3}
-        return out
-    except Exception:
-        return rec  # nunca quebrar
+    out["model"] = "bivariate+iso"
+    out["lambda_used"] = {"home": lam_h, "away": lam_a, "lambda3": l3}
+    return out

@@ -10,11 +10,12 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src import config
 
-# 👉 routers existentes
+# 👉 routers v1 existentes
 from src.api_routes import health as health_routes
 from src.api_routes import predict as predict_routes
 from src.api_routes import meta as meta_routes
-from src.api_routes import flags as flags_routes  # <— NOVO
+from src.api_routes import flags as flags_routes          # /meta/flags
+from src.api_routes import metrics as metrics_routes      # /metrics
 
 # ============================================================
 # ⚙️ LOGGING
@@ -88,17 +89,23 @@ api.add_middleware(
 api.include_router(health_routes.router)
 api.include_router(predict_routes.router)
 api.include_router(meta_routes.router)
-api.include_router(flags_routes.router)  # <— NOVO: /meta/flags
+api.include_router(flags_routes.router)     # /meta/flags
+api.include_router(metrics_routes.router)   # /metrics
 
 # ============================================================
-# 🔗 Rota experimental v2 (Bivariate Poisson) — segura
+# 🔗 Rota v2 (Bivariate Poisson + calibração) — segura com fallback
+#    Importa do sítio CERTO: src/api_routes/predictions_v2.py
 # ============================================================
 try:
     from src.api_routes import predictions_v2 as predictions_v2_routes
+
     if getattr(predictions_v2_routes, "router", None) is not None:
         r = predictions_v2_routes.router
-        has_prefix = any(getattr(route, "path", "").startswith("/predictions/v2")
-                         for route in getattr(r, "routes", []))
+        # Se o router já vier com /predictions/v2 nas rotas, não duplicar prefixo
+        has_prefix = any(
+            getattr(route, "path", "").startswith("/predictions/v2")
+            for route in getattr(r, "routes", [])
+        )
         if has_prefix:
             api.include_router(r, tags=["predictions-v2"])
         else:
