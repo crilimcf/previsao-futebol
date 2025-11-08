@@ -10,9 +10,6 @@ from typing import Dict, Any, List
 import requests
 import pandas as pd
 
-# -----------------------------
-# Config de API
-# -----------------------------
 def normalize_base(u: str | None) -> str:
     u = (u or "").strip()
     if not u.startswith(("http://", "https://")):
@@ -23,9 +20,20 @@ API_KEY = os.getenv("API_FOOTBALL_KEY", "")
 BASE = normalize_base(os.getenv("API_FOOTBALL_BASE"))
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-# -----------------------------
-# HTTP com retry simples
-# -----------------------------
+# ---------- Fallback embutido (se não houver config/leagues_*.json) ----------
+DEFAULT_LEAGUES = [
+    {"id": 39,  "name": "Premier League",                     "country": "England"},
+    {"id": 140, "name": "La Liga",                            "country": "Spain"},
+    {"id": 135, "name": "Serie A",                            "country": "Italy"},
+    {"id": 78,  "name": "Bundesliga",                         "country": "Germany"},
+    {"id": 61,  "name": "Ligue 1",                            "country": "France"},
+    {"id": 88,  "name": "Eredivisie",                         "country": "Netherlands"},
+    {"id": 94,  "name": "Primeira Liga",                      "country": "Portugal"},
+    {"id": 2,   "name": "UEFA Champions League",              "country": "Europe"},
+    {"id": 3,   "name": "UEFA Europa League",                 "country": "Europe"},
+    {"id": 848, "name": "UEFA Europa Conference League",      "country": "Europe"},
+]
+
 def req(path: str, params: Dict[str, Any]) -> Dict[str, Any]:
     if not API_KEY:
         raise SystemExit("Falta API_FOOTBALL_KEY no ambiente.")
@@ -38,15 +46,14 @@ def req(path: str, params: Dict[str, Any]) -> Dict[str, Any]:
         r.raise_for_status()
         return r.json()
     r.raise_for_status()
-    return {}  # nunca chega aqui
+    return {}
 
-# -----------------------------
-# Ligas curadas (config/leagues_*.json)
-# -----------------------------
 def list_leagues_curated() -> pd.DataFrame:
     cfg_dir = Path("config")
     arr: List[Dict[str, Any]] = []
+    found_any = False
     for p in cfg_dir.glob("leagues_*.json"):
+        found_any = True
         try:
             data = json.loads(p.read_text(encoding="utf-8"))
             items = data.get("leagues") or data.get("items") or data
@@ -57,11 +64,12 @@ def list_leagues_curated() -> pd.DataFrame:
                     arr.append({"league_id": int(lid), "name": str(name or "")})
         except Exception:
             continue
+    if not found_any and arr == []:
+        # fallback embutido
+        for x in DEFAULT_LEAGUES:
+            arr.append({"league_id": int(x["id"]), "name": x["name"]})
     return pd.DataFrame(arr).drop_duplicates(subset=["league_id"])
 
-# -----------------------------
-# Fixtures por época com paginação
-# -----------------------------
 def fetch_fixtures_league_season(league_id: int, season: int) -> List[Dict[str, Any]]:
     page = 1
     out: List[Dict[str, Any]] = []
@@ -77,37 +85,21 @@ def fetch_fixtures_league_season(league_id: int, season: int) -> List[Dict[str, 
         time.sleep(0.45)
     return out
 
-# -----------------------------
-# Rolling helpers
-# -----------------------------
 def compute_team_marginals(df: pd.DataFrame, window: int = 20) -> pd.DataFrame:
-    # Sort por data para garantir histórico
     df = df.sort_values("date").copy()
-
-    # λ_home: média móvel dos golos em casa por equipa (home_id), usando apenas jogos anteriores (shift)
     gh = df.groupby(["league_id", "home_id"], group_keys=False)["goals_home"]
-    lam_h_roll = gh.apply(lambda s: s.shift().rolling(window=window, min_periods=max(5, window // 2)).mean())
-    lam_h_exp  = gh.apply(lambda s: s.shift().expanding().mean())
-    df["lambda_home"] = lam_h_roll.fillna(lam_h_exp)
-
-    # λ_away: média móvel dos golos fora por equipa (away_id), usando apenas jogos anteriores (shift)
+    df["lambda_home"] = gh.apply(lambda s: s.shift().rolling(window=window, min_periods=max(5, window//2)).mean()) \
+                          .fillna(gh.apply(lambda s: s.shift().expanding().mean()))
     ga = df.groupby(["league_id", "away_id"], group_keys=False)["goals_away"]
-    lam_a_roll = ga.apply(lambda s: s.shift().rolling(window=window, min_periods=max(5, window // 2)).mean())
-    lam_a_exp  = ga.apply(lambda s: s.shift().expanding().mean())
-    df["lambda_away"] = lam_a_roll.fillna(lam_a_exp)
-
-    # Fallbacks por liga quando ainda não há histórico
+    df["lambda_away"] = ga.apply(lambda s: s.shift().rolling(window=window, min_periods=max(5, window//2)).mean()) \
+                          .fillna(ga.apply(lambda s: s.shift().expanding().mean()))
     league_home_mean = df.groupby("league_id")["goals_home"].transform("mean")
     league_away_mean = df.groupby("league_id")["goals_away"].transform("mean")
     df["lambda_home"] = df["lambda_home"].fillna(league_home_mean).clip(lower=0.05)
     df["lambda_away"] = df["lambda_away"].fillna(league_away_mean).clip(lower=0.05)
     return df
 
-# -----------------------------
-# Parse seasons do CLI/ENV
-# -----------------------------
 def parse_seasons(cli_values: List[str] | None) -> List[int]:
-    # CLI pode ter múltiplos --season e/ou "2024,2025"
     vals: List[str] = []
     for v in (cli_values or []):
         vals.extend(str(v).split(","))
@@ -126,16 +118,11 @@ def parse_seasons(cli_values: List[str] | None) -> List[int]:
             pass
     return sorted(set(seasons))
 
-# -----------------------------
-# Main
-# -----------------------------
 def main():
     ap = argparse.ArgumentParser("export: poisson_inputs_from_api.py")
     ap.add_argument("--season", action="append",
-                    help="Época(s) ex: --season 2024 --season 2025 ou '2024,2025'. "
-                         "Se omitir, usa ENV: API_FOOTBALL_SEASONS/SEASON (default 2024).")
-    ap.add_argument("--out", default="data/train/poisson_inputs.csv",
-                    help="Caminho do CSV de saída.")
+                    help="--season 2024 --season 2025 ou '2024,2025'. Se omitir, usa ENV (default 2024).")
+    ap.add_argument("--out", default="data/train/poisson_inputs.csv")
     args = ap.parse_args()
 
     seasons = parse_seasons(args.season)
@@ -144,7 +131,7 @@ def main():
 
     leagues = list_leagues_curated()
     if leagues.empty:
-        raise SystemExit("Sem ligas curadas em config/leagues_*.json")
+        raise SystemExit("Sem ligas para exportar (mesmo após fallback).")
 
     rows: List[Dict[str, Any]] = []
     for _, row in leagues.iterrows():
@@ -153,14 +140,12 @@ def main():
             fixtures = fetch_fixtures_league_season(lid, season)
             time.sleep(0.2)
             for f in fixtures:
-                sc = f.get("score", {}) or {}
-                ft = (sc.get("fulltime") or {})
-                gh, ga = ft.get("home"), ft.get("away")
+                sc = (f.get("score") or {}).get("fulltime") or {}
+                gh, ga = sc.get("home"), sc.get("away")
                 if gh is None or ga is None:
                     continue
-                teams = f.get("teams", {}) or {}
-                home = (teams.get("home") or {})
-                away = (teams.get("away") or {})
+                teams = f.get("teams") or {}
+                home, away = (teams.get("home") or {}), (teams.get("away") or {})
                 rows.append({
                     "league_id": lid,
                     "season": season,
@@ -173,16 +158,11 @@ def main():
 
     if not rows:
         raise SystemExit("Sem dados de fixtures com resultado.")
-
     df = pd.DataFrame(rows)
-    # Normaliza data para ordenação
     df["date"] = pd.to_datetime(df["date"], utc=True, errors="coerce")
     df = df.dropna(subset=["date", "goals_home", "goals_away", "home_id", "away_id"])
-
-    # λ marginais por equipa (histórico)
     df = compute_team_marginals(df, window=20)
 
-    # CSV final: colunas esperadas pelo treino de λ3
     df_out = df[["league_id", "goals_home", "goals_away", "lambda_home", "lambda_away"]].copy()
     df_out.to_csv(outp, index=False)
     print(f"[ok] gravado: {outp} (linhas={len(df_out)})")
