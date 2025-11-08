@@ -989,8 +989,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/59.png",
     "odds": {
       "winner": {
-        "home": 2.15,
-        "draw": 3.25,
+        "home": 2.2,
+        "draw": 3.2,
         "away": 3.3
       },
       "over_2_5": {
@@ -2826,9 +2826,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/504.png",
     "odds": {
       "winner": {
-        "home": 2.88,
-        "draw": 2.7,
-        "away": 3.0
+        "home": 2.9,
+        "draw": 2.75,
+        "away": 2.9
       },
       "over_2_5": {
         "over": 8.0,
@@ -3160,9 +3160,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/490.png",
     "odds": {
       "winner": {
-        "home": 1.5,
-        "draw": 4.2,
-        "away": 7.0
+        "home": 1.57,
+        "draw": 4.0,
+        "away": 6.0
       },
       "over_2_5": {
         "over": 1.57,
@@ -4663,21 +4663,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/74.png",
     "odds": {
       "winner": {
-        "home": 1.48,
-        "draw": 4.5,
-        "away": 5.5
+        "home": 1.45,
+        "draw": 4.75,
+        "away": 5.75
       },
       "over_2_5": {
-        "over": 4.0,
-        "under": 1.22
+        "over": 3.75,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 1.91,
-        "under": 1.8
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
-        "yes": 3.4,
-        "no": 1.3
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -4997,7 +4997,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/44.png",
     "odds": {
       "winner": {
-        "home": 1.85,
+        "home": 1.83,
         "draw": 3.6,
         "away": 4.33
       },
@@ -5010,8 +5010,8 @@
         "under": 1.62
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -5166,7 +5166,7 @@
       "winner": {
         "home": 1.67,
         "draw": 3.5,
-        "away": 5.75
+        "away": 5.5
       },
       "over_2_5": {
         "over": 1.62,
@@ -5499,16 +5499,16 @@
     "odds": {
       "winner": {
         "home": 2.4,
-        "draw": 3.4,
+        "draw": 3.3,
         "away": 2.8
       },
       "over_2_5": {
-        "over": 6.0,
-        "under": 1.12
+        "over": 5.5,
+        "under": 1.14
       },
       "over_1_5": {
-        "over": 2.5,
-        "under": 1.5
+        "over": 2.38,
+        "under": 1.53
       },
       "btts": {
         "yes": 3.75,
@@ -6501,7 +6501,7 @@
     "odds": {
       "winner": {
         "home": 2.0,
-        "draw": 3.5,
+        "draw": 3.4,
         "away": 3.7
       },
       "over_2_5": {
@@ -6513,8 +6513,8 @@
         "under": 1.8
       },
       "btts": {
-        "yes": 3.0,
-        "no": 1.36
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -6835,8 +6835,8 @@
     "odds": {
       "winner": {
         "home": 2.05,
-        "draw": 3.5,
-        "away": 3.5
+        "draw": 3.3,
+        "away": 3.75
       },
       "over_2_5": {
         "over": 5.5,
@@ -6847,8 +6847,8 @@
         "under": 1.57
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -7006,12 +7006,12 @@
         "away": 3.9
       },
       "over_2_5": {
-        "over": 5.5,
-        "under": 1.14
+        "over": 5.0,
+        "under": 1.17
       },
       "over_1_5": {
-        "over": 2.25,
-        "under": 1.57
+        "over": 2.2,
+        "under": 1.62
       },
       "btts": {
         "yes": 3.75,
@@ -7515,8 +7515,8 @@
         "under": 1.57
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -7669,9 +7669,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/106.png",
     "odds": {
       "winner": {
-        "home": 1.44,
-        "draw": 4.75,
-        "away": 7.0
+        "home": 1.48,
+        "draw": 4.5,
+        "away": 6.25
       },
       "over_2_5": {
         "over": 1.67,
@@ -7682,8 +7682,8 @@
         "under": 1.83
       },
       "btts": {
-        "yes": 3.4,
-        "no": 1.3
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -7836,7 +7836,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/4256.png",
     "odds": {
       "winner": {
-        "home": 1.73,
+        "home": 1.7,
         "draw": 3.6,
         "away": 5.0
       },
@@ -8337,9 +8337,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/522.png",
     "odds": {
       "winner": {
-        "home": 3.1,
+        "home": 2.9,
         "draw": 3.1,
-        "away": 2.4
+        "away": 2.5
       },
       "over_2_5": {
         "over": 6.0,
@@ -8350,8 +8350,8 @@
         "under": 1.5
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -8504,8 +8504,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/503.png",
     "odds": {
       "winner": {
-        "home": 1.45,
-        "draw": 3.8,
+        "home": 1.53,
+        "draw": 4.1,
         "away": 6.0
       },
       "over_2_5": {
@@ -8517,8 +8517,8 @@
         "under": 1.57
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -8676,12 +8676,12 @@
         "away": 2.75
       },
       "over_2_5": {
-        "over": 3.4,
-        "under": 1.3
+        "over": 3.5,
+        "under": 1.28
       },
       "over_1_5": {
-        "over": 1.73,
-        "under": 2.0
+        "over": 1.8,
+        "under": 1.91
       },
       "btts": {
         "yes": 2.62,
@@ -9005,9 +9005,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/549.png",
     "odds": {
       "winner": {
-        "home": 4.33,
-        "draw": 4.1,
-        "away": 1.7
+        "home": 4.2,
+        "draw": 4.0,
+        "away": 1.73
       },
       "over_2_5": {
         "over": 3.75,
@@ -9018,8 +9018,8 @@
         "under": 1.83
       },
       "btts": {
-        "yes": 3.25,
-        "no": 1.33
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -9506,9 +9506,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/192.png",
     "odds": {
       "winner": {
-        "home": 2.1,
-        "draw": 3.7,
-        "away": 3.25
+        "home": 2.15,
+        "draw": 3.6,
+        "away": 3.2
       },
       "over_2_5": {
         "over": 3.5,
@@ -9673,8 +9673,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/539.png",
     "odds": {
       "winner": {
-        "home": 1.2,
-        "draw": 7.0,
+        "home": 1.18,
+        "draw": 7.5,
         "away": 13.0
       },
       "over_2_5": {
@@ -9840,9 +9840,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/725.png",
     "odds": {
       "winner": {
-        "home": 1.7,
-        "draw": 3.8,
-        "away": 4.5
+        "home": 1.65,
+        "draw": 3.9,
+        "away": 5.0
       },
       "over_2_5": {
         "over": 4.5,
@@ -9853,8 +9853,8 @@
         "under": 1.67
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -10007,13 +10007,13 @@
     "away_logo": "https://media.api-sports.io/football/teams/42.png",
     "odds": {
       "winner": {
-        "home": 6.5,
-        "draw": 4.5,
+        "home": 7.5,
+        "draw": 4.33,
         "away": 1.44
       },
       "over_2_5": {
-        "over": 1.57,
-        "under": 2.25
+        "over": 1.62,
+        "under": 2.2
       },
       "over_1_5": {
         "over": 2.38,
@@ -10174,9 +10174,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/2929.png",
     "odds": {
       "winner": {
-        "home": 3.1,
-        "draw": 3.6,
-        "away": 2.05
+        "home": 2.75,
+        "draw": 3.5,
+        "away": 2.3
       },
       "over_2_5": {
         "over": 3.4,
@@ -10508,9 +10508,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/203.png",
     "odds": {
       "winner": {
-        "home": 2.7,
-        "draw": 3.5,
-        "away": 2.45
+        "home": 2.8,
+        "draw": 3.6,
+        "away": 2.38
       },
       "over_2_5": {
         "over": 4.0,
@@ -10677,7 +10677,7 @@
       "winner": {
         "home": 1.8,
         "draw": 3.4,
-        "away": 5.0
+        "away": 4.75
       },
       "over_2_5": {
         "over": 5.5,
@@ -10842,9 +10842,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/224.png",
     "odds": {
       "winner": {
-        "home": 2.7,
-        "draw": 3.1,
-        "away": 2.7
+        "home": 2.75,
+        "draw": 3.2,
+        "away": 2.62
       },
       "over_2_5": {
         "over": 5.5,
@@ -11307,21 +11307,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/498.png",
     "odds": {
       "winner": {
-        "home": 1.65,
-        "draw": 3.7,
-        "away": 5.25
+        "home": 1.57,
+        "draw": 3.8,
+        "away": 5.75
       },
       "over_2_5": {
-        "over": 5.0,
-        "under": 1.17
+        "over": 4.5,
+        "under": 1.18
       },
       "over_1_5": {
-        "over": 2.2,
-        "under": 1.62
+        "over": 2.1,
+        "under": 1.67
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -11474,9 +11474,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/1063.png",
     "odds": {
       "winner": {
-        "home": 2.4,
+        "home": 2.45,
         "draw": 3.5,
-        "away": 2.62
+        "away": 2.6
       },
       "over_2_5": {
         "over": 3.75,
@@ -11641,9 +11641,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/1062.png",
     "odds": {
       "winner": {
-        "home": 3.7,
-        "draw": 3.25,
-        "away": 2.1
+        "home": 3.5,
+        "draw": 3.2,
+        "away": 2.15
       },
       "over_2_5": {
         "over": 5.0,
@@ -11654,8 +11654,8 @@
         "under": 1.62
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -11975,17 +11975,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/159.png",
     "odds": {
       "winner": {
-        "home": 2.25,
+        "home": 2.3,
         "draw": 3.5,
-        "away": 2.9
+        "away": 2.88
       },
       "over_2_5": {
-        "over": 3.4,
-        "under": 1.3
+        "over": 3.5,
+        "under": 1.28
       },
       "over_1_5": {
-        "over": 1.73,
-        "under": 2.0
+        "over": 1.8,
+        "under": 1.91
       },
       "btts": {
         "yes": 2.75,
@@ -12147,12 +12147,12 @@
         "away": 3.2
       },
       "over_2_5": {
-        "over": 3.4,
-        "under": 1.3
+        "over": 3.5,
+        "under": 1.28
       },
       "over_1_5": {
-        "over": 1.73,
-        "under": 2.0
+        "over": 1.8,
+        "under": 1.91
       },
       "btts": {
         "yes": 2.62,
@@ -12309,9 +12309,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/489.png",
     "odds": {
       "winner": {
-        "home": 5.5,
-        "draw": 4.2,
-        "away": 1.55
+        "home": 6.25,
+        "draw": 4.0,
+        "away": 1.53
       },
       "over_2_5": {
         "over": 4.5,
@@ -12322,8 +12322,8 @@
         "under": 1.67
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -12485,8 +12485,8 @@
         "under": 1.12
       },
       "over_1_5": {
-        "over": 2.38,
-        "under": 1.53
+        "over": 2.5,
+        "under": 1.5
       },
       "btts": {
         "yes": 3.75,
@@ -12656,8 +12656,8 @@
         "under": 1.83
       },
       "btts": {
-        "yes": 3.4,
-        "no": 1.3
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -12986,8 +12986,8 @@
         "under": 1.17
       },
       "over_1_5": {
-        "over": 2.2,
-        "under": 1.62
+        "over": 2.1,
+        "under": 1.67
       },
       "btts": {
         "yes": 3.4,
@@ -13144,7 +13144,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/533.png",
     "odds": {
       "winner": {
-        "home": 2.8,
+        "home": 2.88,
         "draw": 3.5,
         "away": 2.4
       },
@@ -13313,7 +13313,7 @@
       "winner": {
         "home": 2.0,
         "draw": 3.9,
-        "away": 3.3
+        "away": 3.4
       },
       "over_2_5": {
         "over": 3.4,
@@ -13478,21 +13478,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/228.png",
     "odds": {
       "winner": {
-        "home": 7.5,
+        "home": 7.0,
         "draw": 4.5,
-        "away": 1.4
+        "away": 1.42
       },
       "over_2_5": {
         "over": 1.67,
         "under": 2.1
       },
       "over_1_5": {
-        "over": 2.2,
-        "under": 1.62
+        "over": 2.1,
+        "under": 1.67
       },
       "btts": {
-        "yes": 4.33,
-        "no": 1.2
+        "yes": 4.0,
+        "no": 1.22
       }
     },
     "predicted_score": {
@@ -13658,8 +13658,8 @@
         "under": 1.73
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.4,
+        "no": 1.3
       }
     },
     "predicted_score": {
@@ -14814,9 +14814,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/185.png",
     "odds": {
       "winner": {
-        "home": 3.6,
-        "draw": 3.75,
-        "away": 1.91
+        "home": 3.5,
+        "draw": 3.7,
+        "away": 1.95
       },
       "over_2_5": {
         "over": 3.4,
@@ -14994,8 +14994,8 @@
         "under": 1.83
       },
       "btts": {
-        "yes": 2.75,
-        "no": 1.4
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -16155,12 +16155,12 @@
         "away": 5.0
       },
       "over_2_5": {
-        "over": 4.5,
-        "under": 1.18
+        "over": 5.0,
+        "under": 1.17
       },
       "over_1_5": {
-        "over": 2.1,
-        "under": 1.67
+        "over": 2.2,
+        "under": 1.62
       },
       "btts": {
         "yes": 3.75,
@@ -16820,7 +16820,7 @@
       "winner": {
         "home": 1.95,
         "draw": 3.5,
-        "away": 3.7
+        "away": 3.75
       },
       "over_2_5": {
         "over": 5.0,
@@ -16985,9 +16985,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/781.png",
     "odds": {
       "winner": {
-        "home": 4.0,
+        "home": 3.9,
         "draw": 3.4,
-        "away": 1.9
+        "away": 1.95
       },
       "over_2_5": {
         "over": 5.0,
@@ -17822,7 +17822,7 @@
       "winner": {
         "home": 3.0,
         "draw": 3.3,
-        "away": 2.4
+        "away": 2.38
       },
       "over_2_5": {
         "over": 5.5,
@@ -18156,7 +18156,7 @@
       "winner": {
         "home": 3.0,
         "draw": 3.0,
-        "away": 2.55
+        "away": 2.6
       },
       "over_2_5": {
         "over": 6.5,
@@ -19125,9 +19125,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/257.png",
     "odds": {
       "winner": {
-        "home": 7.0,
+        "home": 6.5,
         "draw": 4.33,
-        "away": 1.44
+        "away": 1.45
       },
       "over_2_5": {
         "over": 3.75,
@@ -19138,8 +19138,8 @@
         "under": 1.83
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.4,
+        "no": 1.3
       }
     },
     "predicted_score": {
@@ -19802,8 +19802,8 @@
         "under": 1.8
       },
       "over_1_5": {
-        "over": 2.0,
-        "under": 1.73
+        "over": 1.91,
+        "under": 1.8
       },
       "btts": {
         "yes": 3.75,
@@ -20294,9 +20294,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/234.png",
     "odds": {
       "winner": {
-        "home": 1.57,
+        "home": 1.55,
         "draw": 3.4,
-        "away": 5.25
+        "away": 5.5
       },
       "over_2_5": {
         "over": 5.0,
@@ -24772,13 +24772,13 @@
     "away_logo": "https://media.api-sports.io/football/teams/129.png",
     "odds": {
       "winner": {
-        "home": 1.7,
-        "draw": 3.4,
-        "away": 6.0
+        "home": 1.65,
+        "draw": 3.5,
+        "away": 6.5
       },
       "over_2_5": {
-        "over": 5.5,
-        "under": 1.14
+        "over": 6.0,
+        "under": 1.12
       },
       "over_1_5": {
         "over": 2.38,
@@ -26109,8 +26109,8 @@
     "odds": {
       "winner": {
         "home": 4.33,
-        "draw": 4.2,
-        "away": 1.7
+        "draw": 4.33,
+        "away": 1.67
       },
       "over_2_5": {
         "over": 3.0,
@@ -26275,9 +26275,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/720.png",
     "odds": {
       "winner": {
-        "home": 2.75,
+        "home": 2.7,
         "draw": 3.2,
-        "away": 2.55
+        "away": 2.6
       },
       "over_2_5": {
         "over": 6.0,
@@ -26614,8 +26614,8 @@
         "away": 7.0
       },
       "over_2_5": {
-        "over": 2.0,
-        "under": 1.73
+        "over": 1.83,
+        "under": 1.83
       },
       "over_1_5": {
         "over": 2.0,
@@ -27110,9 +27110,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/130.png",
     "odds": {
       "winner": {
-        "home": 2.05,
-        "draw": 3.4,
-        "away": 3.7
+        "home": 2.1,
+        "draw": 3.3,
+        "away": 3.6
       },
       "over_2_5": {
         "over": 5.5,
