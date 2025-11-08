@@ -7,37 +7,44 @@ services:
     name: previsao-futebol
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn src.main:api --host 0.0.0.0 --port $PORT
-    autoDeploy: true
     region: frankfurt
 
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
 
-    startCommand: |
-      uvicorn main:app --host 0.0.0.0 --port $PORT --log-level info
+    startCommand: uvicorn src.main:api --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /healthz
+    autoDeploy: true
 
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
 
+      - key: ENV
+        value: production
+      - key: MODE
+        value: api
+
       - key: PREDICTIONS_PATH
         value: data/predict/predictions.json
 
-      - key: ENV
-        value: prod
+      # 🔀 Toggle do v2 (podes começar em "false" e ligar depois por API)
+      - key: V2_MODELS_ENABLED
+        value: "false"
+      # ⚠️ Circuit breaker (opcional)
+      - key: V2_FAIL_MAX
+        value: "5"
+      - key: V2_FAIL_TTL
+        value: "900"
 
-      - key: TELEGRAM_TOKEN
-        sync: false
-      - key: CHAT_ID
-        sync: false
+      # 🔒 Segredos (ajusta os nomes aos teus Secrets no Render)
+      - key: API_TOKEN
+        fromSecret: API_TOKEN
       - key: REDIS_URL
-        sync: false
-
-    healthCheckPath: /healthz
-    healthCheckTimeout: 30
-    healthCheckInterval: 300
-    autoDeployOnCrash: true
-    restartPolicy: always
+        fromSecret: REDIS_URL
+      - key: TELEGRAM_TOKEN
+        fromSecret: TELEGRAM_TOKEN
+      - key: CHAT_ID
+        fromSecret: CHAT_ID

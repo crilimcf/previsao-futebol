@@ -13,7 +13,11 @@ from src import config
 # 👉 routers existentes (v1)
 from src.api_routes import health as health_routes
 from src.api_routes import predict as predict_routes
-from src.api_routes import meta as meta_routes  # existe
+from src.api_routes import meta as meta_routes
+
+# 👉 novos routers
+from src.api_routes import predictions_v2 as predictions_v2_routes
+from src.api_routes import metrics as metrics_routes
 
 # ============================================================
 # ⚙️ LOGGING
@@ -63,10 +67,10 @@ def main(
 # ============================================================
 # 🌍 FASTAPI APP
 # ============================================================
-api = FastAPI(title="Previsão Futebol API", version="1.0.7")
+api = FastAPI(title="Previsão Futebol API", version="1.0.8")
 
 # ============================================================
-# 🔓 CORS — Corrigido para suportar Vercel e localhost
+# 🔓 CORS — ajusta em produção se quiseres apertar
 # ============================================================
 ALLOWED_ORIGINS = [
     "https://previsao-futebol.vercel.app",
@@ -74,46 +78,22 @@ ALLOWED_ORIGINS = [
 ]
 api.add_middleware(
     CORSMiddleware,
-    # Em produção podes trocar para allow_origins=ALLOWED_ORIGINS
-    allow_origins=["*"],
+    allow_origins=["*"],  # em produção podes trocar para ALLOWED_ORIGINS
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # ============================================================
-# 🔗 Rotas (v1)
+# 🔗 Rotas (v1 + novos)
 # ============================================================
 api.include_router(health_routes.router)
 api.include_router(predict_routes.router)
 api.include_router(meta_routes.router)
 
-# ============================================================
-# 🔗 Rota v2 (Bivariate Poisson + calibração + blend) — fail-open
-#    Import CERTO: src/api_routes/predictions_v2.py (tem router = APIRouter(prefix="/predictions"))
-# ============================================================
-try:
-    from src.api_routes import predictions_v2 as predictions_v2_routes
-    if getattr(predictions_v2_routes, "router", None) is None:
-        raise RuntimeError("router não encontrado em predictions_v2")
-    # O router já tem prefix "/predictions" e endpoint "/v2"
-    api.include_router(predictions_v2_routes.router, tags=["predictions-v2"])
-    logger.info("✅ predictions_v2 ativado (/predictions/v2)")
-except Exception as e:
-    logger.warning(f"⚠️ predictions_v2 desativado: {e}")
-
-# ============================================================
-# 🔗 Métricas (backtest) — fail-open
-#    Ficheiro: src/api_routes/metrics.py  → GET /metrics
-# ============================================================
-try:
-    from src.api_routes import metrics as metrics_routes
-    if getattr(metrics_routes, "router", None) is None:
-        raise RuntimeError("router não encontrado em metrics")
-    api.include_router(metrics_routes.router, tags=["metrics"])
-    logger.info("✅ /metrics ativado")
-except Exception as e:
-    logger.warning(f"⚠️ /metrics desativado: {e}")
+# v2 e métricas
+api.include_router(predictions_v2_routes.router)  # já traz prefix "/predictions/v2"
+api.include_router(metrics_routes.router)         # expõe "/metrics"
 
 # ============================================================
 # 🩺 Healthcheck
@@ -164,7 +144,7 @@ def root():
     return {
         "status": "online",
         "service": "previsao-futebol",
-        "version": "1.0.7",
+        "version": "1.0.8",
         "docs": "/docs",
         "health": "/healthz",
         "time": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),

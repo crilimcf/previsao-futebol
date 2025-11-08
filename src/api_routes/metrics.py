@@ -1,19 +1,41 @@
-# src/api_routes/metrics.py
+# -*- coding: utf-8 -*-
 from __future__ import annotations
-import os, json
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
+from pathlib import Path
+import json
+from datetime import datetime, timezone
 
-router = APIRouter(prefix="/metrics", tags=["metrics"])
+router = APIRouter()
 
-METRICS_FILE = os.getenv("METRICS_FILE", "data/stats/metrics.json")
+PRED_FILE = Path("data/predict/predictions.json")
+STATS_FILE = Path("data/stats/prediction_stats.json")
 
-@router.get("")
-def get_metrics():
-    if not os.path.exists(METRICS_FILE):
-        return JSONResponse({"status":"missing"})
-    try:
-        data = json.loads(open(METRICS_FILE, "r", encoding="utf-8").read())
-        return JSONResponse(data)
-    except Exception as e:
-        return JSONResponse({"status":"error","detail":str(e)}, status_code=500)
+@router.get("/metrics", tags=["metrics"])
+def metrics():
+    out = {
+        "time_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "predictions_count": 0,
+        "stats": {},
+        "sources": {},
+    }
+    if PRED_FILE.exists():
+        try:
+            raw = json.loads(PRED_FILE.read_text(encoding="utf-8"))
+            arr = raw if isinstance(raw, list) else raw.get("data") or raw.get("items") or raw.get("predictions") or []
+            out["predictions_count"] = len(arr) if isinstance(arr, list) else 0
+            out["sources"]["predictions_json"] = "ok"
+        except Exception:
+            out["sources"]["predictions_json"] = "error"
+    else:
+        out["sources"]["predictions_json"] = "missing"
+
+    if STATS_FILE.exists():
+        try:
+            out["stats"] = json.loads(STATS_FILE.read_text(encoding="utf-8"))
+            out["sources"]["stats_json"] = "ok"
+        except Exception:
+            out["sources"]["stats_json"] = "error"
+    else:
+        out["sources"]["stats_json"] = "missing"
+
+    return out
