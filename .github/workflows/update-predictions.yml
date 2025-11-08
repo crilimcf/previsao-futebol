@@ -23,8 +23,6 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-
     env:
       API_BASE_URL: https://previsao-futebol.onrender.com
       API_TOKEN: ${{ secrets.API_TOKEN }}
@@ -33,52 +31,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Acorda o serviço (não falha o job)
-      - name: Wake backend (HEAD /)
-        run: |
-          set -euxo pipefail
-          curl -I -sS --max-time 10 "$API_BASE_URL" || true
-
-      # Espera pelo /healthz com várias tentativas (evita 502)
       - name: Health check backend (retry)
-        id: health
         run: |
           set -euxo pipefail
-          ok=false
-          for i in $(seq 1 18); do   # ~3 minutos (18 x 10s)
-            code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$API_BASE_URL/healthz" || echo 000)"
-            echo "try #$i -> /healthz => $code"
-            if [ "$code" = "200" ]; then
-              ok=true
-              break
-            fi
-            sleep 10
+          for i in 1 2 3; do
+            curl -fsS "$API_BASE_URL/healthz" && break || sleep 5
           done
-          echo "ok=$ok" >> "$GITHUB_OUTPUT"
-          if [ "$ok" != "true" ]; then
-            echo "Backend offline após retries."
-            exit 1
-          fi
 
-      # Dispara o update com retry (protege contra 502 intermitente)
-      - name: Trigger backend update (retry)
+      - name: Trigger backend update
         run: |
           set -euxo pipefail
-          for i in $(seq 1 6); do
-            code="$(curl -sS -o /dev/null -w '%{http_code}' \
-              -X POST "$API_BASE_URL/meta/update" \
-              -H "Authorization: Bearer $API_TOKEN" \
-              -H "Accept: application/json" || echo 000)"
-            echo "try #$i -> POST /meta/update => $code"
-            if [ "$code" = "200" ]; then
-              exit 0
-            fi
-            sleep 10
-          done
-          echo "Falha a chamar /meta/update depois de retries."
-          exit 1
+          curl -fsS -X POST "$API_BASE_URL/meta/update" \
+               -H "Authorization: Bearer $API_TOKEN" \
+               -H "Accept: application/json"
 
-      # (Opcional) Exporta artefactos locais se o repo guardar JSONs
+      # Opcional: export local -> repo
       - name: Setup Python (optional)
         if: ${{ always() }}
         uses: actions/setup-python@v5
@@ -89,7 +56,6 @@ jobs:
       - name: Install deps (optional)
         if: ${{ always() }}
         run: |
-          set -euxo pipefail
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
 
@@ -102,22 +68,17 @@ jobs:
           set -euxo pipefail
           python scripts/export_predictions.py || true
 
-      - name: Commit & push (auto-rebase com retry)
+      - name: Commit & push if changed (safe)
         run: |
           set -euxo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/predict/*.json data/stats/*.json 2>/dev/null || true
-          if git diff --cached --quiet; then
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(data): export predictions & stats (post-update)"
+            git fetch origin
+            git pull --rebase origin main || true
+            git push
+          else
             echo "Sem alterações."
-            exit 0
           fi
-          git commit -m "chore(data): export predictions & stats (post-update)"
-          # rebase defensivo para evitar rejeições
-          for i in 1 2 3; do
-            if git pull --rebase origin main; then
-              break
-            fi
-            sleep 2
-          done
-          git push origin main

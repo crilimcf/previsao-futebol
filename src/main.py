@@ -10,10 +10,10 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src import config
 
-# 👉 routers existentes
+# 👉 routers existentes (v1)
 from src.api_routes import health as health_routes
 from src.api_routes import predict as predict_routes
-from src.api_routes import meta as meta_routes  # <— existe
+from src.api_routes import meta as meta_routes  # existe
 
 # ============================================================
 # ⚙️ LOGGING
@@ -89,26 +89,31 @@ api.include_router(predict_routes.router)
 api.include_router(meta_routes.router)
 
 # ============================================================
-# 🔗 Rota experimental v2 (Bivariate Poisson) — segura
-#    Importa do sítio CERTO: src/api_routes/predictions_v2.py
+# 🔗 Rota v2 (Bivariate Poisson + calibração + blend) — fail-open
+#    Import CERTO: src/api_routes/predictions_v2.py (tem router = APIRouter(prefix="/predictions"))
 # ============================================================
 try:
     from src.api_routes import predictions_v2 as predictions_v2_routes
-
-    # Se o router NÃO tiver prefix definido no ficheiro, aplicamos aqui:
-    if getattr(predictions_v2_routes, "router", None) is not None:
-        r = predictions_v2_routes.router
-        # Só adiciona prefix se o router não tiver um
-        has_prefix = any(getattr(route, "path", "").startswith("/predictions/v2") for route in getattr(r, "routes", []))
-        if has_prefix:
-            api.include_router(r, tags=["predictions-v2"])
-        else:
-            api.include_router(r, prefix="/predictions/v2", tags=["predictions-v2"])
-        logger.info("✅ predictions_v2 ativado (/predictions/v2)")
-    else:
+    if getattr(predictions_v2_routes, "router", None) is None:
         raise RuntimeError("router não encontrado em predictions_v2")
+    # O router já tem prefix "/predictions" e endpoint "/v2"
+    api.include_router(predictions_v2_routes.router, tags=["predictions-v2"])
+    logger.info("✅ predictions_v2 ativado (/predictions/v2)")
 except Exception as e:
     logger.warning(f"⚠️ predictions_v2 desativado: {e}")
+
+# ============================================================
+# 🔗 Métricas (backtest) — fail-open
+#    Ficheiro: src/api_routes/metrics.py  → GET /metrics
+# ============================================================
+try:
+    from src.api_routes import metrics as metrics_routes
+    if getattr(metrics_routes, "router", None) is None:
+        raise RuntimeError("router não encontrado em metrics")
+    api.include_router(metrics_routes.router, tags=["metrics"])
+    logger.info("✅ /metrics ativado")
+except Exception as e:
+    logger.warning(f"⚠️ /metrics desativado: {e}")
 
 # ============================================================
 # 🩺 Healthcheck
