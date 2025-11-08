@@ -2,7 +2,7 @@ name: Train bivariate correlation (weekly)
 
 on:
   schedule:
-    - cron: "10 0 * * 1"
+    - cron: "10 0 * * 1"      # segundas 00:10 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -30,28 +30,36 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # ✅ Sem heredoc: gera um leagues_default.json com printf se não houver ficheiros config/leagues_*.json
       - name: Ensure curated leagues (fallback if missing)
+        shell: bash
         run: |
           set -euxo pipefail
           mkdir -p config
           if ! ls config/leagues_*.json 1>/dev/null 2>&1; then
-            cat > config/leagues_default.json << 'JSON'
-            {"leagues":[
-              {"id":39,"name":"Premier League","country":"England"},
-              {"id":140,"name":"La Liga","country":"Spain"},
-              {"id":135,"name":"Serie A","country":"Italy"},
-              {"id":78,"name":"Bundesliga","country":"Germany"},
-              {"id":61,"name":"Ligue 1","country":"France"},
-              {"id":88,"name":"Eredivisie","country":"Netherlands"},
-              {"id":94,"name":"Primeira Liga","country":"Portugal"},
-              {"id":2,"name":"UEFA Champions League","country":"Europe"},
-              {"id":3,"name":"UEFA Europa League","country":"Europe"},
-              {"id":848,"name":"UEFA Europa Conference League","country":"Europe"}
-            ]}
-            JSON
+            printf '%s\n' \
+              '{' \
+              '  "leagues": [' \
+              '    {"id":39,"name":"Premier League","country":"England"},' \
+              '    {"id":140,"name":"La Liga","country":"Spain"},' \
+              '    {"id":135,"name":"Serie A","country":"Italy"},' \
+              '    {"id":78,"name":"Bundesliga","country":"Germany"},' \
+              '    {"id":61,"name":"Ligue 1","country":"France"},' \
+              '    {"id":88,"name":"Eredivisie","country":"Netherlands"},' \
+              '    {"id":94,"name":"Primeira Liga","country":"Portugal"},' \
+              '    {"id":2,"name":"UEFA Champions League","country":"Europe"},' \
+              '    {"id":3,"name":"UEFA Europa League","country":"Europe"},' \
+              '    {"id":848,"name":"UEFA Europa Conference League","country":"Europe"}' \
+              '  ]' \
+              '}' > config/leagues_default.json
+            echo "Created fallback config/leagues_default.json"
           fi
 
       - name: Export CSV for λ3
+        env:
+          API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
+          API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
+          SEASONS: ${{ env.SEASONS }}
         run: |
           set -euxo pipefail
           mkdir -p data/train
