@@ -9506,9 +9506,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/192.png",
     "odds": {
       "winner": {
-        "home": 2.15,
-        "draw": 3.6,
-        "away": 3.2
+        "home": 2.1,
+        "draw": 3.7,
+        "away": 3.3
       },
       "over_2_5": {
         "over": 3.5,
@@ -11009,9 +11009,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/243.png",
     "odds": {
       "winner": {
-        "home": 1.62,
-        "draw": 3.3,
-        "away": 4.75
+        "home": 1.57,
+        "draw": 3.4,
+        "away": 5.25
       },
       "over_2_5": {
         "over": 5.0,
@@ -11022,8 +11022,8 @@
         "under": 1.62
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 4.0,
+        "no": 1.22
       }
     },
     "predicted_score": {
@@ -11808,9 +11808,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/210.png",
     "odds": {
       "winner": {
-        "home": 2.9,
-        "draw": 3.6,
-        "away": 2.3
+        "home": 3.0,
+        "draw": 3.7,
+        "away": 2.25
       },
       "over_2_5": {
         "over": 3.75,
@@ -12643,8 +12643,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/39.png",
     "odds": {
       "winner": {
-        "home": 1.42,
-        "draw": 4.5,
+        "home": 1.4,
+        "draw": 4.75,
         "away": 7.5
       },
       "over_2_5": {
@@ -12656,8 +12656,8 @@
         "under": 1.83
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.4,
+        "no": 1.3
       }
     },
     "predicted_score": {
@@ -18625,7 +18625,7 @@
     "odds": {
       "winner": {
         "home": 6.5,
-        "draw": 5.0,
+        "draw": 4.75,
         "away": 1.42
       },
       "over_2_5": {
@@ -18633,8 +18633,8 @@
         "under": 1.28
       },
       "over_1_5": {
-        "over": 1.73,
-        "under": 2.0
+        "over": 1.8,
+        "under": 1.91
       },
       "btts": {
         "yes": 3.25,
@@ -22268,8 +22268,8 @@
     "odds": {
       "winner": {
         "home": 5.25,
-        "draw": 3.7,
-        "away": 1.67
+        "draw": 3.75,
+        "away": 1.65
       },
       "over_2_5": {
         "over": 5.5,
@@ -23115,8 +23115,8 @@
         "under": 2.25
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.4,
+        "no": 1.3
       }
     },
     "predicted_score": {
