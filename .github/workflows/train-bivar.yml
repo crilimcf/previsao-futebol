@@ -2,7 +2,7 @@ name: Train bivariate correlation (weekly)
 
 on:
   schedule:
-    - cron: "10 0 * * 1"   # segundas 00:10 UTC
+    - cron: "10 0 * * 1"    # segundas 00:10 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -10,6 +10,9 @@ permissions:
 
 env:
   API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+  API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
+  # Define a(s) época(s) aqui ou em Repository Variables (SEASONS="2024,2025")
+  SEASONS: ${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}
 
 jobs:
   train:
@@ -25,6 +28,7 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euxo pipefail
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
@@ -32,7 +36,8 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p data/train
-          python scripts/export_poisson_inputs_from_api.py
+          # podes passar explicitamente, ou deixar o script usar ENV/default
+          python scripts/export_poisson_inputs_from_api.py --season "$SEASONS"
 
       - name: Train λ3 per league
         run: |
