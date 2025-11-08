@@ -1,0 +1,52 @@
+name: Train isotonic calibrators (weekly)
+
+on:
+  schedule:
+    - cron: "20 0 * * 1"   # segundas 00:20 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  calibrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Export historico para calibração (se existir poisson_inputs.csv)
+        run: |
+          set -euxo pipefail
+          python scripts/export_historico_for_calibration.py || true
+          test -f data/train/historico_com_probs.csv && head -n 3 data/train/historico_com_probs.csv || true
+
+      - name: Train calibrators (1X2/por liga)
+        run: |
+          set -euxo pipefail
+          mkdir -p models/calibrators
+          python scripts/train_isotonic_calibrators.py --csv data/train/historico_com_probs.csv --outdir models/calibrators || true
+
+      - name: Commit calibrators (rebase)
+        run: |
+          set -euxo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add models/calibrators/*.pkl models/calibrators/index.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git fetch origin
+            git rebase origin/main || true
+            git commit -m "chore(calibration): refresh isotonic calibrators by league"
+            git push origin HEAD:main
+          else
+            echo "Sem alterações."
+          fi
