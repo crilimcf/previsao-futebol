@@ -2,20 +2,33 @@ name: Train bivariate correlation (weekly)
 
 on:
   schedule:
-    - cron: "10 0 * * 1"
-  workflow_dispatch: {}
+    - cron: "10 0 * * 1" # segundas 00:10 UTC
+  workflow_dispatch:
+    inputs:
+      seasons:
+        description: "Épocas separadas por vírgulas (ex: 2023,2024,2025)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
 
+# Defaults e segredos (podem ser sobrepostos por env/vars do repo)
 env:
   API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
   API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
-  SEASONS: ${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}
+  SEASONS: ${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2023,2024,2025' }}
 
 jobs:
   train:
     runs-on: ubuntu-latest
+
+    # permite override das épocas via "Run workflow"
+    env:
+      API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
+      API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
+      SEASONS: ${{ github.event.inputs.seasons != '' && github.event.inputs.seasons || env.SEASONS }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -30,15 +43,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Export CSV for λ3
-        env:
-          API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
-          SEASONS: ${{ env.SEASONS }}
+      - name: Echo config
+        run: |
+          echo "BASE=${API_FOOTBALL_BASE}"
+          echo "SEASONS=${SEASONS}"
+
+      - name: Export CSV for λ3 (paginação + FT + fallback datas)
         run: |
           set -euxo pipefail
           mkdir -p data/train
-          python scripts/export_poisson_inputs_from_api.py --season "$SEASONS"
+          python scripts/export_poisson_inputs_from_api.py --season "${SEASONS}"
 
       - name: Train λ3 per league
         run: |
@@ -59,3 +73,13 @@ jobs:
             git commit -m "chore(models): refresh λ3 por liga"
             git push origin HEAD:main
           fi
+
+      - name: Upload artifacts (CSV + modelo)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bivar-training-artifacts
+          path: |
+            data/train/poisson_inputs.csv
+            models/bivar_lambda3.json
+          if-no-files-found: warn
