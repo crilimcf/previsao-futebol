@@ -1,6 +1,7 @@
 // =====================================================
 // src/services/api.ts
 // Cliente HTTP para comunicar com a API FastAPI (Render)
+// Agora com toggle v1/v2 (env + localStorage) e fallback automático
 // =====================================================
 
 import axios from "axios";
@@ -36,6 +37,27 @@ export const authApi = axios.create({
 // helper para bustar cache de GETs
 function withTs(params?: Record<string, any>) {
   return { ...(params || {}), _ts: Date.now() };
+}
+
+// ---------------------------
+// Toggle v2 helpers
+// ---------------------------
+function wantV2FromEnv(): boolean {
+  const v = (process.env.NEXT_PUBLIC_PREDICTIONS_VERSION || "").toLowerCase();
+  if (v === "v2") return true;
+  const u2 = (process.env.NEXT_PUBLIC_USE_V2 || "").trim();
+  return u2 === "1" || u2.toLowerCase() === "true";
+}
+
+function wantV2(): boolean {
+  try {
+    if (typeof window !== "undefined") {
+      const ls = window.localStorage.getItem("use_v2");
+      if (ls === "1") return true;
+      if (ls === "0") return false;
+    }
+  } catch { /* ignore */ }
+  return wantV2FromEnv();
 }
 
 // ---------------------------
@@ -91,26 +113,103 @@ export type LeagueItem = {
 // 📊 Funções principais para o frontend consumir
 // =====================================================
 
-/** Obtém previsões (suporta filtros via query params). */
-export async function getPredictions(
-  params?: { date?: string; league_id?: number | string }
-): Promise<Prediction[]> {
-  try {
-    const normalized = params
-      ? {
-          ...params,
-          league_id:
-            params.league_id !== undefined && params.league_id !== null
-              ? String(params.league_id)
-              : undefined,
-        }
-      : undefined;
+type GetPredParams = { date?: string; league_id?: number | string };
+type GetPredOpts = { version?: "v1" | "v2"; allowFallback?: boolean };
 
-    const r = await api.get("/predictions", { params: withTs(normalized) });
-    return Array.isArray(r.data) ? (r.data as Prediction[]) : [];
-  } catch {
-    return [];
+/**
+ * Obtém previsões.
+ * - Por omissão, respeita env/localStorage (v2 se configurado).
+ * - Se `version: "v2"`, força v2 (com fallback p/ v1 se allowFallback=true).
+ */
+export async function getPredictions(
+  params?: GetPredParams,
+  opts: GetPredOpts = {}
+): Promise<Prediction[]> {
+  const normalized = params
+    ? {
+        ...params,
+        league_id:
+          params.league_id !== undefined && params.league_id !== null
+            ? String(params.league_id)
+            : undefined,
+      }
+    : undefined;
+
+  const preferV2 = opts.version ? opts.version === "v2" : wantV2();
+  const allowFallback = opts.allowFallback !== false; // default true
+
+  if (preferV2) {
+    try {
+      const r2 = await api.get("/predictions/v2", { params: withTs(normalized) });
+      return normalizePredArray(r2.data);
+    } catch (err) {
+      if (!allowFallback) throw err;
+      // cai para v1 silenciosamente
+      try {
+        const r1 = await api.get("/predictions", { params: withTs(normalized) });
+        return normalizePredArray(r1.data);
+      } catch {
+        return [];
+      }
+    }
+  } else {
+    try {
+      const r1 = await api.get("/predictions", { params: withTs(normalized) });
+      return normalizePredArray(r1.data);
+    } catch (err) {
+      if (!allowFallback) throw err;
+      // tenta v2 como fallback
+      try {
+        const r2 = await api.get("/predictions/v2", { params: withTs(normalized) });
+        return normalizePredArray(r2.data);
+      } catch {
+        return [];
+      }
+    }
   }
+}
+
+/** Normaliza qualquer payload de previsões para Prediction[] seguro. */
+function normalizePredArray(data: any): Prediction[] {
+  const arr: any[] = Array.isArray(data)
+    ? data
+    : Array.isArray(data?.items)
+    ? data.items
+    : Array.isArray(data?.data)
+    ? data.data
+    : Array.isArray(data?.predictions)
+    ? data.predictions
+    : [];
+
+  // Garantir campos mínimos e strings
+  return arr
+    .map((p) => ({
+      match_id: String(p.match_id ?? p.fixture_id ?? p.id ?? ""),
+      league_id: String(p.league_id ?? p.league?.id ?? ""),
+      league: p.league ?? p.league_name ?? undefined,
+      league_name: p.league_name ?? p.league ?? undefined,
+      country: p.country ?? p.country_name ?? undefined,
+      date: String(p.date ?? p.fixture_date ?? p.kickoff ?? ""),
+      home_team: String(p.home_team ?? p.home?.name ?? p.home ?? ""),
+      away_team: String(p.away_team ?? p.away?.name ?? p.away ?? ""),
+      home_logo: p.home_logo ?? p.home?.logo ?? undefined,
+      away_logo: p.away_logo ?? p.away?.logo ?? undefined,
+      odds: p.odds ?? undefined,
+      predictions: p.predictions ?? {
+        winner: { class: 1 as 0 | 1 | 2, prob: 0.33 },
+        over_2_5: { class: 0 as 0 | 1, prob: 0.5 },
+        over_1_5: { class: 1 as 0 | 1, prob: 0.6 },
+        double_chance: { class: 0 as DCClass, prob: 0.5 },
+        btts: { class: 0 as 0 | 1, prob: 0.5 },
+      },
+      correct_score_top3:
+        p.correct_score_top3 ??
+        p.predictions?.correct_score?.top3 ??
+        [],
+      top_scorers: p.top_scorers ?? [],
+      predicted_scorers: p.predicted_scorers ?? {},
+    }))
+    .filter((x) => x.match_id && x.date && x.home_team && x.away_team);
 }
 
 /** Obtém estatísticas agregadas (fallback para objeto vazio). */
