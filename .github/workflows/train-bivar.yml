@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: train-bivar
+  cancel-in-progress: false
+
 jobs:
   train:
     runs-on: ubuntu-latest
@@ -27,10 +31,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Compute seasons
+        id: seasons
         run: |
           set -euxo pipefail
           SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
-          SEASONS="$(echo "$SEASONS" | tr ',' ' ' | xargs)"
+          SEASONS="$(echo "$SEASONS" | tr ',;' ' ' | xargs)"
           echo "Seasons => $SEASONS"
           echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
 
@@ -39,9 +44,9 @@ jobs:
           set -euxo pipefail
           mkdir -p config
           if [ -f config/leagues_main.json ]; then
-            echo "Usar config/leagues_main.json"
+            echo "Usar config/leagues_main.json existente"
           else
-            echo "Criar fallback de ligas (curado)"
+            echo "Criar fallback de ligas curadas"
             printf '%s\n' \
 '{"leagues":[
   {"id":39,"name":"Premier League"},
@@ -65,8 +70,21 @@ jobs:
           set -euxo pipefail
           export PYTHONPATH="$GITHUB_WORKSPACE:${PYTHONPATH:-}"
           mkdir -p data/train
-          python scripts/export_poisson_inputs_from_api.py --season "$SEASONS" || true
-          if [ ! -s data/train/poisson_inputs.csv ]; then
+          rm -f data/train/poisson_inputs.csv
+
+          # corre uma vez por época para não depender de parsing de lista no argparse
+          OK=0
+          for S in $SEASONS; do
+            echo ">> Exportar época $S"
+            python scripts/export_poisson_inputs_from_api.py --season "$S" --out data/train/poisson_inputs.csv || true
+            if [ -s data/train/poisson_inputs.csv ]; then
+              OK=1
+            fi
+            # pequena pausa para não bater rate-limit
+            sleep 1
+          done
+
+          if [ "$OK" -ne 1 ]; then
             echo "Sem dados exportados — treino λ3 será ignorado."
             echo "SKIP_L3=1" >> "$GITHUB_ENV"
           fi
@@ -79,11 +97,18 @@ jobs:
           python scripts/train_lambda3_per_league.py
 
       - name: Commit λ3 (rebase)
+        if: env.SKIP_L3 != '1'
         run: |
           set -euxo pipefail
+          if [ ! -f models/bivar_lambda3.json ]; then
+            echo "Nada para commitar (modelo não gerado)."
+            exit 0
+          fi
+
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add models/bivar_lambda3.json
+
           if git diff --cached --quiet; then
             echo "Sem alterações."
           else
