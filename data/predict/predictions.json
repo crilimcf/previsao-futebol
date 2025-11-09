@@ -423,46 +423,46 @@
         "goals": 6
       },
       {
-        "player": "W. Weghorst",
-        "team": "Ajax",
+        "player": "J. Hornkamp",
+        "team": "Heracles",
         "goals": 6
       },
       {
-        "player": "J. Hornkamp",
-        "team": "Heracles",
+        "player": "W. Weghorst",
+        "team": "Ajax",
         "goals": 6
       }
     ],
     "predicted_scorers": {
       "home": [
         {
-          "player": "Miguel Rodríguez",
-          "prob": 0.3651,
-          "xg": 0.454,
+          "player": "V. Jensen",
+          "prob": 0.5932,
+          "xg": 0.899,
           "position": "Midfielder"
         },
         {
-          "player": "D. van den Berg",
-          "prob": 0.3464,
-          "xg": 0.425,
+          "player": "Miguel Rodríguez",
+          "prob": 0.2913,
+          "xg": 0.344,
           "position": "Midfielder"
         },
         {
           "player": "I. Jenner",
-          "prob": 0.2993,
-          "xg": 0.356,
+          "prob": 0.2363,
+          "xg": 0.27,
           "position": "Midfielder"
         },
         {
           "player": "A. Engwanda",
-          "prob": 0.0729,
-          "xg": 0.076,
+          "prob": 0.0558,
+          "xg": 0.057,
           "position": "Midfielder"
         },
         {
           "player": "G. Zechiël",
-          "prob": 0.0726,
-          "xg": 0.075,
+          "prob": 0.0556,
+          "xg": 0.057,
           "position": "Midfielder"
         }
       ],
@@ -749,7 +749,7 @@
       {
         "player": "P. Onuachu",
         "team": "Trabzonspor",
-        "goals": 7
+        "goals": 8
       },
       {
         "player": "U. Nayir",
@@ -1637,33 +1637,33 @@
       ],
       "away": [
         {
+          "player": "Robert",
+          "prob": 0.3576,
+          "xg": 0.442,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Mattsson",
+          "prob": 0.3523,
+          "xg": 0.434,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Cornelius",
+          "prob": 0.2298,
+          "xg": 0.261,
+          "position": "Attacker"
+        },
+        {
           "player": "M. Elyounoussi",
-          "prob": 0.2781,
-          "xg": 0.326,
+          "prob": 0.1593,
+          "xg": 0.174,
           "position": "Midfielder"
         },
         {
           "player": "J. Larsson",
-          "prob": 0.2751,
-          "xg": 0.322,
-          "position": "Midfielder"
-        },
-        {
-          "player": "V. Claesson",
-          "prob": 0.2345,
-          "xg": 0.267,
-          "position": "Midfielder"
-        },
-        {
-          "player": "E. Achouri",
-          "prob": 0.2341,
-          "xg": 0.267,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Robert",
-          "prob": 0.2256,
-          "xg": 0.256,
+          "prob": 0.1589,
+          "xg": 0.173,
           "position": "Midfielder"
         }
       ]
@@ -1911,6 +1911,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Z. Eddahchouri",
+        "team": "Deportivo La Coruna",
+        "goals": 7
+      },
+      {
         "player": "Jeremy Arévalo",
         "team": "Racing Santander",
         "goals": 7
@@ -1928,11 +1933,6 @@
       {
         "player": "Agus Medina",
         "team": "Albacete",
-        "goals": 6
-      },
-      {
-        "player": "Jonathan Dubasin",
-        "team": "Sporting Gijon",
         "goals": 6
       }
     ],
@@ -2015,9 +2015,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/606.png",
     "odds": {
       "winner": {
-        "home": 1.83,
-        "draw": 3.9,
-        "away": 3.75
+        "home": 1.73,
+        "draw": 4.1,
+        "away": 4.2
       },
       "over_2_5": {
         "over": 3.25,
@@ -2107,65 +2107,65 @@
       "home": [
         {
           "player": "B. Traoré",
-          "prob": 0.4731,
-          "xg": 0.641,
+          "prob": 0.6714,
+          "xg": 1.113,
           "position": "Attacker"
         },
         {
-          "player": "X. Shaqiri",
-          "prob": 0.3293,
-          "xg": 0.399,
-          "position": "Midfielder"
-        },
-        {
-          "player": "P. Otele",
-          "prob": 0.3018,
-          "xg": 0.359,
-          "position": "Midfielder"
-        },
-        {
           "player": "G. Sigua",
-          "prob": 0.2369,
-          "xg": 0.27,
+          "prob": 0.3747,
+          "xg": 0.47,
           "position": "Midfielder"
         },
         {
-          "player": "A. Ajeti",
-          "prob": 0.2033,
-          "xg": 0.227,
+          "player": "X. Shaqiri",
+          "prob": 0.1522,
+          "xg": 0.165,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Agbonifo",
+          "prob": 0.1333,
+          "xg": 0.143,
+          "position": "Attacker"
+        },
+        {
+          "player": "Kevin Carlos",
+          "prob": 0.1225,
+          "xg": 0.131,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "G. Koutsias",
-          "prob": 0.1623,
-          "xg": 0.177,
-          "position": "Attacker"
-        },
-        {
-          "player": "K. Behrens",
-          "prob": 0.1501,
-          "xg": 0.163,
+          "prob": 0.2083,
+          "xg": 0.234,
           "position": "Attacker"
         },
         {
           "player": "R. Steffen",
-          "prob": 0.1265,
-          "xg": 0.135,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Y. Cimignani",
-          "prob": 0.0961,
-          "xg": 0.101,
+          "prob": 0.1633,
+          "xg": 0.178,
           "position": "Midfielder"
         },
         {
           "player": "E. Pihlström",
-          "prob": 0.081,
-          "xg": 0.084,
+          "prob": 0.1054,
+          "xg": 0.111,
           "position": "Attacker"
+        },
+        {
+          "player": "U. Bislimi",
+          "prob": 0.0874,
+          "xg": 0.091,
+          "position": "Midfielder"
+        },
+        {
+          "player": "H. Mahou",
+          "prob": 0.0708,
+          "xg": 0.073,
+          "position": "Midfielder"
         }
       ]
     }
@@ -2349,9 +2349,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/2070.png",
     "odds": {
       "winner": {
-        "home": 3.0,
-        "draw": 3.75,
-        "away": 2.15
+        "home": 3.1,
+        "draw": 3.8,
+        "away": 2.1
       },
       "over_2_5": {
         "over": 3.5,
@@ -2639,34 +2639,34 @@
       ],
       "away": [
         {
-          "player": "Chiquinho",
-          "prob": 0.4057,
-          "xg": 0.52,
+          "player": "Gelson Martins",
+          "prob": 0.3891,
+          "xg": 0.493,
           "position": "Midfielder"
         },
         {
-          "player": "M. Taremi",
-          "prob": 0.3343,
-          "xg": 0.407,
-          "position": "Attacker"
-        },
-        {
           "player": "Daniel Podence",
-          "prob": 0.2013,
-          "xg": 0.225,
-          "position": "Attacker"
+          "prob": 0.0816,
+          "xg": 0.085,
+          "position": "Midfielder"
         },
         {
-          "player": "P. Retsos",
-          "prob": 0.1076,
-          "xg": 0.114,
-          "position": "Defender"
+          "player": "Chiquinho",
+          "prob": 0.0808,
+          "xg": 0.084,
+          "position": "Midfielder"
         },
         {
-          "player": "F. Ortega",
-          "prob": 0.0599,
-          "xg": 0.062,
-          "position": "Defender"
+          "player": "R. Cabella",
+          "prob": 0.0804,
+          "xg": 0.084,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Hezze",
+          "prob": 0.0795,
+          "xg": 0.083,
+          "position": "Midfielder"
         }
       ]
     }
@@ -2683,9 +2683,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/202.png",
     "odds": {
       "winner": {
-        "home": 2.1,
-        "draw": 3.7,
-        "away": 3.3
+        "home": 2.05,
+        "draw": 3.75,
+        "away": 3.4
       },
       "over_2_5": {
         "over": 4.0,
@@ -2761,13 +2761,13 @@
         "goals": 6
       },
       {
-        "player": "W. Weghorst",
-        "team": "Ajax",
+        "player": "J. Hornkamp",
+        "team": "Heracles",
         "goals": 6
       },
       {
-        "player": "J. Hornkamp",
-        "team": "Heracles",
+        "player": "W. Weghorst",
+        "team": "Ajax",
         "goals": 6
       }
     ],
@@ -2850,9 +2850,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/618.png",
     "odds": {
       "winner": {
-        "home": 1.9,
-        "draw": 3.4,
-        "away": 4.1
+        "home": 1.8,
+        "draw": 3.5,
+        "away": 4.5
       },
       "over_2_5": {
         "over": 5.5,
@@ -2913,6 +2913,16 @@
     ],
     "top_scorers": [
       {
+        "player": "K. Mutandwa",
+        "team": "Ried",
+        "goals": 7
+      },
+      {
+        "player": "E. Havel",
+        "team": "TSV Hartberg",
+        "goals": 7
+      },
+      {
         "player": "P. Ratkov",
         "team": "Red Bull Salzburg",
         "goals": 7
@@ -2925,16 +2935,6 @@
       {
         "player": "M. Pink",
         "team": "Wolfsberger AC",
-        "goals": 6
-      },
-      {
-        "player": "K. Mutandwa",
-        "team": "Ried",
-        "goals": 6
-      },
-      {
-        "player": "E. Havel",
-        "team": "TSV Hartberg",
         "goals": 6
       }
     ],
@@ -3080,6 +3080,16 @@
     ],
     "top_scorers": [
       {
+        "player": "K. Mutandwa",
+        "team": "Ried",
+        "goals": 7
+      },
+      {
+        "player": "E. Havel",
+        "team": "TSV Hartberg",
+        "goals": 7
+      },
+      {
         "player": "P. Ratkov",
         "team": "Red Bull Salzburg",
         "goals": 7
@@ -3092,16 +3102,6 @@
       {
         "player": "M. Pink",
         "team": "Wolfsberger AC",
-        "goals": 6
-      },
-      {
-        "player": "K. Mutandwa",
-        "team": "Ried",
-        "goals": 6
-      },
-      {
-        "player": "E. Havel",
-        "team": "TSV Hartberg",
         "goals": 6
       }
     ],
@@ -3140,34 +3140,34 @@
       ],
       "away": [
         {
-          "player": "Nikolaus Wurmbrand",
-          "prob": 0.2811,
-          "xg": 0.33,
-          "position": "Attacker"
-        },
-        {
-          "player": "C. M&apos;Buyi",
-          "prob": 0.2226,
-          "xg": 0.252,
-          "position": "Attacker"
+          "player": "M. Seidl",
+          "prob": 0.2856,
+          "xg": 0.336,
+          "position": "Midfielder"
         },
         {
           "player": "P. Dahl",
-          "prob": 0.1847,
-          "xg": 0.204,
+          "prob": 0.28,
+          "xg": 0.328,
           "position": "Midfielder"
         },
         {
           "player": "E. Kara",
-          "prob": 0.1569,
-          "xg": 0.171,
+          "prob": 0.14,
+          "xg": 0.151,
           "position": "Attacker"
         },
         {
-          "player": "M. Tilio",
-          "prob": 0.1007,
-          "xg": 0.106,
-          "position": "Midfielder"
+          "player": "C. M&apos;Buyi",
+          "prob": 0.1366,
+          "xg": 0.147,
+          "position": "Attacker"
+        },
+        {
+          "player": "D. Weixelbraun",
+          "prob": 0.1297,
+          "xg": 0.139,
+          "position": "Attacker"
         }
       ]
     }
@@ -3184,9 +3184,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/51.png",
     "odds": {
       "winner": {
-        "home": 2.3,
+        "home": 2.25,
         "draw": 3.4,
-        "away": 3.1
+        "away": 3.2
       },
       "over_2_5": {
         "over": 4.0,
@@ -3351,9 +3351,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/34.png",
     "odds": {
       "winner": {
-        "home": 3.0,
+        "home": 2.88,
         "draw": 3.4,
-        "away": 2.38
+        "away": 2.45
       },
       "over_2_5": {
         "over": 4.33,
@@ -3364,8 +3364,8 @@
         "under": 1.73
       },
       "btts": {
-        "yes": 3.25,
-        "no": 1.33
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -3520,7 +3520,7 @@
       "winner": {
         "home": 2.3,
         "draw": 3.1,
-        "away": 3.25
+        "away": 3.3
       },
       "over_2_5": {
         "over": 5.5,
@@ -3531,8 +3531,8 @@
         "under": 1.57
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -3920,13 +3920,13 @@
         "goals": 9
       },
       {
-        "player": "E. Lepaul",
-        "team": "Rennes",
-        "goals": 7
-      },
-      {
         "player": "M. Greenwood",
         "team": "Marseille",
+        "goals": 8
+      },
+      {
+        "player": "E. Lepaul",
+        "team": "Rennes",
         "goals": 7
       },
       {
@@ -4019,8 +4019,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/502.png",
     "odds": {
       "winner": {
-        "home": 2.88,
-        "draw": 2.8,
+        "home": 2.9,
+        "draw": 2.75,
         "away": 2.9
       },
       "over_2_5": {
@@ -4032,8 +4032,8 @@
         "under": 1.4
       },
       "btts": {
-        "yes": 4.5,
-        "no": 1.18
+        "yes": 4.33,
+        "no": 1.2
       }
     },
     "predicted_score": {
@@ -4143,31 +4143,31 @@
       "away": [
         {
           "player": "M. Kean",
-          "prob": 0.2045,
+          "prob": 0.2048,
           "xg": 0.229,
           "position": "Attacker"
         },
         {
           "player": "E. Džeko",
-          "prob": 0.0828,
-          "xg": 0.086,
+          "prob": 0.0829,
+          "xg": 0.087,
           "position": "Attacker"
         },
         {
           "player": "A. Guðmundsson",
-          "prob": 0.079,
+          "prob": 0.0791,
           "xg": 0.082,
           "position": "Attacker"
         },
         {
           "player": "A. Richardson",
-          "prob": 0.0581,
+          "prob": 0.0582,
           "xg": 0.06,
           "position": "Midfielder"
         },
         {
           "player": "R. Gosens",
-          "prob": 0.0535,
+          "prob": 0.0536,
           "xg": 0.055,
           "position": "Midfielder"
         }
@@ -4277,34 +4277,34 @@
     "predicted_scorers": {
       "home": [
         {
-          "player": "N. Moro",
-          "prob": 0.2261,
-          "xg": 0.256,
-          "position": "Midfielder"
-        },
-        {
           "player": "J. Odgaard",
-          "prob": 0.1887,
-          "xg": 0.209,
+          "prob": 0.2319,
+          "xg": 0.264,
           "position": "Attacker"
         },
         {
           "player": "R. Orsolini",
-          "prob": 0.1837,
-          "xg": 0.203,
+          "prob": 0.226,
+          "xg": 0.256,
           "position": "Attacker"
         },
         {
-          "player": "Juan Miranda",
-          "prob": 0.1021,
-          "xg": 0.108,
-          "position": "Defender"
+          "player": "T. Dallinga",
+          "prob": 0.2196,
+          "xg": 0.248,
+          "position": "Attacker"
         },
         {
-          "player": "E. Holm",
-          "prob": 0.1004,
-          "xg": 0.106,
-          "position": "Defender"
+          "player": "L. Ferguson",
+          "prob": 0.0514,
+          "xg": 0.053,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Freuler",
+          "prob": 0.0513,
+          "xg": 0.053,
+          "position": "Midfielder"
         }
       ],
       "away": [
@@ -4353,8 +4353,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/528.png",
     "odds": {
       "winner": {
-        "home": 1.8,
-        "draw": 3.6,
+        "home": 1.75,
+        "draw": 3.7,
         "away": 4.5
       },
       "over_2_5": {
@@ -4366,8 +4366,8 @@
         "under": 1.53
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -4656,17 +4656,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/645.png",
     "odds": {
       "winner": {
-        "home": 6.25,
+        "home": 6.5,
         "draw": 4.75,
-        "away": 1.45
+        "away": 1.44
       },
       "over_2_5": {
-        "over": 3.5,
-        "under": 1.28
+        "over": 3.75,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 1.8,
-        "under": 1.91
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
         "yes": 3.4,
@@ -4726,7 +4726,7 @@
       {
         "player": "P. Onuachu",
         "team": "Trabzonspor",
-        "goals": 7
+        "goals": 8
       },
       {
         "player": "U. Nayir",
@@ -4888,7 +4888,17 @@
       {
         "player": "H. Kane",
         "team": "Bayern München",
-        "goals": 12
+        "goals": 13
+      },
+      {
+        "player": "L. Díaz",
+        "team": "Bayern München",
+        "goals": 6
+      },
+      {
+        "player": "H. Tabaković",
+        "team": "Borussia Mönchengladbach",
+        "goals": 6
       },
       {
         "player": "J. Burkardt",
@@ -4896,18 +4906,8 @@
         "goals": 6
       },
       {
-        "player": "L. Díaz",
-        "team": "Bayern München",
-        "goals": 5
-      },
-      {
         "player": "C. Uzun",
         "team": "Eintracht Frankfurt",
-        "goals": 5
-      },
-      {
-        "player": "C. Baumgartner",
-        "team": "RB Leipzig",
         "goals": 5
       }
     ],
@@ -4991,7 +4991,7 @@
     "odds": {
       "winner": {
         "home": 2.3,
-        "draw": 3.75,
+        "draw": 3.7,
         "away": 2.8
       },
       "over_2_5": {
@@ -5003,8 +5003,8 @@
         "under": 1.73
       },
       "btts": {
-        "yes": 3.0,
-        "no": 1.36
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -5082,32 +5082,32 @@
       "home": [
         {
           "player": "K. Yengi",
-          "prob": 0.2414,
-          "xg": 0.276,
+          "prob": 0.2656,
+          "xg": 0.309,
           "position": "Attacker"
         },
         {
-          "player": "J. Karlsson",
-          "prob": 0.2024,
-          "xg": 0.226,
-          "position": "Midfielder"
-        },
-        {
           "player": "T. Keskinen",
-          "prob": 0.154,
-          "xg": 0.167,
+          "prob": 0.1705,
+          "xg": 0.187,
           "position": "Attacker"
         },
         {
           "player": "E. Sokler",
-          "prob": 0.0983,
-          "xg": 0.103,
+          "prob": 0.1092,
+          "xg": 0.116,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Karlsson",
+          "prob": 0.1041,
+          "xg": 0.11,
           "position": "Attacker"
         },
         {
           "player": "N. Milanovic",
-          "prob": 0.0912,
-          "xg": 0.096,
+          "prob": 0.1014,
+          "xg": 0.107,
           "position": "Attacker"
         }
       ],
@@ -5162,16 +5162,16 @@
         "away": 1.45
       },
       "over_2_5": {
-        "over": 3.75,
-        "under": 1.25
+        "over": 4.0,
+        "under": 1.22
       },
       "over_1_5": {
-        "over": 1.83,
-        "under": 1.83
+        "over": 1.91,
+        "under": 1.8
       },
       "btts": {
-        "yes": 3.25,
-        "no": 1.33
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -5249,19 +5249,19 @@
       "home": [
         {
           "player": "S. Murray",
-          "prob": 0.2254,
-          "xg": 0.255,
+          "prob": 0.2256,
+          "xg": 0.256,
           "position": "Attacker"
         },
         {
           "player": "J. Westley",
-          "prob": 0.133,
+          "prob": 0.1331,
           "xg": 0.143,
           "position": "Attacker"
         },
         {
           "player": "E. Acquah",
-          "prob": 0.1274,
+          "prob": 0.1275,
           "xg": 0.136,
           "position": "Attacker"
         },
@@ -5300,7 +5300,7 @@
         {
           "player": "B. Miovski",
           "prob": 0.1898,
-          "xg": 0.211,
+          "xg": 0.21,
           "position": "Attacker"
         },
         {
@@ -5329,16 +5329,16 @@
         "away": 7.5
       },
       "over_2_5": {
-        "over": 1.67,
-        "under": 2.1
+        "over": 1.73,
+        "under": 2.0
       },
       "over_1_5": {
         "over": 1.83,
         "under": 1.83
       },
       "btts": {
-        "yes": 3.4,
-        "no": 1.3
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -5416,31 +5416,31 @@
       "home": [
         {
           "player": "L. Shankland",
-          "prob": 0.3882,
-          "xg": 0.491,
+          "prob": 0.3884,
+          "xg": 0.492,
           "position": "Attacker"
         },
         {
           "player": "A. Kyziridis",
-          "prob": 0.3646,
-          "xg": 0.453,
+          "prob": 0.3648,
+          "xg": 0.454,
           "position": "Attacker"
         },
         {
           "player": "S. Kartum",
-          "prob": 0.2276,
+          "prob": 0.2278,
           "xg": 0.258,
           "position": "Midfielder"
         },
         {
           "player": "Cláudio Braga",
-          "prob": 0.1896,
+          "prob": 0.1897,
           "xg": 0.21,
           "position": "Attacker"
         },
         {
           "player": "Y. Dhanda",
-          "prob": 0.1736,
+          "prob": 0.1737,
           "xg": 0.191,
           "position": "Midfielder"
         }
@@ -5448,31 +5448,31 @@
       "away": [
         {
           "player": "M. Watters",
-          "prob": 0.3603,
+          "prob": 0.3606,
           "xg": 0.447,
           "position": "Attacker"
         },
         {
           "player": "K. Trapanovski",
-          "prob": 0.2425,
+          "prob": 0.2428,
           "xg": 0.278,
           "position": "Midfielder"
         },
         {
           "player": "Luca Stephenson",
-          "prob": 0.1107,
-          "xg": 0.117,
+          "prob": 0.1109,
+          "xg": 0.118,
           "position": "Defender"
         },
         {
           "player": "J. Eskesen",
-          "prob": 0.1053,
+          "prob": 0.1054,
           "xg": 0.111,
           "position": "Midfielder"
         },
         {
           "player": "R. Strain",
-          "prob": 0.0702,
+          "prob": 0.0703,
           "xg": 0.073,
           "position": "Defender"
         }
@@ -5504,8 +5504,8 @@
         "under": 1.91
       },
       "btts": {
-        "yes": 2.75,
-        "no": 1.4
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -5614,34 +5614,34 @@
       ],
       "away": [
         {
-          "player": "Cho Gue-Sung",
-          "prob": 0.3259,
-          "xg": 0.394,
-          "position": "Attacker"
-        },
-        {
           "player": "Franculino Djú",
-          "prob": 0.3223,
-          "xg": 0.389,
+          "prob": 0.3564,
+          "xg": 0.441,
           "position": "Attacker"
         },
         {
           "player": "V. Byskov",
-          "prob": 0.1487,
-          "xg": 0.161,
+          "prob": 0.1668,
+          "xg": 0.182,
           "position": "Midfielder"
         },
         {
-          "player": "Júnior Brumado",
-          "prob": 0.1402,
-          "xg": 0.151,
+          "player": "A. Buksa",
+          "prob": 0.1507,
+          "xg": 0.163,
           "position": "Attacker"
         },
         {
           "player": "O. Diao",
-          "prob": 0.1262,
-          "xg": 0.135,
+          "prob": 0.1417,
+          "xg": 0.153,
           "position": "Defender"
+        },
+        {
+          "player": "Mikel Johan Gogorza Krüger-Johnsen",
+          "prob": 0.1339,
+          "xg": 0.144,
+          "position": "Attacker"
         }
       ]
     }
@@ -5825,9 +5825,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/2099.png",
     "odds": {
       "winner": {
-        "home": 1.36,
+        "home": 1.33,
         "draw": 4.75,
-        "away": 8.5
+        "away": 9.0
       },
       "over_2_5": {
         "over": 1.91,
@@ -5917,32 +5917,32 @@
       "home": [
         {
           "player": "F. Pedrozo",
-          "prob": 0.4174,
-          "xg": 0.54,
+          "prob": 0.4068,
+          "xg": 0.522,
           "position": "Attacker"
         },
         {
           "player": "S. Palacios",
-          "prob": 0.3359,
-          "xg": 0.409,
+          "prob": 0.3268,
+          "xg": 0.396,
           "position": "Midfielder"
         },
         {
           "player": "H. Layous",
-          "prob": 0.3314,
-          "xg": 0.403,
+          "prob": 0.3224,
+          "xg": 0.389,
           "position": "Midfielder"
         },
         {
           "player": "P. Simelidis",
-          "prob": 0.3282,
-          "xg": 0.398,
+          "prob": 0.3192,
+          "xg": 0.385,
           "position": "Midfielder"
         },
         {
           "player": "A. Ožbolt",
-          "prob": 0.286,
-          "xg": 0.337,
+          "prob": 0.278,
+          "xg": 0.326,
           "position": "Attacker"
         }
       ],
@@ -6005,8 +6005,8 @@
         "under": 1.91
       },
       "btts": {
-        "yes": 3.25,
-        "no": 1.33
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -6083,64 +6083,64 @@
     "predicted_scorers": {
       "home": [
         {
+          "player": "Álvaro García",
+          "prob": 0.3238,
+          "xg": 0.391,
+          "position": "Midfielder"
+        },
+        {
           "player": "Jorge de Frutos",
-          "prob": 0.2824,
-          "xg": 0.332,
+          "prob": 0.122,
+          "xg": 0.13,
           "position": "Attacker"
         },
         {
-          "player": "Álvaro García",
-          "prob": 0.2611,
-          "xg": 0.303,
+          "player": "Sergio Camello",
+          "prob": 0.0874,
+          "xg": 0.092,
           "position": "Midfielder"
         },
         {
-          "player": "Isi Palazón",
-          "prob": 0.1075,
-          "xg": 0.114,
+          "player": "Fran Pérez",
+          "prob": 0.0863,
+          "xg": 0.09,
           "position": "Midfielder"
         },
         {
-          "player": "Pep Chavarría",
-          "prob": 0.0454,
-          "xg": 0.046,
-          "position": "Defender"
-        },
-        {
-          "player": "A. Espino",
-          "prob": 0.0416,
-          "xg": 0.043,
-          "position": "Defender"
+          "player": "Unai López",
+          "prob": 0.0832,
+          "xg": 0.087,
+          "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "Gonzalo García",
-          "prob": 0.4662,
-          "xg": 0.628,
+          "prob": 0.4675,
+          "xg": 0.63,
           "position": "Attacker"
         },
         {
           "player": "J. Bellingham",
-          "prob": 0.1936,
-          "xg": 0.215,
+          "prob": 0.1943,
+          "xg": 0.216,
           "position": "Midfielder"
         },
         {
           "player": "A. Güler",
-          "prob": 0.1932,
-          "xg": 0.215,
+          "prob": 0.1939,
+          "xg": 0.216,
           "position": "Midfielder"
         },
         {
           "player": "Vinícius Júnior",
-          "prob": 0.1643,
-          "xg": 0.179,
+          "prob": 0.1648,
+          "xg": 0.18,
           "position": "Attacker"
         },
         {
           "player": "Kylian Mbappé",
-          "prob": 0.1517,
+          "prob": 0.1523,
           "xg": 0.165,
           "position": "Attacker"
         }
@@ -6161,15 +6161,15 @@
       "winner": {
         "home": 3.1,
         "draw": 3.4,
-        "away": 2.2
+        "away": 2.25
       },
       "over_2_5": {
-        "over": 4.33,
-        "under": 1.2
+        "over": 4.5,
+        "under": 1.18
       },
       "over_1_5": {
-        "over": 2.0,
-        "under": 1.73
+        "over": 2.1,
+        "under": 1.67
       },
       "btts": {
         "yes": 3.25,
@@ -6222,6 +6222,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Z. Eddahchouri",
+        "team": "Deportivo La Coruna",
+        "goals": 7
+      },
+      {
         "player": "Jeremy Arévalo",
         "team": "Racing Santander",
         "goals": 7
@@ -6239,11 +6244,6 @@
       {
         "player": "Agus Medina",
         "team": "Albacete",
-        "goals": 6
-      },
-      {
-        "player": "Jonathan Dubasin",
-        "team": "Sporting Gijon",
         "goals": 6
       }
     ],
@@ -6418,32 +6418,32 @@
       "home": [
         {
           "player": "V. Danilović",
-          "prob": 0.2423,
-          "xg": 0.277,
+          "prob": 0.2347,
+          "xg": 0.267,
           "position": "Midfielder"
         },
         {
           "player": "Adrián Butzke",
-          "prob": 0.2061,
-          "xg": 0.231,
+          "prob": 0.1994,
+          "xg": 0.222,
           "position": "Attacker"
         },
         {
           "player": "Carlos Daniel",
-          "prob": 0.195,
-          "xg": 0.217,
+          "prob": 0.1887,
+          "xg": 0.209,
           "position": "Attacker"
         },
         {
           "player": "N. Madsen",
-          "prob": 0.1105,
-          "xg": 0.117,
+          "prob": 0.1067,
+          "xg": 0.113,
           "position": "Defender"
         },
         {
           "player": "Marco Cruz",
-          "prob": 0.0449,
-          "xg": 0.046,
+          "prob": 0.0433,
+          "xg": 0.044,
           "position": "Midfielder"
         }
       ],
@@ -6616,33 +6616,33 @@
       ],
       "away": [
         {
-          "player": "C. Fassnacht",
-          "prob": 0.2739,
-          "xg": 0.32,
-          "position": "Attacker"
-        },
-        {
           "player": "C. Itten",
-          "prob": 0.1504,
-          "xg": 0.163,
+          "prob": 0.2219,
+          "xg": 0.251,
           "position": "Attacker"
         },
         {
           "player": "C. Bedia",
-          "prob": 0.147,
-          "xg": 0.159,
+          "prob": 0.217,
+          "xg": 0.245,
           "position": "Attacker"
         },
         {
           "player": "D. Males",
-          "prob": 0.1452,
-          "xg": 0.157,
+          "prob": 0.2145,
+          "xg": 0.241,
           "position": "Midfielder"
         },
         {
-          "player": "S. Córdova",
-          "prob": 0.1058,
-          "xg": 0.112,
+          "player": "Joël Monteiro",
+          "prob": 0.0909,
+          "xg": 0.095,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Fassnacht",
+          "prob": 0.0862,
+          "xg": 0.09,
           "position": "Attacker"
         }
       ]
@@ -6751,34 +6751,34 @@
     "predicted_scorers": {
       "home": [
         {
-          "player": "A. Ajdini",
-          "prob": 0.2598,
-          "xg": 0.301,
+          "player": "K. Sène",
+          "prob": 0.2952,
+          "xg": 0.35,
           "position": "Attacker"
         },
         {
-          "player": "K. Sène",
-          "prob": 0.257,
-          "xg": 0.297,
+          "player": "A. Ajdini",
+          "prob": 0.2932,
+          "xg": 0.347,
           "position": "Attacker"
         },
         {
           "player": "B. Lekoueiry",
-          "prob": 0.221,
-          "xg": 0.25,
-          "position": "Midfielder"
-        },
-        {
-          "player": "O. Custodio",
-          "prob": 0.2105,
-          "xg": 0.236,
+          "prob": 0.2504,
+          "xg": 0.288,
           "position": "Midfielder"
         },
         {
           "player": "J. Roche",
-          "prob": 0.1949,
-          "xg": 0.217,
+          "prob": 0.2213,
+          "xg": 0.25,
           "position": "Midfielder"
+        },
+        {
+          "player": "G. Diakité",
+          "prob": 0.2121,
+          "xg": 0.238,
+          "position": "Attacker"
         }
       ],
       "away": [
@@ -6827,9 +6827,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/575.png",
     "odds": {
       "winner": {
-        "home": 6.0,
-        "draw": 4.5,
-        "away": 1.48
+        "home": 7.0,
+        "draw": 4.75,
+        "away": 1.4
       },
       "over_2_5": {
         "over": 1.83,
@@ -6950,33 +6950,33 @@
       ],
       "away": [
         {
-          "player": "P. Mantalos",
-          "prob": 0.2491,
-          "xg": 0.286,
-          "position": "Midfielder"
-        },
-        {
-          "player": "F. Pierrot",
-          "prob": 0.2121,
-          "xg": 0.238,
-          "position": "Attacker"
-        },
-        {
-          "player": "O. Pineda",
-          "prob": 0.1458,
-          "xg": 0.158,
+          "player": "D. Kutesa",
+          "prob": 0.2921,
+          "xg": 0.346,
           "position": "Midfielder"
         },
         {
           "player": "A. Koita",
-          "prob": 0.1452,
-          "xg": 0.157,
+          "prob": 0.2916,
+          "xg": 0.345,
           "position": "Midfielder"
         },
         {
+          "player": "N. Eliasson",
+          "prob": 0.2086,
+          "xg": 0.234,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Jović",
+          "prob": 0.1762,
+          "xg": 0.194,
+          "position": "Attacker"
+        },
+        {
           "player": "R. Marin",
-          "prob": 0.1443,
-          "xg": 0.156,
+          "prob": 0.1222,
+          "xg": 0.13,
           "position": "Midfielder"
         }
       ]
@@ -7057,6 +7057,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Pote",
+        "team": "Sporting CP",
+        "goals": 8
+      },
+      {
         "player": "Pablo",
         "team": "GIL Vicente",
         "goals": 8
@@ -7072,13 +7077,8 @@
         "goals": 7
       },
       {
-        "player": "Pote",
-        "team": "Sporting CP",
-        "goals": 7
-      },
-      {
-        "player": "L. Suárez",
-        "team": "Sporting CP",
+        "player": "Clayton",
+        "team": "Rio Ave",
         "goals": 7
       }
     ],
@@ -7130,17 +7130,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/762.png",
     "odds": {
       "winner": {
-        "home": 5.25,
-        "draw": 3.6,
-        "away": 1.67
+        "home": 5.75,
+        "draw": 3.7,
+        "away": 1.6
       },
       "over_2_5": {
         "over": 6.0,
         "under": 1.12
       },
       "over_1_5": {
-        "over": 2.38,
-        "under": 1.53
+        "over": 2.5,
+        "under": 1.5
       },
       "btts": {
         "yes": 4.0,
@@ -7193,6 +7193,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Pote",
+        "team": "Sporting CP",
+        "goals": 8
+      },
+      {
         "player": "Pablo",
         "team": "GIL Vicente",
         "goals": 8
@@ -7208,13 +7213,8 @@
         "goals": 7
       },
       {
-        "player": "Pote",
-        "team": "Sporting CP",
-        "goals": 7
-      },
-      {
-        "player": "L. Suárez",
-        "team": "Sporting CP",
+        "player": "Clayton",
+        "team": "Rio Ave",
         "goals": 7
       }
     ],
@@ -7297,21 +7297,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/197.png",
     "odds": {
       "winner": {
-        "home": 3.0,
-        "draw": 4.0,
-        "away": 2.1
+        "home": 3.3,
+        "draw": 4.2,
+        "away": 1.91
       },
       "over_2_5": {
-        "over": 2.75,
-        "under": 1.4
+        "over": 2.62,
+        "under": 1.44
       },
       "over_1_5": {
-        "over": 1.57,
-        "under": 2.25
+        "over": 1.53,
+        "under": 2.38
       },
       "btts": {
-        "yes": 2.25,
-        "no": 1.57
+        "yes": 2.2,
+        "no": 1.62
       }
     },
     "predicted_score": {
@@ -7375,13 +7375,13 @@
         "goals": 6
       },
       {
-        "player": "W. Weghorst",
-        "team": "Ajax",
+        "player": "J. Hornkamp",
+        "team": "Heracles",
         "goals": 6
       },
       {
-        "player": "J. Hornkamp",
-        "team": "Heracles",
+        "player": "W. Weghorst",
+        "team": "Ajax",
         "goals": 6
       }
     ],
@@ -7464,21 +7464,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/250.png",
     "odds": {
       "winner": {
-        "home": 1.17,
+        "home": 1.14,
         "draw": 7.5,
-        "away": 13.0
+        "away": 15.0
       },
       "over_2_5": {
         "over": 1.83,
         "under": 1.83
       },
       "over_1_5": {
-        "over": 1.57,
-        "under": 2.25
+        "over": 1.62,
+        "under": 2.2
       },
       "btts": {
-        "yes": 3.4,
-        "no": 1.3
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -7556,32 +7556,32 @@
       "home": [
         {
           "player": "J. Forrest",
-          "prob": 0.2732,
-          "xg": 0.319,
+          "prob": 0.3255,
+          "xg": 0.394,
           "position": "Midfielder"
         },
         {
           "player": "A. Engels",
-          "prob": 0.2605,
-          "xg": 0.302,
+          "prob": 0.3108,
+          "xg": 0.372,
           "position": "Midfielder"
         },
         {
           "player": "L. McCowan",
-          "prob": 0.202,
-          "xg": 0.226,
+          "prob": 0.243,
+          "xg": 0.278,
           "position": "Midfielder"
         },
         {
           "player": "M. Balikwisha",
-          "prob": 0.1903,
-          "xg": 0.211,
+          "prob": 0.2292,
+          "xg": 0.26,
           "position": "Attacker"
         },
         {
           "player": "B. Nygren",
-          "prob": 0.1849,
-          "xg": 0.204,
+          "prob": 0.2229,
+          "xg": 0.252,
           "position": "Attacker"
         }
       ],
@@ -7631,9 +7631,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/571.png",
     "odds": {
       "winner": {
-        "home": 2.15,
+        "home": 2.4,
         "draw": 3.6,
-        "away": 3.0
+        "away": 2.75
       },
       "over_2_5": {
         "over": 3.75,
@@ -7694,6 +7694,16 @@
     ],
     "top_scorers": [
       {
+        "player": "K. Mutandwa",
+        "team": "Ried",
+        "goals": 7
+      },
+      {
+        "player": "E. Havel",
+        "team": "TSV Hartberg",
+        "goals": 7
+      },
+      {
         "player": "P. Ratkov",
         "team": "Red Bull Salzburg",
         "goals": 7
@@ -7707,80 +7717,70 @@
         "player": "M. Pink",
         "team": "Wolfsberger AC",
         "goals": 6
-      },
-      {
-        "player": "K. Mutandwa",
-        "team": "Ried",
-        "goals": 6
-      },
-      {
-        "player": "E. Havel",
-        "team": "TSV Hartberg",
-        "goals": 6
       }
     ],
     "predicted_scorers": {
       "home": [
         {
-          "player": "S. Jatta",
-          "prob": 0.1698,
-          "xg": 0.186,
-          "position": "Attacker"
-        },
-        {
-          "player": "L. Grgić",
-          "prob": 0.1199,
-          "xg": 0.128,
-          "position": "Attacker"
-        },
-        {
-          "player": "M. Malone",
-          "prob": 0.1193,
-          "xg": 0.127,
-          "position": "Attacker"
-        },
-        {
           "player": "P. Kiedl",
-          "prob": 0.1156,
-          "xg": 0.123,
+          "prob": 0.2324,
+          "xg": 0.264,
           "position": "Attacker"
         },
         {
-          "player": "T. Chukwuani",
-          "prob": 0.0812,
-          "xg": 0.085,
+          "player": "O. Kiteishvili",
+          "prob": 0.1436,
+          "xg": 0.155,
           "position": "Midfielder"
+        },
+        {
+          "player": "S. Włodarczyk",
+          "prob": 0.1325,
+          "xg": 0.142,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Jatta",
+          "prob": 0.1218,
+          "xg": 0.13,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Oermann",
+          "prob": 0.065,
+          "xg": 0.067,
+          "position": "Defender"
         }
       ],
       "away": [
         {
-          "player": "Kerim-Sam Alajbegović",
-          "prob": 0.3296,
-          "xg": 0.4,
-          "position": "Attacker"
-        },
-        {
-          "player": "S. Diabaté",
-          "prob": 0.2218,
-          "xg": 0.251,
-          "position": "Midfielder"
-        },
-        {
           "player": "M. Kjærgaard",
-          "prob": 0.2143,
-          "xg": 0.241,
+          "prob": 0.3375,
+          "xg": 0.412,
           "position": "Midfielder"
         },
         {
           "player": "O. Gloukh",
-          "prob": 0.1226,
-          "xg": 0.131,
+          "prob": 0.2001,
+          "xg": 0.223,
           "position": "Midfielder"
         },
         {
           "player": "Y. Vertessen",
-          "prob": 0.103,
-          "xg": 0.109,
+          "prob": 0.1694,
+          "xg": 0.186,
+          "position": "Attacker"
+        },
+        {
+          "player": "E. Baidoo",
+          "prob": 0.1674,
+          "xg": 0.183,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Onisiwo",
+          "prob": 0.1594,
+          "xg": 0.174,
           "position": "Attacker"
         }
       ]
@@ -7798,13 +7798,13 @@
     "away_logo": "https://media.api-sports.io/football/teams/108.png",
     "odds": {
       "winner": {
-        "home": 2.7,
+        "home": 2.55,
         "draw": 3.0,
-        "away": 2.88
+        "away": 3.0
       },
       "over_2_5": {
-        "over": 6.5,
-        "under": 1.11
+        "over": 7.0,
+        "under": 1.1
       },
       "over_1_5": {
         "over": 2.62,
@@ -7866,13 +7866,13 @@
         "goals": 9
       },
       {
-        "player": "E. Lepaul",
-        "team": "Rennes",
-        "goals": 7
-      },
-      {
         "player": "M. Greenwood",
         "team": "Marseille",
+        "goals": 8
+      },
+      {
+        "player": "E. Lepaul",
+        "team": "Rennes",
         "goals": 7
       },
       {
@@ -8033,13 +8033,13 @@
         "goals": 9
       },
       {
-        "player": "E. Lepaul",
-        "team": "Rennes",
-        "goals": 7
-      },
-      {
         "player": "M. Greenwood",
         "team": "Marseille",
+        "goals": 8
+      },
+      {
+        "player": "E. Lepaul",
+        "team": "Rennes",
         "goals": 7
       },
       {
@@ -8089,33 +8089,33 @@
       "away": [
         {
           "player": "H. Igamane",
-          "prob": 0.4025,
-          "xg": 0.515,
-          "position": "Attacker"
-        },
-        {
-          "player": "O. Giroud",
-          "prob": 0.2438,
-          "xg": 0.279,
+          "prob": 0.4002,
+          "xg": 0.511,
           "position": "Attacker"
         },
         {
           "player": "E. Mbappé",
-          "prob": 0.2016,
-          "xg": 0.225,
+          "prob": 0.2558,
+          "xg": 0.295,
           "position": "Midfielder"
         },
         {
           "player": "H. Haraldsson",
-          "prob": 0.1569,
-          "xg": 0.171,
+          "prob": 0.2006,
+          "xg": 0.224,
           "position": "Midfielder"
         },
         {
-          "player": "R. Perraud",
-          "prob": 0.1306,
-          "xg": 0.14,
-          "position": "Defender"
+          "player": "O. Giroud",
+          "prob": 0.1672,
+          "xg": 0.183,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Bentaleb",
+          "prob": 0.0378,
+          "xg": 0.039,
+          "position": "Midfielder"
         }
       ]
     }
@@ -8200,13 +8200,13 @@
         "goals": 9
       },
       {
-        "player": "E. Lepaul",
-        "team": "Rennes",
-        "goals": 7
-      },
-      {
         "player": "M. Greenwood",
         "team": "Marseille",
+        "goals": 8
+      },
+      {
+        "player": "E. Lepaul",
+        "team": "Rennes",
         "goals": 7
       },
       {
@@ -8471,8 +8471,8 @@
         "away": 3.7
       },
       "over_2_5": {
-        "over": 3.25,
-        "under": 1.33
+        "over": 3.0,
+        "under": 1.36
       },
       "over_1_5": {
         "over": 1.67,
@@ -8633,21 +8633,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/170.png",
     "odds": {
       "winner": {
-        "home": 1.53,
-        "draw": 4.2,
-        "away": 5.75
+        "home": 1.5,
+        "draw": 4.33,
+        "away": 6.5
       },
       "over_2_5": {
-        "over": 3.5,
-        "under": 1.28
+        "over": 3.75,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 1.8,
-        "under": 1.91
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
-        "yes": 3.0,
-        "no": 1.36
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -8698,7 +8698,17 @@
       {
         "player": "H. Kane",
         "team": "Bayern München",
-        "goals": 12
+        "goals": 13
+      },
+      {
+        "player": "L. Díaz",
+        "team": "Bayern München",
+        "goals": 6
+      },
+      {
+        "player": "H. Tabaković",
+        "team": "Borussia Mönchengladbach",
+        "goals": 6
       },
       {
         "player": "J. Burkardt",
@@ -8706,18 +8716,8 @@
         "goals": 6
       },
       {
-        "player": "L. Díaz",
-        "team": "Bayern München",
-        "goals": 5
-      },
-      {
         "player": "C. Uzun",
         "team": "Eintracht Frankfurt",
-        "goals": 5
-      },
-      {
-        "player": "C. Baumgartner",
-        "team": "RB Leipzig",
         "goals": 5
       }
     ],
@@ -8800,9 +8800,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/396.png",
     "odds": {
       "winner": {
-        "home": 1.67,
-        "draw": 3.9,
-        "away": 4.75
+        "home": 1.55,
+        "draw": 4.2,
+        "away": 5.5
       },
       "over_2_5": {
         "over": 1.67,
@@ -8813,8 +8813,8 @@
         "under": 1.91
       },
       "btts": {
-        "yes": 2.75,
-        "no": 1.4
+        "yes": 3.0,
+        "no": 1.36
       }
     },
     "predicted_score": {
@@ -8967,7 +8967,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/494.png",
     "odds": {
       "winner": {
-        "home": 1.53,
+        "home": 1.5,
         "draw": 4.1,
         "away": 6.5
       },
@@ -8980,8 +8980,8 @@
         "under": 1.62
       },
       "btts": {
-        "yes": 4.33,
-        "no": 1.2
+        "yes": 4.0,
+        "no": 1.22
       }
     },
     "predicted_score": {
@@ -9204,7 +9204,7 @@
       {
         "player": "P. Onuachu",
         "team": "Trabzonspor",
-        "goals": 7
+        "goals": 8
       },
       {
         "player": "U. Nayir",
@@ -9371,7 +9371,7 @@
       {
         "player": "P. Onuachu",
         "team": "Trabzonspor",
-        "goals": 7
+        "goals": 8
       },
       {
         "player": "U. Nayir",
@@ -9468,17 +9468,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/2110.png",
     "odds": {
       "winner": {
-        "home": 2.45,
+        "home": 2.35,
         "draw": 3.0,
-        "away": 3.1
+        "away": 3.4
       },
       "over_2_5": {
-        "over": 5.5,
-        "under": 1.14
+        "over": 6.0,
+        "under": 1.12
       },
       "over_1_5": {
-        "over": 2.25,
-        "under": 1.57
+        "over": 2.38,
+        "under": 1.53
       },
       "btts": {
         "yes": 3.75,
@@ -9802,21 +9802,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/742.png",
     "odds": {
       "winner": {
-        "home": 3.0,
-        "draw": 3.5,
-        "away": 2.2
+        "home": 3.1,
+        "draw": 3.4,
+        "away": 2.25
       },
       "over_2_5": {
-        "over": 3.5,
-        "under": 1.28
+        "over": 4.0,
+        "under": 1.22
       },
       "over_1_5": {
-        "over": 1.8,
-        "under": 1.91
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
-        "yes": 2.62,
-        "no": 1.44
+        "yes": 2.75,
+        "no": 1.4
       }
     },
     "predicted_score": {
@@ -9925,33 +9925,33 @@
       ],
       "away": [
         {
-          "player": "J. Ito",
-          "prob": 0.1921,
-          "xg": 0.213,
-          "position": "Attacker"
-        },
-        {
           "player": "Oh Hyeon-Gyu",
-          "prob": 0.1904,
-          "xg": 0.211,
+          "prob": 0.234,
+          "xg": 0.267,
           "position": "Attacker"
-        },
-        {
-          "player": "P. Hrošovský",
-          "prob": 0.1317,
-          "xg": 0.141,
-          "position": "Midfielder"
         },
         {
           "player": "Y. Medina",
-          "prob": 0.1245,
-          "xg": 0.133,
+          "prob": 0.1545,
+          "xg": 0.168,
           "position": "Midfielder"
         },
         {
-          "player": "J. Erabi",
-          "prob": 0.1081,
-          "xg": 0.114,
+          "player": "D. Heymans",
+          "prob": 0.1445,
+          "xg": 0.156,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Arokodare",
+          "prob": 0.1199,
+          "xg": 0.128,
+          "position": "Attacker"
+        },
+        {
+          "player": "Y. Sor",
+          "prob": 0.1197,
+          "xg": 0.127,
           "position": "Attacker"
         }
       ]
@@ -9969,9 +9969,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/732.png",
     "odds": {
       "winner": {
-        "home": 1.9,
+        "home": 1.95,
         "draw": 3.4,
-        "away": 4.1
+        "away": 3.9
       },
       "over_2_5": {
         "over": 6.0,
@@ -10032,6 +10032,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Z. Eddahchouri",
+        "team": "Deportivo La Coruna",
+        "goals": 7
+      },
+      {
         "player": "Jeremy Arévalo",
         "team": "Racing Santander",
         "goals": 7
@@ -10049,11 +10054,6 @@
       {
         "player": "Agus Medina",
         "team": "Albacete",
-        "goals": 6
-      },
-      {
-        "player": "Jonathan Dubasin",
-        "team": "Sporting Gijon",
         "goals": 6
       }
     ],
@@ -10303,7 +10303,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/212.png",
     "odds": {
       "winner": {
-        "home": 6.0,
+        "home": 5.75,
         "draw": 4.0,
         "away": 1.55
       },
@@ -10366,6 +10366,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Pote",
+        "team": "Sporting CP",
+        "goals": 8
+      },
+      {
         "player": "Pablo",
         "team": "GIL Vicente",
         "goals": 8
@@ -10381,13 +10386,8 @@
         "goals": 7
       },
       {
-        "player": "Pote",
-        "team": "Sporting CP",
-        "goals": 7
-      },
-      {
-        "player": "L. Suárez",
-        "team": "Sporting CP",
+        "player": "Clayton",
+        "team": "Rio Ave",
         "goals": 7
       }
     ],
@@ -10472,7 +10472,7 @@
       "winner": {
         "home": 5.75,
         "draw": 4.33,
-        "away": 1.5
+        "away": 1.53
       },
       "over_2_5": {
         "over": 3.75,
@@ -10483,8 +10483,8 @@
         "under": 1.83
       },
       "btts": {
-        "yes": 3.0,
-        "no": 1.36
+        "yes": 3.25,
+        "no": 1.33
       }
     },
     "predicted_score": {
@@ -10637,9 +10637,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/164.png",
     "odds": {
       "winner": {
-        "home": 1.85,
+        "home": 1.9,
         "draw": 4.0,
-        "away": 3.8
+        "away": 3.7
       },
       "over_2_5": {
         "over": 3.5,
@@ -10702,7 +10702,17 @@
       {
         "player": "H. Kane",
         "team": "Bayern München",
-        "goals": 12
+        "goals": 13
+      },
+      {
+        "player": "L. Díaz",
+        "team": "Bayern München",
+        "goals": 6
+      },
+      {
+        "player": "H. Tabaković",
+        "team": "Borussia Mönchengladbach",
+        "goals": 6
       },
       {
         "player": "J. Burkardt",
@@ -10710,18 +10720,8 @@
         "goals": 6
       },
       {
-        "player": "L. Díaz",
-        "team": "Bayern München",
-        "goals": 5
-      },
-      {
         "player": "C. Uzun",
         "team": "Eintracht Frankfurt",
-        "goals": 5
-      },
-      {
-        "player": "C. Baumgartner",
-        "team": "RB Leipzig",
         "goals": 5
       }
     ],
@@ -10804,17 +10804,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/129.png",
     "odds": {
       "winner": {
-        "home": 1.62,
+        "home": 1.67,
         "draw": 3.5,
-        "away": 6.5
+        "away": 6.25
       },
       "over_2_5": {
         "over": 5.5,
         "under": 1.14
       },
       "over_1_5": {
-        "over": 2.25,
-        "under": 1.57
+        "over": 2.38,
+        "under": 1.53
       },
       "btts": {
         "yes": 4.33,
@@ -10971,9 +10971,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/124.png",
     "odds": {
       "winner": {
-        "home": 1.85,
-        "draw": 3.3,
-        "away": 4.75
+        "home": 1.91,
+        "draw": 3.25,
+        "away": 4.5
       },
       "over_2_5": {
         "over": 5.5,
@@ -10984,8 +10984,8 @@
         "under": 1.53
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -11139,20 +11139,20 @@
     "odds": {
       "winner": {
         "home": 3.25,
-        "draw": 3.2,
+        "draw": 3.3,
         "away": 2.15
       },
       "over_2_5": {
-        "over": 5.5,
-        "under": 1.14
+        "over": 5.0,
+        "under": 1.17
       },
       "over_1_5": {
-        "over": 2.25,
-        "under": 1.57
+        "over": 2.2,
+        "under": 1.62
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 3.5,
+        "no": 1.28
       }
     },
     "predicted_score": {
@@ -11305,21 +11305,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/398.png",
     "odds": {
       "winner": {
-        "home": 2.1,
-        "draw": 3.6,
-        "away": 3.1
+        "home": 2.05,
+        "draw": 3.5,
+        "away": 3.3
       },
       "over_2_5": {
-        "over": 3.5,
-        "under": 1.28
+        "over": 3.75,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 1.73,
-        "under": 2.0
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
-        "yes": 2.62,
-        "no": 1.44
+        "yes": 2.75,
+        "no": 1.4
       }
     },
     "predicted_score": {
@@ -11472,17 +11472,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/209.png",
     "odds": {
       "winner": {
-        "home": 5.75,
+        "home": 6.25,
         "draw": 5.0,
-        "away": 1.48
+        "away": 1.44
       },
       "over_2_5": {
         "over": 3.25,
         "under": 1.33
       },
       "over_1_5": {
-        "over": 1.67,
-        "under": 2.1
+        "over": 1.73,
+        "under": 2.0
       },
       "btts": {
         "yes": 3.0,
@@ -11550,13 +11550,13 @@
         "goals": 6
       },
       {
-        "player": "W. Weghorst",
-        "team": "Ajax",
+        "player": "J. Hornkamp",
+        "team": "Heracles",
         "goals": 6
       },
       {
-        "player": "J. Hornkamp",
-        "team": "Heracles",
+        "player": "W. Weghorst",
+        "team": "Ajax",
         "goals": 6
       }
     ],
@@ -11639,9 +11639,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/619.png",
     "odds": {
       "winner": {
-        "home": 2.55,
+        "home": 2.75,
         "draw": 3.3,
-        "away": 2.75
+        "away": 2.55
       },
       "over_2_5": {
         "over": 5.0,
@@ -11730,65 +11730,65 @@
     "predicted_scorers": {
       "home": [
         {
-          "player": "K. Świderski",
-          "prob": 0.3309,
-          "xg": 0.402,
-          "position": "Attacker"
-        },
-        {
-          "player": "A. Čerin",
-          "prob": 0.1285,
-          "xg": 0.138,
+          "player": "A. Zaroury",
+          "prob": 0.443,
+          "xg": 0.585,
           "position": "Midfielder"
         },
         {
-          "player": "Tetê",
-          "prob": 0.1089,
-          "xg": 0.115,
-          "position": "Attacker"
-        },
-        {
           "player": "F. Đuričić",
-          "prob": 0.1087,
-          "xg": 0.115,
-          "position": "Attacker"
+          "prob": 0.1888,
+          "xg": 0.209,
+          "position": "Midfielder"
         },
         {
-          "player": "C. Dessers",
-          "prob": 0.0953,
-          "xg": 0.1,
-          "position": "Attacker"
+          "player": "N. Maksimović",
+          "prob": 0.0348,
+          "xg": 0.035,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Pedro Chirivella",
+          "prob": 0.0347,
+          "xg": 0.035,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Bakasetas",
+          "prob": 0.0336,
+          "xg": 0.034,
+          "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "G. Konstantelias",
-          "prob": 0.2564,
-          "xg": 0.296,
+          "prob": 0.2612,
+          "xg": 0.303,
           "position": "Midfielder"
         },
         {
           "player": "A. Živković",
-          "prob": 0.2405,
-          "xg": 0.275,
+          "prob": 0.2489,
+          "xg": 0.286,
           "position": "Attacker"
         },
         {
-          "player": "D. Pelkas",
-          "prob": 0.2349,
-          "xg": 0.268,
-          "position": "Midfielder"
-        },
-        {
           "player": "G. Giakoumakis",
-          "prob": 0.2191,
+          "prob": 0.2186,
           "xg": 0.247,
           "position": "Attacker"
         },
         {
           "player": "M. Ozdoev",
-          "prob": 0.2098,
-          "xg": 0.236,
+          "prob": 0.2173,
+          "xg": 0.245,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Meïté",
+          "prob": 0.1512,
+          "xg": 0.164,
           "position": "Midfielder"
         }
       ]
@@ -11806,8 +11806,8 @@
     "away_logo": "https://media.api-sports.io/football/teams/85.png",
     "odds": {
       "winner": {
-        "home": 4.5,
-        "draw": 3.8,
+        "home": 4.33,
+        "draw": 3.9,
         "away": 1.75
       },
       "over_2_5": {
@@ -11874,13 +11874,13 @@
         "goals": 9
       },
       {
-        "player": "E. Lepaul",
-        "team": "Rennes",
-        "goals": 7
-      },
-      {
         "player": "M. Greenwood",
         "team": "Marseille",
+        "goals": 8
+      },
+      {
+        "player": "E. Lepaul",
+        "team": "Rennes",
         "goals": 7
       },
       {
@@ -11975,15 +11975,15 @@
       "winner": {
         "home": 1.33,
         "draw": 5.25,
-        "away": 9.0
+        "away": 8.5
       },
       "over_2_5": {
         "over": 4.0,
         "under": 1.22
       },
       "over_1_5": {
-        "over": 1.83,
-        "under": 1.83
+        "over": 1.91,
+        "under": 1.8
       },
       "btts": {
         "yes": 3.75,
@@ -12064,34 +12064,34 @@
     "predicted_scorers": {
       "home": [
         {
-          "player": "F. Dimarco",
-          "prob": 0.3951,
-          "xg": 0.503,
-          "position": "Midfielder"
-        },
-        {
           "player": "Lautaro Martínez",
-          "prob": 0.3353,
-          "xg": 0.408,
+          "prob": 0.4666,
+          "xg": 0.629,
           "position": "Attacker"
-        },
-        {
-          "player": "N. Barella",
-          "prob": 0.2403,
-          "xg": 0.275,
-          "position": "Midfielder"
         },
         {
           "player": "F. Esposito",
-          "prob": 0.1992,
-          "xg": 0.222,
+          "prob": 0.2872,
+          "xg": 0.339,
           "position": "Attacker"
         },
         {
-          "player": "A. Bastoni",
-          "prob": 0.1083,
-          "xg": 0.115,
+          "player": "Carlos Augusto",
+          "prob": 0.1519,
+          "xg": 0.165,
           "position": "Defender"
+        },
+        {
+          "player": "F. Dimarco",
+          "prob": 0.0657,
+          "xg": 0.068,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Asllani",
+          "prob": 0.0656,
+          "xg": 0.068,
+          "position": "Midfielder"
         }
       ],
       "away": [
@@ -12145,16 +12145,16 @@
         "away": 1.75
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.36
+        "over": 2.75,
+        "under": 1.4
       },
       "over_1_5": {
         "over": 1.62,
         "under": 2.2
       },
       "btts": {
-        "yes": 2.5,
-        "no": 1.5
+        "yes": 2.38,
+        "no": 1.53
       }
     },
     "predicted_score": {
@@ -12370,6 +12370,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Z. Eddahchouri",
+        "team": "Deportivo La Coruna",
+        "goals": 7
+      },
+      {
         "player": "Jeremy Arévalo",
         "team": "Racing Santander",
         "goals": 7
@@ -12388,43 +12393,38 @@
         "player": "Agus Medina",
         "team": "Albacete",
         "goals": 6
-      },
-      {
-        "player": "Jonathan Dubasin",
-        "team": "Sporting Gijon",
-        "goals": 6
       }
     ],
     "predicted_scorers": {
       "home": [
         {
           "player": "I. Tabatadze",
-          "prob": 0.2423,
-          "xg": 0.278,
+          "prob": 0.2442,
+          "xg": 0.28,
           "position": "Attacker"
         },
         {
           "player": "B. Ocampo",
-          "prob": 0.1299,
-          "xg": 0.139,
+          "prob": 0.131,
+          "xg": 0.14,
           "position": "Attacker"
         },
         {
           "player": "Sergio Ortu",
-          "prob": 0.0916,
-          "xg": 0.096,
+          "prob": 0.0924,
+          "xg": 0.097,
           "position": "Midfielder"
         },
         {
           "player": "Javi Ontiveros",
-          "prob": 0.0902,
-          "xg": 0.094,
+          "prob": 0.0909,
+          "xg": 0.095,
           "position": "Midfielder"
         },
         {
           "player": "Suso",
-          "prob": 0.0771,
-          "xg": 0.08,
+          "prob": 0.0778,
+          "xg": 0.081,
           "position": "Attacker"
         }
       ],
@@ -12483,12 +12483,12 @@
         "under": 1.62
       },
       "over_1_5": {
-        "over": 1.8,
-        "under": 1.91
+        "over": 1.83,
+        "under": 1.83
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 5.0,
+        "no": 1.17
       }
     },
     "predicted_score": {
@@ -12537,6 +12537,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Pote",
+        "team": "Sporting CP",
+        "goals": 8
+      },
+      {
         "player": "Pablo",
         "team": "GIL Vicente",
         "goals": 8
@@ -12552,13 +12557,8 @@
         "goals": 7
       },
       {
-        "player": "Pote",
-        "team": "Sporting CP",
-        "goals": 7
-      },
-      {
-        "player": "L. Suárez",
-        "team": "Sporting CP",
+        "player": "Clayton",
+        "team": "Rio Ave",
         "goals": 7
       }
     ],
@@ -12641,7 +12641,7 @@
     "away_logo": "https://media.api-sports.io/football/teams/215.png",
     "odds": {
       "winner": {
-        "home": 1.38,
+        "home": 1.4,
         "draw": 4.75,
         "away": 7.5
       },
@@ -12650,12 +12650,12 @@
         "under": 1.83
       },
       "over_1_5": {
-        "over": 2.0,
-        "under": 1.73
+        "over": 2.1,
+        "under": 1.67
       },
       "btts": {
-        "yes": 3.75,
-        "no": 1.25
+        "yes": 4.0,
+        "no": 1.22
       }
     },
     "predicted_score": {
@@ -12704,6 +12704,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Pote",
+        "team": "Sporting CP",
+        "goals": 8
+      },
+      {
         "player": "Pablo",
         "team": "GIL Vicente",
         "goals": 8
@@ -12719,13 +12724,8 @@
         "goals": 7
       },
       {
-        "player": "Pote",
-        "team": "Sporting CP",
-        "goals": 7
-      },
-      {
-        "player": "L. Suárez",
-        "team": "Sporting CP",
+        "player": "Clayton",
+        "team": "Rio Ave",
         "goals": 7
       }
     ],
@@ -12984,8 +12984,8 @@
         "under": 2.2
       },
       "over_1_5": {
-        "over": 2.0,
-        "under": 1.73
+        "over": 2.1,
+        "under": 1.67
       },
       "btts": {
         "yes": 4.33,
@@ -13142,17 +13142,17 @@
     "away_logo": "https://media.api-sports.io/football/teams/130.png",
     "odds": {
       "winner": {
-        "home": 2.05,
+        "home": 2.1,
         "draw": 3.4,
-        "away": 3.6
+        "away": 3.5
       },
       "over_2_5": {
         "over": 5.0,
         "under": 1.17
       },
       "over_1_5": {
-        "over": 2.2,
-        "under": 1.62
+        "over": 2.1,
+        "under": 1.67
       },
       "btts": {
         "yes": 3.5,
@@ -13476,9 +13476,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/5254.png",
     "odds": {
       "winner": {
-        "home": 2.5,
+        "home": 2.45,
         "draw": 3.3,
-        "away": 2.75
+        "away": 2.8
       },
       "over_2_5": {
         "over": 5.5,
@@ -13489,8 +13489,8 @@
         "under": 1.57
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -13539,6 +13539,11 @@
     ],
     "top_scorers": [
       {
+        "player": "Z. Eddahchouri",
+        "team": "Deportivo La Coruna",
+        "goals": 7
+      },
+      {
         "player": "Jeremy Arévalo",
         "team": "Racing Santander",
         "goals": 7
@@ -13556,11 +13561,6 @@
       {
         "player": "Agus Medina",
         "team": "Albacete",
-        "goals": 6
-      },
-      {
-        "player": "Jonathan Dubasin",
-        "team": "Sporting Gijon",
         "goals": 6
       }
     ],
