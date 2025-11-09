@@ -199,44 +199,44 @@
       "home": 1,
       "away": 2
     },
-    "confidence": 0.579,
+    "confidence": 0.5604,
     "predictions": {
       "winner": {
         "class": 2,
-        "confidence": 0.579,
-        "prob": 0.579
+        "confidence": 0.5604,
+        "prob": 0.5604
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7989
+        "confidence": 0.7886
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.6874,
-        "prob": 0.6874
+        "confidence": 0.6465,
+        "prob": 0.6465
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8692
+        "confidence": 0.8453
       },
       "btts": {
         "class": 1,
-        "confidence": 0.6541,
-        "prob": 0.6541
+        "confidence": 0.6263,
+        "prob": 0.6263
       }
     },
     "correct_score_top3": [
       {
         "score": "1-2",
-        "prob": 0.095
+        "prob": 0.0972
       },
       {
         "score": "1-1",
-        "prob": 0.0848
+        "prob": 0.0934
       },
       {
         "score": "0-2",
-        "prob": 0.072
+        "prob": 0.0771
       }
     ],
     "top_scorers": [
@@ -270,46 +270,46 @@
       "home": [
         {
           "player": "B. Róchez",
-          "prob": 0.3211,
-          "xg": 0.387,
+          "prob": 0.309,
+          "xg": 0.37,
           "position": "Attacker"
         },
         {
           "player": "Werton",
-          "prob": 0.0981,
-          "xg": 0.103,
+          "prob": 0.0939,
+          "xg": 0.099,
           "position": "Midfielder"
         },
         {
           "player": "Salvador Agra",
-          "prob": 0.0956,
-          "xg": 0.1,
+          "prob": 0.0914,
+          "xg": 0.096,
           "position": "Midfielder"
         },
         {
           "player": "B. Kanurić",
-          "prob": 0.0909,
-          "xg": 0.095,
+          "prob": 0.087,
+          "xg": 0.091,
           "position": "Midfielder"
         },
         {
           "player": "Paulinho",
-          "prob": 0.0847,
-          "xg": 0.089,
+          "prob": 0.081,
+          "xg": 0.084,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "M. Diadie",
-          "prob": 0.765,
-          "xg": 1.448,
+          "prob": 0.7394,
+          "xg": 1.345,
           "position": "Midfielder"
         },
         {
           "player": "N. Ahouonon",
-          "prob": 0.547,
-          "xg": 0.792,
+          "prob": 0.5207,
+          "xg": 0.735,
           "position": "Defender"
         },
         {
@@ -366,44 +366,44 @@
       "home": 2,
       "away": 1
     },
-    "confidence": 0.4999,
+    "confidence": 0.4919,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4999,
-        "prob": 0.4999
+        "confidence": 0.4919,
+        "prob": 0.4919
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7928
+        "confidence": 0.7929
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.732,
-        "prob": 0.732
+        "confidence": 0.7383,
+        "prob": 0.7383
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8934
+        "confidence": 0.8967
       },
       "btts": {
         "class": 1,
-        "confidence": 0.714,
-        "prob": 0.714
+        "confidence": 0.7207,
+        "prob": 0.7207
       }
     },
     "correct_score_top3": [
       {
         "score": "2-1",
-        "prob": 0.0862
+        "prob": 0.0849
       },
       {
         "score": "1-1",
-        "prob": 0.0791
+        "prob": 0.0778
       },
       {
         "score": "2-2",
-        "prob": 0.0707
+        "prob": 0.0713
       }
     ],
     "top_scorers": [
@@ -469,32 +469,32 @@
       "away": [
         {
           "player": "C. Akpom",
-          "prob": 0.262,
-          "xg": 0.304,
+          "prob": 0.2675,
+          "xg": 0.311,
           "position": "Attacker"
         },
         {
           "player": "Don-Angelo Christoffel Annum-Assamoah Konadu",
-          "prob": 0.2573,
-          "xg": 0.297,
+          "prob": 0.2627,
+          "xg": 0.305,
           "position": "Attacker"
         },
         {
           "player": "O. Gloukh",
-          "prob": 0.0755,
-          "xg": 0.079,
+          "prob": 0.0773,
+          "xg": 0.08,
           "position": "Midfielder"
         },
         {
           "player": "Y. Regeer",
-          "prob": 0.0745,
-          "xg": 0.077,
+          "prob": 0.0762,
+          "xg": 0.079,
           "position": "Midfielder"
         },
         {
           "player": "J. McConnell",
-          "prob": 0.0712,
-          "xg": 0.074,
+          "prob": 0.0728,
+          "xg": 0.076,
           "position": "Midfielder"
         }
       ]
@@ -533,44 +533,44 @@
       "home": 1,
       "away": 1
     },
-    "confidence": 0.43,
+    "confidence": 0.4279,
     "predictions": {
       "winner": {
-        "class": 0,
-        "confidence": 0.43,
-        "prob": 0.43
+        "class": 2,
+        "confidence": 0.4279,
+        "prob": 0.4279
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7239
+        "confidence": 0.7325
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4195,
-        "prob": 0.4195
+        "confidence": 0.4558,
+        "prob": 0.4558
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.6826
+        "confidence": 0.7125
       },
       "btts": {
-        "class": 0,
-        "confidence": 0.4737,
-        "prob": 0.4737
+        "class": 1,
+        "confidence": 0.5041,
+        "prob": 0.5041
       }
     },
     "correct_score_top3": [
       {
         "score": "1-1",
-        "prob": 0.1297
-      },
-      {
-        "score": "1-0",
-        "prob": 0.1247
+        "prob": 0.127
       },
       {
         "score": "0-1",
-        "prob": 0.0983
+        "prob": 0.1134
+      },
+      {
+        "score": "1-0",
+        "prob": 0.092
       }
     ],
     "top_scorers": [
@@ -604,64 +604,64 @@
       "home": [
         {
           "player": "L. Samardžić",
-          "prob": 0.3768,
-          "xg": 0.473,
+          "prob": 0.3305,
+          "xg": 0.401,
           "position": "Midfielder"
         },
         {
           "player": "M. Pašalić",
-          "prob": 0.2132,
-          "xg": 0.24,
+          "prob": 0.184,
+          "xg": 0.203,
           "position": "Attacker"
         },
         {
           "player": "M. de Roon",
-          "prob": 0.0478,
-          "xg": 0.049,
+          "prob": 0.0407,
+          "xg": 0.042,
           "position": "Midfielder"
         },
         {
           "player": "R. Bellanova",
-          "prob": 0.047,
-          "xg": 0.048,
+          "prob": 0.0401,
+          "xg": 0.041,
           "position": "Midfielder"
         },
         {
           "player": "Éderson",
-          "prob": 0.047,
-          "xg": 0.048,
+          "prob": 0.0401,
+          "xg": 0.041,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "J. Doig",
-          "prob": 0.1413,
-          "xg": 0.152,
+          "prob": 0.183,
+          "xg": 0.202,
           "position": "Defender"
         },
         {
           "player": "N. Matić",
-          "prob": 0.069,
-          "xg": 0.071,
+          "prob": 0.0905,
+          "xg": 0.095,
           "position": "Midfielder"
         },
         {
           "player": "D. Boloca",
-          "prob": 0.0635,
-          "xg": 0.066,
+          "prob": 0.0834,
+          "xg": 0.087,
           "position": "Midfielder"
         },
         {
           "player": "L. Lipani",
-          "prob": 0.0604,
-          "xg": 0.062,
+          "prob": 0.0794,
+          "xg": 0.083,
           "position": "Midfielder"
         },
         {
           "player": "E. Iannoni",
-          "prob": 0.0602,
-          "xg": 0.062,
+          "prob": 0.0791,
+          "xg": 0.082,
           "position": "Midfielder"
         }
       ]
@@ -700,44 +700,44 @@
       "home": 1,
       "away": 1
     },
-    "confidence": 0.586,
+    "confidence": 0.5366,
     "predictions": {
       "winner": {
         "class": 2,
-        "confidence": 0.586,
-        "prob": 0.586
+        "confidence": 0.5366,
+        "prob": 0.5366
       },
       "double_chance": {
         "class": 2,
-        "confidence": 0.8032
+        "confidence": 0.7703
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.575,
-        "prob": 0.575
+        "confidence": 0.5436,
+        "prob": 0.5436
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8
+        "confidence": 0.7784
       },
       "btts": {
         "class": 1,
-        "confidence": 0.5551,
-        "prob": 0.5551
+        "confidence": 0.5487,
+        "prob": 0.5487
       }
     },
     "correct_score_top3": [
       {
         "score": "1-1",
-        "prob": 0.1019
-      },
-      {
-        "score": "1-2",
-        "prob": 0.0999
+        "prob": 0.1104
       },
       {
         "score": "0-1",
-        "prob": 0.098
+        "prob": 0.1022
+      },
+      {
+        "score": "1-2",
+        "prob": 0.0982
       }
     ],
     "top_scorers": [
@@ -771,64 +771,64 @@
       "home": [
         {
           "player": "D. Fofana",
-          "prob": 0.2321,
-          "xg": 0.264,
+          "prob": 0.2399,
+          "xg": 0.274,
           "position": "Attacker"
         },
         {
           "player": "D. Johnson",
-          "prob": 0.1148,
-          "xg": 0.122,
+          "prob": 0.119,
+          "xg": 0.127,
           "position": "Midfielder"
         },
         {
           "player": "Serginho",
-          "prob": 0.1142,
-          "xg": 0.121,
+          "prob": 0.1183,
+          "xg": 0.126,
           "position": "Midfielder"
         },
         {
           "player": "S. Larsson",
-          "prob": 0.113,
-          "xg": 0.12,
+          "prob": 0.1171,
+          "xg": 0.124,
           "position": "Midfielder"
         },
         {
           "player": "A. Sivri",
-          "prob": 0.0945,
-          "xg": 0.099,
+          "prob": 0.0979,
+          "xg": 0.103,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "U. Nayir",
-          "prob": 0.3474,
-          "xg": 0.427,
+          "prob": 0.3213,
+          "xg": 0.388,
           "position": "Attacker"
         },
         {
           "player": "D. Aleksić",
-          "prob": 0.3231,
-          "xg": 0.39,
+          "prob": 0.2984,
+          "xg": 0.354,
           "position": "Midfielder"
         },
         {
           "player": "E. Bardhi",
-          "prob": 0.2413,
-          "xg": 0.276,
+          "prob": 0.2218,
+          "xg": 0.251,
           "position": "Midfielder"
         },
         {
           "player": "A. Ndao",
-          "prob": 0.1727,
-          "xg": 0.19,
+          "prob": 0.1582,
+          "xg": 0.172,
           "position": "Midfielder"
         },
         {
           "player": "M. Bostan",
-          "prob": 0.1411,
-          "xg": 0.152,
+          "prob": 0.129,
+          "xg": 0.138,
           "position": "Attacker"
         }
       ]
@@ -867,44 +867,44 @@
       "home": 0,
       "away": 1
     },
-    "confidence": 0.5702,
+    "confidence": 0.5778,
     "predictions": {
       "winner": {
         "class": 2,
-        "confidence": 0.5702,
-        "prob": 0.5702
+        "confidence": 0.5778,
+        "prob": 0.5778
       },
       "double_chance": {
         "class": 2,
-        "confidence": 0.8008
+        "confidence": 0.8208
       },
       "over_2_5": {
-        "class": 1,
-        "confidence": 0.5197,
-        "prob": 0.5197
+        "class": 0,
+        "confidence": 0.445,
+        "prob": 0.445
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7614
+        "confidence": 0.7039
       },
       "btts": {
-        "class": 1,
-        "confidence": 0.5148,
-        "prob": 0.5148
+        "class": 0,
+        "confidence": 0.4458,
+        "prob": 0.4458
       }
     },
     "correct_score_top3": [
       {
         "score": "0-1",
-        "prob": 0.1142
-      },
-      {
-        "score": "1-1",
-        "prob": 0.1097
+        "prob": 0.1421
       },
       {
         "score": "0-2",
-        "prob": 0.1028
+        "prob": 0.1179
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1136
       }
     ],
     "top_scorers": [
@@ -938,64 +938,64 @@
       "home": [
         {
           "player": "R. Ghrieb",
-          "prob": 0.1997,
-          "xg": 0.223,
+          "prob": 0.1694,
+          "xg": 0.186,
           "position": "Attacker"
         },
         {
           "player": "M. Mathisen",
-          "prob": 0.1267,
-          "xg": 0.135,
+          "prob": 0.1067,
+          "xg": 0.113,
           "position": "Midfielder"
         },
         {
           "player": "M. Kaars",
-          "prob": 0.1067,
-          "xg": 0.113,
+          "prob": 0.0898,
+          "xg": 0.094,
           "position": "Attacker"
         },
         {
           "player": "M. Breunig",
-          "prob": 0.1067,
-          "xg": 0.113,
+          "prob": 0.0898,
+          "xg": 0.094,
           "position": "Attacker"
         },
         {
           "player": "Noah Pesch",
-          "prob": 0.1006,
-          "xg": 0.106,
+          "prob": 0.0846,
+          "xg": 0.088,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "A. Grimaldi",
-          "prob": 0.3545,
-          "xg": 0.438,
+          "prob": 0.3322,
+          "xg": 0.404,
           "position": "Attacker"
         },
         {
           "player": "F. Bilbija",
-          "prob": 0.2445,
-          "xg": 0.28,
+          "prob": 0.2278,
+          "xg": 0.259,
           "position": "Attacker"
         },
         {
           "player": "S. Marino",
-          "prob": 0.2247,
-          "xg": 0.255,
+          "prob": 0.2092,
+          "xg": 0.235,
           "position": "Attacker"
         },
         {
           "player": "S. Michel",
-          "prob": 0.1869,
-          "xg": 0.207,
+          "prob": 0.1737,
+          "xg": 0.191,
           "position": "Attacker"
         },
         {
           "player": "R. Obermair",
-          "prob": 0.0557,
-          "xg": 0.057,
+          "prob": 0.0515,
+          "xg": 0.053,
           "position": "Midfielder"
         }
       ]
@@ -1032,46 +1032,46 @@
     },
     "predicted_score": {
       "home": 1,
-      "away": 1
+      "away": 0
     },
-    "confidence": 0.4048,
+    "confidence": 0.4394,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4048,
-        "prob": 0.4048
+        "confidence": 0.4394,
+        "prob": 0.4394
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7345
+        "confidence": 0.7222
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4711,
-        "prob": 0.4711
+        "confidence": 0.4089,
+        "prob": 0.4089
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7246
+        "confidence": 0.6736
       },
       "btts": {
-        "class": 1,
-        "confidence": 0.5193,
-        "prob": 0.5193
+        "class": 0,
+        "confidence": 0.4632,
+        "prob": 0.4632
       }
     },
     "correct_score_top3": [
       {
-        "score": "1-1",
-        "prob": 0.1263
-      },
-      {
         "score": "1-0",
-        "prob": 0.1052
+        "prob": 0.1298
       },
       {
-        "score": "0-1",
-        "prob": 0.0928
+        "score": "1-1",
+        "prob": 0.1298
+      },
+      {
+        "score": "0-0",
+        "prob": 0.0983
       }
     ],
     "top_scorers": [
@@ -1105,64 +1105,64 @@
       "home": [
         {
           "player": "A. Bernhardsson",
-          "prob": 0.3221,
-          "xg": 0.389,
+          "prob": 0.3143,
+          "xg": 0.377,
           "position": "Attacker"
         },
         {
           "player": "J. Tolkin",
-          "prob": 0.2423,
-          "xg": 0.277,
+          "prob": 0.2361,
+          "xg": 0.269,
           "position": "Midfielder"
         },
         {
           "player": "A. Gigović",
-          "prob": 0.1892,
-          "xg": 0.21,
+          "prob": 0.1842,
+          "xg": 0.204,
           "position": "Attacker"
         },
         {
           "player": "M. Knudsen",
-          "prob": 0.0444,
-          "xg": 0.045,
+          "prob": 0.0431,
+          "xg": 0.044,
           "position": "Midfielder"
         },
         {
           "player": "R. Wagner",
-          "prob": 0.0427,
-          "xg": 0.044,
+          "prob": 0.0414,
+          "xg": 0.042,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "S. Appelkamp",
-          "prob": 0.3053,
-          "xg": 0.364,
+          "prob": 0.2618,
+          "xg": 0.304,
           "position": "Midfielder"
         },
         {
           "player": "F. Muslija",
-          "prob": 0.1804,
-          "xg": 0.199,
+          "prob": 0.1527,
+          "xg": 0.166,
           "position": "Midfielder"
         },
         {
           "player": "A. El Azzouzi",
-          "prob": 0.1804,
-          "xg": 0.199,
+          "prob": 0.1527,
+          "xg": 0.166,
           "position": "Midfielder"
         },
         {
           "player": "C. Itten",
-          "prob": 0.1445,
-          "xg": 0.156,
+          "prob": 0.122,
+          "xg": 0.13,
           "position": "Attacker"
         },
         {
           "player": "T. Breithaupt",
-          "prob": 0.0302,
-          "xg": 0.031,
+          "prob": 0.0252,
+          "xg": 0.026,
           "position": "Midfielder"
         }
       ]
@@ -1201,44 +1201,44 @@
       "home": 1,
       "away": 0
     },
-    "confidence": 0.4665,
+    "confidence": 0.4599,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4665,
-        "prob": 0.4665
+        "confidence": 0.4599,
+        "prob": 0.4599
       },
       "double_chance": {
         "class": 0,
-        "confidence": 0.7345
+        "confidence": 0.7352
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4351,
-        "prob": 0.4351
+        "confidence": 0.4089,
+        "prob": 0.4089
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.6957
+        "confidence": 0.6735
       },
       "btts": {
         "class": 0,
-        "confidence": 0.4792,
-        "prob": 0.4792
+        "confidence": 0.4586,
+        "prob": 0.4586
       }
     },
     "correct_score_top3": [
       {
         "score": "1-0",
-        "prob": 0.1264
+        "prob": 0.1337
       },
       {
         "score": "1-1",
-        "prob": 0.1264
+        "prob": 0.1284
       },
       {
-        "score": "2-0",
-        "prob": 0.0897
+        "score": "0-0",
+        "prob": 0.0983
       }
     ],
     "top_scorers": [
@@ -1272,64 +1272,64 @@
       "home": [
         {
           "player": "K. Dolberg",
-          "prob": 0.3331,
-          "xg": 0.405,
+          "prob": 0.3216,
+          "xg": 0.388,
           "position": "Attacker"
         },
         {
           "player": "N. Angulo",
-          "prob": 0.2323,
-          "xg": 0.264,
+          "prob": 0.2237,
+          "xg": 0.253,
           "position": "Midfielder"
         },
         {
           "player": "Y. Verschaeren",
-          "prob": 0.222,
-          "xg": 0.251,
+          "prob": 0.2137,
+          "xg": 0.24,
           "position": "Midfielder"
         },
         {
           "player": "E. Llansana",
-          "prob": 0.043,
-          "xg": 0.044,
+          "prob": 0.0412,
+          "xg": 0.042,
           "position": "Midfielder"
         },
         {
           "player": "Nathan De Cat",
-          "prob": 0.0425,
-          "xg": 0.043,
+          "prob": 0.0407,
+          "xg": 0.042,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "C. Tzolis",
-          "prob": 0.1408,
-          "xg": 0.152,
+          "prob": 0.1356,
+          "xg": 0.146,
           "position": "Attacker"
         },
         {
           "player": "G. Nilsson",
-          "prob": 0.1221,
-          "xg": 0.13,
+          "prob": 0.1175,
+          "xg": 0.125,
           "position": "Attacker"
         },
         {
           "player": "H. Vanaken",
-          "prob": 0.1189,
-          "xg": 0.127,
+          "prob": 0.1144,
+          "xg": 0.121,
           "position": "Midfielder"
         },
         {
           "player": "H. Vetlesen",
-          "prob": 0.1044,
-          "xg": 0.11,
+          "prob": 0.1004,
+          "xg": 0.106,
           "position": "Midfielder"
         },
         {
           "player": "L. Reis",
-          "prob": 0.1038,
-          "xg": 0.11,
+          "prob": 0.0999,
+          "xg": 0.105,
           "position": "Midfielder"
         }
       ]
@@ -1368,44 +1368,44 @@
       "home": 1,
       "away": 1
     },
-    "confidence": 0.3903,
+    "confidence": 0.387,
     "predictions": {
       "winner": {
-        "class": 0,
-        "confidence": 0.3903,
-        "prob": 0.3903
+        "class": 2,
+        "confidence": 0.387,
+        "prob": 0.387
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7635
+        "confidence": 0.7566
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.6107,
-        "prob": 0.6107
+        "confidence": 0.576,
+        "prob": 0.576
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8231
+        "confidence": 0.8005
       },
       "btts": {
         "class": 1,
-        "confidence": 0.63,
-        "prob": 0.63
+        "confidence": 0.6031,
+        "prob": 0.6031
       }
     },
     "correct_score_top3": [
       {
         "score": "1-1",
-        "prob": 0.1062
-      },
-      {
-        "score": "2-1",
-        "prob": 0.0849
+        "prob": 0.1122
       },
       {
         "score": "1-2",
-        "prob": 0.0828
+        "prob": 0.0853
+      },
+      {
+        "score": "2-1",
+        "prob": 0.083
       }
     ],
     "top_scorers": [
@@ -1439,64 +1439,64 @@
       "home": [
         {
           "player": "F. Di Michele Sanchez",
-          "prob": 0.4314,
-          "xg": 0.564,
+          "prob": 0.4068,
+          "xg": 0.522,
           "position": "Midfielder"
         },
         {
           "player": "S. Köhler",
-          "prob": 0.2626,
-          "xg": 0.305,
+          "prob": 0.2456,
+          "xg": 0.282,
           "position": "Midfielder"
         },
         {
           "player": "C. Conteh",
-          "prob": 0.1936,
-          "xg": 0.215,
+          "prob": 0.1805,
+          "xg": 0.199,
           "position": "Attacker"
         },
         {
           "player": "L. Tempelmann",
-          "prob": 0.0572,
-          "xg": 0.059,
+          "prob": 0.053,
+          "xg": 0.054,
           "position": "Midfielder"
         },
         {
           "player": "M. Aydın",
-          "prob": 0.0508,
-          "xg": 0.052,
+          "prob": 0.0471,
+          "xg": 0.048,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "M. Bero",
-          "prob": 0.2186,
-          "xg": 0.247,
+          "prob": 0.2137,
+          "xg": 0.24,
           "position": "Midfielder"
         },
         {
           "player": "M. Broschinski",
-          "prob": 0.1883,
-          "xg": 0.209,
+          "prob": 0.1839,
+          "xg": 0.203,
           "position": "Attacker"
         },
         {
           "player": "G. Holtmann",
-          "prob": 0.1881,
-          "xg": 0.208,
+          "prob": 0.1838,
+          "xg": 0.203,
           "position": "Attacker"
         },
         {
           "player": "I. Sissoko",
-          "prob": 0.188,
-          "xg": 0.208,
+          "prob": 0.1836,
+          "xg": 0.203,
           "position": "Attacker"
         },
         {
           "player": "S. Bamba",
-          "prob": 0.1645,
-          "xg": 0.18,
+          "prob": 0.1606,
+          "xg": 0.175,
           "position": "Attacker"
         }
       ]
@@ -1533,46 +1533,46 @@
     },
     "predicted_score": {
       "home": 1,
-      "away": 2
+      "away": 1
     },
-    "confidence": 0.5508,
+    "confidence": 0.5044,
     "predictions": {
       "winner": {
         "class": 2,
-        "confidence": 0.5508,
-        "prob": 0.5508
+        "confidence": 0.5044,
+        "prob": 0.5044
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7905
+        "confidence": 0.7784
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.6695,
-        "prob": 0.6695
+        "confidence": 0.643,
+        "prob": 0.643
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8589
+        "confidence": 0.8431
       },
       "btts": {
         "class": 1,
-        "confidence": 0.6489,
-        "prob": 0.6489
+        "confidence": 0.6403,
+        "prob": 0.6403
       }
     },
     "correct_score_top3": [
       {
-        "score": "1-2",
-        "prob": 0.0953
-      },
-      {
         "score": "1-1",
-        "prob": 0.0899
+        "prob": 0.0972
       },
       {
-        "score": "0-2",
-        "prob": 0.0711
+        "score": "1-2",
+        "prob": 0.0943
+      },
+      {
+        "score": "0-1",
+        "prob": 0.0704
       }
     ],
     "top_scorers": [
@@ -1606,64 +1606,64 @@
       "home": [
         {
           "player": "C. Gammelgaard",
-          "prob": 0.2658,
-          "xg": 0.309,
+          "prob": 0.2726,
+          "xg": 0.318,
           "position": "Attacker"
         },
         {
           "player": "M. Duelund",
-          "prob": 0.2432,
-          "xg": 0.279,
+          "prob": 0.2495,
+          "xg": 0.287,
           "position": "Midfielder"
         },
         {
           "player": "Amin Chiakha",
-          "prob": 0.2052,
-          "xg": 0.23,
+          "prob": 0.2106,
+          "xg": 0.237,
           "position": "Attacker"
         },
         {
           "player": "T. Lauritsen",
-          "prob": 0.142,
-          "xg": 0.153,
+          "prob": 0.1459,
+          "xg": 0.158,
           "position": "Midfielder"
         },
         {
           "player": "Abdoulaye Camara",
-          "prob": 0.1032,
-          "xg": 0.109,
+          "prob": 0.1061,
+          "xg": 0.112,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "Robert",
-          "prob": 0.3576,
-          "xg": 0.442,
+          "prob": 0.333,
+          "xg": 0.405,
           "position": "Midfielder"
         },
         {
           "player": "M. Mattsson",
-          "prob": 0.3523,
-          "xg": 0.434,
+          "prob": 0.328,
+          "xg": 0.397,
           "position": "Midfielder"
         },
         {
           "player": "A. Cornelius",
-          "prob": 0.2298,
-          "xg": 0.261,
+          "prob": 0.2125,
+          "xg": 0.239,
           "position": "Attacker"
         },
         {
           "player": "M. Elyounoussi",
-          "prob": 0.1593,
-          "xg": 0.174,
+          "prob": 0.1468,
+          "xg": 0.159,
           "position": "Midfielder"
         },
         {
           "player": "J. Larsson",
-          "prob": 0.1589,
-          "xg": 0.173,
+          "prob": 0.1464,
+          "xg": 0.158,
           "position": "Midfielder"
         }
       ]
@@ -1702,44 +1702,44 @@
       "home": 1,
       "away": 0
     },
-    "confidence": 0.4718,
+    "confidence": 0.4906,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4718,
-        "prob": 0.4718
+        "confidence": 0.4906,
+        "prob": 0.4906
       },
       "double_chance": {
         "class": 0,
-        "confidence": 0.7378
+        "confidence": 0.7636
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4402,
-        "prob": 0.4402
+        "confidence": 0.3983,
+        "prob": 0.3983
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.6999
+        "confidence": 0.6643
       },
       "btts": {
         "class": 0,
-        "confidence": 0.4822,
-        "prob": 0.4822
+        "confidence": 0.4408,
+        "prob": 0.4408
       }
     },
     "correct_score_top3": [
       {
         "score": "1-0",
-        "prob": 0.1256
+        "prob": 0.1433
       },
       {
         "score": "1-1",
-        "prob": 0.1256
+        "prob": 0.1261
       },
       {
-        "score": "2-0",
-        "prob": 0.0904
+        "score": "0-0",
+        "prob": 0.1024
       }
     ],
     "top_scorers": [
@@ -1773,64 +1773,64 @@
       "home": [
         {
           "player": "Urko Izeta",
-          "prob": 0.5174,
-          "xg": 0.729,
+          "prob": 0.5075,
+          "xg": 0.708,
           "position": "Attacker"
         },
         {
           "player": "Gorka Guruzeta",
-          "prob": 0.3073,
-          "xg": 0.367,
+          "prob": 0.3002,
+          "xg": 0.357,
           "position": "Attacker"
         },
         {
           "player": "Mikel Vesga",
-          "prob": 0.0275,
-          "xg": 0.028,
+          "prob": 0.0268,
+          "xg": 0.027,
           "position": "Midfielder"
         },
         {
           "player": "Unai Vencedor",
-          "prob": 0.0253,
-          "xg": 0.026,
+          "prob": 0.0246,
+          "xg": 0.025,
           "position": "Midfielder"
         },
         {
           "player": "Mikel Jauregizar",
-          "prob": 0.0253,
-          "xg": 0.026,
+          "prob": 0.0246,
+          "xg": 0.025,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "S. Rondón",
-          "prob": 0.2617,
-          "xg": 0.303,
+          "prob": 0.2343,
+          "xg": 0.267,
           "position": "Attacker"
         },
         {
           "player": "J. Brekalo",
-          "prob": 0.1431,
-          "xg": 0.154,
+          "prob": 0.127,
+          "xg": 0.136,
           "position": "Midfielder"
         },
         {
           "player": "L. Ilić",
-          "prob": 0.1243,
-          "xg": 0.133,
+          "prob": 0.1102,
+          "xg": 0.117,
           "position": "Attacker"
         },
         {
           "player": "David Carmo",
-          "prob": 0.0794,
-          "xg": 0.083,
+          "prob": 0.0702,
+          "xg": 0.073,
           "position": "Defender"
         },
         {
           "player": "Santi Cazorla",
-          "prob": 0.0307,
-          "xg": 0.031,
+          "prob": 0.0271,
+          "xg": 0.027,
           "position": "Midfielder"
         }
       ]
@@ -2203,44 +2203,44 @@
       "home": 1,
       "away": 0
     },
-    "confidence": 0.5316,
+    "confidence": 0.5183,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.5316,
-        "prob": 0.5316
+        "confidence": 0.5183,
+        "prob": 0.5183
       },
       "double_chance": {
         "class": 0,
-        "confidence": 0.8192
+        "confidence": 0.827
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.3122,
-        "prob": 0.3122
+        "confidence": 0.2585,
+        "prob": 0.2585
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.5829
+        "confidence": 0.525
       },
       "btts": {
         "class": 0,
-        "confidence": 0.3464,
-        "prob": 0.3464
+        "confidence": 0.2996,
+        "prob": 0.2996
       }
     },
     "correct_score_top3": [
       {
         "score": "1-0",
-        "prob": 0.186
+        "prob": 0.2065
       },
       {
         "score": "0-0",
-        "prob": 0.1409
+        "prob": 0.1721
       },
       {
         "score": "2-0",
-        "prob": 0.1228
+        "prob": 0.1239
       }
     ],
     "top_scorers": [
@@ -2274,64 +2274,64 @@
       "home": [
         {
           "player": "Loren Morón",
-          "prob": 0.2316,
-          "xg": 0.263,
+          "prob": 0.213,
+          "xg": 0.239,
           "position": "Attacker"
         },
         {
           "player": "Monchu",
-          "prob": 0.1586,
-          "xg": 0.173,
+          "prob": 0.1453,
+          "xg": 0.157,
           "position": "Midfielder"
         },
         {
           "player": "Dudu",
-          "prob": 0.1493,
-          "xg": 0.162,
+          "prob": 0.1367,
+          "xg": 0.147,
           "position": "Midfielder"
         },
         {
           "player": "G. Misehouy",
-          "prob": 0.1476,
-          "xg": 0.16,
+          "prob": 0.1351,
+          "xg": 0.145,
           "position": "Midfielder"
         },
         {
           "player": "A. Donis",
-          "prob": 0.1088,
-          "xg": 0.115,
+          "prob": 0.0994,
+          "xg": 0.105,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "F. Macheda",
-          "prob": 0.1275,
-          "xg": 0.136,
+          "prob": 0.1125,
+          "xg": 0.119,
           "position": "Attacker"
         },
         {
           "player": "J. Bartolo",
-          "prob": 0.1266,
-          "xg": 0.135,
+          "prob": 0.1117,
+          "xg": 0.118,
           "position": "Attacker"
         },
         {
           "player": "N. Kaltsas",
-          "prob": 0.0593,
-          "xg": 0.061,
+          "prob": 0.052,
+          "xg": 0.053,
           "position": "Midfielder"
         },
         {
           "player": "Eder González",
-          "prob": 0.0591,
-          "xg": 0.061,
+          "prob": 0.0519,
+          "xg": 0.053,
           "position": "Midfielder"
         },
         {
           "player": "D. Emmanouilidis",
-          "prob": 0.0588,
-          "xg": 0.061,
+          "prob": 0.0517,
+          "xg": 0.053,
           "position": "Midfielder"
         }
       ]
@@ -2367,47 +2367,47 @@
       }
     },
     "predicted_score": {
-      "home": 1,
+      "home": 0,
       "away": 1
     },
-    "confidence": 0.4172,
+    "confidence": 0.4924,
     "predictions": {
       "winner": {
         "class": 2,
-        "confidence": 0.4172,
-        "prob": 0.4172
+        "confidence": 0.4924,
+        "prob": 0.4924
       },
       "double_chance": {
-        "class": 1,
-        "confidence": 0.7292
+        "class": 2,
+        "confidence": 0.7528
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4455,
-        "prob": 0.4455
+        "confidence": 0.4505,
+        "prob": 0.4505
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7042
+        "confidence": 0.7083
       },
       "btts": {
         "class": 0,
-        "confidence": 0.4972,
-        "prob": 0.4972
+        "confidence": 0.4852,
+        "prob": 0.4852
       }
     },
     "correct_score_top3": [
       {
-        "score": "1-1",
-        "prob": 0.1283
-      },
-      {
         "score": "0-1",
-        "prob": 0.1146
+        "prob": 0.1257
       },
       {
-        "score": "1-0",
-        "prob": 0.0957
+        "score": "1-1",
+        "prob": 0.1232
+      },
+      {
+        "score": "0-2",
+        "prob": 0.0943
       }
     ],
     "top_scorers": [
@@ -2441,64 +2441,64 @@
       "home": [
         {
           "player": "A. Muçolli",
-          "prob": 0.2611,
-          "xg": 0.303,
+          "prob": 0.2326,
+          "xg": 0.265,
           "position": "Attacker"
         },
         {
           "player": "O. Buch",
-          "prob": 0.2021,
-          "xg": 0.226,
+          "prob": 0.1793,
+          "xg": 0.198,
           "position": "Attacker"
         },
         {
           "player": "G. Marcussen",
-          "prob": 0.173,
-          "xg": 0.19,
+          "prob": 0.1532,
+          "xg": 0.166,
           "position": "Midfielder"
         },
         {
           "player": "E. Simonsen",
-          "prob": 0.0962,
-          "xg": 0.101,
+          "prob": 0.0847,
+          "xg": 0.088,
           "position": "Midfielder"
         },
         {
           "player": "P. Egelund",
-          "prob": 0.0805,
-          "xg": 0.084,
+          "prob": 0.0708,
+          "xg": 0.073,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "Y. Njoh",
-          "prob": 0.247,
-          "xg": 0.284,
+          "prob": 0.2721,
+          "xg": 0.318,
           "position": "Midfielder"
         },
         {
           "player": "C. Nouck",
-          "prob": 0.211,
-          "xg": 0.237,
+          "prob": 0.233,
+          "xg": 0.265,
           "position": "Attacker"
         },
         {
           "player": "B. Brahimi",
-          "prob": 0.1605,
-          "xg": 0.175,
+          "prob": 0.1779,
+          "xg": 0.196,
           "position": "Midfielder"
         },
         {
           "player": "Frederik Damkjer",
-          "prob": 0.1352,
-          "xg": 0.145,
+          "prob": 0.1501,
+          "xg": 0.163,
           "position": "Midfielder"
         },
         {
           "player": "A. Ementa",
-          "prob": 0.117,
-          "xg": 0.124,
+          "prob": 0.1301,
+          "xg": 0.139,
           "position": "Attacker"
         }
       ]
@@ -2537,44 +2537,44 @@
       "home": 1,
       "away": 1
     },
-    "confidence": 0.4663,
+    "confidence": 0.5087,
     "predictions": {
       "winner": {
         "class": 2,
-        "confidence": 0.4663,
-        "prob": 0.4663
+        "confidence": 0.5087,
+        "prob": 0.5087
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7544
+        "confidence": 0.768
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.5392,
-        "prob": 0.5392
+        "confidence": 0.5801,
+        "prob": 0.5801
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7753
+        "confidence": 0.8033
       },
       "btts": {
         "class": 1,
-        "confidence": 0.565,
-        "prob": 0.565
+        "confidence": 0.5879,
+        "prob": 0.5879
       }
     },
     "correct_score_top3": [
       {
         "score": "1-1",
-        "prob": 0.1157
-      },
-      {
-        "score": "0-1",
-        "prob": 0.0948
+        "prob": 0.1075
       },
       {
         "score": "1-2",
-        "prob": 0.0937
+        "prob": 0.0967
+      },
+      {
+        "score": "0-1",
+        "prob": 0.0881
       }
     ],
     "top_scorers": [
@@ -2640,32 +2640,32 @@
       "away": [
         {
           "player": "Gelson Martins",
-          "prob": 0.3891,
-          "xg": 0.493,
+          "prob": 0.4216,
+          "xg": 0.547,
           "position": "Midfielder"
         },
         {
           "player": "Daniel Podence",
-          "prob": 0.0816,
-          "xg": 0.085,
+          "prob": 0.0903,
+          "xg": 0.095,
           "position": "Midfielder"
         },
         {
           "player": "Chiquinho",
-          "prob": 0.0808,
-          "xg": 0.084,
+          "prob": 0.0893,
+          "xg": 0.094,
           "position": "Midfielder"
         },
         {
           "player": "R. Cabella",
-          "prob": 0.0804,
-          "xg": 0.084,
+          "prob": 0.0889,
+          "xg": 0.093,
           "position": "Midfielder"
         },
         {
           "player": "S. Hezze",
-          "prob": 0.0795,
-          "xg": 0.083,
+          "prob": 0.0879,
+          "xg": 0.092,
           "position": "Midfielder"
         }
       ]
@@ -2704,44 +2704,44 @@
       "home": 2,
       "away": 1
     },
-    "confidence": 0.59,
+    "confidence": 0.6309,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.59,
-        "prob": 0.59
+        "confidence": 0.6309,
+        "prob": 0.6309
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.8196
+        "confidence": 0.8208
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.8105,
-        "prob": 0.8105
+        "confidence": 0.7546,
+        "prob": 0.7546
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.9321
+        "confidence": 0.9053
       },
       "btts": {
         "class": 1,
-        "confidence": 0.7586,
-        "prob": 0.7586
+        "confidence": 0.6917,
+        "prob": 0.6917
       }
     },
     "correct_score_top3": [
       {
         "score": "2-1",
-        "prob": 0.0781
+        "prob": 0.0887
       },
       {
         "score": "3-1",
-        "prob": 0.0708
+        "prob": 0.0769
       },
       {
-        "score": "2-2",
-        "prob": 0.0656
+        "score": "1-1",
+        "prob": 0.0683
       }
     ],
     "top_scorers": [
@@ -2775,64 +2775,64 @@
       "home": [
         {
           "player": "Koki Ogawa",
-          "prob": 0.4553,
-          "xg": 0.607,
+          "prob": 0.4405,
+          "xg": 0.581,
           "position": "Attacker"
         },
         {
           "player": "T. Chery",
-          "prob": 0.3734,
-          "xg": 0.467,
+          "prob": 0.3604,
+          "xg": 0.447,
           "position": "Attacker"
         },
         {
           "player": "B. Linssen",
-          "prob": 0.3721,
-          "xg": 0.465,
+          "prob": 0.359,
+          "xg": 0.445,
           "position": "Attacker"
         },
         {
           "player": "B. Önal",
-          "prob": 0.3156,
-          "xg": 0.379,
+          "prob": 0.304,
+          "xg": 0.362,
           "position": "Midfielder"
         },
         {
           "player": "N. Lebreton",
-          "prob": 0.2302,
-          "xg": 0.262,
+          "prob": 0.2212,
+          "xg": 0.25,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "T. Oosting",
-          "prob": 0.3472,
-          "xg": 0.427,
+          "prob": 0.2956,
+          "xg": 0.35,
           "position": "Midfielder"
         },
         {
           "player": "Y. Taha",
-          "prob": 0.3045,
-          "xg": 0.363,
+          "prob": 0.2579,
+          "xg": 0.298,
           "position": "Midfielder"
         },
         {
           "player": "T. van Bergen",
-          "prob": 0.2611,
-          "xg": 0.303,
+          "prob": 0.2201,
+          "xg": 0.249,
           "position": "Attacker"
         },
         {
           "player": "S. Resink",
-          "prob": 0.06,
-          "xg": 0.062,
+          "prob": 0.0496,
+          "xg": 0.051,
           "position": "Midfielder"
         },
         {
           "player": "J. Schreuders",
-          "prob": 0.06,
-          "xg": 0.062,
+          "prob": 0.0496,
+          "xg": 0.051,
           "position": "Midfielder"
         }
       ]
@@ -2869,46 +2869,46 @@
     },
     "predicted_score": {
       "home": 1,
-      "away": 1
+      "away": 0
     },
-    "confidence": 0.437,
+    "confidence": 0.4394,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.437,
-        "prob": 0.437
+        "confidence": 0.4394,
+        "prob": 0.4394
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.731
+        "confidence": 0.7222
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4455,
-        "prob": 0.4455
+        "confidence": 0.4089,
+        "prob": 0.4089
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7042
+        "confidence": 0.6736
       },
       "btts": {
         "class": 0,
-        "confidence": 0.4941,
-        "prob": 0.4941
+        "confidence": 0.4632,
+        "prob": 0.4632
       }
     },
     "correct_score_top3": [
       {
-        "score": "1-1",
-        "prob": 0.1274
-      },
-      {
         "score": "1-0",
-        "prob": 0.118
+        "prob": 0.1298
       },
       {
-        "score": "0-1",
-        "prob": 0.0923
+        "score": "1-1",
+        "prob": 0.1298
+      },
+      {
+        "score": "0-0",
+        "prob": 0.0983
       }
     ],
     "top_scorers": [
@@ -2942,64 +2942,64 @@
       "home": [
         {
           "player": "S. Adeniran",
-          "prob": 0.2135,
-          "xg": 0.24,
+          "prob": 0.2052,
+          "xg": 0.23,
           "position": "Attacker"
         },
         {
           "player": "E. Havel",
-          "prob": 0.2121,
-          "xg": 0.238,
+          "prob": 0.2039,
+          "xg": 0.228,
           "position": "Attacker"
         },
         {
           "player": "M. Usor",
-          "prob": 0.1754,
-          "xg": 0.193,
+          "prob": 0.1685,
+          "xg": 0.185,
           "position": "Midfielder"
         },
         {
           "player": "C. Lang",
-          "prob": 0.1744,
-          "xg": 0.192,
+          "prob": 0.1675,
+          "xg": 0.183,
           "position": "Midfielder"
         },
         {
           "player": "K. Daněk",
-          "prob": 0.102,
-          "xg": 0.108,
+          "prob": 0.0978,
+          "xg": 0.103,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "P. Greil",
-          "prob": 0.2831,
-          "xg": 0.333,
+          "prob": 0.2652,
+          "xg": 0.308,
           "position": "Midfielder"
         },
         {
           "player": "O. Diawara",
-          "prob": 0.1976,
-          "xg": 0.22,
+          "prob": 0.1844,
+          "xg": 0.204,
           "position": "Attacker"
         },
         {
           "player": "A. Gorgon",
-          "prob": 0.0871,
-          "xg": 0.091,
+          "prob": 0.0809,
+          "xg": 0.084,
           "position": "Midfielder"
         },
         {
           "player": "S. Hrstić",
-          "prob": 0.0753,
-          "xg": 0.078,
+          "prob": 0.0699,
+          "xg": 0.072,
           "position": "Attacker"
         },
         {
           "player": "Erkin Yalcin",
-          "prob": 0.0746,
-          "xg": 0.078,
+          "prob": 0.0693,
+          "xg": 0.072,
           "position": "Attacker"
         }
       ]
@@ -3873,44 +3873,44 @@
       "home": 1,
       "away": 1
     },
-    "confidence": 0.4696,
+    "confidence": 0.4594,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4696,
-        "prob": 0.4696
+        "confidence": 0.4594,
+        "prob": 0.4594
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7728
+        "confidence": 0.7641
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.6352,
-        "prob": 0.6352
+        "confidence": 0.5935,
+        "prob": 0.5935
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8384
+        "confidence": 0.812
       },
       "btts": {
         "class": 1,
-        "confidence": 0.6414,
-        "prob": 0.6414
+        "confidence": 0.6099,
+        "prob": 0.6099
       }
     },
     "correct_score_top3": [
       {
         "score": "1-1",
-        "prob": 0.1001
+        "prob": 0.1078
       },
       {
         "score": "2-1",
-        "prob": 0.0921
+        "prob": 0.0927
       },
       {
-        "score": "1-2",
-        "prob": 0.072
+        "score": "1-0",
+        "prob": 0.0793
       }
     ],
     "top_scorers": [
@@ -3944,64 +3944,64 @@
       "home": [
         {
           "player": "A. Tosin",
-          "prob": 0.3004,
-          "xg": 0.357,
+          "prob": 0.2839,
+          "xg": 0.334,
           "position": "Attacker"
         },
         {
           "player": "P. Pagis",
-          "prob": 0.2972,
-          "xg": 0.353,
+          "prob": 0.2809,
+          "xg": 0.33,
           "position": "Attacker"
         },
         {
           "player": "T. Le Bris",
-          "prob": 0.2551,
-          "xg": 0.294,
+          "prob": 0.2406,
+          "xg": 0.275,
           "position": "Midfielder"
         },
         {
           "player": "S. Soumano",
-          "prob": 0.2142,
-          "xg": 0.241,
+          "prob": 0.2017,
+          "xg": 0.225,
           "position": "Attacker"
         },
         {
           "player": "K. Kouassi",
-          "prob": 0.1476,
-          "xg": 0.16,
+          "prob": 0.1387,
+          "xg": 0.149,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "Emersonn",
-          "prob": 0.313,
-          "xg": 0.375,
-          "position": "Attacker"
-        },
-        {
-          "player": "N. Edjouma",
-          "prob": 0.2991,
+          "prob": 0.2985,
           "xg": 0.355,
           "position": "Attacker"
         },
         {
+          "player": "N. Edjouma",
+          "prob": 0.2852,
+          "xg": 0.336,
+          "position": "Attacker"
+        },
+        {
           "player": "A. Vossah",
-          "prob": 0.1783,
-          "xg": 0.196,
+          "prob": 0.1693,
+          "xg": 0.185,
           "position": "Midfielder"
         },
         {
           "player": "C. Cresswell",
-          "prob": 0.0855,
-          "xg": 0.089,
+          "prob": 0.0809,
+          "xg": 0.084,
           "position": "Defender"
         },
         {
           "player": "M. Sauer",
-          "prob": 0.0407,
-          "xg": 0.042,
+          "prob": 0.0385,
+          "xg": 0.039,
           "position": "Midfielder"
         }
       ]
@@ -4040,44 +4040,44 @@
       "home": 0,
       "away": 0
     },
-    "confidence": 0.4146,
+    "confidence": 0.4284,
     "predictions": {
       "winner": {
-        "class": 1,
-        "confidence": 0.4146,
-        "prob": 0.4146
+        "class": 2,
+        "confidence": 0.4284,
+        "prob": 0.4284
       },
       "double_chance": {
         "class": 2,
-        "confidence": 0.7833
+        "confidence": 0.7972
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.1205,
-        "prob": 0.1205
+        "confidence": 0.1713,
+        "prob": 0.1713
       },
       "over_1_5": {
         "class": 0,
-        "confidence": 0.3374
+        "confidence": 0.415
       },
       "btts": {
         "class": 0,
-        "confidence": 0.1957,
-        "prob": 0.1957
+        "confidence": 0.2406,
+        "prob": 0.2406
       }
     },
     "correct_score_top3": [
       {
         "score": "0-0",
-        "prob": 0.3012
+        "prob": 0.2417
       },
       {
         "score": "0-1",
-        "prob": 0.2169
+        "prob": 0.2176
       },
       {
         "score": "1-0",
-        "prob": 0.1446
+        "prob": 0.1257
       }
     ],
     "top_scorers": [
@@ -4111,64 +4111,64 @@
       "home": [
         {
           "player": "N. Stanciu",
-          "prob": 0.0865,
-          "xg": 0.09,
+          "prob": 0.0934,
+          "xg": 0.098,
           "position": "Midfielder"
         },
         {
           "player": "M. Frendrup",
-          "prob": 0.0861,
-          "xg": 0.09,
+          "prob": 0.0929,
+          "xg": 0.098,
           "position": "Midfielder"
         },
         {
           "player": "V. Carboni",
-          "prob": 0.0859,
-          "xg": 0.09,
+          "prob": 0.0927,
+          "xg": 0.097,
           "position": "Midfielder"
         },
         {
           "player": "J. Ekhator",
-          "prob": 0.0532,
-          "xg": 0.055,
+          "prob": 0.0575,
+          "xg": 0.059,
           "position": "Attacker"
         },
         {
           "player": "A. Marcandalli",
-          "prob": 0.037,
-          "xg": 0.038,
+          "prob": 0.04,
+          "xg": 0.041,
           "position": "Defender"
         }
       ],
       "away": [
         {
           "player": "M. Kean",
-          "prob": 0.2048,
-          "xg": 0.229,
+          "prob": 0.249,
+          "xg": 0.286,
           "position": "Attacker"
         },
         {
           "player": "E. Džeko",
-          "prob": 0.0829,
-          "xg": 0.087,
+          "prob": 0.1025,
+          "xg": 0.108,
           "position": "Attacker"
         },
         {
           "player": "A. Guðmundsson",
-          "prob": 0.0791,
-          "xg": 0.082,
+          "prob": 0.0979,
+          "xg": 0.103,
           "position": "Attacker"
         },
         {
           "player": "A. Richardson",
-          "prob": 0.0582,
-          "xg": 0.06,
+          "prob": 0.0722,
+          "xg": 0.075,
           "position": "Midfielder"
         },
         {
           "player": "R. Gosens",
-          "prob": 0.0536,
-          "xg": 0.055,
+          "prob": 0.0665,
+          "xg": 0.069,
           "position": "Midfielder"
         }
       ]
@@ -4207,44 +4207,44 @@
       "home": 1,
       "away": 0
     },
-    "confidence": 0.4708,
+    "confidence": 0.4806,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4708,
-        "prob": 0.4708
+        "confidence": 0.4806,
+        "prob": 0.4806
       },
       "double_chance": {
         "class": 0,
-        "confidence": 0.7419
+        "confidence": 0.7528
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4194,
-        "prob": 0.4194
+        "confidence": 0.4089,
+        "prob": 0.4089
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.6825
+        "confidence": 0.6735
       },
       "btts": {
         "class": 0,
-        "confidence": 0.4648,
-        "prob": 0.4648
+        "confidence": 0.4531,
+        "prob": 0.4531
       }
     },
     "correct_score_top3": [
       {
         "score": "1-0",
-        "prob": 0.1323
+        "prob": 0.1377
       },
       {
         "score": "1-1",
-        "prob": 0.127
+        "prob": 0.1267
       },
       {
         "score": "0-0",
-        "prob": 0.0945
+        "prob": 0.0983
       }
     ],
     "top_scorers": [
@@ -4310,32 +4310,32 @@
       "away": [
         {
           "player": "S. McTominay",
-          "prob": 0.2776,
-          "xg": 0.325,
+          "prob": 0.2678,
+          "xg": 0.312,
           "position": "Midfielder"
         },
         {
           "player": "R. Højlund",
-          "prob": 0.2338,
-          "xg": 0.266,
+          "prob": 0.2252,
+          "xg": 0.255,
           "position": "Attacker"
         },
         {
           "player": "M. Folorunsho",
-          "prob": 0.0292,
-          "xg": 0.03,
+          "prob": 0.028,
+          "xg": 0.028,
           "position": "Midfielder"
         },
         {
           "player": "A. Zambo Anguissa",
-          "prob": 0.0291,
-          "xg": 0.03,
+          "prob": 0.0279,
+          "xg": 0.028,
           "position": "Midfielder"
         },
         {
           "player": "M. Politano",
-          "prob": 0.0287,
-          "xg": 0.029,
+          "prob": 0.0275,
+          "xg": 0.028,
           "position": "Midfielder"
         }
       ]
@@ -4541,44 +4541,44 @@
       "home": 1,
       "away": 1
     },
-    "confidence": 0.4144,
+    "confidence": 0.3941,
     "predictions": {
       "winner": {
-        "class": 0,
-        "confidence": 0.4144,
-        "prob": 0.4144
+        "class": 2,
+        "confidence": 0.3941,
+        "prob": 0.3941
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7812
+        "confidence": 0.7802
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.7026,
-        "prob": 0.7026
+        "confidence": 0.6992,
+        "prob": 0.6992
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8775
+        "confidence": 0.8756
       },
       "btts": {
         "class": 1,
-        "confidence": 0.7009,
-        "prob": 0.7009
+        "confidence": 0.6987,
+        "prob": 0.6987
       }
     },
     "correct_score_top3": [
       {
         "score": "1-1",
-        "prob": 0.0873
-      },
-      {
-        "score": "2-1",
-        "prob": 0.0821
+        "prob": 0.0882
       },
       {
         "score": "1-2",
-        "prob": 0.0769
+        "prob": 0.0803
+      },
+      {
+        "score": "2-1",
+        "prob": 0.0794
       }
     ],
     "top_scorers": [
@@ -4613,32 +4613,32 @@
       "away": [
         {
           "player": "Á. Zamora",
-          "prob": 0.4189,
-          "xg": 0.543,
+          "prob": 0.4295,
+          "xg": 0.561,
           "position": "Midfielder"
         },
         {
           "player": "André Clóvis",
-          "prob": 0.367,
-          "xg": 0.457,
+          "prob": 0.3767,
+          "xg": 0.473,
           "position": "Attacker"
         },
         {
           "player": "S. Koné",
-          "prob": 0.24,
-          "xg": 0.274,
+          "prob": 0.2471,
+          "xg": 0.284,
           "position": "Midfielder"
         },
         {
           "player": "S. Messeguem",
-          "prob": 0.0487,
-          "xg": 0.05,
+          "prob": 0.0503,
+          "xg": 0.052,
           "position": "Midfielder"
         },
         {
           "player": "G. Costa",
-          "prob": 0.0462,
-          "xg": 0.047,
+          "prob": 0.0477,
+          "xg": 0.049,
           "position": "Midfielder"
         }
       ]
@@ -4842,46 +4842,46 @@
     },
     "predicted_score": {
       "home": 1,
-      "away": 1
+      "away": 0
     },
-    "confidence": 0.508,
+    "confidence": 0.5227,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.508,
-        "prob": 0.508
+        "confidence": 0.5227,
+        "prob": 0.5227
       },
       "double_chance": {
         "class": 0,
-        "confidence": 0.7582
+        "confidence": 0.7691
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.4858,
-        "prob": 0.4858
+        "confidence": 0.4907,
+        "prob": 0.4907
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7361
+        "confidence": 0.7398
       },
       "btts": {
         "class": 1,
-        "confidence": 0.5101,
-        "prob": 0.5101
+        "confidence": 0.5093,
+        "prob": 0.5093
       }
     },
     "correct_score_top3": [
       {
-        "score": "1-1",
-        "prob": 0.119
-      },
-      {
         "score": "1-0",
-        "prob": 0.1167
+        "prob": 0.1172
       },
       {
-        "score": "2-1",
-        "prob": 0.0952
+        "score": "1-1",
+        "prob": 0.1172
+      },
+      {
+        "score": "2-0",
+        "prob": 0.0961
       }
     ],
     "top_scorers": [
@@ -4915,64 +4915,64 @@
       "home": [
         {
           "player": "V. Grifo",
-          "prob": 0.2629,
-          "xg": 0.305,
+          "prob": 0.2685,
+          "xg": 0.313,
           "position": "Midfielder"
         },
         {
           "player": "L. Höler",
-          "prob": 0.2126,
-          "xg": 0.239,
+          "prob": 0.2173,
+          "xg": 0.245,
           "position": "Attacker"
         },
         {
           "player": "E. Dinkçi",
-          "prob": 0.2079,
-          "xg": 0.233,
+          "prob": 0.2125,
+          "xg": 0.239,
           "position": "Attacker"
         },
         {
           "player": "I. Matanović",
-          "prob": 0.2,
-          "xg": 0.223,
+          "prob": 0.2044,
+          "xg": 0.229,
           "position": "Attacker"
         },
         {
           "player": "D. Scherhant",
-          "prob": 0.1892,
-          "xg": 0.21,
+          "prob": 0.1935,
+          "xg": 0.215,
           "position": "Attacker"
         }
       ],
       "away": [
         {
           "player": "Mathias Pereira Lage",
-          "prob": 0.2416,
-          "xg": 0.277,
+          "prob": 0.2375,
+          "xg": 0.271,
           "position": "Attacker"
         },
         {
           "player": "H. Wahl",
-          "prob": 0.1359,
-          "xg": 0.146,
+          "prob": 0.1334,
+          "xg": 0.143,
           "position": "Defender"
         },
         {
           "player": "J. Fujita",
-          "prob": 0.0568,
-          "xg": 0.058,
+          "prob": 0.0557,
+          "xg": 0.057,
           "position": "Midfielder"
         },
         {
           "player": "L. Oppie",
-          "prob": 0.0568,
-          "xg": 0.058,
+          "prob": 0.0557,
+          "xg": 0.057,
           "position": "Midfielder"
         },
         {
           "player": "J. Sands",
-          "prob": 0.0562,
-          "xg": 0.058,
+          "prob": 0.0551,
+          "xg": 0.057,
           "position": "Midfielder"
         }
       ]
@@ -5345,44 +5345,44 @@
       "home": 2,
       "away": 1
     },
-    "confidence": 0.5893,
+    "confidence": 0.5948,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.5893,
-        "prob": 0.5893
+        "confidence": 0.5948,
+        "prob": 0.5948
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.8048
+        "confidence": 0.8034
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.7115,
-        "prob": 0.7115
+        "confidence": 0.6943,
+        "prob": 0.6943
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8825
+        "confidence": 0.8731
       },
       "btts": {
         "class": 1,
-        "confidence": 0.6709,
-        "prob": 0.6709
+        "confidence": 0.6537,
+        "prob": 0.6537
       }
     },
     "correct_score_top3": [
       {
         "score": "2-1",
-        "prob": 0.0931
+        "prob": 0.0949
       },
       {
         "score": "1-1",
-        "prob": 0.0795
+        "prob": 0.0825
       },
       {
-        "score": "3-1",
-        "prob": 0.0726
+        "score": "2-0",
+        "prob": 0.073
       }
     ],
     "top_scorers": [
@@ -5416,64 +5416,64 @@
       "home": [
         {
           "player": "L. Shankland",
-          "prob": 0.3884,
-          "xg": 0.492,
+          "prob": 0.3832,
+          "xg": 0.483,
           "position": "Attacker"
         },
         {
           "player": "A. Kyziridis",
-          "prob": 0.3648,
-          "xg": 0.454,
+          "prob": 0.3598,
+          "xg": 0.446,
           "position": "Attacker"
         },
         {
           "player": "S. Kartum",
-          "prob": 0.2278,
-          "xg": 0.258,
+          "prob": 0.2244,
+          "xg": 0.254,
           "position": "Midfielder"
         },
         {
           "player": "Cláudio Braga",
-          "prob": 0.1897,
-          "xg": 0.21,
+          "prob": 0.1868,
+          "xg": 0.207,
           "position": "Attacker"
         },
         {
           "player": "Y. Dhanda",
-          "prob": 0.1737,
-          "xg": 0.191,
+          "prob": 0.171,
+          "xg": 0.188,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "M. Watters",
-          "prob": 0.3606,
-          "xg": 0.447,
+          "prob": 0.3479,
+          "xg": 0.428,
           "position": "Attacker"
         },
         {
           "player": "K. Trapanovski",
-          "prob": 0.2428,
-          "xg": 0.278,
+          "prob": 0.2335,
+          "xg": 0.266,
           "position": "Midfielder"
         },
         {
           "player": "Luca Stephenson",
-          "prob": 0.1109,
-          "xg": 0.118,
+          "prob": 0.1063,
+          "xg": 0.112,
           "position": "Defender"
         },
         {
           "player": "J. Eskesen",
-          "prob": 0.1054,
-          "xg": 0.111,
+          "prob": 0.101,
+          "xg": 0.107,
           "position": "Midfielder"
         },
         {
           "player": "R. Strain",
-          "prob": 0.0703,
-          "xg": 0.073,
+          "prob": 0.0673,
+          "xg": 0.07,
           "position": "Defender"
         }
       ]
@@ -7986,44 +7986,44 @@
       "home": 2,
       "away": 1
     },
-    "confidence": 0.4795,
+    "confidence": 0.5388,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4795,
-        "prob": 0.4795
+        "confidence": 0.5388,
+        "prob": 0.5388
       },
       "double_chance": {
         "class": 1,
-        "confidence": 0.7855
+        "confidence": 0.7852
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.7024,
-        "prob": 0.7024
+        "confidence": 0.6506,
+        "prob": 0.6506
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.8774
+        "confidence": 0.8477
       },
       "btts": {
         "class": 1,
-        "confidence": 0.6936,
-        "prob": 0.6936
+        "confidence": 0.637,
+        "prob": 0.637
       }
     },
     "correct_score_top3": [
       {
         "score": "2-1",
-        "prob": 0.088
+        "prob": 0.0959
       },
       {
         "score": "1-1",
-        "prob": 0.0862
+        "prob": 0.094
       },
       {
-        "score": "2-2",
-        "prob": 0.0704
+        "score": "2-0",
+        "prob": 0.0727
       }
     ],
     "top_scorers": [
@@ -8089,32 +8089,32 @@
       "away": [
         {
           "player": "H. Igamane",
-          "prob": 0.4002,
-          "xg": 0.511,
+          "prob": 0.3441,
+          "xg": 0.422,
           "position": "Attacker"
         },
         {
           "player": "E. Mbappé",
-          "prob": 0.2558,
-          "xg": 0.295,
+          "prob": 0.2163,
+          "xg": 0.244,
           "position": "Midfielder"
         },
         {
           "player": "H. Haraldsson",
-          "prob": 0.2006,
-          "xg": 0.224,
+          "prob": 0.1687,
+          "xg": 0.185,
           "position": "Midfielder"
         },
         {
           "player": "O. Giroud",
-          "prob": 0.1672,
-          "xg": 0.183,
+          "prob": 0.1401,
+          "xg": 0.151,
           "position": "Attacker"
         },
         {
           "player": "N. Bentaleb",
-          "prob": 0.0378,
-          "xg": 0.039,
+          "prob": 0.0313,
+          "xg": 0.032,
           "position": "Midfielder"
         }
       ]
@@ -8654,44 +8654,44 @@
       "home": 1,
       "away": 1
     },
-    "confidence": 0.4827,
+    "confidence": 0.4986,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.4827,
-        "prob": 0.4827
+        "confidence": 0.4986,
+        "prob": 0.4986
       },
       "double_chance": {
-        "class": 0,
-        "confidence": 0.7424
+        "class": 1,
+        "confidence": 0.7522
       },
       "over_2_5": {
-        "class": 0,
-        "confidence": 0.4608,
-        "prob": 0.4608
+        "class": 1,
+        "confidence": 0.5056,
+        "prob": 0.5056
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.7165
+        "confidence": 0.7509
       },
       "btts": {
-        "class": 0,
-        "confidence": 0.4966,
-        "prob": 0.4966
+        "class": 1,
+        "confidence": 0.5295,
+        "prob": 0.5295
       }
     },
     "correct_score_top3": [
       {
         "score": "1-1",
-        "prob": 0.1232
+        "prob": 0.1178
       },
       {
         "score": "1-0",
-        "prob": 0.1208
+        "prob": 0.109
       },
       {
         "score": "2-1",
-        "prob": 0.0924
+        "prob": 0.0954
       }
     ],
     "top_scorers": [
@@ -8725,64 +8725,64 @@
       "home": [
         {
           "player": "C. Führich",
-          "prob": 0.2986,
-          "xg": 0.355,
+          "prob": 0.3182,
+          "xg": 0.383,
           "position": "Midfielder"
         },
         {
           "player": "A. Stiller",
-          "prob": 0.2986,
-          "xg": 0.355,
+          "prob": 0.3182,
+          "xg": 0.383,
           "position": "Midfielder"
         },
         {
           "player": "Tiago Tomás",
-          "prob": 0.0618,
-          "xg": 0.064,
+          "prob": 0.0666,
+          "xg": 0.069,
           "position": "Midfielder"
         },
         {
           "player": "D. Undav",
-          "prob": 0.0612,
-          "xg": 0.063,
+          "prob": 0.0659,
+          "xg": 0.068,
           "position": "Midfielder"
         },
         {
           "player": "A. Karazor",
-          "prob": 0.0568,
-          "xg": 0.058,
+          "prob": 0.0612,
+          "xg": 0.063,
           "position": "Midfielder"
         }
       ],
       "away": [
         {
           "player": "S. Mounié",
-          "prob": 0.2046,
-          "xg": 0.229,
+          "prob": 0.2152,
+          "xg": 0.242,
           "position": "Attacker"
         },
         {
           "player": "S. Essende",
-          "prob": 0.1917,
-          "xg": 0.213,
+          "prob": 0.2018,
+          "xg": 0.225,
           "position": "Attacker"
         },
         {
           "player": "K. Jakić",
-          "prob": 0.0482,
-          "xg": 0.049,
+          "prob": 0.051,
+          "xg": 0.052,
           "position": "Midfielder"
         },
         {
           "player": "M. Wolf",
-          "prob": 0.0475,
-          "xg": 0.049,
+          "prob": 0.0502,
+          "xg": 0.052,
           "position": "Midfielder"
         },
         {
           "player": "M. Kömür",
-          "prob": 0.0461,
-          "xg": 0.047,
+          "prob": 0.0487,
+          "xg": 0.05,
           "position": "Midfielder"
         }
       ]
