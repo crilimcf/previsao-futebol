@@ -2,7 +2,7 @@ name: Train bivariate correlation (weekly)
 
 on:
   schedule:
-    - cron: "10 0 * * 1"      # seg 00:10 UTC
+    - cron: "10 0 * * 1"   # segundas 00:10 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: pip
+          cache: "pip"
 
       - name: Install deps
         run: |
@@ -26,84 +26,86 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # --- calcular seasons a usar e publicar em $GITHUB_ENV ---
       - name: Compute seasons
-        env:
-          V_SEAS: ${{ vars.SEASONS }}
-          V_SEASON: ${{ vars.SEASON }}
-          S_SEAS: ${{ secrets.API_FOOTBALL_SEASONS }}
-          S_SEASON: ${{ secrets.API_FOOTBALL_SEASON }}
         run: |
-          set -euxo pipefail
-          SEASONS="${V_SEAS:-${V_SEASON:-${S_SEAS:-${S_SEASON:-2024}}}}"
-          # normalizar: vírgulas -> espaços; remover duplos
-          SEASONS="$(echo "$SEASONS" | tr ',' ' ' | xargs -n1 | sort -u | xargs)"
-          echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
-          # garantir que o pacote local 'src' é importável
-          echo "PYTHONPATH=$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
-          echo "Seasons: $SEASONS"
+          set -euo pipefail
+          S="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
+          # aceitar "2024,2025" ou com espaços
+          S="${S//,/ }"
+          echo "SEASONS=$S" >> "$GITHUB_ENV"
+          echo "Seasons => $S"
 
-      # --- se não existir config/leagues_main.json, criar fallback curto ---
       - name: Ensure curated leagues (fallback if missing)
         run: |
-          set -euxo pipefail
+          set -euo pipefail
           mkdir -p config
-          if [ ! -s config/leagues_main.json ]; then
-            cat > config/leagues_main.json <<'JSON'
-            {
-              "leagues": [
-                {"id":39,"name":"Premier League"},
-                {"id":140,"name":"La Liga"},
-                {"id":135,"name":"Serie A"},
-                {"id":78,"name":"Bundesliga"},
-                {"id":61,"name":"Ligue 1"},
-                {"id":94,"name":"Primeira Liga"},
-                {"id":88,"name":"Eredivisie"},
-                {"id":2,"name":"UEFA Champions League"}
+          if [[ -s config/leagues_main.json ]]; then
+            echo "Usar config/leagues_main.json do repositório"
+            jq . config/leagues_main.json >/dev/null
+          else
+            echo "Criar fallback de ligas (curado)"
+            # evita here-doc; gera JSON com jq -n
+            jq -n '{
+              leagues: [
+                {id:39,  name:"Premier League"},
+                {id:140, name:"La Liga"},
+                {id:135, name:"Serie A"},
+                {id:78,  name:"Bundesliga"},
+                {id:61,  name:"Ligue 1"},
+                {id:94,  name:"Primeira Liga"},
+                {id:88,  name:"Eredivisie"},
+                {id:203, name:"Süper Lig"},
+                {id:144, name:"Brasileirão"},
+                {id:253, name:"MLS"}
               ]
-            }
-            JSON
+            }' > config/leagues_main.json
+            jq . config/leagues_main.json >/dev/null
           fi
-          echo "ligas fallback pronto."
 
-      # --- export do CSV para treino de λ3 ---
       - name: Export CSV for λ3
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
+          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io' }}
         run: |
           set -euxo pipefail
+          export PYTHONPATH="$GITHUB_WORKSPACE:$PYTHONPATH"
           mkdir -p data/train
-          ARGS=""
-          for S in $SEASONS; do ARGS="$ARGS --season $S"; done
-          python scripts/export_poisson_inputs_from_api.py $ARGS || true
-          if [ ! -s data/train/poisson_inputs.csv ]; then
-            echo "Sem dados exportados — nada para treinar. A sair sem falhar…"
-            echo "NO_TRAIN=1" >> "$GITHUB_ENV"
+          # corre para cada época; se não houver jogos, não falha o job
+          RET=0
+          for SE in $SEASONS; do
+            echo "Exportar época $SE ..."
+            python scripts/export_poisson_inputs_from_api.py --season "$SE" || RET=$?
+          done
+          if [[ ! -s data/train/poisson_inputs.csv ]]; then
+            echo "Sem dados exportados — treino λ3 será ignorado."
+          fi
+          exit 0  # nunca falhar aqui
+
+      - name: Train λ3 per league
+        run: |
+          set -euxo pipefail
+          export PYTHONPATH="$GITHUB_WORKSPACE:$PYTHONPATH"
+          if [[ -s data/train/poisson_inputs.csv ]]; then
+            python scripts/train_lambda3_per_league.py
+          else
+            echo "Sem CSV; saltar treino."
           fi
 
-      # --- treino λ3 (salta se não houver CSV) ---
-      - name: Train λ3 per league
-        if: env.NO_TRAIN != '1'
-        env:
-          PYTHONPATH: ${{ env.PYTHONPATH }}
-        run: |
-          set -euxo pipefail
-          python scripts/train_lambda3_per_league.py
-
-      # --- commit seguro do modelo ---
       - name: Commit λ3 (rebase)
-        if: env.NO_TRAIN != '1'
         run: |
           set -euxo pipefail
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add models/bivar_lambda3.json
-          if git diff --cached --quiet; then
-            echo "Sem alterações."
+          if [[ -f models/bivar_lambda3.json ]]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add models/bivar_lambda3.json
+            if git diff --cached --quiet; then
+              echo "Sem alterações a commitar."
+            else
+              git fetch origin
+              git rebase origin/main || true
+              git commit -m "chore(models): refresh λ3 por liga"
+              git push origin HEAD:main
+            fi
           else
-            git fetch origin
-            git rebase origin/main || true
-            git commit -m "chore(models): refresh λ3 por liga"
-            git push origin HEAD:main
+            echo "models/bivar_lambda3.json não existe — nada a commitar."
           fi
