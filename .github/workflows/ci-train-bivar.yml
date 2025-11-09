@@ -57,22 +57,21 @@ jobs:
             echo "Usar config/leagues_main.json existente"
           else
             echo "Criar fallback de ligas curadas"
-            cat > config/leagues_main.json <<'JSON'
-{
-  "leagues": [
-    { "id": 39,  "name": "Premier League" },
-    { "id": 140, "name": "La Liga" },
-    { "id": 135, "name": "Serie A" },
-    { "id": 78,  "name": "Bundesliga" },
-    { "id": 61,  "name": "Ligue 1" },
-    { "id": 94,  "name": "Primeira Liga" },
-    { "id": 88,  "name": "Eredivisie" },
-    { "id": 203, "name": "Super Lig" },
-    { "id": 2,   "name": "UEFA Champions League" },
-    { "id": 3,   "name": "UEFA Europa League" }
-  ]
-}
-JSON
+            printf '%s\n' \
+              '{' \
+              '  "leagues": [' \
+              '    {"id":39,  "name":"Premier League"},' \
+              '    {"id":140, "name":"La Liga"},' \
+              '    {"id":135, "name":"Serie A"},' \
+              '    {"id":78,  "name":"Bundesliga"},' \
+              '    {"id":61,  "name":"Ligue 1"},' \
+              '    {"id":94,  "name":"Primeira Liga"},' \
+              '    {"id":88,  "name":"Eredivisie"},' \
+              '    {"id":203, "name":"Super Lig"},' \
+              '    {"id":2,   "name":"UEFA Champions League"},' \
+              '    {"id":3,   "name":"UEFA Europa League"}' \
+              '  ]' \
+              '}' > config/leagues_main.json
           fi
 
       - name: Export CSV for λ3
