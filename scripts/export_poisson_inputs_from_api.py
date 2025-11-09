@@ -52,15 +52,20 @@ def list_leagues_curated() -> pd.DataFrame:
     return pd.DataFrame(arr).drop_duplicates(subset=["league_id"])
 
 def parse_seasons(raw: List[str]) -> List[int]:
+    """Aceita --season repetido, vírgulas, ponto-e-vírgula e/ou espaços."""
     out: List[int] = []
     for item in raw:
-        for token in str(item).replace(";", ",").split(","):
-            token = token.strip()
-            if token:
-                try:
-                    out.append(int(token))
-                except Exception:
-                    pass
+        tokens = (
+            str(item)
+            .replace(";", " ")
+            .replace(",", " ")
+            .split()
+        )
+        for token in tokens:
+            try:
+                out.append(int(token))
+            except Exception:
+                pass
     return sorted(set(out))
 
 def moving_lambda(s: pd.Series, window=20) -> pd.Series:
@@ -86,24 +91,19 @@ def fetch_fixtures_finished(league_id: int, season: int) -> List[Dict[str, Any]]
     return rows
 
 def fetch_fixtures_fallback_range(league_id: int, season: int) -> List[Dict[str, Any]]:
-    """Fallback: último ~365 dias se a API não devolver por status/season."""
-    # janelas grosseiras de 6 meses para não estourar paginação
+    """Fallback: último ~360 dias em blocos para não estourar paginação."""
     from datetime import datetime, timedelta
     out: List[Dict[str, Any]] = []
     end = datetime.utcnow().date()
     start = end - timedelta(days=360)
-    chunks = []
-    k = 6  # meses
-    step = math.ceil(360 / (k * 30))
+
+    # blocos de ~60 dias
     cur = start
     while cur < end:
-        nxt = min(cur + timedelta(days=step*30), end)
-        chunks.append((cur.isoformat(), nxt.isoformat()))
-        cur = nxt
-    for f, t in chunks:
+        nxt = min(cur + timedelta(days=60), end)
         page = 1
         while True:
-            payload = {"league": league_id, "from": f, "to": t, "status": "FT", "page": page}
+            payload = {"league": league_id, "from": cur.isoformat(), "to": nxt.isoformat(), "status": "FT", "page": page}
             data = req("fixtures", payload)
             resp = data.get("response") or []
             out.extend(resp)
@@ -113,27 +113,28 @@ def fetch_fixtures_fallback_range(league_id: int, season: int) -> List[Dict[str,
                 break
             page += 1
             time.sleep(0.4)
+        cur = nxt
     return out
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--season", action="append", required=True,
-                    help="Épocas: repetir flag ou usar vírgulas. Ex: --season 2023 --season 2024  OU  --season 2023,2024")
+                    help="Épocas: repetir flag ou usar vírgulas/espaços/ponto-e-vírgula. Ex: --season 2023 --season 2024  OU  --season 2023,2024")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
+    # Garante diretório de saída
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+
     if not API_KEY:
-        print("[export] Falta API_FOOTBALL_KEY no ambiente.")
-        # ainda assim gera CSV vazio para não falhar o job
-        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+        print("[export] Falta API_FOOTBALL_KEY no ambiente — a escrever CSV vazio.")
         pd.DataFrame(columns=["league_id","goals_home","goals_away","lambda_home","lambda_away"]).to_csv(args.out, index=False)
         return
 
     seasons = parse_seasons(args.season)
     leagues = list_leagues_curated()
     if leagues.empty:
-        print("[export] Sem ligas (mesmo após fallback).")
-        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+        print("[export] Sem ligas (mesmo após fallback) — CSV vazio.")
         pd.DataFrame(columns=["league_id","goals_home","goals_away","lambda_home","lambda_away"]).to_csv(args.out, index=False)
         return
 
@@ -146,7 +147,6 @@ def main():
             try:
                 data = fetch_fixtures_finished(lid, season)
                 if not data:
-                    # fallback por intervalo de datas
                     data = fetch_fixtures_fallback_range(lid, season)
                 for f in data:
                     sc = (f.get("score") or {}).get("fulltime") or {}
@@ -161,25 +161,21 @@ def main():
                         "goals_away": int(ga),
                     })
             except requests.HTTPError as e:
-                # não quebra o job — segue
                 print(f"[export] HTTPError liga={lid} season={season}: {e}")
             except Exception as e:
                 print(f"[export] erro liga={lid} season={season}: {e}")
-
             time.sleep(0.3)
 
     df = pd.DataFrame(rows).sort_values("date")
     if df.empty:
-        print("[export] Sem jogos com FT após tentativas — escrevendo CSV vazio.")
-        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+        print("[export] Sem jogos com FT após tentativas — CSV vazio.")
         pd.DataFrame(columns=["league_id","goals_home","goals_away","lambda_home","lambda_away"]).to_csv(args.out, index=False)
         return
 
-    # λ marginais simples (rolling) por COLUNA: suficiente para treino do λ3
+    # λ marginais simples (rolling)
     df["lambda_home"] = moving_lambda(df["goals_home"])
     df["lambda_away"] = moving_lambda(df["goals_away"])
 
-    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     df[["league_id","goals_home","goals_away","lambda_home","lambda_away"]].to_csv(args.out, index=False)
     print(f"[export] gravado: {args.out} ({len(df)} linhas)")
 

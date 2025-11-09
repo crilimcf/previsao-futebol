@@ -1,16 +1,9 @@
 name: Train bivariate correlation (weekly)
 
 on:
-  workflow_dispatch: {}          # <— botão “Run workflow”
   schedule:
-    - cron: "10 0 * * 1"        # segundas 00:10 UTC
-  push:                          # opcional: dispara quando alteras ficheiros relevantes
-    branches: [ main ]
-    paths:
-      - ".github/workflows/train-bivar.yml"
-      - "scripts/**"
-      - "src/**"
-      - "config/**"
+    - cron: "10 0 * * 1"          # segundas 00:10 UTC
+  workflow_dispatch: {}            # botão "Run workflow" na UI
 
 permissions:
   contents: write
@@ -22,6 +15,7 @@ concurrency:
 jobs:
   train:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -41,6 +35,7 @@ jobs:
         run: |
           set -euxo pipefail
           SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
+          # normalizar: vírgulas/; -> espaços e limpar espaços duplicados
           SEASONS="$(echo "$SEASONS" | tr ',;' ' ' | xargs)"
           echo "Seasons => $SEASONS"
           echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
@@ -52,6 +47,8 @@ jobs:
           if [ -f config/leagues_main.json ]; then
             echo "Usar config/leagues_main.json existente"
           else
+            echo "Criar fallback de ligas curadas"
+            # Heredoc QUOTED — não expande nada; terminador isolado na linha
             cat > config/leagues_main.json <<'JSON'
 {
   "leagues": [
@@ -83,6 +80,7 @@ JSON
           OK=0
           for S in $SEASONS; do
             echo ">> Exportar época $S"
+            # não falha o job se uma época não devolver dados
             python scripts/export_poisson_inputs_from_api.py --season "$S" --out data/train/poisson_inputs.csv || true
             if [ -s data/train/poisson_inputs.csv ]; then
               OK=1
