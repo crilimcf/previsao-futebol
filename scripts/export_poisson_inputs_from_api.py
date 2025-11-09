@@ -1,5 +1,6 @@
 # scripts/export_poisson_inputs_from_api.py
 # Cria data/train/poisson_inputs.csv a partir da API-Football (paginação + fallback)
+
 import os, json, time, math, argparse
 from pathlib import Path
 from typing import List, Dict, Any
@@ -12,7 +13,7 @@ HEADERS = {"x-apisports-key": API_KEY}
 
 OUT = Path("data/train/poisson_inputs.csv")
 
-# fallback interno se não houver ficheiros em config/
+# Fallback interno se não houver ficheiros em config/
 BUILTIN_LEAGUES = [
     {"id": 39,  "name": "Premier League"},
     {"id": 140, "name": "La Liga"},
@@ -118,8 +119,12 @@ def fetch_fixtures_fallback_range(league_id: int, season: int) -> List[Dict[str,
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--season", action="append", required=True,
-                    help="Épocas: repetir flag ou usar vírgulas/espaços/ponto-e-vírgula. Ex: --season 2023 --season 2024  OU  --season 2023,2024")
+    ap.add_argument(
+        "--season",
+        action="append",
+        required=True,
+        help="Épocas: repetir flag ou usar vírgulas/espaços/ponto-e-vírgula. Ex: --season 2023 --season 2024  OU  --season 2023,2024",
+    )
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
@@ -161,6 +166,7 @@ def main():
                         "goals_away": int(ga),
                     })
             except requests.HTTPError as e:
+                # não quebra o job
                 print(f"[export] HTTPError liga={lid} season={season}: {e}")
             except Exception as e:
                 print(f"[export] erro liga={lid} season={season}: {e}")
