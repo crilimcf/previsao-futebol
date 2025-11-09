@@ -1,15 +1,15 @@
 name: Train bivariate correlation (weekly)
 
 on:
-  workflow_dispatch: {}          # botão “Run workflow”
+  workflow_dispatch: {}
   schedule:
-    - cron: "10 0 * * 1"         # segundas 00:10 UTC
-  push:                          # corre quando mexes nestes ficheiros
+    - cron: '10 0 * * 1'          # segundas 00:10 UTC
+  push:
     branches: [ main ]
     paths:
-      - ".github/workflows/ci-train-bivar.yml"
-      - "scripts/export_poisson_inputs_from_api.py"
-      - "scripts/train_lambda3_per_league.py"
+      - '.github/workflows/ci-train-bivar.yml'
+      - 'scripts/export_poisson_inputs_from_api.py'
+      - 'scripts/train_lambda3_per_league.py'
 
 permissions:
   contents: write
@@ -20,30 +20,36 @@ concurrency:
 
 jobs:
   train:
+    name: Train λ3 (bivariate)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-          cache: "pip"
+          python-version: '3.11'
+          cache: 'pip'
 
       - name: Install deps
+        shell: bash
         run: |
           set -euxo pipefail
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Compute seasons
+        shell: bash
         run: |
           set -euxo pipefail
           SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
           SEASONS="$(echo "$SEASONS" | tr ',;' ' ' | xargs)"
-          echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
           echo "Seasons => $SEASONS"
+          echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
 
       - name: Ensure curated leagues (fallback if missing)
+        shell: bash
         run: |
           set -euxo pipefail
           mkdir -p config
@@ -71,9 +77,9 @@ JSON
 
       - name: Export CSV for λ3
         env:
-          API_FOOTBALL_KEY:  ${{ secrets.API_FOOTBALL_KEY }}
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://football-proxy-4ymo.onrender.com' }}
-          PROXY_TOKEN:       ${{ secrets.PROXY_TOKEN || '' }}   # opcional se o proxy exigir
+        shell: bash
         run: |
           set -euxo pipefail
           export PYTHONPATH="$GITHUB_WORKSPACE:${PYTHONPATH:-}"
@@ -97,6 +103,7 @@ JSON
 
       - name: Train λ3 per league
         if: env.SKIP_L3 != '1'
+        shell: bash
         run: |
           set -euxo pipefail
           export PYTHONPATH="$GITHUB_WORKSPACE:${PYTHONPATH:-}"
@@ -104,6 +111,7 @@ JSON
 
       - name: Commit λ3 (rebase)
         if: env.SKIP_L3 != '1'
+        shell: bash
         run: |
           set -euxo pipefail
           if [ ! -f models/bivar_lambda3.json ]; then
