@@ -39,24 +39,22 @@ jobs:
       - name: Compute seasons
         run: |
           set -euxo pipefail
-          # prioridade: input manual -> repo vars -> secrets -> default
           S="${{ github.event.inputs.seasons }}"
           if [ -z "$S" ]; then
-            if [ -n "${{ vars.SEASONS }}" ]; then S="${{ vars.SEASONS }}"; \
-            elif [ -n "${{ vars.SEASON }}" ]; then S="${{ vars.SEASON }}"; \
-            elif [ -n "${{ secrets.API_FOOTBALL_SEASONS }}" ]; then S="${{ secrets.API_FOOTBALL_SEASONS }}"; \
-            elif [ -n "${{ secrets.API_FOOTBALL_SEASON }}" ]; then S="${{ secrets.API_FOOTBALL_SEASON }}"; \
+            if [ -n "${{ vars.SEASONS }}" ]; then S="${{ vars.SEASONS }}";
+            elif [ -n "${{ vars.SEASON }}" ]; then S="${{ vars.SEASON }}";
+            elif [ -n "${{ secrets.API_FOOTBALL_SEASONS }}" ]; then S="${{ secrets.API_FOOTBALL_SEASONS }}";
+            elif [ -n "${{ secrets.API_FOOTBALL_SEASON }}" ]; then S="${{ secrets.API_FOOTBALL_SEASON }}";
             else S="2024"; fi
           fi
-          # construir --season N --season M ...
           A=""
           IFS=',' read -ra arr <<< "$S"
           for e in "${arr[@]}"; do
             e="$(echo "$e" | xargs)"
             [ -n "$e" ] && A="$A --season $e"
           done
-          echo "SEASONS=$S"       >> "$GITHUB_ENV"
-          echo "SEASON_ARGS=$A"   >> "$GITHUB_ENV"
+          echo "SEASONS=$S"     >> "$GITHUB_ENV"
+          echo "SEASON_ARGS=$A" >> "$GITHUB_ENV"
           echo "Using seasons: $S"
           echo "Args: $A"
 
@@ -65,30 +63,26 @@ jobs:
           set -euxo pipefail
           mkdir -p config
           if [ ! -s config/leagues_main.json ]; then
-            cat > config/leagues_main.json <<'JSON'
-{"leagues":[
-  {"id":39,"name":"Premier League"},
-  {"id":140,"name":"La Liga"},
-  {"id":135,"name":"Serie A"},
-  {"id":78,"name":"Bundesliga"},
-  {"id":61,"name":"Ligue 1"},
-  {"id":94,"name":"Primeira Liga"},
-  {"id":45,"name":"Eredivisie"},
-  {"id":88,"name":"Super Lig"},
-  {"id":203,"name":"Brasileirao"},
-  {"id":253,"name":"MLS"}
-]}
-JSON
+            printf '%s\n' \
+            '{ "leagues": [' \
+            '{"id":39,"name":"Premier League"},' \
+            '{"id":140,"name":"La Liga"},' \
+            '{"id":135,"name":"Serie A"},' \
+            '{"id":78,"name":"Bundesliga"},' \
+            '{"id":61,"name":"Ligue 1"},' \
+            '{"id":94,"name":"Primeira Liga"},' \
+            '{"id":45,"name":"Eredivisie"},' \
+            '{"id":88,"name":"Super Lig"},' \
+            '{"id":203,"name":"Brasileirao"},' \
+            '{"id":253,"name":"MLS"}' \
+            ']}' > config/leagues_main.json
           fi
 
       - name: Export CSV for λ3
-        env:
-          API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
         run: |
           set -euxo pipefail
           mkdir -p data/train
-          # o exporter aceita múltiplos --season; se não houver jogos, não falha o job
+          # aceita múltiplos --season (ex.: --season 2024 --season 2025)
           python scripts/export_poisson_inputs_from_api.py $SEASON_ARGS || true
           if [ ! -s data/train/poisson_inputs.csv ]; then
             echo "Sem dados exportados; a treinar será ignorado."
