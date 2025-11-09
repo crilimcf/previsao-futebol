@@ -1,16 +1,15 @@
 name: Train bivariate correlation (weekly)
 
 on:
-  workflow_dispatch: {}               # botão “Run workflow”
+  workflow_dispatch: {}            # botão “Run workflow”
   schedule:
-    - cron: "10 0 * * 1"              # segundas 00:10 UTC
-  push:
+    - cron: "10 0 * * 1"           # segundas 00:10 UTC
+  push:                             # corre quando mexes nos ficheiros relevantes
     branches: [ main ]
     paths:
       - ".github/workflows/train-bivar.yml"
       - "scripts/export_poisson_inputs_from_api.py"
       - "scripts/train_lambda3_per_league.py"
-      - "config/**"
 
 permissions:
   contents: write
@@ -22,8 +21,6 @@ concurrency:
 jobs:
   train:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-
     steps:
       - uses: actions/checkout@v4
 
@@ -39,12 +36,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Compute seasons
-        id: seasons
         run: |
           set -euxo pipefail
           SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
           SEASONS="$(echo "$SEASONS" | tr ',;' ' ' | xargs)"
-          echo "Seasons => $SEASONS"
           echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
 
       - name: Ensure curated leagues (fallback if missing)
@@ -55,20 +50,19 @@ jobs:
             echo "Usar config/leagues_main.json existente"
           else
             echo "Criar fallback de ligas curadas"
-            # Heredoc quoted: não expande variáveis; terminador sozinho na linha
             cat > config/leagues_main.json <<'JSON'
 {
   "leagues": [
-    {"id":39,"name":"Premier League"},
-    {"id":140,"name":"La Liga"},
-    {"id":135,"name":"Serie A"},
-    {"id":78,"name":"Bundesliga"},
-    {"id":61,"name":"Ligue 1"},
-    {"id":94,"name":"Primeira Liga"},
-    {"id":88,"name":"Eredivisie"},
-    {"id":203,"name":"Super Lig"},
-    {"id":2,"name":"UEFA Champions League"},
-    {"id":3,"name":"UEFA Europa League"}
+    {"id":39,  "name":"Premier League"},
+    {"id":140, "name":"La Liga"},
+    {"id":135, "name":"Serie A"},
+    {"id":78,  "name":"Bundesliga"},
+    {"id":61,  "name":"Ligue 1"},
+    {"id":94,  "name":"Primeira Liga"},
+    {"id":88,  "name":"Eredivisie"},
+    {"id":203, "name":"Super Lig"},
+    {"id":2,   "name":"UEFA Champions League"},
+    {"id":3,   "name":"UEFA Europa League"}
   ]
 }
 JSON
@@ -77,7 +71,8 @@ JSON
       - name: Export CSV for λ3
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io' }}
+          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://football-proxy-4ymo.onrender.com' }}
+          PROXY_TOKEN: ${{ secrets.PROXY_TOKEN }}
         run: |
           set -euxo pipefail
           export PYTHONPATH="$GITHUB_WORKSPACE:${PYTHONPATH:-}"
@@ -87,6 +82,7 @@ JSON
           OK=0
           for S in $SEASONS; do
             echo ">> Exportar época $S"
+            # não falha o job se uma época vier vazia
             python scripts/export_poisson_inputs_from_api.py --season "$S" --out data/train/poisson_inputs.csv || true
             if [ -s data/train/poisson_inputs.csv ]; then
               OK=1
@@ -114,12 +110,9 @@ JSON
             echo "Nada para commitar (modelo não gerado)."
             exit 0
           fi
-
-          git config --global safe.directory "$GITHUB_WORKSPACE"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add models/bivar_lambda3.json
-
           if git diff --cached --quiet; then
             echo "Sem alterações."
           else
