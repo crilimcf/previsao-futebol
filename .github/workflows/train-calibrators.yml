@@ -1,43 +1,26 @@
-name: Train bivariate correlation (weekly)
+name: Train isotonic calibrators (manual/weekly)
 
 on:
   schedule:
-    - cron: "10 0 * * 1" # segundas 00:10 UTC
-  workflow_dispatch:
-    inputs:
-      seasons:
-        description: "Seasons comma-separated (ex: 2023,2024,2025)"
-        required: false
-        default: ""
+    - cron: "20 0 * * 2"   # terças 00:20 UTC
+  workflow_dispatch: {}
 
 permissions:
   contents: write
 
-env:
-  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-  API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
-  SEASONS_DEFAULT: ${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2023,2024,2025' }}
-
 jobs:
-  train:
+  train-calib:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
-
-      - name: Compute seasons
-        run: |
-          if [ -n "${{ github.event.inputs.seasons }}" ]; then
-            echo "SEASONS=${{ github.event.inputs.seasons }}" >> $GITHUB_ENV
-          else
-            echo "SEASONS=${{ env.SEASONS_DEFAULT }}" >> $GITHUB_ENV
-          fi
-          echo "Using seasons: $SEASONS"
 
       - name: Install deps
         run: |
@@ -45,67 +28,32 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Ensure curated leagues (fallback if missing)
+      - name: Ensure history CSV (skip if missing)
         run: |
           set -euxo pipefail
-          mkdir -p config
-          if ! ls config/leagues_*.json >/dev/null 2>&1; then
-            cat > config/leagues_main.json <<'JSON'
-{
-  "leagues": [
-    {"id":39,  "name":"Premier League"},
-    {"id":140, "name":"La Liga"},
-    {"id":135, "name":"Serie A"},
-    {"id":78,  "name":"Bundesliga"},
-    {"id":61,  "name":"Ligue 1"},
-    {"id":94,  "name":"Primeira Liga"},
-    {"id":88,  "name":"Eredivisie"},
-    {"id":2,   "name":"UEFA Champions League"},
-    {"id":3,   "name":"UEFA Europa League"},
-    {"id":848, "name":"Saudi Pro League"}
-  ]
-}
-JSON
+          if [ ! -s data/train/historico_com_probs.csv ]; then
+            echo "History CSV não encontrado (data/train/historico_com_probs.csv); a treinar será ignorado."
+            echo "SKIP_CALIB=1" >> "$GITHUB_ENV"
           fi
-          echo "Leagues files present:"; ls -la config || true
-          head -n 50 config/*.json || true
 
-      - name: Export CSV for λ3
-        env:
-          API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
-          API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
-          SEASONS: ${{ env.SEASONS }}
+      - name: Train calibrators
+        if: env.SKIP_CALIB != '1'
         run: |
           set -euxo pipefail
-          mkdir -p data/train
-          python scripts/export_poisson_inputs_from_api.py --season "$SEASONS"
+          python scripts/train_isotonic_calibrators.py --csv data/train/historico_com_probs.csv --outdir models/calibrators
 
-      - name: Train λ3 per league
-        run: |
-          set -euxo pipefail
-          python scripts/train_lambda3_per_league.py
-
-      - name: Commit λ3 (rebase)
+      - name: Commit calibrators (rebase)
+        if: env.SKIP_CALIB != '1'
         run: |
           set -euxo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add models/bivar_lambda3.json
+          git add models/calibrators/*.pkl || true
           if git diff --cached --quiet; then
             echo "Sem alterações."
           else
             git fetch origin
             git rebase origin/main || true
-            git commit -m "chore(models): refresh λ3 por liga"
+            git commit -m "chore(models): refresh calibradores isotónicos"
             git push origin HEAD:main
           fi
-
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: bivar-training-artifacts
-          path: |
-            data/train/poisson_inputs.csv
-            models/bivar_lambda3.json
-          if-no-files-found: warn

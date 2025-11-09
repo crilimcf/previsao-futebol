@@ -2,32 +2,28 @@ name: Train bivariate correlation (weekly)
 
 on:
   schedule:
-    - cron: "10 0 * * 1" # segundas 00:10 UTC
+    - cron: "10 0 * * 1"   # segundas 00:10 UTC
   workflow_dispatch:
     inputs:
       seasons:
-        description: "Épocas separadas por vírgulas (ex: 2023,2024,2025)"
+        description: "Épocas (comma-separated), ex: 2022,2023,2024"
         required: false
-        default: ""
+        default: "2024"
 
 permissions:
   contents: write
-
-env:
-  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-  API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
-  SEASONS: ${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2023,2024,2025' }}
 
 jobs:
   train:
     runs-on: ubuntu-latest
     env:
-      API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
-      API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
-      SEASONS: ${{ github.event.inputs.seasons != '' && github.event.inputs.seasons || env.SEASONS }}
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://v3.football.api-sports.io/' }}
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -40,44 +36,73 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Compute seasons
+        run: |
+          set -euxo pipefail
+          # prioridade: input manual -> repo vars -> secrets -> default
+          S="${{ github.event.inputs.seasons }}"
+          if [ -z "$S" ]; then
+            if [ -n "${{ vars.SEASONS }}" ]; then S="${{ vars.SEASONS }}"; \
+            elif [ -n "${{ vars.SEASON }}" ]; then S="${{ vars.SEASON }}"; \
+            elif [ -n "${{ secrets.API_FOOTBALL_SEASONS }}" ]; then S="${{ secrets.API_FOOTBALL_SEASONS }}"; \
+            elif [ -n "${{ secrets.API_FOOTBALL_SEASON }}" ]; then S="${{ secrets.API_FOOTBALL_SEASON }}"; \
+            else S="2024"; fi
+          fi
+          # construir --season N --season M ...
+          A=""
+          IFS=',' read -ra arr <<< "$S"
+          for e in "${arr[@]}"; do
+            e="$(echo "$e" | xargs)"
+            [ -n "$e" ] && A="$A --season $e"
+          done
+          echo "SEASONS=$S"       >> "$GITHUB_ENV"
+          echo "SEASON_ARGS=$A"   >> "$GITHUB_ENV"
+          echo "Using seasons: $S"
+          echo "Args: $A"
+
       - name: Ensure curated leagues (fallback if missing)
         run: |
           set -euxo pipefail
           mkdir -p config
-          if ! ls config/leagues_*.json >/dev/null 2>&1; then
+          if [ ! -s config/leagues_main.json ]; then
             cat > config/leagues_main.json <<'JSON'
-            {
-              "leagues": [
-                {"id": 39,  "name": "Premier League"},
-                {"id": 140, "name": "La Liga"},
-                {"id": 135, "name": "Serie A"},
-                {"id": 78,  "name": "Bundesliga"},
-                {"id": 61,  "name": "Ligue 1"},
-                {"id": 94,  "name": "Primeira Liga"},
-                {"id": 88,  "name": "Eredivisie"},
-                {"id": 2,   "name": "UEFA Champions League"},
-                {"id": 3,   "name": "UEFA Europa League"},
-                {"id": 848, "name": "Saudi Pro League"}
-              ]
-            }
-            JSON
+{"leagues":[
+  {"id":39,"name":"Premier League"},
+  {"id":140,"name":"La Liga"},
+  {"id":135,"name":"Serie A"},
+  {"id":78,"name":"Bundesliga"},
+  {"id":61,"name":"Ligue 1"},
+  {"id":94,"name":"Primeira Liga"},
+  {"id":45,"name":"Eredivisie"},
+  {"id":88,"name":"Super Lig"},
+  {"id":203,"name":"Brasileirao"},
+  {"id":253,"name":"MLS"}
+]}
+JSON
           fi
-          echo "Leagues config:"
-          ls -la config || true
-          head -n 50 config/*.json || true
 
       - name: Export CSV for λ3
+        env:
+          API_FOOTBALL_KEY: ${{ env.API_FOOTBALL_KEY }}
+          API_FOOTBALL_BASE: ${{ env.API_FOOTBALL_BASE }}
         run: |
           set -euxo pipefail
           mkdir -p data/train
-          python scripts/export_poisson_inputs_from_api.py --season "${SEASONS}"
+          # o exporter aceita múltiplos --season; se não houver jogos, não falha o job
+          python scripts/export_poisson_inputs_from_api.py $SEASON_ARGS || true
+          if [ ! -s data/train/poisson_inputs.csv ]; then
+            echo "Sem dados exportados; a treinar será ignorado."
+            echo "SKIP_L3=1" >> "$GITHUB_ENV"
+          fi
 
       - name: Train λ3 per league
+        if: env.SKIP_L3 != '1'
         run: |
           set -euxo pipefail
           python scripts/train_lambda3_per_league.py
 
       - name: Commit λ3 (rebase)
+        if: env.SKIP_L3 != '1'
         run: |
           set -euxo pipefail
           git config user.name  "github-actions[bot]"
@@ -91,13 +116,3 @@ jobs:
             git commit -m "chore(models): refresh λ3 por liga"
             git push origin HEAD:main
           fi
-
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: bivar-training-artifacts
-          path: |
-            data/train/poisson_inputs.csv
-            models/bivar_lambda3.json
-          if-no-files-found: warn
