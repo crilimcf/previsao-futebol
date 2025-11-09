@@ -1,6 +1,6 @@
 # scripts/export_poisson_inputs_from_api.py
 # Cria data/train/poisson_inputs.csv a partir da API-Football (paginação + fallback)
-import os, json, time, argparse
+import os, json, time, math, argparse
 from pathlib import Path
 from typing import List, Dict, Any
 import requests
@@ -8,22 +8,21 @@ import pandas as pd
 
 API_KEY = os.getenv("API_FOOTBALL_KEY", "")
 BASE = (os.getenv("API_FOOTBALL_BASE") or "https://v3.football.api-sports.io/").rstrip("/")
-PROXY_TOKEN = os.getenv("PROXY_TOKEN", "").strip()
+PROXY_TOKEN = os.getenv("PROXY_TOKEN", "")
 
-def _build_headers() -> Dict[str, str]:
-    h = {"Accept": "application/json"}
+def build_headers() -> Dict[str, str]:
+    # Se usamos o proxy (Render), dá prioridade ao PROXY_TOKEN
+    if "api-sports.io" not in BASE and PROXY_TOKEN:
+        return {"Authorization": f"Bearer {PROXY_TOKEN}"}
+    # Caso contrário, usa a chave da API-Football
     if API_KEY:
-        # para API-Football "direta" ou proxies compatíveis
-        h["x-apisports-key"] = API_KEY
-    if PROXY_TOKEN:
-        # se o teu proxy exigir bearer
-        h["Authorization"] = f"Bearer {PROXY_TOKEN}"
-    return h
+        return {"x-apisports-key": API_KEY}
+    return {}
 
-HEADERS = _build_headers()
+HEADERS = build_headers()
+
 OUT = Path("data/train/poisson_inputs.csv")
 
-# fallback interno se não houver ficheiros em config/
 BUILTIN_LEAGUES = [
     {"id": 39,  "name": "Premier League"},
     {"id": 140, "name": "La Liga"},
@@ -77,16 +76,12 @@ def moving_lambda(s: pd.Series, window=20) -> pd.Series:
     return roll.fillna(s.expanding().mean()).fillna(s.mean())
 
 def fetch_fixtures_finished(league_id: int, season: int) -> List[Dict[str, Any]]:
-    page = 1
-    rows: List[Dict[str, Any]] = []
+    page, rows = 1, []
     while True:
-        payload = {"league": league_id, "season": season, "status": "FT", "page": page}
-        data = req("fixtures", payload)
-        resp = data.get("response") or []
-        rows.extend(resp)
+        data = req("fixtures", {"league": league_id, "season": season, "status": "FT", "page": page})
+        rows.extend(data.get("response") or [])
         paging = data.get("paging") or {}
-        cur, tot = int(paging.get("current", 1)), int(paging.get("total", 1))
-        if cur >= tot:
+        if int(paging.get("current", 1)) >= int(paging.get("total", 1)):
             break
         page += 1
         time.sleep(0.4)
@@ -97,62 +92,50 @@ def fetch_fixtures_fallback_range(league_id: int, season: int) -> List[Dict[str,
     out: List[Dict[str, Any]] = []
     end = datetime.utcnow().date()
     start = end - timedelta(days=360)
-
     cur = start
     while cur < end:
         nxt = min(cur + timedelta(days=60), end)
         page = 1
         while True:
-            payload = {"league": league_id, "from": cur.isoformat(), "to": nxt.isoformat(), "status": "FT", "page": page}
-            data = req("fixtures", payload)
-            resp = data.get("response") or []
-            out.extend(resp)
+            data = req("fixtures", {"league": league_id, "from": cur.isoformat(), "to": nxt.isoformat(), "status": "FT", "page": page})
+            out.extend(data.get("response") or [])
             paging = data.get("paging") or {}
-            curp, totp = int(paging.get("current", 1)), int(paging.get("total", 1))
-            if curp >= totp:
+            if int(paging.get("current", 1)) >= int(paging.get("total", 1)):
                 break
             page += 1
             time.sleep(0.4)
         cur = nxt
     return out
 
-def _write_empty(out_path: Path):
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(columns=["league_id","goals_home","goals_away","lambda_home","lambda_away"]).to_csv(out_path, index=False)
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--season", action="append", required=True,
-                    help="Épocas: repetir flag ou usar vírgulas/espaços/ponto-e-vírgula. Ex: --season 2023 --season 2024  OU  --season 2023,2024")
+                    help="Épocas: repetir flag ou usar vírgulas/espaços/ponto-e-vírgula. Ex: --season 2023,2024")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
-    outp = Path(args.out)
-    outp.parent.mkdir(parents=True, exist_ok=True)
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
 
-    if not API_KEY and not PROXY_TOKEN:
-        # Sem credenciais suficientes; ainda assim escrever CSV vazio para não falhar pipeline
-        print("[export] Sem API_FOOTBALL_KEY/PROXY_TOKEN — a escrever CSV vazio.")
-        _write_empty(outp)
+    if not (API_KEY or PROXY_TOKEN):
+        print("[export] Falta API_FOOTBALL_KEY ou PROXY_TOKEN — CSV vazio.")
+        pd.DataFrame(columns=["league_id","goals_home","goals_away","lambda_home","lambda_away"]).to_csv(args.out, index=False)
         return
 
     seasons = parse_seasons(args.season)
     leagues = list_leagues_curated()
     if leagues.empty:
-        print("[export] Sem ligas (mesmo após fallback) — CSV vazio.")
-        _write_empty(outp)
+        print("[export] Sem ligas — CSV vazio.")
+        pd.DataFrame(columns=["league_id","goals_home","goals_away","lambda_home","lambda_away"]).to_csv(args.out, index=False)
         return
 
-    print(f"[export] base={BASE} | seasons={seasons} | ligas={len(leagues)} | proxy_token={'yes' if PROXY_TOKEN else 'no'}")
+    print(f"[export] base={BASE} | seasons={seasons} | ligas={len(leagues)}")
 
     rows: List[Dict[str, Any]] = []
     for _, lg in leagues.iterrows():
         lid = int(lg["league_id"])
         for season in seasons:
             try:
-                data = fetch_fixtures_finished(lid, season)
-                if not data:
-                    data = fetch_fixtures_fallback_range(lid, season)
+                data = fetch_fixtures_finished(lid, season) or fetch_fixtures_fallback_range(lid, season)
                 for f in data:
                     sc = (f.get("score") or {}).get("fulltime") or {}
                     gh, ga = sc.get("home"), sc.get("away")
@@ -173,15 +156,13 @@ def main():
 
     df = pd.DataFrame(rows).sort_values("date")
     if df.empty:
-        print("[export] Sem jogos com FT após tentativas — CSV vazio.")
-        _write_empty(outp)
+        print("[export] Sem jogos FT — CSV vazio.")
+        pd.DataFrame(columns=["league_id","goals_home","goals_away","lambda_home","lambda_away"]).to_csv(args.out, index=False)
         return
 
     df["lambda_home"] = moving_lambda(df["goals_home"])
     df["lambda_away"] = moving_lambda(df["goals_away"])
-
-    df[["league_id","goals_home","goals_away","lambda_home","lambda_away"]].to_csv(outp, index=False)
-    print(f"[export] gravado: {outp} ({len(df)} linhas)")
-
+    df[["league_id","goals_home","goals_away","lambda_home","lambda_away"]].to_csv(args.out, index=False)
+    print(f"[export] gravado: {args.out} ({len(df)} linhas)")
 if __name__ == "__main__":
     main()

@@ -3,7 +3,7 @@ name: Update predictions (daily + on-push)
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: "5 0 * * *"          # 00:05 UTC diariamente
+    - cron: "5 0 * * *"   # 00:05 UTC diariamente
   push:
     branches: [ main ]
     paths:
@@ -22,8 +22,6 @@ permissions:
 
 env:
   API_BASE_URL: ${{ vars.API_BASE_URL || 'https://previsao-futebol.onrender.com' }}
-  # Preferimos ENDPOINT_API_KEY, mas mantemos retrocompatibilidade com API_UPDATE_TOKEN
-  API_UPDATE_TOKEN: ${{ secrets.ENDPOINT_API_KEY || secrets.API_UPDATE_TOKEN }}
 
 jobs:
   update:
@@ -34,25 +32,59 @@ jobs:
       - name: Health check backend
         run: |
           set -euxo pipefail
-          curl -fsS "$API_BASE_URL/healthz" | jq -r .
+          for p in /healthz /api/healthz ; do
+            if curl -fsS -m 25 "$API_BASE_URL$p" >/dev/null 2>&1; then
+              echo "OK: $p"
+              exit 0
+            fi
+          done
+          echo "Backend online mas nenhum healthz respondeu 200."
+          # não falha — deixamos o /meta/update decidir
 
-      - name: Trigger backend update (com retries)
+      - name: Trigger backend /meta/update (com fallbacks + retries)
+        env:
+          ENDPOINT_API_KEY: ${{ secrets.ENDPOINT_API_KEY }}
         run: |
           set -euxo pipefail
-          for i in 1 2 3 4 5; do
-            code=0
-            curl -fsS -X POST "$API_BASE_URL/meta/update" \
-                 -H "Authorization: Bearer $API_UPDATE_TOKEN" \
-                 -H "Accept: application/json" \
-                 -H "Content-Type: application/json" \
-                 --data '{}' \
-                 | jq -r . || code=$?
-            if [ $code -eq 0 ]; then
-              echo "Update OK"; break
+          test -n "${ENDPOINT_API_KEY:-}" || { echo "Falta secret ENDPOINT_API_KEY"; exit 1; }
+
+          try_update () {
+            url="$1"; shift
+            # 1) Authorization: Bearer
+            code=$(curl -sS -o /tmp/upd1.out -w "%{http_code}" -X POST "$url" \
+                    -H "Authorization: Bearer $ENDPOINT_API_KEY" \
+                    -H "Accept: application/json" -H "Content-Type: application/json" || true)
+            [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
+
+            # 2) X-Endpoint-Key
+            code=$(curl -sS -o /tmp/upd2.out -w "%{http_code}" -X POST "$url" \
+                    -H "X-Endpoint-Key: $ENDPOINT_API_KEY" \
+                    -H "Accept: application/json" -H "Content-Type: application/json" || true)
+            [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
+
+            # 3) Query string
+            code=$(curl -sS -o /tmp/upd3.out -w "%{http_code}" -X POST "${url}?key=${ENDPOINT_API_KEY}" \
+                    -H "Accept: application/json" -H "Content-Type: application/json" || true)
+            [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
+
+            return 1
+          }
+
+          # Tentativas com backoff
+          for i in 1 2 3; do
+            if try_update "$API_BASE_URL/meta/update"; then
+              echo "Update disparado com sucesso."
+              break
             fi
-            echo "Falhou (tentativa $i). A aguardar…"
-            sleep $((5*i))
+            echo "Falhou tentativa $i; a aguardar $((i*10))s..."
+            sleep $((i*10))
           done
+
+          # Verifica se alguma tentativa gerou sucesso
+          if ! grep -q . /tmp/upd1.out /tmp/upd2.out /tmp/upd3.out 2>/dev/null; then
+            echo "Nenhuma resposta capturada; possível 502 upstream. Verifica logs do Render."
+            exit 1
+          fi
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -65,11 +97,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
 
-      - name: Export predictions (opcional)
+      - name: Export predictions (optional)
         if: ${{ hashFiles('scripts/export_predictions.py') != '' }}
         env:
           API_BASE_URL: ${{ env.API_BASE_URL }}
-          API_TOKEN: ${{ env.API_UPDATE_TOKEN }}
+          API_TOKEN: ${{ secrets.ENDPOINT_API_KEY }}
         run: |
           set -euxo pipefail
           python scripts/export_predictions.py || true
