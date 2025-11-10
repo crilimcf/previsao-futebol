@@ -11,9 +11,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/5254.png",
     "odds": {
       "winner": {
-        "home": 2.4,
-        "draw": 3.25,
-        "away": 2.9
+        "home": 2.6,
+        "draw": 3.0,
+        "away": 2.88
       },
       "over_2_5": {
         "over": 5.5,
@@ -178,21 +178,21 @@
     "away_logo": "https://media.api-sports.io/football/teams/154.png",
     "odds": {
       "winner": {
-        "home": 1.57,
+        "home": 1.7,
         "draw": 3.6,
-        "away": 6.25
+        "away": 5.25
       },
       "over_2_5": {
-        "over": 5.5,
-        "under": 1.14
+        "over": 5.0,
+        "under": 1.17
       },
       "over_1_5": {
-        "over": 2.38,
-        "under": 1.53
+        "over": 2.2,
+        "under": 1.62
       },
       "btts": {
-        "yes": 4.33,
-        "no": 1.2
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -253,7 +253,7 @@
       {
         "player": "Vitor Roque",
         "team": "Palmeiras",
-        "goals": 15
+        "goals": 16
       },
       {
         "player": "P. Vegetti",
