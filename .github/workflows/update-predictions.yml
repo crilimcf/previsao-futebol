@@ -41,7 +41,7 @@ jobs:
           echo "Backend online mas nenhum healthz respondeu 200."
           # não falha — deixamos o /meta/update decidir
 
-      - name: Trigger backend /meta/update (com fallbacks + retries)
+      - name: Trigger backend /meta/update (fallbacks + retries)
         env:
           ENDPOINT_API_KEY: ${{ secrets.ENDPOINT_API_KEY }}
         run: |
@@ -70,19 +70,19 @@ jobs:
             return 1
           }
 
-          # Tentativas com backoff
+          SUCCESS=0
           for i in 1 2 3; do
             if try_update "$API_BASE_URL/meta/update"; then
               echo "Update disparado com sucesso."
+              SUCCESS=1
               break
             fi
             echo "Falhou tentativa $i; a aguardar $((i*10))s..."
             sleep $((i*10))
           done
 
-          # Verifica se alguma tentativa gerou sucesso
-          if ! grep -q . /tmp/upd1.out /tmp/upd2.out /tmp/upd3.out 2>/dev/null; then
-            echo "Nenhuma resposta capturada; possível 502 upstream. Verifica logs do Render."
+          if [ "$SUCCESS" -ne 1 ]; then
+            echo "Falhou /meta/update após retries. Verifica logs do Render."
             exit 1
           fi
 
@@ -97,11 +97,53 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
 
+      # Garante um ficheiro de ligas curadas se não existir (usado pelo topscorers)
+      - name: Ensure curated leagues (fallback if missing)
+        run: |
+          set -euxo pipefail
+          mkdir -p config
+          if [ -f config/leagues_main.json ]; then
+            echo "Usar config/leagues_main.json existente"
+          else
+            echo "Criar fallback de ligas curadas"
+            cat > config/leagues_main.json <<'JSON'
+{
+  "leagues": [
+    {"id":39,  "name":"Premier League"},
+    {"id":140, "name":"La Liga"},
+    {"id":135, "name":"Serie A"},
+    {"id":78,  "name":"Bundesliga"},
+    {"id":61,  "name":"Ligue 1"},
+    {"id":94,  "name":"Primeira Liga"},
+    {"id":88,  "name":"Eredivisie"},
+    {"id":203, "name":"Super Lig"},
+    {"id":2,   "name":"UEFA Champions League"},
+    {"id":3,   "name":"UEFA Europa League"}
+  ]
+}
+JSON
+          fi
+
+      # **Novo**: gera topscorers cruzando plantel e lesões
+      - name: Refresh top scorers (per team)
+        if: ${{ hashFiles('scripts/refresh_topscorers.py') != '' }}
+        env:
+          API_FOOTBALL_KEY:  ${{ secrets.API_FOOTBALL_KEY }}
+          API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://football-proxy-4ymo.onrender.com' }}
+          SEASONS:           ${{ vars.SEASONS || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}
+        run: |
+          set -euxo pipefail
+          python scripts/refresh_topscorers.py \
+            --leagues-file config/leagues_main.json \
+            --out data/stats/topscorers.json \
+            --topn 5 \
+            --exclude-injured || true
+
       - name: Export predictions (optional)
         if: ${{ hashFiles('scripts/export_predictions.py') != '' }}
         env:
           API_BASE_URL: ${{ env.API_BASE_URL }}
-          API_TOKEN: ${{ secrets.ENDPOINT_API_KEY }}
+          API_TOKEN:    ${{ secrets.ENDPOINT_API_KEY }}
         run: |
           set -euxo pipefail
           python scripts/export_predictions.py || true
