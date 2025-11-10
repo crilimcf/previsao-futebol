@@ -38,10 +38,9 @@ jobs:
               exit 0
             fi
           done
-          echo "Backend online mas nenhum healthz respondeu 200."
-          # não falha — deixamos o /meta/update decidir
+          echo "Backend online mas nenhum healthz respondeu 200 (seguimos para o update)."
 
-      - name: Trigger backend /meta/update (fallbacks + retries)
+      - name: Trigger backend /meta/update (retries e 3 modos de auth)
         env:
           ENDPOINT_API_KEY: ${{ secrets.ENDPOINT_API_KEY }}
         run: |
@@ -50,41 +49,31 @@ jobs:
 
           try_update () {
             url="$1"; shift
-            # 1) Authorization: Bearer
-            code=$(curl -sS -o /tmp/upd1.out -w "%{http_code}" -X POST "$url" \
+            code=$(curl -sS -o /tmp/u1.out -w "%{http_code}" -X POST "$url" \
                     -H "Authorization: Bearer $ENDPOINT_API_KEY" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
             [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
 
-            # 2) X-Endpoint-Key
-            code=$(curl -sS -o /tmp/upd2.out -w "%{http_code}" -X POST "$url" \
+            code=$(curl -sS -o /tmp/u2.out -w "%{http_code}" -X POST "$url" \
                     -H "X-Endpoint-Key: $ENDPOINT_API_KEY" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
             [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
 
-            # 3) Query string
-            code=$(curl -sS -o /tmp/upd3.out -w "%{http_code}" -X POST "${url}?key=${ENDPOINT_API_KEY}" \
+            code=$(curl -sS -o /tmp/u3.out -w "%{http_code}" -X POST "${url}?key=${ENDPOINT_API_KEY}" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
             [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
 
             return 1
           }
 
-          SUCCESS=0
           for i in 1 2 3; do
             if try_update "$API_BASE_URL/meta/update"; then
               echo "Update disparado com sucesso."
-              SUCCESS=1
               break
             fi
             echo "Falhou tentativa $i; a aguardar $((i*10))s..."
             sleep $((i*10))
           done
-
-          if [ "$SUCCESS" -ne 1 ]; then
-            echo "Falhou /meta/update após retries. Verifica logs do Render."
-            exit 1
-          fi
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -97,7 +86,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
 
-      # Garante um ficheiro de ligas curadas se não existir (usado pelo topscorers)
+      - name: Compute seasons
+        id: seasons
+        run: |
+          set -euxo pipefail
+          SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
+          SEASONS="$(echo "$SEASONS" | tr ',;' ' ' | xargs)"   # normalizar "2023,2024" -> "2023 2024"
+          echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
+
       - name: Ensure curated leagues (fallback if missing)
         run: |
           set -euxo pipefail
@@ -106,38 +102,39 @@ jobs:
             echo "Usar config/leagues_main.json existente"
           else
             echo "Criar fallback de ligas curadas"
-            cat > config/leagues_main.json <<'JSON'
-{
-  "leagues": [
-    {"id":39,  "name":"Premier League"},
-    {"id":140, "name":"La Liga"},
-    {"id":135, "name":"Serie A"},
-    {"id":78,  "name":"Bundesliga"},
-    {"id":61,  "name":"Ligue 1"},
-    {"id":94,  "name":"Primeira Liga"},
-    {"id":88,  "name":"Eredivisie"},
-    {"id":203, "name":"Super Lig"},
-    {"id":2,   "name":"UEFA Champions League"},
-    {"id":3,   "name":"UEFA Europa League"}
-  ]
-}
-JSON
+            # (usar printf em vez de heredoc para evitar erros de YAML)
+            printf '%s\n' \
+'{' \
+'  "leagues": [' \
+'    {"id":39,  "name":"Premier League"},' \
+'    {"id":140, "name":"La Liga"},' \
+'    {"id":135, "name":"Serie A"},' \
+'    {"id":78,  "name":"Bundesliga"},' \
+'    {"id":61,  "name":"Ligue 1"},' \
+'    {"id":94,  "name":"Primeira Liga"},' \
+'    {"id":88,  "name":"Eredivisie"},' \
+'    {"id":203, "name":"Super Lig"},' \
+'    {"id":2,   "name":"UEFA Champions League"},' \
+'    {"id":3,   "name":"UEFA Europa League"}' \
+'  ]' \
+'}' > config/leagues_main.json
           fi
 
-      # **Novo**: gera topscorers cruzando plantel e lesões
-      - name: Refresh top scorers (per team)
+      # ✅ Opcional: gerar/atualizar topscorers filtrando lesionados e trocas de clube
+      - name: Refresh top scorers (optional)
         if: ${{ hashFiles('scripts/refresh_topscorers.py') != '' }}
         env:
           API_FOOTBALL_KEY:  ${{ secrets.API_FOOTBALL_KEY }}
           API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://football-proxy-4ymo.onrender.com' }}
-          SEASONS:           ${{ vars.SEASONS || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}
+          SEASONS:           ${{ env.SEASONS }}
         run: |
           set -euxo pipefail
           python scripts/refresh_topscorers.py \
             --leagues-file config/leagues_main.json \
             --out data/stats/topscorers.json \
-            --topn 5 \
-            --exclude-injured || true
+            --seasons $SEASONS \
+            --exclude-injured true \
+            --cross-check-squads true || true
 
       - name: Export predictions (optional)
         if: ${{ hashFiles('scripts/export_predictions.py') != '' }}
