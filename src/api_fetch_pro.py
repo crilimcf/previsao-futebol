@@ -108,6 +108,99 @@ def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int
         logger.error(f"❌ API erro {endpoint}: {e}")
     return []
 
+# ===========================================================
+# Odds helpers (mercado real para O/U 2.5)
+# ===========================================================
+PREFERRED_BOOKS = ("Pinnacle", "bet365", "10Bet", "William Hill", "Unibet", "1xBet")
+
+def _to_float(x) -> Optional[float]:
+    try:
+        return float(str(x).replace(",", "."))
+    except Exception:
+        return None
+
+def _median(nums: List[float]) -> Optional[float]:
+    vals = sorted([n for n in nums if n is not None])
+    if not vals:
+        return None
+    n = len(vals)
+    mid = n // 2
+    return vals[mid] if n % 2 else (vals[mid - 1] + vals[mid]) / 2.0
+
+def get_market_ou(fixture_id: int, line: float = 2.5) -> Optional[Dict[str, float]]:
+    """
+    Busca Over/Under para a 'line' (default 2.5) no /odds da API-Football.
+    Preferimos livros 'conhecidos'; se não houver, usamos a mediana das odds.
+    Retorna: {"over": float, "under": float, "book": str, "line": 2.5} ou None.
+    """
+    if not fixture_id:
+        return None
+
+    items = api_get("odds", {"fixture": int(fixture_id), "season": SEASON})
+    if not items:
+        return None
+
+    per_book: Dict[str, Dict[str, float]] = {}
+    all_over: List[float] = []
+    all_under: List[float] = []
+
+    for item in items:
+        for bmk in (item.get("bookmakers") or []):
+            book = bmk.get("name") or ""
+            over_val, under_val = None, None
+
+            for bet in (bmk.get("bets") or []):
+                name = (bet.get("name") or "").lower()
+                if "over" not in name or "under" not in name:
+                    continue
+
+                for v in (bet.get("values") or []):
+                    label = (v.get("value") or "").strip().replace(",", ".").lower()
+                    odd = _to_float(v.get("odd"))
+                    if odd is None:
+                        continue
+
+                    if label.startswith("over "):
+                        try:
+                            ln = float(label.split(" ", 1)[1])
+                            if abs(ln - line) < 1e-9:
+                                over_val = odd
+                        except Exception:
+                            pass
+                    elif label.startswith("under "):
+                        try:
+                            ln = float(label.split(" ", 1)[1])
+                            if abs(ln - line) < 1e-9:
+                                under_val = odd
+                        except Exception:
+                            pass
+
+            if over_val is not None or under_val is not None:
+                per_book.setdefault(book, {})
+                if over_val is not None:
+                    per_book[book]["over"] = over_val
+                    all_over.append(over_val)
+                if under_val is not None:
+                    per_book[book]["under"] = under_val
+                    all_under.append(under_val)
+
+    # tenta livros preferidos completos
+    for b in PREFERRED_BOOKS:
+        kv = per_book.get(b)
+        if kv and kv.get("over") and kv.get("under"):
+            return {"over": kv["over"], "under": kv["under"], "book": b, "line": float(line)}
+
+    # senão, usa a mediana agregada
+    med_over, med_under = _median(all_over), _median(all_under)
+    if med_over and med_under:
+        return {"over": med_over, "under": med_under, "book": "median", "line": float(line)}
+
+    # último recurso: qualquer livro completo
+    for b, kv in per_book.items():
+        if kv.get("over") and kv.get("under"):
+            return {"over": kv["over"], "under": kv["under"], "book": b, "line": float(line)}
+
+    return None
 
 # ===========================================================
 # Poisson helpers (com fallback)
@@ -140,7 +233,6 @@ except Exception:
                 pa = _poisson_pmf(lambda_away, a)
                 row.append(ph * pa)
             mat.append(row)
-        # normaliza (por segurança numérica)
         s = sum(sum(r) for r in mat)
         if s > 0:
             mat = [[x / s for x in r] for r in mat]
@@ -166,7 +258,6 @@ except Exception:
         return p
 
     def over_under_prob_from_matrix(mat: List[List[float]], line: float) -> Tuple[float, float]:
-        # prob total goals > line
         n = len(mat)
         p_over = 0.0
         for h in range(n):
@@ -184,7 +275,6 @@ except Exception:
                 pairs.append((f"{h}-{a}", mat[h][a]))
         pairs.sort(key=lambda t: t[1], reverse=True)
         return pairs[:k]
-
 
 # ===========================================================
 # Modelagem prob/odds
@@ -211,7 +301,6 @@ def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float]:
 # ===========================================================
 def team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
     data = api_get("teams/statistics", {"team": team_id, "league": league_id, "season": SEASON})
-    # a API devolve dict (e não lista) aqui; mas como normalizamos, garantimos dict
     if isinstance(data, dict):
         return data
     if isinstance(data, list) and data:
@@ -241,17 +330,12 @@ def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> T
     lam_away = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
     return lam_home, lam_away
 
-
+# ===========================================================
+# Predição por fixture
+# ===========================================================
 def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
-    Recebe um fixture (como devolvido pela API-Football) e gera o objeto PRO de previsão:
-    - probs 1X2 via Poisson
-    - over/under 2.5 e 1.5
-    - BTTS
-    - Double Chance
-    - Top-3 correct scores
-    - Odds lineadas (1/prob)
-    - Top scorers por liga (5)
+    Recebe um fixture (como devolvido pela API-Football) e gera o objeto PRO de previsão.
     """
     try:
         fixture = fix.get("fixture", {})
@@ -295,7 +379,6 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         if top_scorers is None:
             tops = api_get("players/topscorers", {"league": league_id, "season": SEASON})
             res = []
-            # normaliza
             for s in (tops or [])[:5]:
                 player = (s.get("player") or {}).get("name")
                 stat0 = (s.get("statistics") or [{}])[0]
@@ -305,17 +388,25 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             top_scorers = res
             redis_cache_set(scorers_cache_key, top_scorers, ex=12 * 3600)
 
-        # odds lineadas (simples 1/p)
+        # odds reais (mercado) para O/U 2.5, com fallback a implied
+        fixture_id = fixture.get("id")
+        ou25_market = get_market_ou(int(fixture_id), line=2.5) if fixture_id else None
+        if ou25_market:
+            ou25_odds = {
+                "over": round(float(ou25_market["over"]), 2),
+                "under": round(float(ou25_market["under"]), 2),
+            }
+        else:
+            ou25_odds = {"over": implied_odds(p_over25), "under": implied_odds(p_under25)}
+
+        # Odds finais (mantemos implied nos restantes mercados, por agora)
         odds_map = {
             "winner": {
                 "home": implied_odds(ph),
                 "draw": implied_odds(pd),
                 "away": implied_odds(pa),
             },
-            "over_2_5": {
-                "over": implied_odds(p_over25),
-                "under": implied_odds(p_under25),
-            },
+            "over_2_5": ou25_odds,
             "over_1_5": {
                 "over": implied_odds(p_over15),
                 "under": implied_odds(p_under15),
@@ -354,7 +445,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             },
             "correct_score_top3": top3,
             "top_scorers": top_scorers,
-            "predicted_score": ps_obj,  # legado/compat
+            "predicted_score": ps_obj,   # legado/compat
             "confidence": float(winner_conf),  # legado/compat
         }
         return out
@@ -378,23 +469,20 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
             fixtures.extend(payload["response"])
         else:
             logger.warning(f"⚠️ Sem fixtures via proxy para {iso}.")
-        # pequena pausa para não saturar
         time.sleep(0.2)
 
-    # fallback: tentar próximos N (se deu zero)
     if not fixtures:
         payload = proxy_get("/fixtures", {"next": 50})
         if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
             fixtures = payload["response"]
     return fixtures
 
-
 def fetch_and_save_predictions() -> Dict[str, Any]:
     """
     Pipeline PRO:
       - fixtures (proxy)
-      - para cada fixture: estatísticas (API-Football), Poisson, odds lineadas, DC, BTTS, CS top-3, top scorers
-      - grava predictions.json (sem BOM)
+      - por fixture: estatísticas (API-Football), Poisson, odds (O/U 2.5 de mercado), DC, BTTS, CS top-3, top scorers
+      - grava predictions.json
     """
     total = 0
     matches: List[Dict[str, Any]] = []
@@ -409,7 +497,6 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
             matches.append(pred)
             total += 1
 
-    # Ordena por confiança do Winner desc (opcional)
     matches_sorted = sorted(matches, key=lambda x: x["predictions"]["winner"]["confidence"], reverse=True)
 
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
