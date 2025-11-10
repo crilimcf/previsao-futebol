@@ -3,9 +3,9 @@ name: Update predictions (daily + on-push)
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: "5 0 * * *"          # 00:05 UTC diariamente
+    - cron: "5 0 * * *"
   push:
-    branches: [ main ]
+    branches: [ "main" ]
     paths:
       - "frontend/**"
       - "scripts/**"
@@ -25,7 +25,6 @@ env:
 
 jobs:
   update:
-    name: Update predictions
     runs-on: ubuntu-latest
 
     steps:
@@ -44,7 +43,7 @@ jobs:
             fi
           done
           if [ "$ok" -eq 0 ]; then
-            echo "Backend pode estar OK mas nenhum healthz respondeu 200. Continuo para o update."
+            echo "Nenhum healthz respondeu 200; continuo para o update."
           fi
 
       - name: Trigger /meta/update (retries + 3 modos de auth)
@@ -75,10 +74,10 @@ jobs:
 
           for i in 1 2 3; do
             if try_update "$API_BASE_URL/meta/update"; then
-              echo "Update disparado com sucesso."
+              echo "Update disparado."
               break
             fi
-            echo "Falhou tentativa $i; a aguardar $((i*10))s…"
+            echo "Falhou tentativa $i; aguardando $((i*10))s..."
             sleep $((i*10))
           done
 
@@ -86,7 +85,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: pip
+          cache: "pip"
 
       - name: Install deps
         run: |
@@ -95,7 +94,6 @@ jobs:
           pip install -r requirements.txt || true
 
       - name: Compute seasons
-        id: seasons
         run: |
           set -euxo pipefail
           SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
@@ -110,22 +108,7 @@ jobs:
           if [ -f config/leagues_main.json ]; then
             echo "Usar config/leagues_main.json existente"
           else
-            echo "Criar fallback de ligas curadas"
-            printf '%s\n' \
-'{' \
-'  "leagues": [' \
-'    {"id":39,  "name":"Premier League"},' \
-'    {"id":140, "name":"La Liga"},' \
-'    {"id":135, "name":"Serie A"},' \
-'    {"id":78,  "name":"Bundesliga"},' \
-'    {"id":61,  "name":"Ligue 1"},' \
-'    {"id":94,  "name":"Primeira Liga"},' \
-'    {"id":88,  "name":"Eredivisie"},' \
-'    {"id":203, "name":"Super Lig"},' \
-'    {"id":2,   "name":"UEFA Champions League"},' \
-'    {"id":3,   "name":"UEFA Europa League"}' \
-'  ]' \
-'}' > config/leagues_main.json
+            echo '{"leagues":[{"id":39,"name":"Premier League"},{"id":140,"name":"La Liga"},{"id":135,"name":"Serie A"},{"id":78,"name":"Bundesliga"},{"id":61,"name":"Ligue 1"},{"id":94,"name":"Primeira Liga"},{"id":88,"name":"Eredivisie"},{"id":203,"name":"Super Lig"},{"id":2,"name":"UEFA Champions League"},{"id":3,"name":"UEFA Europa League"}]}' > config/leagues_main.json
           fi
 
       - name: Refresh top scorers (optional)
