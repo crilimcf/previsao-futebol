@@ -1,0 +1,4 @@
+[35msrc/api_fetch.py[m[36m:[m[32m63[m[36m:[m    """Extrai odds de mercados chave: 1X2, [1;31mOver/Under[m 2.5/1.5, BTTS."""
+[35msrc/api_fetch.py[m[36m:[m[32m102[m[36m:[m                    # [1;31mOver/Under[m 2.5
+[35msrc/api_fetch.py[m[36m:[m[32m122[m[36m:[m                    # [1;31mOver/Under[m 1.5
+[35msrc/ml/bivar.py[m[36m:[m[32m53[m[36m:[m    """Extrai 1X2, BTTS, [1;31mOver/Under[m 2.5 e Top-3 correct score do score matrix."""
