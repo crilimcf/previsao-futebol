@@ -3,7 +3,7 @@ name: Update predictions (daily + on-push)
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: "5 0 * * *"   # 00:05 UTC diariamente
+    - cron: "5 0 * * *"          # 00:05 UTC diariamente
   push:
     branches: [ main ]
     paths:
@@ -25,22 +25,29 @@ env:
 
 jobs:
   update:
+    name: Update predictions
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Health check backend
         run: |
           set -euxo pipefail
-          for p in /healthz /api/healthz ; do
+          ok=0
+          for p in /healthz /api/healthz; do
             if curl -fsS -m 25 "$API_BASE_URL$p" >/dev/null 2>&1; then
-              echo "OK: $p"
-              exit 0
+              echo "OK $p"
+              ok=1
+              break
             fi
           done
-          echo "Backend online mas nenhum healthz respondeu 200 (seguimos para o update)."
+          if [ "$ok" -eq 0 ]; then
+            echo "Backend pode estar OK mas nenhum healthz respondeu 200. Continuo para o update."
+          fi
 
-      - name: Trigger backend /meta/update (retries e 3 modos de auth)
+      - name: Trigger /meta/update (retries + 3 modos de auth)
         env:
           ENDPOINT_API_KEY: ${{ secrets.ENDPOINT_API_KEY }}
         run: |
@@ -48,20 +55,20 @@ jobs:
           test -n "${ENDPOINT_API_KEY:-}" || { echo "Falta secret ENDPOINT_API_KEY"; exit 1; }
 
           try_update () {
-            url="$1"; shift
+            url="$1"
             code=$(curl -sS -o /tmp/u1.out -w "%{http_code}" -X POST "$url" \
                     -H "Authorization: Bearer $ENDPOINT_API_KEY" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
-            [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
+            if [ "$code" -ge 200 ] && [ "$code" -lt 300 ]; then return 0; fi
 
             code=$(curl -sS -o /tmp/u2.out -w "%{http_code}" -X POST "$url" \
                     -H "X-Endpoint-Key: $ENDPOINT_API_KEY" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
-            [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
+            if [ "$code" -ge 200 ] && [ "$code" -lt 300 ]; then return 0; fi
 
             code=$(curl -sS -o /tmp/u3.out -w "%{http_code}" -X POST "${url}?key=${ENDPOINT_API_KEY}" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
-            [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && return 0
+            if [ "$code" -ge 200 ] && [ "$code" -lt 300 ]; then return 0; fi
 
             return 1
           }
@@ -71,7 +78,7 @@ jobs:
               echo "Update disparado com sucesso."
               break
             fi
-            echo "Falhou tentativa $i; a aguardar $((i*10))s..."
+            echo "Falhou tentativa $i; a aguardar $((i*10))s…"
             sleep $((i*10))
           done
 
@@ -79,10 +86,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
+          cache: pip
 
       - name: Install deps
         run: |
+          set -euxo pipefail
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
 
@@ -91,8 +99,9 @@ jobs:
         run: |
           set -euxo pipefail
           SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
-          SEASONS="$(echo "$SEASONS" | tr ',;' ' ' | xargs)"   # normalizar "2023,2024" -> "2023 2024"
+          SEASONS="$(echo "$SEASONS" | tr ',;' ' ' | xargs)"
           echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
+          echo "Seasons => $SEASONS"
 
       - name: Ensure curated leagues (fallback if missing)
         run: |
@@ -102,7 +111,6 @@ jobs:
             echo "Usar config/leagues_main.json existente"
           else
             echo "Criar fallback de ligas curadas"
-            # (usar printf em vez de heredoc para evitar erros de YAML)
             printf '%s\n' \
 '{' \
 '  "leagues": [' \
@@ -120,19 +128,17 @@ jobs:
 '}' > config/leagues_main.json
           fi
 
-      # ✅ Opcional: gerar/atualizar topscorers filtrando lesionados e trocas de clube
       - name: Refresh top scorers (optional)
         if: ${{ hashFiles('scripts/refresh_topscorers.py') != '' }}
         env:
           API_FOOTBALL_KEY:  ${{ secrets.API_FOOTBALL_KEY }}
           API_FOOTBALL_BASE: ${{ vars.API_FOOTBALL_BASE || 'https://football-proxy-4ymo.onrender.com' }}
-          SEASONS:           ${{ env.SEASONS }}
         run: |
           set -euxo pipefail
           python scripts/refresh_topscorers.py \
             --leagues-file config/leagues_main.json \
             --out data/stats/topscorers.json \
-            --seasons $SEASONS \
+            --seasons "$SEASONS" \
             --exclude-injured true \
             --cross-check-squads true || true
 
