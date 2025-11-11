@@ -1,127 +1,73 @@
+## 📘 `previsao-futebol` — README.md (proposta)
 
-<div align="center">
+```md
+# Previsão de Futebol
 
-# Football Prediction
+Stack: **FastAPI (backend)** + **Next.js (frontend)** + **Proxy para API-Football** (via serviço dedicado) + **tarefas agendadas** (scripts `run_daily.py`, `run_weekly.py`).
 
-![License](https://img.shields.io/github/license/fernandosc14/football-prediction)
-![Version](https://img.shields.io/badge/version-v1.0.1-blue)
-![Stars](https://img.shields.io/github/stars/fernandosc14/football-prediction?style=social)
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support%20me-yellow?logo=buy-me-a-coffee&style=flat)](https://buymeacoffee.com/fernandosc14)
+> Objetivo: obter dados da API-Football, normalizar/guardar, expor endpoints para o frontend, e apresentar previsões/estatísticas no site.
 
-</div>
+## Arquitetura
+- `src/` — código FastAPI (endpoints, serviços, modelos Pydantic)
+- `scripts/` — tarefas programadas (ex.: `run_daily.py`, `run_weekly.py`)
+- `models/` — modelos de ML/artefatos
+- `notebooks/` — exploração/EDA
+- `frontend/` — aplicação Next.js
+- `tests/` — testes automáticos (Python)
 
+## Variáveis de ambiente
+> Mantém **segredos fora do Git**. Usa *Render Environment* (ou GitHub Secrets) para chaves.
 
-<details>
-   <summary>Table of Contents</summary>
+### Comuns / Dados
+- `ENV` — `production` | `development` (padrão: `development`)
+- `REDIS_URL` — URL Redis (ex.: `rediss://...`)
 
-- [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+### Backend (FastAPI)
+- `APISPORTS_PROXY_BASE` — Base URL do **proxy** para API-Football (ex.: `https://football-proxy.onrender.com`)
+- `API_FOOTBALL_BASE` — (opcional) base da API original, padrão `https://v3.football.api-sports.io/`
+- `API_FOOTBALL_SEASONS` — ex.: `2024,2025`
 
-</details>
+> **Não** definas `API_FOOTBALL_KEY` no frontend. O acesso deve ser **sempre** via backend/proxy.
 
+### Frontend (Next.js)
+- `NEXT_PUBLIC_API_BASE_URL` — base dos endpoints **do backend deste projeto**, ex.: `https://previsao-futebol.onrender.com`
 
-## Description
+> Evita tokens `NEXT_PUBLIC_*`. Tudo sensível deve ficar **server-side**.
 
-Football Prediction is a modern, data-driven platform for forecasting football match outcomes.
-It leverages machine learning models and real-time data to provide accurate predictions, confidence scores, and insights.
+## Desenvolvimento local
+```bash
+# 1) Backend
+python -m venv .venv && source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+pip install -U pip
+pip install -r requirements.txt  # ou pip install -e . se houver pyproject.toml
+uvicorn src.main:app --reload --port 8000
 
-**Key Features:**
-- Predict match results, double chance, over/under goals, and BTTS.
-- Interactive frontend built with Next.js and Tailwind CSS.
-- Automated data fetching and model training.
-- REST API for integration and custom queries.
-- Scheduled updates via cloud automation.
-
-**New in v1.0.0:**
-- Improved authentication and API security
-- Enhanced error handling and startup validation
-- Stable production-ready configuration
-
-## Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/fernandosc14/football-prediction.git
-   cd football-prediction
-   ```
-
-2. **Install Python dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Install frontend dependencies:**
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-4. **Set up environment variables:**
-   Create a `.env` file in the root and add your secrets (see [Configuration](#configuration)).
-
-5. **Run the backend:**
-   ```bash
-   uvicorn src.api:app --reload
-   ```
-
-6. **Run the frontend:**
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-
-## Usage
-
-- Access the frontend at `http://localhost:3000`
-- Use the REST API endpoints (see API docs for details)
-- Example API call:
-  ```bash
-  curl http://localhost:8000/predictions
-  ```
-
-- Run the weekly update script:
-  ```bash
-  python scripts/run_weekly.py
-  ```
-
-## Configuration
-
-Set the following environment variables in your `.env` file:
-
-```env
-REDIS_URL=your_redis_url
-API_KEY=your_api_key
-ENDPOINT_API_KEY=your_endpoint_api_key
+# 2) Frontend
+cd frontend
+npm ci
+npm run dev  # http://localhost:3000
 ```
 
-Other optional settings can be found in `config.yaml` and `frontend/.env.local`.
+## Testes & Lint
+```bash
+# Python
+ruff check .
+pytest -q
 
-## Contributing
+# Frontend (se existir)
+cd frontend
+npm run lint
+npm test --if-present
+```
 
-We welcome contributions! To get started:
+## Deploy
+- **Backend/Frontend**: Render (ou Docker) — configurar `REDIS_URL`, `APISPORTS_PROXY_BASE` e `NEXT_PUBLIC_API_BASE_URL`.
+- **Tarefas**: usar Cron Jobs do Render para chamar `scripts/run_daily.py` e `scripts/run_weekly.py` ou endpoints internos de manutenção.
 
-- Fork the repository
-- Create a new branch (`git checkout -b feature/your-feature`)
-- Commit your changes
-- Open a pull request
+## Endpoints úteis
+- `GET /health` — healthcheck (recomendado implementar)
+- `GET /predictions` — previsões (expor conforme o modelo)
+- `GET /stats` — estatísticas
+```
 
-Please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and ensure all tests pass before submitting.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgments
-
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Next.js](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Upstash Redis](https://upstash.com/)
-- [Render](https://render.com/)
-- [SoccerDataAPI](https://soccerdataapi.com/)
-- Special thanks to all contributors and the open-source community!
+---
