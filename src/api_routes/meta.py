@@ -2,22 +2,102 @@
 import os
 import json
 import logging
-from typing import Dict, List, Any
-from fastapi import APIRouter
+from typing import Dict, List, Any, Optional
+
+from fastapi import APIRouter, Header, Query
+from fastapi.responses import JSONResponse
+
+# usamos o pipeline PRO (odds reais via /odds do proxy)
+from src.api_fetch_pro import fetch_and_save_predictions
 
 router = APIRouter(prefix="/meta", tags=["meta"])
 log = logging.getLogger("meta")
 
+
+# -------------------- helpers --------------------
 def _read_json(path: str) -> Any:
     if not os.path.exists(path):
         return None
     try:
-        # utf-8-sig para tolerar BOM
-        with open(path, "r", encoding="utf-8-sig") as f:
+        with open(path, "r", encoding="utf-8-sig") as f:  # tolera BOM
             return json.load(f)
     except Exception as e:
         log.warning(f"Falha a ler {path}: {e}")
         return None
+
+
+def _expected_key() -> Optional[str]:
+    """
+    Procura a chave certa para autorizar /meta/update.
+    Suporta qualquer uma destas env vars, para compat:
+      - ENDPOINT_API_KEY  (recomendado)
+      - API_UPDATE_TOKEN
+      - API_TOKEN
+    """
+    return (
+        os.getenv("ENDPOINT_API_KEY")
+        or os.getenv("API_UPDATE_TOKEN")
+        or os.getenv("API_TOKEN")
+        or None
+    )
+
+
+def _extract_bearer(token_hdr: str) -> Optional[str]:
+    if not token_hdr:
+        return None
+    token_hdr = token_hdr.strip()
+    if token_hdr.lower().startswith("bearer "):
+        return token_hdr[7:].strip()
+    return None
+
+
+def _is_authorized(authorization: str, x_endpoint_key: str, key_query: Optional[str]) -> bool:
+    """
+    Aceita:
+      - Authorization: Bearer <token>
+      - X-Endpoint-Key: <token>
+      - ?key=<token>
+    """
+    expected = _expected_key()
+    if not expected:
+        # Se não houver chave configurada no ambiente, não bloqueia (modo dev)
+        log.warning("⚠️ ENDPOINT_API_KEY/API_UPDATE_TOKEN/API_TOKEN não configurado — /meta/update sem proteção.")
+        return True
+
+    cand = _extract_bearer(authorization) or (x_endpoint_key or "").strip() or (key_query or "").strip()
+    return bool(cand) and cand == expected
+
+
+# -------------------- endpoints --------------------
+@router.get("/healthz")
+def healthz():
+    return {"status": "ok"}
+
+
+@router.post("/update")
+def update_predictions(
+    authorization: str = Header(default=""),
+    x_endpoint_key: str = Header(default=""),
+    key: Optional[str] = Query(default=None),
+    days: int = Query(default=3, ge=1, le=7),
+):
+    """
+    Dispara o refresh das previsões (fixtures + odds reais + poisson + topscorers) e grava data/predict/predictions.json.
+
+    Auth: Authorization: Bearer <token>  |  X-Endpoint-Key: <token>  |  ?key=<token>
+    O <token> deve corresponder a ENDPOINT_API_KEY (ou API_UPDATE_TOKEN/API_TOKEN) no ambiente do backend.
+    """
+    if not _is_authorized(authorization, x_endpoint_key, key):
+        return JSONResponse({"status": "forbidden"}, status_code=403)
+
+    try:
+        # fetch_and_save_predictions já grava o ficheiro final e retorna {"status":"ok","total":N}
+        out = fetch_and_save_predictions()
+        return JSONResponse({"status": "ok", **(out or {})})
+    except Exception as e:
+        log.exception("Erro no update:")
+        return JSONResponse({"status": "error", "detail": str(e)}, status_code=500)
+
 
 @router.get("/leagues")
 def leagues():
@@ -61,7 +141,6 @@ def leagues():
     )
     return {"count": len(items), "items": items}
 
-# adiciona ao src/api_routes/meta.py
 
 @router.get("/calibration")
 def calibration_info():
