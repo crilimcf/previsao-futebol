@@ -11,9 +11,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/154.png",
     "odds": {
       "winner": {
-        "home": 1.7,
+        "home": 1.67,
         "draw": 3.6,
-        "away": 5.25
+        "away": 5.5
       },
       "over_2_5": {
         "over": 5.0,
