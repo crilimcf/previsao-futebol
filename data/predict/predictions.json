@@ -1,172 +1,5 @@
 [
   {
-    "match_id": 1391898,
-    "league_id": 141,
-    "league": "Segunda División",
-    "country": "Spain",
-    "date": "2025-11-10T19:30:00+00:00",
-    "home_team": "Burgos",
-    "away_team": "Castellón",
-    "home_logo": "https://media.api-sports.io/football/teams/9580.png",
-    "away_logo": "https://media.api-sports.io/football/teams/5254.png",
-    "odds": {
-      "winner": {
-        "home": 2.62,
-        "draw": 3.0,
-        "away": 2.9
-      },
-      "over_2_5": {
-        "over": 5.5,
-        "under": 1.14
-      },
-      "over_1_5": {
-        "over": 2.38,
-        "under": 1.53
-      },
-      "btts": {
-        "yes": 3.75,
-        "no": 1.25
-      }
-    },
-    "predicted_score": {
-      "home": 1,
-      "away": 0
-    },
-    "confidence": 0.4852,
-    "predictions": {
-      "winner": {
-        "class": 0,
-        "confidence": 0.4852,
-        "prob": 0.4852
-      },
-      "double_chance": {
-        "class": 0,
-        "confidence": 0.7605
-      },
-      "over_2_5": {
-        "class": 0,
-        "confidence": 0.393,
-        "prob": 0.393
-      },
-      "over_1_5": {
-        "class": 1,
-        "confidence": 0.6596
-      },
-      "btts": {
-        "class": 0,
-        "confidence": 0.4379,
-        "prob": 0.4379
-      }
-    },
-    "correct_score_top3": [
-      {
-        "score": "1-0",
-        "prob": 0.1441
-      },
-      {
-        "score": "1-1",
-        "prob": 0.1268
-      },
-      {
-        "score": "0-0",
-        "prob": 0.1044
-      }
-    ],
-    "top_scorers": [
-      {
-        "player": "Z. Eddahchouri",
-        "team": "Deportivo La Coruna",
-        "goals": 7
-      },
-      {
-        "player": "Jeremy Arévalo",
-        "team": "Racing Santander",
-        "goals": 7
-      },
-      {
-        "player": "Adri Embarba",
-        "team": "Almeria",
-        "goals": 6
-      },
-      {
-        "player": "Asier Villalibre",
-        "team": "Racing Santander",
-        "goals": 6
-      },
-      {
-        "player": "Agus Medina",
-        "team": "Albacete",
-        "goals": 6
-      }
-    ],
-    "predicted_scorers": {
-      "home": [
-        {
-          "player": "David González",
-          "prob": 0.2704,
-          "xg": 0.315,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Fer Niño",
-          "prob": 0.2231,
-          "xg": 0.253,
-          "position": "Attacker"
-        },
-        {
-          "player": "José Mateo Mejía Piedrahita",
-          "prob": 0.175,
-          "xg": 0.192,
-          "position": "Attacker"
-        },
-        {
-          "player": "Curro Sánchez",
-          "prob": 0.1545,
-          "xg": 0.168,
-          "position": "Midfielder"
-        },
-        {
-          "player": "K. Appin",
-          "prob": 0.153,
-          "xg": 0.166,
-          "position": "Midfielder"
-        }
-      ],
-      "away": [
-        {
-          "player": "B. Cipenga",
-          "prob": 0.1589,
-          "xg": 0.173,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Álex Calatrava",
-          "prob": 0.1426,
-          "xg": 0.154,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Ousmane Camara",
-          "prob": 0.1302,
-          "xg": 0.14,
-          "position": "Attacker"
-        },
-        {
-          "player": "Barri",
-          "prob": 0.0622,
-          "xg": 0.064,
-          "position": "Midfielder"
-        },
-        {
-          "player": "M. Doué",
-          "prob": 0.0616,
-          "xg": 0.064,
-          "position": "Midfielder"
-        }
-      ]
-    }
-  },
-  {
     "match_id": 1351198,
     "league_id": 71,
     "league": "Serie A",
@@ -183,12 +16,12 @@
         "away": 5.25
       },
       "over_2_5": {
-        "over": 5.0,
-        "under": 1.17
+        "over": 5.5,
+        "under": 1.14
       },
       "over_1_5": {
-        "over": 2.2,
-        "under": 1.62
+        "over": 2.25,
+        "under": 1.57
       },
       "btts": {
         "yes": 3.75,
