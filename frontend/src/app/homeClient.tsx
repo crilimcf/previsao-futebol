@@ -20,11 +20,11 @@ import {
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
+// -----------------------------
+// Helpers gerais
+// -----------------------------
 type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
 
-/* ----------------------------- */
-/*   Helpers de tempo            */
-/* ----------------------------- */
 function timeSince(ts: number) {
   const sec = Math.floor((Date.now() - ts) / 1000);
   if (sec < 60) return `${sec}s atrás`;
@@ -38,21 +38,10 @@ function ymd(d: Date) {
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().split("T")[0];
 }
-// Evita crash se a API der date inválida
-function safeDate(val?: string | number | Date) {
-  if (val === undefined || val === null) return new Date();
-  const d = new Date(val as any);
-  if (!isNaN(d.getTime())) return d;
-  if (typeof val === "string") {
-    const d2 = new Date(val.replace(" ", "T"));
-    if (!isNaN(d2.getTime())) return d2;
-  }
-  return new Date();
+function fixtureDateSafe(d?: string) {
+  const t = d ? Date.parse(d) : NaN;
+  return Number.isFinite(t) ? new Date(d as string) : new Date();
 }
-
-/* ----------------------------- */
-/*   ✨ Helpers de destaque      */
-/* ----------------------------- */
 function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
@@ -77,9 +66,9 @@ function badgeClass(prob: number, isMax: boolean): string {
   return "bg-gray-100 text-gray-700";
 }
 
-/* ----------------------------- */
-/*   Heurística Seleções A       */
-/* ----------------------------- */
+// -----------------------------
+// Heurística Seleções A (client-side)
+// -----------------------------
 const CONFED_REGIONS = new Set([
   "World",
   "Europe",
@@ -90,52 +79,63 @@ const CONFED_REGIONS = new Set([
   "Oceania",
   "International",
 ]);
+
 const INTL_KEYWORDS = [
   "world cup",
-  "wc qualification",
   "qualification",
   "qualifiers",
+  "nations league",
   "uefa euro",
   "european championship",
-  "nations league",
-  "international friendly",
-  "friendlies",
   "copa america",
-  "gold cup",
   "africa cup of nations",
+  "afcon",
   "asian cup",
+  "gold cup",
+  "friendly",
+  "friendlies",
 ];
-const YOUTH_MARKS = [" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23"];
-const WOMEN_MARKS = ["women", " fémin", " fem ", " w-", " w "];
 
-const containsAny = (s: string, arr: string[]) => arr.some((t) => s.includes(t));
+const YOUTH_PATTERNS = [" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23"];
+const WOMEN_PATTERNS = ["women", " fémin", " fem ", " w ", " w-"];
 
-function isYouthOrWomenName(name?: string | null) {
+function isYouthOrWomen(name?: string) {
   if (!name) return false;
   const n = name.toLowerCase();
-  if (containsAny(n, YOUTH_MARKS)) return true;
-  if (containsAny(n, WOMEN_MARKS)) return true;
+  if (YOUTH_PATTERNS.some((t) => n.includes(t))) return true;
+  if (WOMEN_PATTERNS.some((t) => n.includes(t))) return true;
   return false;
 }
 
-function isNationalA(p: any): boolean {
-  const leagueName = String(p.league_name ?? p.league ?? "").toLowerCase();
-  const country = String(p.country ?? "").trim();
-  const h = String(p.home_team ?? "").toLowerCase();
-  const a = String(p.away_team ?? "").toLowerCase();
+function isIntlATeam(pred: any): boolean {
+  const leagueName = String(pred.league_name ?? pred.league ?? "").toLowerCase();
+  const country = String(pred.country ?? "").trim();
+  const home = String(pred.home_team ?? "").toLowerCase();
+  const away = String(pred.away_team ?? "").toLowerCase();
 
-  if (isYouthOrWomenName(h) || isYouthOrWomenName(a)) return false; // exclui U-xx/Women
+  if (isYouthOrWomen(home) || isYouthOrWomen(away)) return false;
 
-  if (CONFED_REGIONS.has(country)) return true; // país "World/Europe/International"
-  if (containsAny(leagueName, INTL_KEYWORDS)) return true; // nome da competição
+  if (country && CONFED_REGIONS.has(country)) return true;
+  if (INTL_KEYWORDS.some((k) => leagueName.includes(k))) return true;
 
-  // fallback: equipas com nome de país comum (curto) – evita clubes
-  const looksNational = (x: string) => /^[a-z\s-]{3,20}$/.test(x) && !x.includes(" fc") && !x.includes(" sc");
-  if (looksNational(h) && looksNational(a)) return true;
-
-  return false;
+  // fallback: nomes de seleções costumam não ter "FC/SC/United/City"
+  const clubHints = [" fc", " sc", " united", " city", " cf ", " afc", "cd ", "sd "];
+  const looksClub = clubHints.some((t) => home.includes(t) || away.includes(t));
+  return !looksClub;
 }
 
+// -----------------------------
+// Datas
+// -----------------------------
+const dateTabs = [
+  { key: "today", label: "Hoje", calc: () => new Date() },
+  { key: "tomorrow", label: "Amanhã", calc: () => new Date(Date.now() + 86400000) },
+  { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
+];
+
+// -----------------------------
+// Componente
+// -----------------------------
 export default function HomeClient() {
   const router = useRouter();
   const search = useSearchParams();
@@ -150,14 +150,13 @@ export default function HomeClient() {
 
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
-  const [onlyIntlA, setOnlyIntlA] = useState<boolean>(false);
+
+  const [intlOnly, setIntlOnly] = useState<boolean>(search.get("intlA") === "1");
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
-  /* ----------------------------- */
-  /* 1) Ligas (backend curado)     */
-  /* ----------------------------- */
+  // 1) Ligas do backend curado
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
@@ -170,7 +169,7 @@ export default function HomeClient() {
     })();
   }, []);
 
-  // limpar caches antigas do browser (uma vez)
+  // limpar caches antigas
   useEffect(() => {
     try {
       ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
@@ -196,10 +195,7 @@ export default function HomeClient() {
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
-    const qpIntl = search.get("intlA");
-
     if (qpLeague) setSelectedLeague(qpLeague);
-    if (qpIntl === "1") setOnlyIntlA(true);
 
     if (qpDate) {
       const today = ymd(new Date());
@@ -223,49 +219,45 @@ export default function HomeClient() {
     params.set("date", selectedDateISO);
     if (selectedLeague && selectedLeague !== "all") params.set("league_id", String(selectedLeague));
     else params.delete("league_id");
-    if (onlyIntlA) params.set("intlA", "1");
+    if (intlOnly) params.set("intlA", "1");
     else params.delete("intlA");
     router.replace(`?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDateISO, selectedLeague, onlyIntlA]);
+  }, [selectedDateISO, selectedLeague, intlOnly]);
 
-  // -------- carregamento principal com fallback de data ----------
+  // carregar previsões + stats + lastUpdate
   async function loadMainData() {
     setLoading(true);
     setError("");
 
     try {
-      const params =
-        selectedLeague === "all"
-          ? { date: selectedDateISO }
-          : { date: selectedDateISO, league_id: selectedLeague };
+      const params: Record<string, any> = { date: selectedDateISO };
+      if (selectedLeague !== "all") params.league_id = selectedLeague;
+      if (intlOnly) params.intlA = 1; // se o backend suportar, ótimo; senão filtramos client-side
 
-      // 1ª tentativa: pedir filtrado por data ao backend
-      let preds = await getPredictions(params);
-      let predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
+      const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
+      const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
 
-      // Fallback: se vier vazio, buscar tudo e filtrar a data no cliente
-      if (!predsArray.length) {
-        const all = await getPredictions({});
-        const allArr = Array.isArray(all) ? (all as Prediction[]) : [];
-        predsArray = allArr.filter((p: any) => ymd(safeDate(p.date)) === selectedDateISO);
+      // 1) filtra por liga selecionada (se houver)
+      let arr = predsArray;
+      if (selectedLeague !== "all") {
+        arr = arr.filter(
+          (p: any) => String(p.league_id ?? p.leagueId ?? p.league?.id) === String(selectedLeague)
+        );
       }
 
-      // 1) filtro Seleções A (se ativo)
-      let arr: Prediction[] = predsArray;
-      if (onlyIntlA) arr = arr.filter(isNationalA);
+      // 2) se NÃO for intlOnly, podemos restringir às ligas curadas
+      if (!intlOnly && allowedLeagueIds.size > 0) {
+        arr = arr.filter((p: any) => allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id)));
+      }
 
-      // 2) allow-list SÓ quando o user escolhe liga específica
-      if (selectedLeague !== "all" && allowedLeagueIds.size > 0) {
-        arr = arr.filter((p: any) =>
-          allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
-        );
+      // 3) intlOnly — garante só Seleções A
+      if (intlOnly) {
+        arr = arr.filter(isIntlATeam);
       }
 
       setPredictions(arr);
 
-      // stats + lastUpdate
-      const [statsData, lastU] = await Promise.all([getStats(), getLastUpdate()]);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
@@ -291,7 +283,7 @@ export default function HomeClient() {
   useEffect(() => {
     loadMainData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLeague, selectedDateISO, onlyIntlA, allowedLeagueIds]);
+  }, [selectedLeague, selectedDateISO, allowedLeagueIds, intlOnly]);
 
   // fixtures reais por liga (proxy) — por data
   async function loadFixtures(ignoreCache = false) {
@@ -321,7 +313,6 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
 
-  // Helpers UI
   const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
   const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—");
   const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
@@ -370,7 +361,7 @@ export default function HomeClient() {
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas (APENAS backend curado) */}
+          {/* Ligas dinâmicas (APENAS do backend curado) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -385,11 +376,7 @@ export default function HomeClient() {
 
           {/* Datas */}
           <div className="flex gap-3 md:gap-4">
-            {[
-              { key: "today", label: "Hoje" },
-              { key: "tomorrow", label: "Amanhã" },
-              { key: "after", label: "Depois de Amanhã" },
-            ].map((d) => (
+            {dateTabs.map((d) => (
               <button
                 key={d.key}
                 onClick={() => setSelectedDateKey(d.key)}
@@ -401,21 +388,23 @@ export default function HomeClient() {
           </div>
 
           {/* Só Seleções A */}
-          <label className="inline-flex items-center gap-2 text-sm text-gray-300 select-none">
+          <label className="inline-flex items-center gap-2 text-sm text-gray-200 select-none cursor-pointer">
             <input
               type="checkbox"
-              className="checkbox checkbox-sm"
-              checked={onlyIntlA}
-              onChange={(e) => setOnlyIntlA(e.target.checked)}
+              className="accent-emerald-500"
+              checked={intlOnly}
+              onChange={(e) => setIntlOnly(e.target.checked)}
             />
-            <span> Só Seleções A</span>
+            <span>Só Seleções A</span>
           </label>
 
           {/* Atualizar */}
           <button
             onClick={async () => {
               await loadMainData();
-              if (selectedLeague !== "all") await loadFixtures(true);
+              if (selectedLeague !== "all") {
+                await loadFixtures(true);
+              }
             }}
             className="btn btn-ghost"
             disabled={loading || loadingFixtures}
@@ -434,7 +423,7 @@ export default function HomeClient() {
               } catch {}
               setSelectedLeague("all");
               setSelectedDateKey("today");
-              setOnlyIntlA(false);
+              setIntlOnly(false);
               setPredictions([]);
               setLiveFixtures([]);
               setLastFixturesUpdate(null);
@@ -465,7 +454,7 @@ export default function HomeClient() {
 
             {(() => {
               const fixturesDay = (liveFixtures || []).filter(
-                (f: any) => ymd(safeDate(f.fixture?.date)) === selectedDateISO
+                (f: any) => ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
               );
 
               return fixturesDay.length > 0 ? (
@@ -473,14 +462,14 @@ export default function HomeClient() {
                   {fixturesDay.map((f: any) => (
                     <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
                       <div className="flex items-center justify-center gap-3 mb-2">
-                        <Image src={f.teams.home.logo} alt="" width={24} height={24} />
+                        <Image src={f.teams.home.logo} alt="" width={24} height={24} unoptimized />
                         <span className="text-white font-medium">{f.teams.home.name}</span>
                         <span className="text-gray-400">vs</span>
                         <span className="text-white font-medium">{f.teams.away.name}</span>
-                        <Image src={f.teams.away.logo} alt="" width={24} height={24} />
+                        <Image src={f.teams.away.logo} alt="" width={24} height={24} unoptimized />
                       </div>
                       <p className="text-sm text-center text-gray-400">
-                        {safeDate(f.fixture?.date).toLocaleString("pt-PT")}
+                        {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
                       </p>
                       <p className="text-xs text-center text-gray-500 mt-1">
                         {f.league.name} ({f.league.country})
@@ -501,7 +490,7 @@ export default function HomeClient() {
           </div>
         )}
 
-        {/* Previsões */}
+        {/* Previsões (filtradas/local) */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {predictions.map((p: any) => {
@@ -545,7 +534,7 @@ export default function HomeClient() {
                       {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
                     </div>
                     <div className="text-xs text-gray-500">
-                      {safeDate(p.date).toLocaleString("pt-PT", {
+                      {new Date(p.date).toLocaleString("pt-PT", {
                         day: "2-digit",
                         month: "2-digit",
                         hour: "2-digit",
@@ -556,17 +545,17 @@ export default function HomeClient() {
 
                   {/* Teams */}
                   <div className="flex items-center justify-center gap-3">
-                    {!!p.home_logo && <Image src={p.home_logo} alt="" width={28} height={28} />}
+                    {!!p.home_logo && <Image src={p.home_logo} alt="" width={28} height={28} unoptimized />}
                     <div className="text-white font-semibold text-center">{p.home_team}</div>
                     <div className="text-gray-500">vs</div>
                     <div className="text-white font-semibold text-center">{p.away_team}</div>
-                    {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
+                    {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} unoptimized />}
                   </div>
 
-                  {/* Correct score */}
+                  {/* Correct score (best) */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
-                    <span className="text-sm text-white">{p?.correct_score_top3?.[0]?.score ?? "—"}</span>
+                    <span className="text-sm text-white">{bestCorrectScore(p)}</span>
                   </div>
 
                   {/* Tips com destaque */}
@@ -627,7 +616,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* BTTS */}
+                    {/* BTTS (fora do ranking TOP) */}
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
@@ -651,13 +640,14 @@ export default function HomeClient() {
                         <div>
                           <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
                           <div className="text-white">
-                            O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
+                            O {oddFmt(p?.odds?.over_2_5?.over ?? p?.odds?.over_under?.["2.5"]?.over)} · U{" "}
+                            {oddFmt(p?.odds?.over_2_5?.under ?? p?.odds?.over_under?.["2.5"]?.under)}
                           </div>
                         </div>
                         <div>
                           <div className="text-gray-400 text-xs mb-1">BTTS</div>
                           <div className="text-white">
-                            Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
+                            Sim {oddFmt(p?.odds?.btts?.yes)} · Não {oddFmt(p?.odds?.btts?.no)}
                           </div>
                         </div>
                       </div>
