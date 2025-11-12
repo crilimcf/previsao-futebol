@@ -20,8 +20,11 @@ import {
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
-type DCClass = 0 | 1 | 2;
+type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
 
+/* ----------------------------- */
+/*   Helpers de tempo            */
+/* ----------------------------- */
 function timeSince(ts: number) {
   const sec = Math.floor((Date.now() - ts) / 1000);
   if (sec < 60) return `${sec}s atrás`;
@@ -35,6 +38,7 @@ function ymd(d: Date) {
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().split("T")[0];
 }
+// Evita crash se a API der date inválida
 function fixtureDateSafe(d?: string) {
   const t = d ? Date.parse(d) : NaN;
   return Number.isFinite(t) ? new Date(d as string) : new Date();
@@ -46,7 +50,9 @@ const dateTabs = [
   { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
 ];
 
-/* ===== Helpers de prob/odds ===== */
+/* ----------------------------- */
+/*   ✨ Helpers de destaque      */
+/* ----------------------------- */
 function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
@@ -71,31 +77,59 @@ function badgeClass(prob: number, isMax: boolean): string {
   return "bg-gray-100 text-gray-700";
 }
 
-/* ===== Heurística Seleções A (fallback se backend não mandar intlA) ===== */
-const CONFEDS = new Set([
-  "World", "Europe", "South America", "North & Central America", "Africa", "Asia", "Oceania", "International",
+/* ----------------------------- */
+/*   Heurística Seleções A       */
+/* ----------------------------- */
+const CONFED_REGIONS = new Set([
+  "World",
+  "Europe",
+  "South America",
+  "North & Central America",
+  "Africa",
+  "Asia",
+  "Oceania",
+  "International",
 ]);
-const INTL_RE = /(world cup|wc qualification|qualif|qualification|european championship|uefa euro|nations league|copa america|africa cup|afcon|asian cup|gold cup|friendly|friendlies)/i;
-const YOUTH = /\bU(?:15|16|17|18|19|20|21|22|23)\b/i;
-const WOMEN = /\b(women|fem|fémin|w-)\b/i;
+const INTL_KEYWORDS = [
+  "world cup",
+  "qualification",
+  "qualifiers",
+  "uefa euro",
+  "european championship",
+  "nations league",
+  "international friendly",
+  "friendlies",
+  "copa america",
+  "gold cup",
+  "africa cup of nations",
+  "asian cup",
+];
+const YOUTH_MARKS = [" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23"];
+const WOMEN_MARKS = ["women", " fémin", " fem ", " w-", " w "];
+
+const containsAny = (s: string, arr: string[]) => arr.some((t) => s.includes(t));
 
 function isYouthOrWomenName(name?: string | null) {
   if (!name) return false;
   const n = name.toLowerCase();
-  return YOUTH.test(n) || WOMEN.test(n);
+  if (containsAny(n, YOUTH_MARKS)) return true;
+  if (containsAny(n, WOMEN_MARKS)) return true;
+  return false;
 }
+
 function isNationalA(p: any): boolean {
-  // usa flag do backend se existir
-  if (p?.intlA === true || p?.is_national_a === true) return true;
+  const leagueName = String(p.league_name ?? p.league ?? "").toLowerCase();
+  const country = String(p.country ?? "").trim();
+  const h = String(p.home_team ?? "").toLowerCase();
+  const a = String(p.away_team ?? "").toLowerCase();
 
-  const leagueName = (p?.league_name || p?.league || "").toString();
-  const leagueCountry = (p?.country || p?.league_country || p?.league?.country || "").toString().trim();
-  const home = (p?.home_team || "").toString();
-  const away = (p?.away_team || "").toString();
+  // excluir juvenis/mulheres
+  if (isYouthOrWomenName(h) || isYouthOrWomenName(a)) return false;
 
-  if (isYouthOrWomenName(home) || isYouthOrWomenName(away)) return false;
-  if (CONFEDS.has(leagueCountry)) return true;
-  if (INTL_RE.test(leagueName)) return true;
+  // competições internacionais
+  if (CONFED_REGIONS.has(country)) return true;
+  if (containsAny(leagueName, INTL_KEYWORDS)) return true;
+
   return false;
 }
 
@@ -113,17 +147,19 @@ export default function HomeClient() {
 
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
-  const [onlyIntlA, setOnlyIntlA] = useState<boolean>(false);   // <— NOVO
+  const [onlyIntlA, setOnlyIntlA] = useState<boolean>(false);
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
-  /* Ligas do backend curado */
+  /* ----------------------------- */
+  /* 1) Ligas só do backend curado */
+  /* ----------------------------- */
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues();
+        const ls = await getLeagues(); // <- só as ligas curadas vindas do backend
         setBackendLeagues(ls ?? []);
       } catch {
         setBackendLeagues([]);
@@ -131,7 +167,7 @@ export default function HomeClient() {
     })();
   }, []);
 
-  // limpar caches antigas
+  // limpar possíveis caches antigas do browser (uma vez)
   useEffect(() => {
     try {
       ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
@@ -140,11 +176,13 @@ export default function HomeClient() {
     } catch {}
   }, []);
 
+  // conjunto de IDs permitidos (usamos APENAS quando o user escolhe liga específica)
   const allowedLeagueIds = useMemo(
     () => new Set<string>(backendLeagues.map((x) => String(x.id))),
     [backendLeagues]
   );
 
+  // dropdown de ligas (apenas curadas) — mostra País — Liga
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
     const arr = backendLeagues.map((x) => ({
       id: String(x.id),
@@ -157,9 +195,10 @@ export default function HomeClient() {
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
-    const qpIntl = search.get("intlA"); // "1" para ativo
+    const qpIntl = search.get("intlA");
 
     if (qpLeague) setSelectedLeague(qpLeague);
+    if (qpIntl === "1") setOnlyIntlA(true);
 
     if (qpDate) {
       const today = ymd(new Date());
@@ -169,8 +208,6 @@ export default function HomeClient() {
         qpDate === today ? "today" : qpDate === tomorrow ? "tomorrow" : qpDate === after ? "after" : "today";
       setSelectedDateKey(key);
     }
-
-    setOnlyIntlA(qpIntl === "1");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -179,7 +216,7 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // refletir filtros na URL
+  // reflete filtros na URL
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
@@ -205,11 +242,15 @@ export default function HomeClient() {
       const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
       const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
 
-      // 1) filtro base por Seleções A (se ativo)
-      let arr: any[] = onlyIntlA ? predsArray.filter(isNationalA) : predsArray;
+      let arr: Prediction[] = predsArray;
 
-      // 2) só aplicar allow-list quando NÃO estamos em modo “Só Seleções A”
-      if (!onlyIntlA && allowedLeagueIds.size > 0) {
+      // 1) filtro Seleções A (se ativo)
+      if (onlyIntlA) {
+        arr = arr.filter(isNationalA);
+      }
+
+      // 2) allow-list SÓ quando o user escolhe liga específica (em "Todos" NÃO restringimos)
+      if (selectedLeague !== "all" && allowedLeagueIds.size > 0) {
         arr = arr.filter((p: any) =>
           allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
         );
@@ -241,9 +282,9 @@ export default function HomeClient() {
   useEffect(() => {
     loadMainData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLeague, selectedDateISO, allowedLeagueIds, onlyIntlA]);
+  }, [selectedLeague, selectedDateISO, onlyIntlA, allowedLeagueIds]);
 
-  // fixtures por liga (não depende de Só Seleções A)
+  // fixtures reais por liga (proxy) — por data (evita jogos “de outro dia”)
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -271,13 +312,14 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
 
+  // Helpers UI
   const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
   const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—");
   const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
   const bestCorrectScore = (p: any) =>
     p?.correct_score_top3?.[0]?.score ?? p?.predictions?.correct_score?.best ?? "—";
 
-  /* Loading */
+  // Loading
   if (loading) {
     return (
       <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -297,7 +339,7 @@ export default function HomeClient() {
     );
   }
 
-  /* Erro */
+  // Erro
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -307,18 +349,19 @@ export default function HomeClient() {
     );
   }
 
-  /* UI principal */
+  // UI principal
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
       <Header />
       <main className="space-y-12 md:space-y-16">
         <InfoCard />
 
+        {/* Usa StatsAverage se existir */}
         {stats ? <StatsAverage stats={stats} /> : null}
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas */}
+          {/* Ligas dinâmicas (APENAS do backend curado) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -345,13 +388,14 @@ export default function HomeClient() {
           </div>
 
           {/* Só Seleções A */}
-          <label className="flex items-center gap-2 text-sm text-gray-200">
+          <label className="inline-flex items-center gap-2 text-sm text-gray-300 select-none">
             <input
               type="checkbox"
+              className="checkbox checkbox-sm"
               checked={onlyIntlA}
-              onChange={() => setOnlyIntlA((v) => !v)}
+              onChange={(e) => setOnlyIntlA(e.target.checked)}
             />
-            Só Seleções A
+            <span> Só Seleções A</span>
           </label>
 
           {/* Atualizar */}
@@ -369,7 +413,7 @@ export default function HomeClient() {
             {loading || loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
           </button>
 
-          {/* Limpar */}
+          {/* 🧹 Limpar */}
           <button
             onClick={() => {
               try {
@@ -409,6 +453,7 @@ export default function HomeClient() {
             )}
 
             {(() => {
+              // compara pelos Y-M-D em horário local
               const fixturesDay = (liveFixtures || []).filter(
                 (f: any) => ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
               );
@@ -446,7 +491,7 @@ export default function HomeClient() {
           </div>
         )}
 
-        {/* Previsões */}
+        {/* Previsões (já filtradas) */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {predictions.map((p: any) => {
@@ -484,6 +529,7 @@ export default function HomeClient() {
                   key={String(p.match_id ?? p.fixture_id)}
                   className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4"
                 >
+                  {/* Header */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-400">
                       {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
@@ -498,6 +544,7 @@ export default function HomeClient() {
                     </div>
                   </div>
 
+                  {/* Teams */}
                   <div className="flex items-center justify-center gap-3">
                     {!!p.home_logo && <Image src={p.home_logo} alt="" width={28} height={28} />}
                     <div className="text-white font-semibold text-center">{p.home_team}</div>
@@ -506,14 +553,15 @@ export default function HomeClient() {
                     {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
                   </div>
 
+                  {/* Correct score (best) */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
-                    <span className="text-sm text-white">
-                      {p?.correct_score_top3?.[0]?.score ?? p?.predictions?.correct_score?.best ?? "—"}
-                    </span>
+                    <span className="text-sm text-white">{p?.correct_score_top3?.[0]?.score ?? "—"}</span>
                   </div>
 
+                  {/* Tips com destaque */}
                   <div className="grid grid-cols-2 gap-2">
+                    {/* Winner */}
                     <div className={`rounded-xl border p-3 ${tileClass(prWinner, isTop("winner"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Winner</span>
@@ -527,6 +575,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
+                    {/* Double Chance */}
                     <div className={`rounded-xl border p-3 ${tileClass(prDC, isTop("double"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Double Chance</span>
@@ -540,6 +589,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
+                    {/* Over 2.5 */}
                     <div className={`rounded-xl border p-3 ${tileClass(prO25, isTop("over25"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 2.5</span>
@@ -553,6 +603,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
+                    {/* Over 1.5 */}
                     <div className={`rounded-xl border p-3 ${tileClass(prO15, isTop("over15"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 1.5</span>
@@ -566,6 +617,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
+                    {/* BTTS (fora do ranking TOP) */}
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
@@ -575,6 +627,7 @@ export default function HomeClient() {
                     </div>
                   </div>
 
+                  {/* Odds */}
                   {(odds1x2 || oddsOU25 || oddsBTTS) && (
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                       <div className="text-xs text-gray-400 mb-2">Odds</div>
