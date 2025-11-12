@@ -489,6 +489,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             "top_scorers": _get_top_scorers_cached(league_id),
             "predicted_score": ps_obj,   # legado/compat
             "confidence": float(winner_conf),
+            "intlA": _is_national_A_fixture(fix),
         }
         return out
     except Exception as e:
