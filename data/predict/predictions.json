@@ -22,8 +22,8 @@
         "under": 1.86
       },
       "over_1_5": {
-        "over": 1.04,
-        "under": 26.94
+        "over": 1.05,
+        "under": 19.66
       },
       "btts": {
         "yes": 2.45,
@@ -33,118 +33,40 @@
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.9923326897653497,
-        "prob": 0.9923326897653497
+        "confidence": 0.9888665754640424,
+        "prob": 0.9888665754640424
       },
       "over_2_5": {
         "class": 1,
-        "confidence": 0.875612142411608,
-        "prob": 0.875612142411608
+        "confidence": 0.8418970152062665,
+        "prob": 0.8418970152062665
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.9628840969327958
+        "confidence": 0.9491244966158053
       },
       "double_chance": {
         "class": 0,
-        "confidence": 0.9996680047403258
+        "confidence": 0.999513143868681
       },
       "btts": {
         "class": 0,
-        "confidence": 0.0484800452635363,
-        "prob": 0.0484800452635363
+        "confidence": 0.04833942792275117,
+        "prob": 0.04833942792275117
       }
     },
     "correct_score_top3": [
       {
+        "score": "4-0",
+        "prob": 0.21898890919505232
+      },
+      {
         "score": "5-0",
-        "prob": 0.23765717656155808
+        "prob": 0.21898890919505232
       },
       {
         "score": "6-0",
-        "prob": 0.2178524118480949
-      },
-      {
-        "score": "4-0",
-        "prob": 0.2160519786923255
-      }
-    ],
-    "top_scorers": [],
-    "predicted_score": {
-      "home": 5,
-      "away": 0
-    },
-    "confidence": 0.9923326897653497,
-    "intlA": true
-  },
-  {
-    "match_id": 1468971,
-    "league_id": 1140,
-    "league": "AFC Women's Champions League",
-    "league_name": "AFC Women's Champions League",
-    "country": "World",
-    "date": "2025-11-12T08:30:00+00:00",
-    "home_team": "Ispe W",
-    "away_team": "Tokyo Verdy Beleza W",
-    "home_logo": "https://media.api-sports.io/football/teams/26441.png",
-    "away_logo": "https://media.api-sports.io/football/teams/16951.png",
-    "odds_source": "model",
-    "odds": {
-      "winner": {
-        "home": 1.02,
-        "draw": 63.53,
-        "away": 1374.69
-      },
-      "over_2_5": {
-        "over": 1.25,
-        "under": 4.95
-      },
-      "over_1_5": {
-        "over": 1.08,
-        "under": 14.17
-      },
-      "btts": {
-        "yes": 20.78,
-        "no": 1.05
-      }
-    },
-    "predictions": {
-      "winner": {
-        "class": 0,
-        "confidence": 0.983531094744305,
-        "prob": 0.983531094744305
-      },
-      "over_2_5": {
-        "class": 1,
-        "confidence": 0.7978080239514741,
-        "prob": 0.7978080239514741
-      },
-      "over_1_5": {
-        "class": 1,
-        "confidence": 0.9294291035566814
-      },
-      "double_chance": {
-        "class": 0,
-        "confidence": 0.9992725644686563
-      },
-      "btts": {
-        "class": 0,
-        "confidence": 0.04811863906078868,
-        "prob": 0.04811863906078868
-      }
-    },
-    "correct_score_top3": [
-      {
-        "score": "4-0",
-        "prob": 0.2172558425134257
-      },
-      {
-        "score": "5-0",
-        "prob": 0.1955302582620831
-      },
-      {
-        "score": "3-0",
-        "prob": 0.19311630445637834
+        "prob": 0.18249075766254358
       }
     ],
     "top_scorers": [],
@@ -152,7 +74,7 @@
       "home": 4,
       "away": 0
     },
-    "confidence": 0.983531094744305,
+    "confidence": 0.9888665754640424,
     "intlA": true
   },
   {
@@ -274,8 +196,8 @@
     "odds": {
       "winner": {
         "home": 1.95,
-        "draw": 3.56,
-        "away": 3.12
+        "draw": 3.5,
+        "away": 3.13
       },
       "over_2_5": {
         "over": 1.65,
@@ -338,6 +260,84 @@
     "intlA": true
   },
   {
+    "match_id": 1468971,
+    "league_id": 1140,
+    "league": "AFC Women's Champions League",
+    "league_name": "AFC Women's Champions League",
+    "country": "World",
+    "date": "2025-11-12T08:30:00+00:00",
+    "home_team": "Ispe W",
+    "away_team": "Tokyo Verdy Beleza W",
+    "home_logo": "https://media.api-sports.io/football/teams/26441.png",
+    "away_logo": "https://media.api-sports.io/football/teams/16951.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 1.2,
+        "draw": 7.34,
+        "away": 32.83
+      },
+      "over_2_5": {
+        "over": 2.21,
+        "under": 1.82
+      },
+      "over_1_5": {
+        "over": 1.41,
+        "under": 3.45
+      },
+      "btts": {
+        "yes": 5.06,
+        "no": 1.25
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.8332299900754369,
+        "prob": 0.8332299900754369
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.45159559792571424,
+        "prob": 0.45159559792571424
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7102769196588679
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9695424800197658
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.19768814791974496,
+        "prob": 0.19768814791974496
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "2-0",
+        "prob": 0.20953187060385445
+      },
+      {
+        "score": "1-0",
+        "prob": 0.18625055164787063
+      },
+      {
+        "score": "3-0",
+        "prob": 0.15714890295289086
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 2,
+      "away": 0
+    },
+    "confidence": 0.8332299900754369,
+    "intlA": true
+  },
+  {
     "match_id": 1482365,
     "league_id": 1191,
     "league": "UEFA Europa Cup - Women",
@@ -353,7 +353,7 @@
       "winner": {
         "home": 1.17,
         "draw": 6.5,
-        "away": 9.0
+        "away": 9.5
       },
       "over_2_5": {
         "over": 1.94,
@@ -429,12 +429,12 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 2.89,
-        "draw": 3.42,
+        "home": 2.87,
+        "draw": 3.43,
         "away": 2.1
       },
       "over_2_5": {
-        "over": 1.8,
+        "over": 1.77,
         "under": 1.9
       },
       "over_1_5": {
@@ -819,7 +819,7 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 2.92,
+        "home": 2.89,
         "draw": 3.58,
         "away": 2.05
       },
@@ -897,13 +897,13 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 4.72,
+        "home": 4.62,
         "draw": 4.45,
-        "away": 1.48
+        "away": 1.5
       },
       "over_2_5": {
         "over": 1.46,
-        "under": 2.49
+        "under": 2.5
       },
       "over_1_5": {
         "over": 1.68,
@@ -975,13 +975,13 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 1.4,
-        "draw": 4.0,
-        "away": 8.05
+        "home": 1.36,
+        "draw": 4.12,
+        "away": 8.65
       },
       "over_2_5": {
-        "over": 2.0,
-        "under": 1.75
+        "over": 1.96,
+        "under": 1.81
       },
       "over_1_5": {
         "over": 3.54,
@@ -989,7 +989,7 @@
       },
       "btts": {
         "yes": 4.0,
-        "no": 1.21
+        "no": 1.71
       }
     },
     "predictions": {
@@ -1158,8 +1158,8 @@
     "odds": {
       "winner": {
         "home": 1.71,
-        "draw": 3.72,
-        "away": 3.88
+        "draw": 3.65,
+        "away": 3.9
       },
       "over_2_5": {
         "over": 1.61,
@@ -1235,9 +1235,9 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 2.14,
+        "home": 2.12,
         "draw": 3.6,
-        "away": 2.73
+        "away": 2.75
       },
       "over_2_5": {
         "over": 1.52,
@@ -1781,9 +1781,9 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 2.05,
-        "draw": 2.96,
-        "away": 3.91
+        "home": 2.04,
+        "draw": 3.0,
+        "away": 3.98
       },
       "over_2_5": {
         "over": 2.75,
@@ -2095,7 +2095,7 @@
       "winner": {
         "home": 21.53,
         "draw": 21.0,
-        "away": 72.0
+        "away": 74.0
       },
       "over_2_5": {
         "over": 2.1,
@@ -2107,7 +2107,7 @@
       },
       "btts": {
         "yes": 5.2,
-        "no": 1.16
+        "no": 1.14
       }
     },
     "predictions": {
@@ -2457,21 +2457,21 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 17.0,
-        "draw": 5.55,
+        "home": 15.5,
+        "draw": 5.5,
         "away": 1.23
       },
       "over_2_5": {
-        "over": 3.41,
-        "under": 1.2
+        "over": 2.42,
+        "under": 1.46
       },
       "over_1_5": {
         "over": 213.73,
         "under": 1.0
       },
       "btts": {
-        "yes": 5.9,
-        "no": 1.57
+        "yes": 5.75,
+        "no": 1.14
       }
     },
     "predictions": {
@@ -2925,20 +2925,20 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 1.24,
-        "draw": 5.35,
-        "away": 10.47
+        "home": 1.25,
+        "draw": 5.3,
+        "away": 10.0
       },
       "over_2_5": {
-        "over": 2.9,
-        "under": 1.35
+        "over": 1.79,
+        "under": 1.92
       },
       "over_1_5": {
         "over": 1.41,
         "under": 3.46
       },
       "btts": {
-        "yes": 3.32,
+        "yes": 3.25,
         "no": 2.29
       }
     },
@@ -3315,13 +3315,13 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 2.22,
+        "home": 2.15,
         "draw": 3.1,
-        "away": 3.34
+        "away": 3.3
       },
       "over_2_5": {
-        "over": 5.2,
-        "under": 1.14
+        "over": 5.05,
+        "under": 1.36
       },
       "over_1_5": {
         "over": 1.55,
@@ -3329,7 +3329,7 @@
       },
       "btts": {
         "yes": 3.74,
-        "no": 1.25
+        "no": 1.62
       }
     },
     "predictions": {
@@ -3419,9 +3419,9 @@
     "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 14.75,
-        "draw": 6.35,
-        "away": 1.19
+        "home": 14.5,
+        "draw": 6.3,
+        "away": 1.18
       },
       "over_2_5": {
         "over": 3.45,
@@ -3432,7 +3432,7 @@
         "under": 5.04
       },
       "btts": {
-        "yes": 4.3,
+        "yes": 4.4,
         "no": 1.21
       }
     },
@@ -4794,24 +4794,24 @@
     "away_team": "Egypt",
     "home_logo": "https://media.api-sports.io/football/teams/1568.png",
     "away_logo": "https://media.api-sports.io/football/teams/32.png",
-    "odds_source": "model",
+    "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 3.33,
-        "draw": 1.98,
-        "away": 5.15
+        "home": 3.3,
+        "draw": 3.15,
+        "away": 2.15
       },
       "over_2_5": {
-        "over": 18.22,
-        "under": 1.06
+        "over": 5.0,
+        "under": 1.12
       },
       "over_1_5": {
         "over": 4.78,
         "under": 1.26
       },
       "btts": {
-        "yes": 8.61,
-        "no": 1.13
+        "yes": 3.6,
+        "no": 1.25
       }
     },
     "predictions": {
