@@ -20,11 +20,8 @@ import {
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
-type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
+type DCClass = 0 | 1 | 2;
 
-/* ----------------------------- */
-/*   Helpers de tempo            */
-/* ----------------------------- */
 function timeSince(ts: number) {
   const sec = Math.floor((Date.now() - ts) / 1000);
   if (sec < 60) return `${sec}s atrás`;
@@ -43,66 +40,20 @@ function fixtureDateSafe(d?: string) {
   return Number.isFinite(t) ? new Date(d as string) : new Date();
 }
 
-/* ----------------------------- */
-/*   Odds helpers (validação)    */
-/* ----------------------------- */
+const dateTabs = [
+  { key: "today", label: "Hoje", calc: () => new Date() },
+  { key: "tomorrow", label: "Amanhã", calc: () => new Date(Date.now() + 86400000) },
+  { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
+];
+
+/* ===== Helpers de prob/odds ===== */
 function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
 }
-const pctStr01 = (v?: number | null) => `${Math.round(prob01(v) * 100)}%`;
-const oddFmt = (v?: number | null) =>
-  typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
-const isValidOdd = (v?: number | null) =>
-  typeof v === "number" && isFinite(v) && v >= 1.2 && v <= 100;
-
-/* ----------------------------- */
-/*   Heurística Seleções A       */
-/* ----------------------------- */
-const INTL_COUNTRIES = new Set([
-  "world",
-  "international",
-  "europe",
-  "south america",
-  "north & central america",
-  "africa",
-  "asia",
-  "oceania",
-  "uefa",
-  "conmebol",
-  "concacaf",
-  "caf",
-  "afc",
-  "ofc",
-]);
-
-const INTL_NAME_RE =
-  /(world cup|qualification|qualifiers|euro|european championship|nations league|afcon|africa cup of nations|asian cup|copa america|gold cup|friendly)/i;
-
-function isYouthOrWomenName(s?: string) {
-  const n = (s || "").toLowerCase();
-  const youth = /\bu\s*-?\s*(14|15|16|17|18|19|20|21|22|23)\b/i.test(n);
-  const women =
-    /\b(women|womens|ladies|feminina|feminino|feminine|féminin|femenino)\b/i.test(
-      n
-    );
-  return youth || women;
+function pctStr01(v?: number | null): string {
+  return `${Math.round(prob01(v) * 100)}%`;
 }
-
-function isIntlATeams(p: any) {
-  const country = (p?.country || "").toLowerCase();
-  const lname = (p?.league_name || p?.league || "").toLowerCase();
-  const home = (p?.home_team || "").toLowerCase();
-  const away = (p?.away_team || "").toLowerCase();
-  if (isYouthOrWomenName(home) || isYouthOrWomenName(away)) return false;
-  const intlCountry = INTL_COUNTRIES.has(country);
-  const intlName = INTL_NAME_RE.test(lname);
-  return intlCountry || intlName;
-}
-
-/* ----------------------------- */
-/*   UI helpers                  */
-/* ----------------------------- */
 function tileClass(prob: number, isMax: boolean): string {
   const p = Math.round(prob * 100);
   if (isMax) return "bg-emerald-600/15 border-emerald-500/60 ring-2 ring-emerald-400";
@@ -119,21 +70,35 @@ function badgeClass(prob: number, isMax: boolean): string {
   if (p >= 50) return "bg-sky-200 text-sky-900";
   return "bg-gray-100 text-gray-700";
 }
-const dcLabel = (dc: DCClass | undefined) =>
-  dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
 
-/* ----------------------------- */
-/*   Datas                       */
-/* ----------------------------- */
-const dateTabs = [
-  { key: "today", label: "Hoje", calc: () => new Date() },
-  { key: "tomorrow", label: "Amanhã", calc: () => new Date(Date.now() + 86400000) },
-  { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
-];
+/* ===== Heurística Seleções A (fallback se backend não mandar intlA) ===== */
+const CONFEDS = new Set([
+  "World", "Europe", "South America", "North & Central America", "Africa", "Asia", "Oceania", "International",
+]);
+const INTL_RE = /(world cup|wc qualification|qualif|qualification|european championship|uefa euro|nations league|copa america|africa cup|afcon|asian cup|gold cup|friendly|friendlies)/i;
+const YOUTH = /\bU(?:15|16|17|18|19|20|21|22|23)\b/i;
+const WOMEN = /\b(women|fem|fémin|w-)\b/i;
 
-/* ============================= */
-/*   Componente principal        */
-/* ============================= */
+function isYouthOrWomenName(name?: string | null) {
+  if (!name) return false;
+  const n = name.toLowerCase();
+  return YOUTH.test(n) || WOMEN.test(n);
+}
+function isNationalA(p: any): boolean {
+  // usa flag do backend se existir
+  if (p?.intlA === true || p?.is_national_a === true) return true;
+
+  const leagueName = (p?.league_name || p?.league || "").toString();
+  const leagueCountry = (p?.country || p?.league_country || p?.league?.country || "").toString().trim();
+  const home = (p?.home_team || "").toString();
+  const away = (p?.away_team || "").toString();
+
+  if (isYouthOrWomenName(home) || isYouthOrWomenName(away)) return false;
+  if (CONFEDS.has(leagueCountry)) return true;
+  if (INTL_RE.test(leagueName)) return true;
+  return false;
+}
+
 export default function HomeClient() {
   const router = useRouter();
   const search = useSearchParams();
@@ -148,18 +113,12 @@ export default function HomeClient() {
 
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
+  const [onlyIntlA, setOnlyIntlA] = useState<boolean>(false);   // <— NOVO
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
-  // Toggle "Só Seleções A" (pode ser inicializado via env)
-  const [onlyA, setOnlyA] = useState<boolean>(
-    (process.env.NEXT_PUBLIC_ONLY_A_TEAMS || "") === "1"
-  );
-
-  /* ----------------------------- */
-  /* 1) Ligas só do backend curado */
-  /* ----------------------------- */
+  /* Ligas do backend curado */
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
@@ -172,7 +131,7 @@ export default function HomeClient() {
     })();
   }, []);
 
-  // limpar caches antigas do browser (uma vez)
+  // limpar caches antigas
   useEffect(() => {
     try {
       ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
@@ -186,7 +145,6 @@ export default function HomeClient() {
     [backendLeagues]
   );
 
-  // dropdown País — Liga
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
     const arr = backendLeagues.map((x) => ({
       id: String(x.id),
@@ -195,10 +153,12 @@ export default function HomeClient() {
     return [{ id: "all", name: "🌍 Todos os países / ligas" }, ...arr];
   }, [backendLeagues]);
 
-  // estado inicial via query
+  // estado inicial via query params
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
+    const qpIntl = search.get("intlA"); // "1" para ativo
+
     if (qpLeague) setSelectedLeague(qpLeague);
 
     if (qpDate) {
@@ -209,6 +169,8 @@ export default function HomeClient() {
         qpDate === today ? "today" : qpDate === tomorrow ? "tomorrow" : qpDate === after ? "after" : "today";
       setSelectedDateKey(key);
     }
+
+    setOnlyIntlA(qpIntl === "1");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -217,15 +179,17 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // reflete filtros na URL
+  // refletir filtros na URL
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
     if (selectedLeague && selectedLeague !== "all") params.set("league_id", String(selectedLeague));
     else params.delete("league_id");
+    if (onlyIntlA) params.set("intlA", "1");
+    else params.delete("intlA");
     router.replace(`?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDateISO, selectedLeague, onlyA]);
+  }, [selectedDateISO, selectedLeague, onlyIntlA]);
 
   // carregar previsões + stats + lastUpdate
   async function loadMainData() {
@@ -241,30 +205,17 @@ export default function HomeClient() {
       const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
       const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
 
-      // 🔧 IMPORTANTE:
-      // - Quando "Todos": NÃO filtrar pelas ligas curadas (para não remover jogos internacionais).
-      // - Quando uma liga específica: aplicar allowedLeagueIds se existir.
-      let filteredPreds: any[] = predsArray;
+      // 1) filtro base por Seleções A (se ativo)
+      let arr: any[] = onlyIntlA ? predsArray.filter(isNationalA) : predsArray;
 
-      if (selectedLeague !== "all") {
-        filteredPreds = filteredPreds.filter((p: any) =>
-          allowedLeagueIds.size === 0
-            ? true
-            : allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
+      // 2) só aplicar allow-list quando NÃO estamos em modo “Só Seleções A”
+      if (!onlyIntlA && allowedLeagueIds.size > 0) {
+        arr = arr.filter((p: any) =>
+          allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
         );
       }
 
-      // Toggle Só Seleções A
-      if (onlyA) {
-        filteredPreds = filteredPreds.filter(isIntlATeams);
-      } else {
-        // mesmo quando não é só A, exclui equipas U-xx/Women explícitas
-        filteredPreds = filteredPreds.filter(
-          (p: any) => !isYouthOrWomenName(p?.home_team) && !isYouthOrWomenName(p?.away_team)
-        );
-      }
-
-      setPredictions(filteredPreds);
+      setPredictions(arr);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
@@ -290,9 +241,9 @@ export default function HomeClient() {
   useEffect(() => {
     loadMainData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLeague, selectedDateISO, onlyA, allowedLeagueIds]);
+  }, [selectedLeague, selectedDateISO, allowedLeagueIds, onlyIntlA]);
 
-  // fixtures reais por liga (proxy) — por data
+  // fixtures por liga (não depende de Só Seleções A)
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -320,12 +271,13 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
 
+  const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
+  const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—");
+  const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
   const bestCorrectScore = (p: any) =>
     p?.correct_score_top3?.[0]?.score ?? p?.predictions?.correct_score?.best ?? "—";
 
-  /* ----------------------------- */
-  /*     Loading / Erro            */
-  /* ----------------------------- */
+  /* Loading */
   if (loading) {
     return (
       <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -345,6 +297,7 @@ export default function HomeClient() {
     );
   }
 
+  /* Erro */
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -354,21 +307,18 @@ export default function HomeClient() {
     );
   }
 
-  /* ----------------------------- */
-  /*        UI principal           */
-  /* ----------------------------- */
+  /* UI principal */
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
       <Header />
       <main className="space-y-12 md:space-y-16">
         <InfoCard />
 
-        {/* Stats */}
         {stats ? <StatsAverage stats={stats} /> : null}
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas (curadas) */}
+          {/* Ligas */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -394,13 +344,12 @@ export default function HomeClient() {
             ))}
           </div>
 
-          {/* Toggle Só Seleções A */}
-          <label className="flex items-center gap-2 text-sm text-gray-300 select-none">
+          {/* Só Seleções A */}
+          <label className="flex items-center gap-2 text-sm text-gray-200">
             <input
               type="checkbox"
-              className="accent-emerald-500"
-              checked={onlyA}
-              onChange={(e) => setOnlyA(e.target.checked)}
+              checked={onlyIntlA}
+              onChange={() => setOnlyIntlA((v) => !v)}
             />
             Só Seleções A
           </label>
@@ -420,7 +369,7 @@ export default function HomeClient() {
             {loading || loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
           </button>
 
-          {/* 🧹 Limpar */}
+          {/* Limpar */}
           <button
             onClick={() => {
               try {
@@ -430,6 +379,7 @@ export default function HomeClient() {
               } catch {}
               setSelectedLeague("all");
               setSelectedDateKey("today");
+              setOnlyIntlA(false);
               setPredictions([]);
               setLiveFixtures([]);
               setLastFixturesUpdate(null);
@@ -529,22 +479,11 @@ export default function HomeClient() {
               const topEntry = marketEntries.reduce((a, b) => (b[1] > a[1] ? b : a), ["winner", -1]);
               const isTop = (k: string) => topEntry[0] === k;
 
-              // 🔒 Mostrar odds só quando válidas; O/U 2.5 só se vier de 'market'
-              const show1x2 =
-                isValidOdd(odds1x2?.home) && isValidOdd(odds1x2?.draw) && isValidOdd(odds1x2?.away);
-              const showOU25 =
-                p?.odds_source === "market" &&
-                isValidOdd(oddsOU25?.over) &&
-                isValidOdd(oddsOU25?.under);
-              const showBTTS = isValidOdd(oddsBTTS?.yes) && isValidOdd(oddsBTTS?.no);
-              const showAnyOdds = show1x2 || showOU25 || showBTTS;
-
               return (
                 <div
                   key={String(p.match_id ?? p.fixture_id)}
                   className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4"
                 >
-                  {/* Header */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-400">
                       {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
@@ -559,7 +498,6 @@ export default function HomeClient() {
                     </div>
                   </div>
 
-                  {/* Teams */}
                   <div className="flex items-center justify-center gap-3">
                     {!!p.home_logo && <Image src={p.home_logo} alt="" width={28} height={28} />}
                     <div className="text-white font-semibold text-center">{p.home_team}</div>
@@ -568,15 +506,14 @@ export default function HomeClient() {
                     {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
                   </div>
 
-                  {/* Correct score (best) */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
-                    <span className="text-sm text-white">{bestCorrectScore(p)}</span>
+                    <span className="text-sm text-white">
+                      {p?.correct_score_top3?.[0]?.score ?? p?.predictions?.correct_score?.best ?? "—"}
+                    </span>
                   </div>
 
-                  {/* Tips com destaque */}
                   <div className="grid grid-cols-2 gap-2">
-                    {/* Winner */}
                     <div className={`rounded-xl border p-3 ${tileClass(prWinner, isTop("winner"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Winner</span>
@@ -590,7 +527,6 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* Double Chance */}
                     <div className={`rounded-xl border p-3 ${tileClass(prDC, isTop("double"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Double Chance</span>
@@ -604,7 +540,6 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* Over 2.5 */}
                     <div className={`rounded-xl border p-3 ${tileClass(prO25, isTop("over25"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 2.5</span>
@@ -618,7 +553,6 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* Over 1.5 */}
                     <div className={`rounded-xl border p-3 ${tileClass(prO15, isTop("over15"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 1.5</span>
@@ -632,47 +566,37 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* BTTS */}
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
                         {btts?.class ? "Sim" : "Não"}{" "}
-                        <span className="text-gray-400 ml-1">({pctStr01(btts?.confidence ?? btts?.prob)})</span>
+                        <span className="text-gray-400 ml-1">({toPct(btts?.confidence ?? btts?.prob)})</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Odds */}
-                  {showAnyOdds && (
+                  {(odds1x2 || oddsOU25 || oddsBTTS) && (
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3">
-                      <div className="text-xs text-gray-400 mb-2">
-                        Odds {p?.odds_source === "market" ? "(mercado)" : "(modelo)"}
-                      </div>
+                      <div className="text-xs text-gray-400 mb-2">Odds</div>
                       <div className="grid grid-cols-3 gap-2 text-sm">
-                        {show1x2 && (
-                          <div>
-                            <div className="text-gray-400 text-xs mb-1">1X2</div>
-                            <div className="text-white">
-                              {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} / {oddFmt(odds1x2?.away)}
-                            </div>
+                        <div>
+                          <div className="text-gray-400 text-xs mb-1">1X2</div>
+                          <div className="text-white">
+                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} / {oddFmt(odds1x2?.away)}
                           </div>
-                        )}
-                        {showOU25 && (
-                          <div>
-                            <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
-                            <div className="text-white">
-                              O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
-                            </div>
+                        </div>
+                        <div>
+                          <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
+                          <div className="text-white">
+                            O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
                           </div>
-                        )}
-                        {showBTTS && (
-                          <div>
-                            <div className="text-gray-400 text-xs mb-1">BTTS</div>
-                            <div className="text-white">
-                              Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
-                            </div>
+                        </div>
+                        <div>
+                          <div className="text-gray-400 text-xs mb-1">BTTS</div>
+                          <div className="text-white">
+                            Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
                           </div>
-                        )}
+                        </div>
                       </div>
                     </div>
                   )}
