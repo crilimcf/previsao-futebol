@@ -4,7 +4,6 @@ import json
 import math
 import time
 import logging
-import re
 import statistics as stats
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
@@ -16,9 +15,6 @@ from src import config
 logger = logging.getLogger("football_api")
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-# ==============================
-# ENV
-# ==============================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
 BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
 SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
@@ -29,21 +25,9 @@ PROXY_TOKEN = os.getenv("API_PROXY_TOKEN", "CF_Proxy_2025_Secret_!@#839")
 PRED_PATH = os.path.join("data", "predict", "predictions.json")
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-# Competições que normalmente indicam seleções (torneios internacionais)
-CONTINENT_OR_INTL = {
-    "World", "International",
-    "Europe", "Africa", "Asia", "Oceania",
-    "South America", "North America", "North & Central America", "Central America",
-}
-INTL_NAME_TOKENS = (
-    "friend", "qualif", "world cup", "euro", "nations league",
-    "copa america", "africa cup", "afcon", "gold cup", "asian cup",
-    "confederations", "olympic", "uefa euro"
-)
-
-# ==============================
+# =========================
 # Redis cache
-# ==============================
+# =========================
 def redis_cache_get(key: str) -> Optional[Any]:
     try:
         if config.redis_client:
@@ -61,13 +45,18 @@ def redis_cache_set(key: str, value: Any, ex: int = 1800) -> None:
     except Exception:
         pass
 
-# ==============================
-# HTTP
-# ==============================
+# =========================
+# HTTP helpers
+# =========================
 def proxy_get(path: str, params: Optional[Dict[str, Any]] = None, timeout: int = 8) -> Optional[Dict[str, Any]]:
     url = urljoin(PROXY_BASE, path.lstrip("/"))
     try:
-        r = requests.get(url, params=params or {}, headers={"x-proxy-token": PROXY_TOKEN, "Accept": "application/json"}, timeout=timeout)
+        r = requests.get(
+            url,
+            params=params or {},
+            headers={"x-proxy-token": PROXY_TOKEN, "Accept": "application/json"},
+            timeout=timeout,
+        )
         if r.status_code == 200:
             return r.json()
         logger.warning(f"Proxy {url} -> {r.status_code}: {r.text[:200]}")
@@ -95,9 +84,9 @@ def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int
         logger.error(f"API erro {endpoint}: {e}")
     return []
 
-# ==============================
+# =========================
 # Poisson (fallback simples)
-# ==============================
+# =========================
 def _poisson_pmf(lmbda: float, k: int) -> float:
     if lmbda <= 0:
         return 1.0 if k == 0 else 0.0
@@ -157,9 +146,9 @@ def top_k_scores_from_matrix(mat: List[List[float]], k: int = 3) -> List[Tuple[s
     pairs.sort(key=lambda t: t[1], reverse=True)
     return pairs[:k]
 
-# ==============================
+# =========================
 # Odds helpers
-# ==============================
+# =========================
 def _median_or_none(vals: List[float]) -> Optional[float]:
     vals = [v for v in vals if isinstance(v, (int, float)) and 1.05 <= v <= 100.0]
     if not vals:
@@ -231,17 +220,23 @@ def _parse_btts(bet: Dict[str, Any]) -> Dict[str, Optional[float]]:
 
 def get_market_odds(fixture_id: int) -> Dict[str, Any]:
     """
-    Odds reais. Tenta via proxy/API com season; se vier vazio, tenta SEM season
-    (útil para torneios internacionais).
+    Odds reais por fixture:
+      - NUNCA enviar 'season' quando já tens 'fixture' (pode filtrar fora qualif. internacionais).
     """
-    def _read_payload(params: Dict[str, Any]) -> Dict[str, Any]:
-        # 1) proxy
-        pj = proxy_get("/odds", params)
-        if pj and isinstance(pj.get("response"), list):
-            return pj
-        # 2) API direta
-        resp = api_get("odds", params)
-        return {"response": resp if isinstance(resp, list) else []}
+    payload: Optional[Dict[str, Any]] = None
+
+    # 1) Proxy sem season
+    try:
+        pj = proxy_get("/odds", {"fixture": fixture_id})
+        if pj and isinstance(pj.get("response"), list) and pj["response"]:
+            payload = pj
+    except Exception:
+        payload = None
+
+    # 2) API direta sem season (fallback)
+    if payload is None:
+        resp = api_get("odds", {"fixture": fixture_id})
+        payload = {"response": resp if isinstance(resp, list) else []}
 
     out = {
         "winner": {"home": None, "draw": None, "away": None},
@@ -249,119 +244,40 @@ def get_market_odds(fixture_id: int) -> Dict[str, Any]:
         "btts": {"yes": None, "no": None},
     }
 
-    # primeiro com season
-    payload = _read_payload({"fixture": fixture_id, "season": SEASON})
+    try:
+        for item in payload.get("response", []):
+            for bm in item.get("bookmakers", []) or []:
+                for bet in bm.get("bets", []) or []:
+                    name = (bet.get("name") or "").lower().strip()
+                    if name in ("match winner", "1x2"):
+                        w = _parse_match_winner(bet)
+                        for k, v in w.items():
+                            if v is not None:
+                                out["winner"][k] = v if out["winner"][k] is None else round((out["winner"][k] + v) / 2, 2)
+                    if "over/under" in name or "under/over" in name:
+                        over, under = _parse_over_under(bet, 2.5)
+                        if over is not None:
+                            out["over_2_5"]["over"] = over if out["over_2_5"]["over"] is None else round((out["over_2_5"]["over"] + over) / 2, 2)
+                        if under is not None:
+                            out["over_2_5"]["under"] = under if out["over_2_5"]["under"] is None else round((out["over_2_5"]["under"] + under) / 2, 2)
+                    if "both teams to score" in name or "btts" in name:
+                        b = _parse_btts(bet)
+                        for k, v in b.items():
+                            if v is not None:
+                                out["btts"][k] = v if out["btts"][k] is None else round((out["btts"][k] + v) / 2, 2)
+    except Exception as e:
+        logger.debug(f"odds parse fail {fixture_id}: {e}")
 
-    def _merge_payload(pl: Dict[str, Any]) -> None:
-        try:
-            for item in pl.get("response", []):
-                for bm in item.get("bookmakers", []) or []:
-                    for bet in bm.get("bets", []) or []:
-                        name = (bet.get("name") or "").lower().strip()
-                        if name in ("match winner", "1x2"):
-                            w = _parse_match_winner(bet)
-                            for k, v in w.items():
-                                if v is not None:
-                                    out["winner"][k] = v if out["winner"][k] is None else round((out["winner"][k] + v) / 2, 2)
-                        if "over/under" in name or "under/over" in name:
-                            over, under = _parse_over_under(bet, 2.5)
-                            if over is not None:
-                                out["over_2_5"]["over"] = over if out["over_2_5"]["over"] is None else round((out["over_2_5"]["over"] + over) / 2, 2)
-                            if under is not None:
-                                out["over_2_5"]["under"] = under if out["over_2_5"]["under"] is None else round((out["over_2_5"]["under"] + under) / 2, 2)
-                        if "both teams to score" in name or "btts" in name:
-                            b = _parse_btts(bet)
-                            for k, v in b.items():
-                                if v is not None:
-                                    out["btts"][k] = v if out["btts"][k] is None else round((out["btts"][k] + v) / 2, 2)
-        except Exception as e:
-            logger.debug(f"odds parse fail {fixture_id}: {e}")
-
-    _merge_payload(payload)
-
-    # se nada útil, tenta sem season
-    if not any(v for v in out["winner"].values()) and not any(v for v in out["over_2_5"].values()) and not any(v for v in out["btts"].values()):
-        payload2 = _read_payload({"fixture": fixture_id})
-        _merge_payload(payload2)
-
-    # valida ranges
+    # sanity range
     for sect in (out["winner"], out["over_2_5"], out["btts"]):
         for k, v in list(sect.items()):
             if isinstance(v, (int, float)) and not (1.05 <= v <= 100.0):
                 sect[k] = None
     return out
 
-# ==============================
-# Seleções A – deteção & filtros
-# ==============================
-def _dedupe_fixtures(arr):
-    seen, out = set(), []
-    for f in arr or []:
-        fid = (((f or {}).get("fixture") or {}).get("id"))
-        if fid and fid not in seen:
-            seen.add(fid)
-            out.append(f)
-    return out
-
-_YOUTH_WOMEN_RE = re.compile(
-    r"(?:\bunder\s?(1[5-9]|2[0-3])\b|\bu-?(1[5-9]|2[0-3])\b|\bu(?:15|16|17|18|19|20|21|22|23)\b|"
-    r"\b(women|feminino|femenino|ladies|girls)\b|\bW\b$)",
-    re.IGNORECASE
-)
-
-def _is_youth_or_women(name: str) -> bool:
-    n = (name or "").strip()
-    return bool(_YOUTH_WOMEN_RE.search(n))
-
-def _looks_international(league_obj: Dict[str, Any]) -> bool:
-    name = ((league_obj or {}).get("name") or "").lower()
-    country = (league_obj or {}).get("country") or ""
-    if country in CONTINENT_OR_INTL:
-        return True
-    return any(tok in name for tok in INTL_NAME_TOKENS)
-
-def _get_team_info(team_id: int) -> Optional[Dict[str, Any]]:
-    """/teams + cache (7 dias)."""
-    key = f"teaminfo:{team_id}"
-    cached = redis_cache_get(key)
-    if cached is not None:
-        return cached
-    data = api_get("teams", {"id": team_id})
-    try:
-        row = (data or [])[0]
-        info = {
-            "name": ((row.get("team") or {}).get("name") or ""),
-            "national": bool((row.get("team") or {}).get("national")),
-        }
-        redis_cache_set(key, info, ex=7 * 24 * 3600)
-        return info
-    except Exception:
-        return None
-
-def _is_national_A_team(team_id: Optional[int], name_hint: Optional[str]) -> bool:
-    if not team_id:
-        return False
-    info = _get_team_info(int(team_id)) or {}
-    if not info.get("national"):
-        return False
-    name = (name_hint or info.get("name") or "")
-    return not _is_youth_or_women(name)
-
-def _keep_fixture_with_national_filter(fix: Dict[str, Any]) -> bool:
-    """Mantém clubes; em torneios internacionais, só seleções A (sem U-XX/Women)."""
-    league = fix.get("league") or {}
-    if not _looks_international(league):
-        return True  # ligas de clubes
-
-    home = ((fix.get("teams") or {}).get("home") or {})
-    away = ((fix.get("teams") or {}).get("away") or {})
-    h_ok = _is_national_A_team(home.get("id"), home.get("name"))
-    a_ok = _is_national_A_team(away.get("id"), away.get("name"))
-    return bool(h_ok and a_ok)
-
-# ==============================
-# Features/Stats
-# ==============================
+# =========================
+# Stats & features
+# =========================
 def team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
     data = api_get("teams/statistics", {"team": team_id, "league": league_id, "season": SEASON})
     if isinstance(data, dict):
@@ -395,13 +311,56 @@ def implied_odds(p: float) -> float:
     return round(1.0 / p, 2)
 
 def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float]:
-    opts = [(0, ph+pd), (1, ph+pa), (2, pd+pa)]
+    opts = [(0, ph + pd), (1, ph + pa), (2, pd + pa)]
     best = max(opts, key=lambda t: t[1])
     return best[0], best[1]
 
-# ==============================
+# =========================
+# Seleções A — heurística
+# =========================
+CONFED_REGIONS = {
+    "World", "Europe", "South America", "North & Central America", "Africa", "Asia", "Oceania", "International"
+}
+INTL_KEYWORDS = [
+    "world cup", "wc qualification", "qualifiers", "european championship", "uefa euro",
+    "nations league", "africa cup of nations", "afcon", "asian cup", "copa america",
+    "gold cup", "friendly international", "international friendlies"
+]
+YOUTH_PATTERNS = [" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23"]
+WOMEN_PATTERNS = ["women", "fem", " fémin", " w ", " w-"]
+
+def _is_youth_or_women(name: Optional[str]) -> bool:
+    if not name:
+        return False
+    ln = name.lower()
+    if any(tok in ln for tok in YOUTH_PATTERNS):
+        return True
+    if any(tok in ln for tok in WOMEN_PATTERNS):
+        return True
+    return False
+
+def _is_international_comp(league: Dict[str, Any]) -> bool:
+    country = (league.get("country") or "").strip() if isinstance(league, dict) else ""
+    name = (league.get("name") or "").lower() if isinstance(league, dict) else ""
+    if country in CONFED_REGIONS:
+        return True
+    if any(kw in name for kw in INTL_KEYWORDS):
+        return True
+    return False
+
+def _is_national_A_fixture(fix: Dict[str, Any]) -> bool:
+    league = fix.get("league", {}) or {}
+    if not _is_international_comp(league):
+        return False
+    home = (fix.get("teams") or {}).get("home", {}) or {}
+    away = (fix.get("teams") or {}).get("away", {}) or {}
+    if _is_youth_or_women(home.get("name")) or _is_youth_or_women(away.get("name")):
+        return False
+    return True
+
+# =========================
 # Build prediction
-# ==============================
+# =========================
 def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
         fixture = fix.get("fixture", {})
@@ -412,8 +371,8 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         league_name = league.get("name")
         country = league.get("country")
 
-        home = teams.get("home", {})
-        away = teams.get("away", {})
+        home = teams.get("home", {}) or {}
+        away = teams.get("away", {}) or {}
         home_id = home.get("id")
         away_id = away.get("id")
         if not home_id or not away_id:
@@ -435,7 +394,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         winner_conf  = max(ph, pd, pa)
         top3 = [{"score": s, "prob": float(p)} for (s, p) in top_k_scores_from_matrix(mat, k=3)]
 
-        # Odds (modelo) como base
+        # odds modeladas (base)
         odds_map = {
             "winner": {"home": implied_odds(ph), "draw": implied_odds(pd), "away": implied_odds(pa)},
             "over_2_5": {"over": implied_odds(p_over25), "under": implied_odds(p_under25)},
@@ -444,7 +403,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         }
         odds_source = "model"
 
-        # Tenta odds reais (com e sem season dentro de get_market_odds)
+        # tenta substituir por odds reais (sem season)
         fix_id = fixture.get("id")
         if fix_id:
             mkt = get_market_odds(int(fix_id))
@@ -514,40 +473,59 @@ def _get_top_scorers_cached(league_id: int) -> List[Dict[str, Any]]:
     redis_cache_set(key, res, ex=12 * 3600)
     return res
 
-# ==============================
+# =========================
 # Fixtures & pipeline
-# ==============================
+# =========================
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    Junta clubes (com season) + seleções A (sem season) e filtra U-XX/Women.
+    Busca fixtures por data **sem 'season'** primeiro (para apanhar qualif./internacionais),
+    depois faz fallback com 'season'. No fim elimina duplicados por fixture.id.
+    Inclui clubes + seleções A (exclui U-xx e Women).
     """
     fixtures: List[Dict[str, Any]] = []
+    seen: set[int] = set()
+
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
-        # Clubes (com season)
-        pjA = proxy_get("/fixtures", {"date": iso, "season": SEASON})
-        if pjA and isinstance(pjA.get("response"), list):
-            fixtures.extend(pjA["response"])
-
-        # Internacionais – apanham melhor SEM season
-        pjB = proxy_get("/fixtures", {"date": iso})
-        if pjB and isinstance(pjB.get("response"), list):
-            fixtures.extend(pjB["response"])
-
-        time.sleep(0.2)
-
-    fixtures = _dedupe_fixtures(fixtures)
-    fixtures = [f for f in fixtures if _keep_fixture_with_national_filter(f)]
-
-    # Fallback
-    if not fixtures:
-        pj = proxy_get("/fixtures", {"next": 50})
+        # 1) sem season
+        pj = proxy_get("/fixtures", {"date": iso})
         if pj and isinstance(pj.get("response"), list):
-            fixtures = _dedupe_fixtures(pj["response"])
-            fixtures = [f for f in fixtures if _keep_fixture_with_national_filter(f)]
+            for f in pj["response"]:
+                fid = (f.get("fixture") or {}).get("id")
+                if fid and fid not in seen:
+                    fixtures.append(f); seen.add(fid)
 
-    return fixtures
+        # 2) fallback com season (se o proxy/rota exigir)
+        pj2 = proxy_get("/fixtures", {"date": iso, "season": SEASON})
+        if pj2 and isinstance(pj2.get("response"), list):
+            for f in pj2["response"]:
+                fid = (f.get("fixture") or {}).get("id")
+                if fid and fid not in seen:
+                    fixtures.append(f); seen.add(fid)
+
+        time.sleep(0.15)
+
+    # 3) fallback “next”
+    if not fixtures:
+        pj = proxy_get("/fixtures", {"next": 80})
+        if pj and isinstance(pj.get("response"), list):
+            for f in pj["response"]:
+                fid = (f.get("fixture") or {}).get("id")
+                if fid and fid not in seen:
+                    fixtures.append(f); seen.add(fid)
+
+    # Filtro leve: mantém clubes + seleções A (sem U-xx/Women)
+    filtered: List[Dict[str, Any]] = []
+    for f in fixtures:
+        home = (f.get("teams") or {}).get("home", {}) or {}
+        away = (f.get("teams") or {}).get("away", {}) or {}
+        # rejeita apenas se for juvenil/mulheres
+        if _is_youth_or_women(home.get("name")) or _is_youth_or_women(away.get("name")):
+            continue
+        filtered.append(f)
+
+    return filtered
 
 def fetch_and_save_predictions() -> Dict[str, Any]:
     total = 0
@@ -556,6 +534,8 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
     fixtures = collect_fixtures(days=3)
     logger.info(f"{len(fixtures)} fixtures carregados (proxy).")
     for f in fixtures:
+        # **opcional**: se quiseres obrigar a incluir seleções A, isto não exclui clubes:
+        # if _is_national_A_fixture(f) or True:
         pred = build_prediction_from_fixture(f)
         if pred:
             matches.append(pred)
