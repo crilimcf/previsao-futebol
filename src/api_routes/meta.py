@@ -1,5 +1,6 @@
 # src/api_routes/meta.py
 import os
+import re
 import json
 import logging
 from typing import Dict, List, Any, Optional
@@ -7,12 +8,11 @@ from typing import Dict, List, Any, Optional
 from fastapi import APIRouter, Header, Query
 from fastapi.responses import JSONResponse
 
-# usamos o pipeline PRO (odds reais via /odds do proxy)
+# pipeline PRO (gera predictions.json com odds de mercado quando possível)
 from src.api_fetch_pro import fetch_and_save_predictions
 
 router = APIRouter(prefix="/meta", tags=["meta"])
 log = logging.getLogger("meta")
-
 
 # -------------------- helpers --------------------
 def _read_json(path: str) -> Any:
@@ -25,12 +25,11 @@ def _read_json(path: str) -> Any:
         log.warning(f"Falha a ler {path}: {e}")
         return None
 
-
 def _expected_key() -> Optional[str]:
     """
-    Procura a chave certa para autorizar /meta/update.
-    Suporta qualquer uma destas env vars, para compat:
-      - ENDPOINT_API_KEY  (recomendado)
+    Chave para autorizar /meta/update.
+    Aceita:
+      - ENDPOINT_API_KEY (recomendado)
       - API_UPDATE_TOKEN
       - API_TOKEN
     """
@@ -41,7 +40,6 @@ def _expected_key() -> Optional[str]:
         or None
     )
 
-
 def _extract_bearer(token_hdr: str) -> Optional[str]:
     if not token_hdr:
         return None
@@ -49,7 +47,6 @@ def _extract_bearer(token_hdr: str) -> Optional[str]:
     if token_hdr.lower().startswith("bearer "):
         return token_hdr[7:].strip()
     return None
-
 
 def _is_authorized(authorization: str, x_endpoint_key: str, key_query: Optional[str]) -> bool:
     """
@@ -60,19 +57,43 @@ def _is_authorized(authorization: str, x_endpoint_key: str, key_query: Optional[
     """
     expected = _expected_key()
     if not expected:
-        # Se não houver chave configurada no ambiente, não bloqueia (modo dev)
+        # modo dev/sem chave definida: não bloqueia
         log.warning("⚠️ ENDPOINT_API_KEY/API_UPDATE_TOKEN/API_TOKEN não configurado — /meta/update sem proteção.")
         return True
 
     cand = _extract_bearer(authorization) or (x_endpoint_key or "").strip() or (key_query or "").strip()
     return bool(cand) and cand == expected
 
+# -------------------- classificação de ligas --------------------
+INTL_COUNTRIES = {
+    "World", "Europe", "South America", "North & Central America",
+    "Africa", "Asia", "Oceania", "International"
+}
+INTL_KW = [
+    "world cup", "qualification", "qualifiers", "nations league",
+    "uefa euro", "european championship",
+    "africa cup of nations", "afcon", "asian cup",
+    "copa america", "gold cup", "friendly"
+]
+YOUTH_RE = re.compile(r"\bU(15|16|17|18|19|20|21|22|23)\b", re.I)
+WOMEN_RE = re.compile(r"\b(women|fem|fémin)\b", re.I)
+
+def _is_youth_or_women(s: Optional[str]) -> bool:
+    if not s:
+        return False
+    return bool(YOUTH_RE.search(s)) or bool(WOMEN_RE.search(s))
+
+def _is_international(country: Optional[str], name: Optional[str]) -> bool:
+    c = (country or "").strip()
+    n = (name or "").lower()
+    if c in INTL_COUNTRIES:
+        return True
+    return any(kw in n for kw in INTL_KW)
 
 # -------------------- endpoints --------------------
 @router.get("/healthz")
 def healthz():
     return {"status": "ok"}
-
 
 @router.post("/update")
 def update_predictions(
@@ -82,65 +103,96 @@ def update_predictions(
     days: int = Query(default=3, ge=1, le=7),
 ):
     """
-    Dispara o refresh das previsões (fixtures + odds reais + poisson + topscorers) e grava data/predict/predictions.json.
+    Dispara refresh das previsões (fixtures + odds + poisson + topscorers)
+    e grava em data/predict/predictions.json.
 
     Auth: Authorization: Bearer <token>  |  X-Endpoint-Key: <token>  |  ?key=<token>
-    O <token> deve corresponder a ENDPOINT_API_KEY (ou API_UPDATE_TOKEN/API_TOKEN) no ambiente do backend.
+    O <token> deve corresponder a ENDPOINT_API_KEY (ou API_UPDATE_TOKEN/API_TOKEN).
     """
     if not _is_authorized(authorization, x_endpoint_key, key):
         return JSONResponse({"status": "forbidden"}, status_code=403)
-
     try:
-        # fetch_and_save_predictions já grava o ficheiro final e retorna {"status":"ok","total":N}
+        # Nota: fetch_and_save_predictions() atual não recebe "days".
         out = fetch_and_save_predictions()
         return JSONResponse({"status": "ok", **(out or {})})
     except Exception as e:
         log.exception("Erro no update:")
         return JSONResponse({"status": "error", "detail": str(e)}, status_code=500)
 
-
 @router.get("/leagues")
 def leagues():
     """
-    Devolve a lista de ligas conhecidas:
-    - Primeiro tenta inferir de data/predict/predictions.json
-    - Caso vazio, tenta config/leagues.json
+    Devolve uma LISTA de ligas conhecida a partir de predictions.json.
+    - Dedupe por "id"
+    - Exclui U-xx e Women
+    - Internacionais (Seleções A) primeiro; depois País e Nome
+    - Fallback para config/leagues.json se predictions.json faltar
     """
-    leagues_map: Dict[str, Dict[str, Any]] = {}
+    leagues_map: Dict[int, Dict[str, Any]] = {}
 
-    # 1) predictions.json (mais real do dia)
+    # 1) predictions.json (fonte principal)
     preds = _read_json("data/predict/predictions.json") or []
     try:
         for p in preds:
-            lid = str(p.get("league_id") or p.get("league") or "").strip()
+            # liga: id correto SEM usar 'league' (nome) como id
+            lid = p.get("league_id") or p.get("leagueId")
+            try:
+                lid = int(lid)
+            except Exception:
+                continue
             if not lid:
                 continue
-            name = p.get("league_name") or p.get("league") or "League"
-            country = p.get("country")
-            leagues_map[lid] = {"id": lid, "name": name, "country": country}
+
+            name = p.get("league_name") or p.get("league") or ""
+            country = p.get("country") or ""
+
+            # excluir juvenis/mulheres pelo nome da liga
+            if _is_youth_or_women(name):
+                continue
+
+            # registo
+            if lid not in leagues_map:
+                leagues_map[lid] = {"id": lid, "name": name, "country": country}
+            else:
+                # preenche campos em falta (se houver)
+                if not leagues_map[lid].get("name") and name:
+                    leagues_map[lid]["name"] = name
+                if not leagues_map[lid].get("country") and country:
+                    leagues_map[lid]["country"] = country
     except Exception as e:
         log.warning(f"Falha a extrair ligas de predictions.json: {e}")
 
-    # 2) fallback: config/leagues.json
+    # 2) fallback: config/leagues.json (curadas)
     if not leagues_map:
         cfg = _read_json("config/leagues.json") or []
         try:
             for row in cfg:
-                lid = str(row.get("id") or row.get("league_id") or "").strip()
+                lid = row.get("id") or row.get("league_id")
+                try:
+                    lid = int(lid)
+                except Exception:
+                    continue
                 if not lid:
                     continue
-                name = row.get("name") or row.get("league") or "League"
-                country = row.get("country")
-                leagues_map[lid] = {"id": lid, "name": name, "country": country}
+                name = row.get("name") or row.get("league") or ""
+                country = row.get("country") or ""
+                if _is_youth_or_women(name):
+                    continue
+                if lid not in leagues_map:
+                    leagues_map[lid] = {"id": lid, "name": name, "country": country}
         except Exception as e:
             log.warning(f"Falha a extrair ligas de config/leagues.json: {e}")
 
-    items: List[Dict[str, Any]] = sorted(
-        leagues_map.values(),
-        key=lambda x: ((x.get("country") or ""), (x.get("name") or ""))
-    )
-    return {"count": len(items), "items": items}
+    items: List[Dict[str, Any]] = list(leagues_map.values())
 
+    # ordenação: internacionais primeiro, depois país/nome
+    def sort_key(x: Dict[str, Any]):
+        intl = 0 if _is_international(x.get("country"), x.get("name")) else 1
+        return (intl, (x.get("country") or "ZZZ"), (x.get("name") or ""))
+
+    items.sort(key=sort_key)
+    # ⚠️ devolve LISTA simples (frontend espera array)
+    return items
 
 @router.get("/calibration")
 def calibration_info():
