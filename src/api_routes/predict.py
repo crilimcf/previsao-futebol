@@ -5,14 +5,12 @@ import logging
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Query, HTTPException
-from fastapi.responses import JSONResponse
 
 from src import config
 
 router = APIRouter(tags=["predictions"])
 log = logging.getLogger("predict")
 
-# Caminhos
 PRED_PATH   = "data/predict/predictions.json"
 STATS_PATH  = "data/predict/stats.json"
 META_PATH   = "data/predict/meta.json"
@@ -20,36 +18,37 @@ LEAGUES_CFG = "config/leagues.json"
 MODEL_DIR   = "data/model"
 MODEL_PATH  = os.path.join(MODEL_DIR, "calibrator.joblib")
 
-# ---------- Heurísticas internacionais / filtros ----------
-INTL_COUNTRIES = {"World", "International"}
-INTL_KWS = (
-    "world", "uefa", "euro", "nations", "qualif", "qualification",
-    "friendlies", "copa", "africa cup", "asian cup", "gold cup"
-)
-YOUTH_PAT = (" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23")
-WOMEN_PAT = (" women", " feminino", " fémin", " fem ", " w ", " w-")
-
-def _is_youth_or_women(name: Optional[str]) -> bool:
-    if not name:
-        return False
-    n = (" " + str(name).lower() + " ")
-    if any(p in n for p in YOUTH_PAT):
-        return True
-    if any(p in n for p in WOMEN_PAT):
-        return True
-    return False
-
-def _is_international_row(p: Dict[str, Any]) -> bool:
-    country = (p.get("country") or "").strip()
-    lname = (p.get("league_name") or p.get("league") or "").strip().lower()
-    return (country in INTL_COUNTRIES) or any(kw in lname for kw in INTL_KWS)
-
-# ------------------ utils ------------------
+# ------------ utils ------------
 def _load_json(path: str) -> Any:
     if not os.path.exists(path):
         return None
     with open(path, "r", encoding="utf-8-sig") as f:
         return json.load(f)
+
+WOMEN_TOKENS = [
+    "women", "women's", "womens", "feminina", "femenina", "feminino", "féminine", "feminine", " ladies", "girls",
+    " w ", " w-", "(w)", " w)", " w.", " w"
+]
+YOUTH_TOKENS = [" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23"]
+INTL_HINTS   = ["world", "international", "qualification", "qualifiers", "uefa", "euro", "nations", "friendlies", "copa", "afcon", "asian cup", "gold cup"]
+
+def _is_women_or_youth(text: Optional[str]) -> bool:
+    if not text:
+        return False
+    t = text.lower()
+    if any(k in t for k in WOMEN_TOKENS): return True
+    if any(k in t for k in YOUTH_TOKENS): return True
+    if t.endswith(" w"): return True
+    return False
+
+def _looks_international(row: Dict[str, Any]) -> bool:
+    country = (row.get("country") or "").lower()
+    league  = (row.get("league") or row.get("league_name") or "").lower()
+    if country in ("world", "international"):
+        return True
+    if any(k in league for k in INTL_HINTS):
+        return True
+    return False
 
 # -------- calib (a,b) retro-compat --------
 def _load_ab_calibrators() -> Dict[str, Dict[str, float]]:
@@ -82,8 +81,7 @@ def _load_ab_calibrators() -> Dict[str, Dict[str, float]]:
 def _calibrate_logit(p: Optional[float], cal: Optional[Dict[str, float]]) -> Optional[float]:
     if p is None or cal is None:
         return p
-    a = float(cal.get("a", 1.0))
-    b = float(cal.get("b", 0.0))
+    a = float(cal.get("a", 1.0)); b = float(cal.get("b", 0.0))
     eps = 1e-6
     import math
     x = min(max(float(p), eps), 1 - eps)
@@ -107,10 +105,8 @@ def _load_joblib_model() -> Optional[Dict[str, Any]]:
         mtime = os.path.getmtime(MODEL_PATH)
     except Exception:
         return None
-
     if _cal_cache["model"] is not None and _cal_cache["mtime"] == mtime:
         return _cal_cache["model"]
-
     try:
         model = joblib.load(MODEL_PATH)
         _cal_cache["model"] = model
@@ -136,7 +132,7 @@ def _apply_isotonic(model: Dict[str, Any], label: str, p: Optional[float]) -> Op
     except Exception:
         return p
 
-# ------------------ helpers ------------------
+# ------------- helpers -------------
 def _winner_class_to_key(c: Optional[int]) -> Optional[str]:
     return {0: "home", 1: "draw", 2: "away"}.get(c) if c is not None else None
 
@@ -144,55 +140,42 @@ def _iter_predictions_filtered(
     data: List[Dict[str, Any]],
     date: Optional[str],
     league_id: Optional[str],
-    intl: Optional[bool],
-) -> List[Dict[str, Any]]:
-    out: List[Dict[str, Any]] = []
-    d = (date or "").strip()[:10] if date else None
-
+    intl: bool,
+    no_women: bool,
+):
     for row in data:
         row_ymd = row.get("date_ymd") or (row.get("date") or "")[:10]
-        if d and row_ymd != d:
+        if date and row_ymd != date:
             continue
         if league_id and str(row.get("league_id")) != str(league_id):
             continue
-
-        if intl is True:
-            # mantém só seleções A (exclui U-xx/Women pelo nome das equipas)
-            if not _is_international_row(row):
+        if no_women:
+            if _is_women_or_youth(row.get("home_team")) or _is_women_or_youth(row.get("away_team")):
                 continue
-            h = (row.get("home_team") or "").strip()
-            a = (row.get("away_team") or "").strip()
-            if _is_youth_or_women(h) or _is_youth_or_women(a):
+            if _is_women_or_youth(row.get("league") or row.get("league_name")):
                 continue
-        elif intl is False:
-            if _is_international_row(row):
-                continue
-
-        out.append(row)
-    return out
+        if intl and not _looks_international(row):
+            continue
+        yield row
 
 # ------------------ /predictions ------------------
 @router.get("/predictions")
 def get_predictions(
     date: Optional[str] = Query(None, description="YYYY-MM-DD"),
     league_id: Optional[str] = Query(None),
-    intl: Optional[bool] = Query(None, description="True=apenas seleções A; False=excluir internacionais; None=tudo"),
     raw: bool = Query(False, description="Se true, não aplica calibração"),
-    limit: int = Query(0, ge=0, le=1000),
+    intl: bool = Query(False, description="Se true, apenas Seleções A"),
+    no_women: bool = Query(True, description="Exclui Women/U-xx"),
 ):
     data = _load_json(PRED_PATH) or []
     if not isinstance(data, list):
         raise HTTPException(status_code=500, detail="predictions.json mal formatado")
 
-    # Filtro base (data/league/intl)
-    items = _iter_predictions_filtered(data, date, league_id, intl)
-
-    # Calibração (winner, over_2_5, btts)
     model = None if raw else _load_joblib_model()
     ab_cals = {} if raw or model else _load_ab_calibrators()
 
     out: List[Dict[str, Any]] = []
-    for row in items:
+    for row in _iter_predictions_filtered(data, date, league_id, intl, no_women):
         preds = row.get("predictions") or {}
 
         # Winner
@@ -242,11 +225,7 @@ def get_predictions(
         row["predictions"] = preds
         out.append(row)
 
-    if limit > 0:
-        out = out[:limit]
-
-    # devolve array cru (frontend espera array)
-    return JSONResponse(out, status_code=200)
+    return out
 
 # ------------------ /stats ------------------
 @router.get("/stats")
@@ -264,16 +243,15 @@ def last_update():
 
 # ------------------ /meta/leagues ------------------
 @router.get("/meta/leagues")
-def meta_leagues(
-    date: Optional[str] = Query(None, description="Se fornecido, apenas ligas com jogos nesse dia"),
-    intl: Optional[bool] = Query(None, description="Mesmo critério do /predictions"),
-):
+def meta_leagues(date: Optional[str] = Query(None, description="Se fornecido, apenas ligas com jogos nesse dia")):
     leagues: Dict[str, Dict[str, Any]] = {}
 
     data = _load_json(PRED_PATH)
     if isinstance(data, list) and data:
-        items = _iter_predictions_filtered(data, date, None, intl)
-        for row in items:
+        for row in data:
+            row_ymd = row.get("date_ymd") or (row.get("date") or "")[:10]
+            if date and row_ymd != date:
+                continue
             lid = row.get("league_id")
             if lid is None:
                 continue
@@ -283,17 +261,16 @@ def meta_leagues(
             leagues.setdefault(lid, {"id": lid, "name": name, "country": country, "matches": 0})
             leagues[lid]["matches"] += 1
 
-    # fallback se não houver predictions
     if not leagues and os.path.exists(LEAGUES_CFG):
         try:
             cfg = _load_json(LEAGUES_CFG) or []
             for obj in cfg:
-                lid = str(obj.get("id") or obj.get("league_id") or "")
+                lid = str(obj.get("id"))
                 if not lid:
                     continue
                 leagues.setdefault(lid, {
                     "id": lid,
-                    "name": obj.get("name") or obj.get("league") or "",
+                    "name": obj.get("name") or "",
                     "country": obj.get("country") or "",
                     "matches": 0
                 })
@@ -301,16 +278,12 @@ def meta_leagues(
             pass
 
     arr = list(leagues.values())
-    arr.sort(key=lambda x: ((x.get("country") or ""), (x.get("name") or "")))
+    arr.sort(key=lambda x: (x.get("country") or "", x.get("name") or ""))
     return {"leagues": arr}
 
 # ------------------ /meta/update ------------------
 @router.post("/meta/update")
 def manual_update():
-    """
-    Chama o gerador PRO (vai à API-Football via proxy, reconstrói predictions.json e atualiza meta/Redis).
-    """
-    # ⚠️ usar o mesmo pipeline do /meta/update global
     from src.api_fetch_pro import fetch_and_save_predictions
     res = fetch_and_save_predictions()
     return {"status": "ok", "result": res}

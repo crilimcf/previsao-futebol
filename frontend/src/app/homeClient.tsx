@@ -97,13 +97,14 @@ const INTL_KEYWORDS = [
 ];
 
 const YOUTH_PATTERNS = [" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23"];
-const WOMEN_PATTERNS = ["women", " fémin", " fem ", " w ", " w-"];
+const WOMEN_PATTERNS = ["women", "women's", "womens", " fémin", " fem ", " w ", " w-", "(w)", " w)", " w.", " w"];
 
 function isYouthOrWomen(name?: string) {
   if (!name) return false;
   const n = name.toLowerCase();
   if (YOUTH_PATTERNS.some((t) => n.includes(t))) return true;
   if (WOMEN_PATTERNS.some((t) => n.includes(t))) return true;
+  if (n.endsWith(" w")) return true;
   return false;
 }
 
@@ -151,7 +152,12 @@ export default function HomeClient() {
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
-  const [intlOnly, setIntlOnly] = useState<boolean>(search.get("intlA") === "1");
+  // aceita ?intlA=1 (UI antiga) ou ?intl=1|true
+  const initialIntl =
+    search.get("intlA") === "1" ||
+    search.get("intl") === "1" ||
+    (search.get("intl") || "").toLowerCase() === "true";
+  const [intlOnly, setIntlOnly] = useState<boolean>(initialIntl);
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
@@ -231,9 +237,13 @@ export default function HomeClient() {
     setError("");
 
     try {
-      const params: Record<string, any> = { date: selectedDateISO };
+      // novo backend: intl + no_women
+      const params: Record<string, any> = {
+        date: selectedDateISO,
+        no_women: true,
+      };
       if (selectedLeague !== "all") params.league_id = selectedLeague;
-      if (intlOnly) params.intlA = 1; // se o backend suportar, ótimo; senão filtramos client-side
+      if (intlOnly) params.intl = true;
 
       const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
       const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
@@ -246,18 +256,24 @@ export default function HomeClient() {
         );
       }
 
-      // 2) se NÃO for intlOnly, podemos restringir às ligas curadas
+      // 2) se NÃO for intlOnly, restringe às ligas curadas
       if (!intlOnly && allowedLeagueIds.size > 0) {
         arr = arr.filter((p: any) => allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id)));
       }
 
-      // 3) intlOnly — garante só Seleções A
+      // 3) intlOnly — garante só Seleções A (defesa extra client-side)
       if (intlOnly) {
         arr = arr.filter(isIntlATeam);
       }
 
-      setPredictions(arr);
+      // ordena por hora do jogo para UI mais previsível
+      arr.sort((a: any, b: any) => {
+        const ta = Date.parse(a?.date || "") || 0;
+        const tb = Date.parse(b?.date || "") || 0;
+        return ta - tb;
+      });
 
+      setPredictions(arr);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
@@ -462,17 +478,21 @@ export default function HomeClient() {
                   {fixturesDay.map((f: any) => (
                     <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
                       <div className="flex items-center justify-center gap-3 mb-2">
-                        <Image src={f.teams.home.logo} alt="" width={24} height={24} unoptimized />
-                        <span className="text-white font-medium">{f.teams.home.name}</span>
+                        {!!f.teams?.home?.logo && (
+                          <Image src={f.teams.home.logo} alt="" width={24} height={24} unoptimized />
+                        )}
+                        <span className="text-white font-medium">{f.teams?.home?.name}</span>
                         <span className="text-gray-400">vs</span>
-                        <span className="text-white font-medium">{f.teams.away.name}</span>
-                        <Image src={f.teams.away.logo} alt="" width={24} height={24} unoptimized />
+                        <span className="text-white font-medium">{f.teams?.away?.name}</span>
+                        {!!f.teams?.away?.logo && (
+                          <Image src={f.teams.away.logo} alt="" width={24} height={24} unoptimized />
+                        )}
                       </div>
                       <p className="text-sm text-center text-gray-400">
                         {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
                       </p>
                       <p className="text-xs text-center text-gray-500 mt-1">
-                        {f.league.name} ({f.league.country})
+                        {f.league?.name} ({f.league?.country})
                       </p>
                     </div>
                   ))}
@@ -525,7 +545,7 @@ export default function HomeClient() {
 
               return (
                 <div
-                  key={String(p.match_id ?? p.fixture_id)}
+                  key={String(p.match_id ?? p.fixture_id ?? `${p.league_id}-${p.home_team}-${p.away_team}-${p.date}`)}
                   className="card p-5 hover:border-emerald-400 transition flex flex-col gap-4"
                 >
                   {/* Header */}
