@@ -1,575 +1,5098 @@
 [
   {
-    "match_id": 1351198,
-    "league_id": 71,
-    "league": "Serie A",
-    "country": "Brazil",
-    "date": "2025-11-12T23:30:00+00:00",
-    "home_team": "Atletico-MG",
-    "away_team": "Fortaleza EC",
-    "home_logo": "https://media.api-sports.io/football/teams/1062.png",
-    "away_logo": "https://media.api-sports.io/football/teams/154.png",
+    "match_id": 1468970,
+    "league_id": 1140,
+    "league": "AFC Women's Champions League",
+    "league_name": "AFC Women's Champions League",
+    "country": "World",
+    "date": "2025-11-12T12:30:00+00:00",
+    "home_team": "Naegohyang W",
+    "away_team": "Suwon FMC",
+    "home_logo": "https://media.api-sports.io/football/teams/26464.png",
+    "away_logo": "https://media.api-sports.io/football/teams/14379.png",
+    "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 1.65,
-        "draw": 3.75,
-        "away": 5.5
+        "home": 2.48,
+        "draw": 3.54,
+        "away": 2.34
       },
       "over_2_5": {
-        "over": 4.5,
-        "under": 1.18
+        "over": 2.17,
+        "under": 1.86
       },
       "over_1_5": {
-        "over": 2.1,
-        "under": 1.67
+        "over": 1.04,
+        "under": 26.94
       },
       "btts": {
-        "yes": 3.5,
-        "no": 1.28
+        "yes": 2.45,
+        "no": 1.44
       }
     },
-    "predicted_score": {
-      "home": 1,
-      "away": 0
-    },
-    "confidence": 0.5695,
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.5695,
-        "prob": 0.5695
-      },
-      "double_chance": {
-        "class": 0,
-        "confidence": 0.8285
+        "confidence": 0.9923326897653497,
+        "prob": 0.9923326897653497
       },
       "over_2_5": {
-        "class": 0,
-        "confidence": 0.382,
-        "prob": 0.382
+        "class": 1,
+        "confidence": 0.875612142411608,
+        "prob": 0.875612142411608
       },
       "over_1_5": {
         "class": 1,
-        "confidence": 0.6499
+        "confidence": 0.9628840969327958
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9996680047403258
       },
       "btts": {
         "class": 0,
-        "confidence": 0.3932,
-        "prob": 0.3932
+        "confidence": 0.0484800452635363,
+        "prob": 0.0484800452635363
       }
     },
     "correct_score_top3": [
       {
-        "score": "1-0",
-        "prob": 0.1653
+        "score": "5-0",
+        "prob": 0.23765717656155808
+      },
+      {
+        "score": "6-0",
+        "prob": 0.2178524118480949
+      },
+      {
+        "score": "4-0",
+        "prob": 0.2160519786923255
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 5,
+      "away": 0
+    },
+    "confidence": 0.9923326897653497,
+    "intlA": true
+  },
+  {
+    "match_id": 1468971,
+    "league_id": 1140,
+    "league": "AFC Women's Champions League",
+    "league_name": "AFC Women's Champions League",
+    "country": "World",
+    "date": "2025-11-12T08:30:00+00:00",
+    "home_team": "Ispe W",
+    "away_team": "Tokyo Verdy Beleza W",
+    "home_logo": "https://media.api-sports.io/football/teams/26441.png",
+    "away_logo": "https://media.api-sports.io/football/teams/16951.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 1.02,
+        "draw": 63.53,
+        "away": 1374.69
+      },
+      "over_2_5": {
+        "over": 1.25,
+        "under": 4.95
+      },
+      "over_1_5": {
+        "over": 1.08,
+        "under": 14.17
+      },
+      "btts": {
+        "yes": 20.78,
+        "no": 1.05
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.983531094744305,
+        "prob": 0.983531094744305
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.7978080239514741,
+        "prob": 0.7978080239514741
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.9294291035566814
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9992725644686563
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.04811863906078868,
+        "prob": 0.04811863906078868
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "4-0",
+        "prob": 0.2172558425134257
+      },
+      {
+        "score": "5-0",
+        "prob": 0.1955302582620831
+      },
+      {
+        "score": "3-0",
+        "prob": 0.19311630445637834
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 4,
+      "away": 0
+    },
+    "confidence": 0.983531094744305,
+    "intlA": true
+  },
+  {
+    "match_id": 1476022,
+    "league_id": 525,
+    "league": "UEFA Champions League Women",
+    "league_name": "UEFA Champions League Women",
+    "country": "World",
+    "date": "2025-11-12T20:00:00+00:00",
+    "home_team": "Manchester United W",
+    "away_team": "Paris Saint Germain W",
+    "home_logo": "https://media.api-sports.io/football/teams/4898.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1667.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.49,
+        "draw": 4.1,
+        "away": 5.85
+      },
+      "over_2_5": {
+        "over": 3.72,
+        "under": 1.23
+      },
+      "over_1_5": {
+        "over": 1.22,
+        "under": 5.6
+      },
+      "btts": {
+        "yes": 3.4,
+        "no": 2.63
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.9481434223811454,
+        "prob": 0.9481434223811454
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.6035872937220346,
+        "prob": 0.6035872937220346
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8213590808618612
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9976444452869716
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.04658983364633409,
+        "prob": 0.04658983364633409
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "3-0",
+        "prob": 0.22157056501852287
       },
       {
         "score": "2-0",
-        "prob": 0.1256
+        "prob": 0.21101958573192658
       },
       {
-        "score": "1-1",
-        "prob": 0.1157
+        "score": "4-0",
+        "prob": 0.17448681995208679
       }
     ],
     "top_scorers": [
       {
-        "player": "Kaio Jorge",
-        "team": "Cruzeiro",
+        "player": "L. Freigang",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "R. Chiba",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "L. Magull",
+        "team": "Inter Milano W",
+        "goals": 5
+      },
+      {
+        "player": "G. Reuteler",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      },
+      {
+        "player": "N. Anyomi",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      }
+    ],
+    "predicted_score": {
+      "home": 3,
+      "away": 0
+    },
+    "confidence": 0.9481434223811454,
+    "intlA": true
+  },
+  {
+    "match_id": 1482367,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T18:00:00+00:00",
+    "home_team": "Anderlecht W",
+    "away_team": "Austria Wien W",
+    "home_logo": "https://media.api-sports.io/football/teams/1792.png",
+    "away_logo": "https://media.api-sports.io/football/teams/17575.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.95,
+        "draw": 3.56,
+        "away": 3.12
+      },
+      "over_2_5": {
+        "over": 1.65,
+        "under": 2.05
+      },
+      "over_1_5": {
+        "over": 1.09,
+        "under": 12.48
+      },
+      "btts": {
+        "yes": 2.75,
+        "no": 1.4
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.8627549075422777,
+        "prob": 0.8627549075422777
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.7820570179042781,
+        "prob": 0.7820570179042781
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.9198809168663428
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9534316394567695
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.510581090178454,
+        "prob": 0.510581090178454
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "3-0",
+        "prob": 0.10905097426525538
+      },
+      {
+        "score": "4-0",
+        "prob": 0.09541960248209846
+      },
+      {
+        "score": "2-0",
+        "prob": 0.09347226365593318
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 3,
+      "away": 0
+    },
+    "confidence": 0.8627549075422777,
+    "intlA": true
+  },
+  {
+    "match_id": 1482365,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T17:00:00+00:00",
+    "home_team": "Nordsjælland",
+    "away_team": "ŽNK Mura",
+    "home_logo": "https://media.api-sports.io/football/teams/13983.png",
+    "away_logo": "https://media.api-sports.io/football/teams/21583.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.17,
+        "draw": 6.5,
+        "away": 9.0
+      },
+      "over_2_5": {
+        "over": 1.94,
+        "under": 2.16
+      },
+      "over_1_5": {
+        "over": 1.13,
+        "under": 8.65
+      },
+      "btts": {
+        "yes": 3.25,
+        "no": 1.33
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.8159964449313146,
+        "prob": 0.8159964449313146
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.7133215614917802,
+        "prob": 0.7133215614917802
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8844161202831579
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9347626695179653
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5004471817874128,
+        "prob": 0.5004471817874128
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "2-0",
+        "prob": 0.10950051762648179
+      },
+      {
+        "score": "3-0",
+        "prob": 0.10950051762648179
+      },
+      {
+        "score": "4-0",
+        "prob": 0.08212538821986134
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 2,
+      "away": 0
+    },
+    "confidence": 0.8159964449313146,
+    "intlA": true
+  },
+  {
+    "match_id": 1482362,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T18:00:00+00:00",
+    "home_team": "Breidablik W",
+    "away_team": "Fortuna Hjørring",
+    "home_logo": "https://media.api-sports.io/football/teams/10914.png",
+    "away_logo": "https://media.api-sports.io/football/teams/10890.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.89,
+        "draw": 3.42,
+        "away": 2.1
+      },
+      "over_2_5": {
+        "over": 1.8,
+        "under": 1.9
+      },
+      "over_1_5": {
+        "over": 1.25,
+        "under": 4.95
+      },
+      "btts": {
+        "yes": 2.75,
+        "no": 1.4
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.8079866173844757,
+        "prob": 0.8079866173844757
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5707191533728023,
+        "prob": 0.5707191533728023
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7979854839401425
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9443128970200027
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.36070603738778817,
+        "prob": 0.36070603738778817
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "2-0",
+        "prob": 0.15782384067176386
+      },
+      {
+        "score": "3-0",
+        "prob": 0.13151986722646988
+      },
+      {
+        "score": "1-0",
+        "prob": 0.1262590725374111
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 2,
+      "away": 0
+    },
+    "confidence": 0.8079866173844757,
+    "intlA": true
+  },
+  {
+    "match_id": 1472404,
+    "league_id": 525,
+    "league": "UEFA Champions League Women",
+    "league_name": "UEFA Champions League Women",
+    "country": "World",
+    "date": "2025-11-12T20:00:00+00:00",
+    "home_team": "SL Benfica",
+    "away_team": "Twente W",
+    "home_logo": "https://media.api-sports.io/football/teams/15495.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1899.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.2,
+        "draw": 3.6,
+        "away": 2.75
+      },
+      "over_2_5": {
+        "over": 3.58,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 1.32,
+        "under": 4.14
+      },
+      "btts": {
+        "yes": 2.75,
+        "no": 3.0
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.7722333857163671,
+        "prob": 0.7722333857163671
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5144779876534983,
+        "prob": 0.5144779876534983
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7582463009063064
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.9323624616280504
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.3516473010222412,
+        "prob": 0.3516473010222412
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-2",
+        "prob": 0.16318374688824336
+      },
+      {
+        "score": "0-1",
+        "prob": 0.14505221945621632
+      },
+      {
+        "score": "0-3",
+        "prob": 0.12238781016618253
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "L. Freigang",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "R. Chiba",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "L. Magull",
+        "team": "Inter Milano W",
+        "goals": 5
+      },
+      {
+        "player": "G. Reuteler",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      },
+      {
+        "player": "N. Anyomi",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 2
+    },
+    "confidence": 0.7722333857163671,
+    "intlA": true
+  },
+  {
+    "match_id": 1472516,
+    "league_id": 525,
+    "league": "UEFA Champions League Women",
+    "league_name": "UEFA Champions League Women",
+    "country": "World",
+    "date": "2025-11-12T17:45:00+00:00",
+    "home_team": "Barcelona W",
+    "away_team": "OH Leuven W",
+    "home_logo": "https://media.api-sports.io/football/teams/1918.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1790.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.3,
+        "draw": 29.0,
+        "away": 65.0
+      },
+      "over_2_5": {
+        "over": 1.75,
+        "under": 2.06
+      },
+      "over_1_5": {
+        "over": 1.02,
+        "under": 42.34
+      },
+      "btts": {
+        "yes": 6.5,
+        "no": 1.28
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.7719228550193744,
+        "prob": 0.7719228550193744
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.9179669603411382,
+        "prob": 0.9179669603411382
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.9763833755427493
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.888440485756476
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.7930624251576227,
+        "prob": 0.7930624251576227
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "4-1",
+        "prob": 0.0708229480050275
+      },
+      {
+        "score": "3-1",
+        "prob": 0.06826308241448432
+      },
+      {
+        "score": "5-1",
+        "prob": 0.05878304684417285
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "L. Freigang",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "R. Chiba",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "L. Magull",
+        "team": "Inter Milano W",
+        "goals": 5
+      },
+      {
+        "player": "G. Reuteler",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      },
+      {
+        "player": "N. Anyomi",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      }
+    ],
+    "predicted_score": {
+      "home": 4,
+      "away": 1
+    },
+    "confidence": 0.7719228550193744,
+    "intlA": true
+  },
+  {
+    "match_id": 1436810,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-12T17:00:00+00:00",
+    "home_team": "Russia",
+    "away_team": "Peru",
+    "home_logo": "https://media.api-sports.io/football/teams/4.png",
+    "away_logo": "https://media.api-sports.io/football/teams/30.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.46,
+        "draw": 4.3,
+        "away": 6.89
+      },
+      "over_2_5": {
+        "over": 1.94,
+        "under": 1.86
+      },
+      "over_1_5": {
+        "over": 1.25,
+        "under": 4.97
+      },
+      "btts": {
+        "yes": 3.82,
+        "no": 1.79
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.7520051215536336,
+        "prob": 0.7520051215536336
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5723451334456849,
+        "prob": 0.5723451334456849
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7987506510332634
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9140042540123297
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4318888736487765,
+        "prob": 0.4318888736487765
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "2-0",
+        "prob": 0.1389249412086003
+      },
+      {
+        "score": "1-0",
+        "prob": 0.11823399251795769
+      },
+      {
+        "score": "3-0",
+        "prob": 0.10882453728007024
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
         "goals": 17
       },
       {
-        "player": "G. de Arrascaeta",
-        "team": "Flamengo",
-        "goals": 17
-      },
-      {
-        "player": "Vitor Roque",
-        "team": "Palmeiras",
-        "goals": 16
-      },
-      {
-        "player": "P. Vegetti",
-        "team": "Vasco DA Gama",
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
         "goals": 14
       },
       {
-        "player": "Pedro",
-        "team": "Flamengo",
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
         "goals": 12
       }
     ],
-    "predicted_scorers": {
-      "home": [
-        {
-          "player": "Igor Gomes",
-          "prob": 0.363,
-          "xg": 0.451,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Júnior Santos",
-          "prob": 0.2222,
-          "xg": 0.251,
-          "position": "Attacker"
-        },
-        {
-          "player": "Rony",
-          "prob": 0.2202,
-          "xg": 0.249,
-          "position": "Attacker"
-        },
-        {
-          "player": "Gabriel Menino",
-          "prob": 0.1551,
-          "xg": 0.169,
-          "position": "Midfielder"
-        },
-        {
-          "player": "F. Vera",
-          "prob": 0.1551,
-          "xg": 0.168,
-          "position": "Midfielder"
-        }
-      ],
-      "away": [
-        {
-          "player": "Yago Pikachu",
-          "prob": 0.1727,
-          "xg": 0.19,
-          "position": "Midfielder"
-        },
-        {
-          "player": "T. Pochettino",
-          "prob": 0.0973,
-          "xg": 0.102,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Lucas Sasha",
-          "prob": 0.0969,
-          "xg": 0.102,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Matheus Pereira",
-          "prob": 0.0861,
-          "xg": 0.09,
-          "position": "Midfielder"
-        },
-        {
-          "player": "E. Brítez",
-          "prob": 0.0417,
-          "xg": 0.043,
-          "position": "Defender"
-        }
-      ]
-    }
-  },
-  {
-    "match_id": 1485809,
-    "league_id": 66,
-    "league": "Coupe de France",
-    "country": "France",
-    "date": "2025-11-14T19:00:00+00:00",
-    "home_team": "Cannes",
-    "away_team": "Annecy",
-    "home_logo": "https://media.api-sports.io/football/teams/9932.png",
-    "away_logo": "https://media.api-sports.io/football/teams/3012.png",
-    "odds": {
-      "winner": {
-        "home": 6.61,
-        "draw": 1.43,
-        "away": 6.61
-      },
-      "over_2_5": {
-        "over": 126.16,
-        "under": 1.01
-      },
-      "over_1_5": {
-        "over": 16.25,
-        "under": 1.07
-      },
-      "btts": {
-        "yes": 30.43,
-        "no": 1.03
-      }
-    },
     "predicted_score": {
-      "home": 0,
+      "home": 2,
       "away": 0
     },
-    "confidence": 0.6974,
-    "predictions": {
+    "confidence": 0.7520051215536336,
+    "intlA": true
+  },
+  {
+    "match_id": 1482363,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T19:35:00+00:00",
+    "home_team": "Glasgow City W",
+    "away_team": "Sporting CP W",
+    "home_logo": "https://media.api-sports.io/football/teams/10892.png",
+    "away_logo": "https://media.api-sports.io/football/teams/20511.png",
+    "odds_source": "market",
+    "odds": {
       "winner": {
-        "class": 1,
-        "confidence": 0.6974,
-        "prob": 0.6974
-      },
-      "double_chance": {
-        "class": 2,
-        "confidence": 0.8487
+        "home": 2.92,
+        "draw": 3.58,
+        "away": 2.05
       },
       "over_2_5": {
-        "class": 0,
-        "confidence": 0.0079,
-        "prob": 0.0079
+        "over": 1.6,
+        "under": 2.16
       },
       "over_1_5": {
-        "class": 0,
-        "confidence": 0.0616
+        "over": 1.05,
+        "under": 19.39
       },
       "btts": {
+        "yes": 2.62,
+        "no": 1.44
+      }
+    },
+    "predictions": {
+      "winner": {
         "class": 0,
-        "confidence": 0.0329,
-        "prob": 0.0329
+        "confidence": 0.6203496600390608,
+        "prob": 0.6203496600390608
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.8472058450235043,
+        "prob": 0.8472058450235043
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.9484144504299536
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.8313697331200868
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.7833008986192206,
+        "prob": 0.7833008986192206
       }
     },
     "correct_score_top3": [
       {
-        "score": "0-0",
-        "prob": 0.6703
+        "score": "2-1",
+        "prob": 0.07064977441115025
       },
       {
-        "score": "0-1",
-        "prob": 0.1341
+        "score": "3-1",
+        "prob": 0.07064977441115025
       },
       {
-        "score": "1-0",
-        "prob": 0.1341
+        "score": "2-2",
+        "prob": 0.06181855260975646
       }
     ],
     "top_scorers": [],
-    "predicted_scorers": {
-      "home": [
-        {
-          "player": "H. Abderrahmane",
-          "prob": 0.0645,
-          "xg": 0.067,
-          "position": "Defender"
-        },
-        {
-          "player": "A. Fernandes",
-          "prob": 0.0645,
-          "xg": 0.067,
-          "position": "Attacker"
-        },
-        {
-          "player": "R. Sylva",
-          "prob": 0.0645,
-          "xg": 0.067,
-          "position": "Midfielder"
-        }
-      ],
-      "away": [
-        {
-          "player": "W. Tiendrébéogo",
-          "prob": 0.0384,
-          "xg": 0.039,
-          "position": "Midfielder"
-        },
-        {
-          "player": "T. Rambaud",
-          "prob": 0.0325,
-          "xg": 0.033,
-          "position": "Attacker"
-        },
-        {
-          "player": "C. Billemaz",
-          "prob": 0.0224,
-          "xg": 0.023,
-          "position": "Attacker"
-        },
-        {
-          "player": "Quentin Paris",
-          "prob": 0.0223,
-          "xg": 0.023,
-          "position": "Attacker"
-        },
-        {
-          "player": "V. Pajot",
-          "prob": 0.0147,
-          "xg": 0.015,
-          "position": "Midfielder"
-        }
-      ]
-    }
+    "predicted_score": {
+      "home": 2,
+      "away": 1
+    },
+    "confidence": 0.6203496600390608,
+    "intlA": true
   },
   {
-    "match_id": 1485869,
-    "league_id": 66,
-    "league": "Coupe de France",
-    "country": "France",
-    "date": "2025-11-14T19:00:00+00:00",
-    "home_team": "Olympique de Villefontaine",
-    "away_team": "Grenoble",
-    "home_logo": "https://media.api-sports.io/football/teams/27038.png",
-    "away_logo": "https://media.api-sports.io/football/teams/101.png",
+    "match_id": 1482366,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T18:00:00+00:00",
+    "home_team": "PSV/Eindhoven W",
+    "away_team": "Eintracht Frankfurt W",
+    "home_logo": "https://media.api-sports.io/football/teams/1895.png",
+    "away_logo": "https://media.api-sports.io/football/teams/14014.png",
+    "odds_source": "market",
     "odds": {
       "winner": {
-        "home": 6.61,
-        "draw": 1.43,
-        "away": 6.61
+        "home": 4.72,
+        "draw": 4.45,
+        "away": 1.48
       },
       "over_2_5": {
-        "over": 126.16,
-        "under": 1.01
+        "over": 1.46,
+        "under": 2.49
       },
       "over_1_5": {
-        "over": 16.25,
-        "under": 1.07
+        "over": 1.68,
+        "under": 2.46
       },
       "btts": {
-        "yes": 30.43,
-        "no": 1.03
+        "yes": 2.75,
+        "no": 1.4
       }
     },
-    "predicted_score": {
-      "home": 0,
-      "away": 0
-    },
-    "confidence": 0.6974,
     "predictions": {
       "winner": {
-        "class": 1,
-        "confidence": 0.6974,
-        "prob": 0.6974
-      },
-      "double_chance": {
-        "class": 2,
-        "confidence": 0.8487
+        "class": 0,
+        "confidence": 0.6202926692618701,
+        "prob": 0.6202926692618701
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.0079,
-        "prob": 0.0079
+        "confidence": 0.322695727250057,
+        "prob": 0.322695727250057
       },
       "over_1_5": {
+        "class": 1,
+        "confidence": 0.5936174363500344
+      },
+      "double_chance": {
         "class": 0,
-        "confidence": 0.0616
+        "confidence": 0.8780624689873968
       },
       "btts": {
         "class": 0,
-        "confidence": 0.0329,
-        "prob": 0.0329
+        "confidence": 0.30559261848764746,
+        "prob": 0.30559261848764746
       }
     },
     "correct_score_top3": [
       {
-        "score": "0-0",
-        "prob": 0.6703
-      },
-      {
-        "score": "0-1",
-        "prob": 0.1341
-      },
-      {
         "score": "1-0",
-        "prob": 0.1341
+        "prob": 0.20319128182498286
+      },
+      {
+        "score": "2-0",
+        "prob": 0.1523934613687371
+      },
+      {
+        "score": "0-0",
+        "prob": 0.13546085454998855
       }
     ],
     "top_scorers": [],
-    "predicted_scorers": {
-      "home": [],
-      "away": [
-        {
-          "player": "Y. Diaby",
-          "prob": 0.0586,
-          "xg": 0.06,
-          "position": "Attacker"
-        },
-        {
-          "player": "N. Elphege",
-          "prob": 0.0366,
-          "xg": 0.037,
-          "position": "Attacker"
-        },
-        {
-          "player": "J. Benet",
-          "prob": 0.0167,
-          "xg": 0.017,
-          "position": "Midfielder"
-        },
-        {
-          "player": "M. Bangré",
-          "prob": 0.0164,
-          "xg": 0.017,
-          "position": "Midfielder"
-        },
-        {
-          "player": "M. Xantippe",
-          "prob": 0.0128,
-          "xg": 0.013,
-          "position": "Defender"
-        }
-      ]
-    }
-  },
-  {
-    "match_id": 1391911,
-    "league_id": 141,
-    "league": "Segunda División",
-    "country": "Spain",
-    "date": "2025-11-14T19:30:00+00:00",
-    "home_team": "Valladolid",
-    "away_team": "Las Palmas",
-    "home_logo": "https://media.api-sports.io/football/teams/720.png",
-    "away_logo": "https://media.api-sports.io/football/teams/534.png",
-    "odds": {
-      "winner": {
-        "home": 2.3,
-        "draw": 2.9,
-        "away": 3.4
-      },
-      "over_2_5": {
-        "over": 6.5,
-        "under": 1.11
-      },
-      "over_1_5": {
-        "over": 2.62,
-        "under": 1.44
-      },
-      "btts": {
-        "yes": 4.0,
-        "no": 1.22
-      }
-    },
     "predicted_score": {
       "home": 1,
       "away": 0
     },
-    "confidence": 0.3976,
+    "confidence": 0.6202926692618701,
+    "intlA": true
+  },
+  {
+    "match_id": 1484997,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-12T16:45:00+00:00",
+    "home_team": "Tunisia",
+    "away_team": "Mauritania",
+    "home_logo": "https://media.api-sports.io/football/teams/28.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1491.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.4,
+        "draw": 4.0,
+        "away": 8.05
+      },
+      "over_2_5": {
+        "over": 2.0,
+        "under": 1.75
+      },
+      "over_1_5": {
+        "over": 3.54,
+        "under": 1.39
+      },
+      "btts": {
+        "yes": 4.0,
+        "no": 1.21
+      }
+    },
     "predictions": {
       "winner": {
         "class": 0,
-        "confidence": 0.3976,
-        "prob": 0.3976
-      },
-      "double_chance": {
-        "class": 0,
-        "confidence": 0.7077
+        "confidence": 0.6139230927344407,
+        "prob": 0.6139230927344407
       },
       "over_2_5": {
         "class": 0,
-        "confidence": 0.3124,
-        "prob": 0.3124
+        "confidence": 0.08964865143196132,
+        "prob": 0.08964865143196132
       },
       "over_1_5": {
-        "class": 1,
-        "confidence": 0.583
+        "class": 0,
+        "confidence": 0.28256789444902297
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9816082657970858
       },
       "btts": {
         "class": 0,
-        "confidence": 0.3864,
-        "prob": 0.3864
+        "confidence": 0.030827389827512607,
+        "prob": 0.030827389827512607
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.3499668807565742
+      },
+      {
+        "score": "1-0",
+        "prob": 0.3499668807565742
+      },
+      {
+        "score": "2-0",
+        "prob": 0.1749834403782871
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.6139230927344407,
+    "intlA": true
+  },
+  {
+    "match_id": 1485745,
+    "league_id": 1164,
+    "league": "CAF Women's Champions League",
+    "league_name": "CAF Women's Champions League",
+    "country": "World",
+    "date": "2025-11-12T16:00:00+00:00",
+    "home_team": "JKT Queens Dar",
+    "away_team": "ASEC Mimosas W",
+    "home_logo": "https://media.api-sports.io/football/teams/27009.png",
+    "away_logo": "https://media.api-sports.io/football/teams/27013.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 33.39,
+        "draw": 1.69,
+        "away": 2.64
+      },
+      "over_2_5": {
+        "over": 54.16,
+        "under": 1.02
+      },
+      "over_1_5": {
+        "over": 9.46,
+        "under": 1.12
+      },
+      "btts": {
+        "yes": 52.11,
+        "no": 1.02
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.5914645477238617,
+        "prob": 0.5914645477238617
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.018463151217534675,
+        "prob": 0.018463151217534675
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.10572689750899557
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.9700509166316511
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.019189696515814005,
+        "prob": 0.019189696515814005
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.5769503887038738
+      },
+      {
+        "score": "0-1",
+        "prob": 0.2884751943519369
+      },
+      {
+        "score": "0-2",
+        "prob": 0.07211879858798423
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.5914645477238617,
+    "intlA": true
+  },
+  {
+    "match_id": 1482368,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T17:45:00+00:00",
+    "home_team": "Sparta Praha W",
+    "away_team": "Young Boys W",
+    "home_logo": "https://media.api-sports.io/football/teams/10925.png",
+    "away_logo": "https://media.api-sports.io/football/teams/17367.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.71,
+        "draw": 3.72,
+        "away": 3.88
+      },
+      "over_2_5": {
+        "over": 1.61,
+        "under": 2.08
+      },
+      "over_1_5": {
+        "over": 9.46,
+        "under": 1.12
+      },
+      "btts": {
+        "yes": 2.75,
+        "no": 1.4
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.5914645477238617,
+        "prob": 0.5914645477238617
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.018463151217534675,
+        "prob": 0.018463151217534675
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.10572689750899557
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.9700509166316511
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.019189696515814005,
+        "prob": 0.019189696515814005
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.5769503887038738
+      },
+      {
+        "score": "0-1",
+        "prob": 0.2884751943519369
+      },
+      {
+        "score": "0-2",
+        "prob": 0.07211879858798423
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.5914645477238617,
+    "intlA": true
+  },
+  {
+    "match_id": 1482361,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T18:30:00+00:00",
+    "home_team": "Ajax W",
+    "away_team": "Hammarby",
+    "home_logo": "https://media.api-sports.io/football/teams/1898.png",
+    "away_logo": "https://media.api-sports.io/football/teams/15630.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.14,
+        "draw": 3.6,
+        "away": 2.73
+      },
+      "over_2_5": {
+        "over": 1.52,
+        "under": 2.26
+      },
+      "over_1_5": {
+        "over": 1.52,
+        "under": 2.92
+      },
+      "btts": {
+        "yes": 2.62,
+        "no": 1.44
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.5509058839221963,
+        "prob": 0.5509058839221963
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.39008755668626977,
+        "prob": 0.39008755668626977
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6571303021371457
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.8129497998965787
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4097883338815878,
+        "prob": 0.4097883338815878
       }
     },
     "correct_score_top3": [
       {
         "score": "1-0",
-        "prob": 0.1522
-      },
-      {
-        "score": "0-0",
-        "prob": 0.1409
+        "prob": 0.15824755285977868
       },
       {
         "score": "1-1",
-        "prob": 0.1339
+        "prob": 0.118685664644834
+      },
+      {
+        "score": "2-0",
+        "prob": 0.118685664644834
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.5509058839221963,
+    "intlA": true
+  },
+  {
+    "match_id": 1482364,
+    "league_id": 1191,
+    "league": "UEFA Europa Cup - Women",
+    "league_name": "UEFA Europa Cup - Women",
+    "country": "World",
+    "date": "2025-11-12T17:30:00+00:00",
+    "home_team": "Häcken",
+    "away_team": "Inter Milano W",
+    "home_logo": "https://media.api-sports.io/football/teams/16483.png",
+    "away_logo": "https://media.api-sports.io/football/teams/7533.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.0,
+        "draw": 3.7,
+        "away": 2.9
+      },
+      "over_2_5": {
+        "over": 1.52,
+        "under": 2.33
+      },
+      "over_1_5": {
+        "over": 1.16,
+        "under": 7.32
+      },
+      "btts": {
+        "yes": 2.62,
+        "no": 1.44
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.49171454269307174,
+        "prob": 0.49171454269307174
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.6773927854853109,
+        "prob": 0.6773927854853109
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8633663562055434
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7826339007732426
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.6710744019477672,
+        "prob": 0.6710744019477672
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.09108909586297101
+      },
+      {
+        "score": "2-1",
+        "prob": 0.09108909586297101
+      },
+      {
+        "score": "1-2",
+        "prob": 0.06831682189722825
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.49171454269307174,
+    "intlA": true
+  },
+  {
+    "match_id": 1472403,
+    "league_id": 525,
+    "league": "UEFA Champions League Women",
+    "league_name": "UEFA Champions League Women",
+    "country": "World",
+    "date": "2025-11-12T20:00:00+00:00",
+    "home_team": "Atletico Madrid W",
+    "away_team": "Juventus W",
+    "home_logo": "https://media.api-sports.io/football/teams/1910.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1886.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.6,
+        "draw": 3.9,
+        "away": 4.75
+      },
+      "over_2_5": {
+        "over": 3.45,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 1.4,
+        "under": 3.48
+      },
+      "btts": {
+        "yes": 3.2,
+        "no": 2.77
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4875117312290584,
+        "prob": 0.4875117312290584
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.45563753748114455,
+        "prob": 0.45563753748114455
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7124122839523024
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.7476215403252815
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4909208840674279,
+        "prob": 0.4909208840674279
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.12325187830615596
+      },
+      {
+        "score": "1-1",
+        "prob": 0.12325187830615596
+      },
+      {
+        "score": "2-0",
+        "prob": 0.09243890872961696
       }
     ],
     "top_scorers": [
       {
-        "player": "Z. Eddahchouri",
-        "team": "Deportivo La Coruna",
-        "goals": 7
+        "player": "L. Freigang",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
       },
       {
-        "player": "Adri Embarba",
-        "team": "Almeria",
-        "goals": 7
+        "player": "R. Chiba",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
       },
       {
-        "player": "Asier Villalibre",
-        "team": "Racing Santander",
-        "goals": 7
+        "player": "L. Magull",
+        "team": "Inter Milano W",
+        "goals": 5
       },
       {
-        "player": "Jeremy Arévalo",
-        "team": "Racing Santander",
-        "goals": 7
+        "player": "G. Reuteler",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
       },
       {
-        "player": "Agus Medina",
-        "team": "Albacete",
-        "goals": 6
+        "player": "N. Anyomi",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
       }
     ],
-    "predicted_scorers": {
-      "home": [
-        {
-          "player": "A. Ndiaye",
-          "prob": 0.1886,
-          "xg": 0.209,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Chuky San José",
-          "prob": 0.1878,
-          "xg": 0.208,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Juanmi Latasa",
-          "prob": 0.1566,
-          "xg": 0.17,
-          "position": "Attacker"
-        },
-        {
-          "player": "Víctor Meseguer",
-          "prob": 0.0757,
-          "xg": 0.079,
-          "position": "Midfielder"
-        },
-        {
-          "player": "J. Ponceau",
-          "prob": 0.0751,
-          "xg": 0.078,
-          "position": "Midfielder"
-        }
-      ],
-      "away": [
-        {
-          "player": "Ale García",
-          "prob": 0.2456,
-          "xg": 0.282,
-          "position": "Midfielder"
-        },
-        {
-          "player": "M. Luković",
-          "prob": 0.1581,
-          "xg": 0.172,
-          "position": "Attacker"
-        },
-        {
-          "player": "Iván Gil",
-          "prob": 0.1317,
-          "xg": 0.141,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Mika Màrmol",
-          "prob": 0.0572,
-          "xg": 0.059,
-          "position": "Defender"
-        },
-        {
-          "player": "Enrique Clemente",
-          "prob": 0.0534,
-          "xg": 0.055,
-          "position": "Defender"
-        }
-      ]
-    }
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.4875117312290584,
+    "intlA": true
+  },
+  {
+    "match_id": 1472402,
+    "league_id": 525,
+    "league": "UEFA Champions League Women",
+    "league_name": "UEFA Champions League Women",
+    "country": "World",
+    "date": "2025-11-12T17:45:00+00:00",
+    "home_team": "Bayern Munich W",
+    "away_team": "Arsenal W",
+    "home_logo": "https://media.api-sports.io/football/teams/1860.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1850.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.73,
+        "draw": 3.6,
+        "away": 2.21
+      },
+      "over_2_5": {
+        "over": 3.14,
+        "under": 1.3
+      },
+      "over_1_5": {
+        "over": 1.4,
+        "under": 3.48
+      },
+      "btts": {
+        "yes": 2.58,
+        "no": 3.34
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.48751173122905833,
+        "prob": 0.48751173122905833
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.45563753748114455,
+        "prob": 0.45563753748114455
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7124122839523026
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.7476215403252814
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.49092088406742784,
+        "prob": 0.49092088406742784
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-1",
+        "prob": 0.12325187830615596
+      },
+      {
+        "score": "1-1",
+        "prob": 0.12325187830615596
+      },
+      {
+        "score": "0-2",
+        "prob": 0.09243890872961696
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "L. Freigang",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "R. Chiba",
+        "team": "Eintracht Frankfurt W",
+        "goals": 5
+      },
+      {
+        "player": "L. Magull",
+        "team": "Inter Milano W",
+        "goals": 5
+      },
+      {
+        "player": "G. Reuteler",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      },
+      {
+        "player": "N. Anyomi",
+        "team": "Eintracht Frankfurt W",
+        "goals": 3
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 1
+    },
+    "confidence": 0.48751173122905833,
+    "intlA": true
+  },
+  {
+    "match_id": 1468972,
+    "league_id": 1140,
+    "league": "AFC Women's Champions League",
+    "league_name": "AFC Women's Champions League",
+    "country": "World",
+    "date": "2025-11-13T12:00:00+00:00",
+    "home_team": "Hồ Chí Minh City W",
+    "away_team": "Stallion W",
+    "home_logo": "https://media.api-sports.io/football/teams/24897.png",
+    "away_logo": "https://media.api-sports.io/football/teams/26446.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 6137.05,
+        "draw": 272.24,
+        "away": 1.0
+      },
+      "over_2_5": {
+        "over": 1.09,
+        "under": 12.69
+      },
+      "over_1_5": {
+        "over": 1.02,
+        "under": 48.76
+      },
+      "btts": {
+        "yes": 20.56,
+        "no": 1.05
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.9961637938504447,
+        "prob": 0.9961637938504447
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.9212283395812607,
+        "prob": 0.9212283395812607
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.9794930895681573
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.9998370552924823
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.04863131566058561,
+        "prob": 0.04863131566058561
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-6",
+        "prob": 0.2845122212869438
+      },
+      {
+        "score": "0-5",
+        "prob": 0.26262666580333277
+      },
+      {
+        "score": "0-4",
+        "prob": 0.2020205121564098
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 6
+    },
+    "confidence": 0.9961637938504447,
+    "intlA": true
+  },
+  {
+    "match_id": 1485014,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-13T06:00:00+00:00",
+    "home_team": "Papua New Guinea",
+    "away_team": "Solomon Islands",
+    "home_logo": "https://media.api-sports.io/football/teams/8175.png",
+    "away_logo": "https://media.api-sports.io/football/teams/5165.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 21.53,
+        "draw": 1.1,
+        "away": 21.53
+      },
+      "over_2_5": {
+        "over": 6466.09,
+        "under": 1.0
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 420.42,
+        "no": 1.0
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1481801,
+    "league_id": 30,
+    "league": "World Cup - Qualification Asia",
+    "league_name": "World Cup - Qualification Asia",
+    "country": "World",
+    "date": "2025-11-13T16:00:00+00:00",
+    "home_team": "United Arab Emirates",
+    "away_team": "Iraq",
+    "home_logo": "https://media.api-sports.io/football/teams/1563.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1567.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.05,
+        "draw": 2.96,
+        "away": 3.91
+      },
+      "over_2_5": {
+        "over": 2.75,
+        "under": 1.44
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.4,
+        "no": 1.21
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1483273,
+    "league_id": 29,
+    "league": "World Cup - Qualification Africa",
+    "league_name": "World Cup - Qualification Africa",
+    "country": "World",
+    "date": "2025-11-13T16:00:00+00:00",
+    "home_team": "Nigeria",
+    "away_team": "Gabon",
+    "home_logo": "https://media.api-sports.io/football/teams/19.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1503.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.83,
+        "draw": 3.05,
+        "away": 5.0
+      },
+      "over_2_5": {
+        "over": 2.73,
+        "under": 1.4
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.65,
+        "no": 1.17
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323343,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T17:00:00+00:00",
+    "home_team": "Azerbaijan",
+    "away_team": "Iceland",
+    "home_logo": "https://media.api-sports.io/football/teams/1096.png",
+    "away_logo": "https://media.api-sports.io/football/teams/18.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 6.2,
+        "draw": 4.19,
+        "away": 1.52
+      },
+      "over_2_5": {
+        "over": 1.88,
+        "under": 1.92
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.48,
+        "no": 1.33
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323344,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T17:00:00+00:00",
+    "home_team": "Armenia",
+    "away_team": "Hungary",
+    "home_logo": "https://media.api-sports.io/football/teams/1094.png",
+    "away_logo": "https://media.api-sports.io/football/teams/769.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 5.75,
+        "draw": 4.15,
+        "away": 1.55
+      },
+      "over_2_5": {
+        "over": 3.65,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.35,
+        "no": 1.35
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323345,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T17:00:00+00:00",
+    "home_team": "Norway",
+    "away_team": "Estonia",
+    "home_logo": "https://media.api-sports.io/football/teams/1090.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1101.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 21.53,
+        "draw": 21.0,
+        "away": 72.0
+      },
+      "over_2_5": {
+        "over": 2.1,
+        "under": 1.67
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 5.2,
+        "no": 1.16
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1431011,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-13T17:00:00+00:00",
+    "home_team": "Lithuania",
+    "away_team": "Israel",
+    "home_logo": "https://media.api-sports.io/football/teams/1097.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1116.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 4.95,
+        "draw": 3.6,
+        "away": 1.65
+      },
+      "over_2_5": {
+        "over": 4.85,
+        "under": 1.15
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.83,
+        "no": 1.23
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1449846,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-13T17:00:00+00:00",
+    "home_team": "FYR Macedonia",
+    "away_team": "Latvia",
+    "home_logo": "https://media.api-sports.io/football/teams/1105.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1092.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.5,
+        "draw": 3.85,
+        "away": 6.5
+      },
+      "over_2_5": {
+        "over": 5.4,
+        "under": 1.14
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.45,
+        "no": 1.19
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1483272,
+    "league_id": 29,
+    "league": "World Cup - Qualification Africa",
+    "league_name": "World Cup - Qualification Africa",
+    "country": "World",
+    "date": "2025-11-13T19:00:00+00:00",
+    "home_team": "Cameroon",
+    "away_team": "Congo DR",
+    "home_logo": "https://media.api-sports.io/football/teams/1530.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1508.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.38,
+        "draw": 2.79,
+        "away": 3.4
+      },
+      "over_2_5": {
+        "over": 3.0,
+        "under": 1.36
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.8,
+        "no": 1.18
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323346,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T19:45:00+00:00",
+    "home_team": "Andorra",
+    "away_team": "Albania",
+    "home_logo": "https://media.api-sports.io/football/teams/1110.png",
+    "away_logo": "https://media.api-sports.io/football/teams/778.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 17.0,
+        "draw": 5.55,
+        "away": 1.23
+      },
+      "over_2_5": {
+        "over": 3.41,
+        "under": 1.2
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 5.9,
+        "no": 1.57
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323347,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T19:45:00+00:00",
+    "home_team": "England",
+    "away_team": "Serbia",
+    "home_logo": "https://media.api-sports.io/football/teams/10.png",
+    "away_logo": "https://media.api-sports.io/football/teams/14.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.28,
+        "draw": 5.5,
+        "away": 10.91
+      },
+      "over_2_5": {
+        "over": 2.11,
+        "under": 1.67
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.0,
+        "no": 1.27
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1366311,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T19:45:00+00:00",
+    "home_team": "France",
+    "away_team": "Ukraine",
+    "home_logo": "https://media.api-sports.io/football/teams/2.png",
+    "away_logo": "https://media.api-sports.io/football/teams/772.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.17,
+        "draw": 7.0,
+        "away": 15.5
+      },
+      "over_2_5": {
+        "over": 2.85,
+        "under": 1.47
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.33,
+        "no": 1.22
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1366312,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T19:45:00+00:00",
+    "home_team": "Rep. Of Ireland",
+    "away_team": "Portugal",
+    "home_logo": "https://media.api-sports.io/football/teams/776.png",
+    "away_logo": "https://media.api-sports.io/football/teams/27.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 8.3,
+        "draw": 5.0,
+        "away": 1.35
+      },
+      "over_2_5": {
+        "over": 2.89,
+        "under": 1.53
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.55,
+        "no": 1.3
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1366313,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-13T19:45:00+00:00",
+    "home_team": "Moldova",
+    "away_team": "Italy",
+    "home_logo": "https://media.api-sports.io/football/teams/1114.png",
+    "away_logo": "https://media.api-sports.io/football/teams/768.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 43.52,
+        "draw": 13.75,
+        "away": 1.06
+      },
+      "over_2_5": {
+        "over": 2.7,
+        "under": 1.44
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 5.85,
+        "no": 1.14
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1446017,
+    "league_id": 31,
+    "league": "World Cup - Qualification CONCACAF",
+    "league_name": "World Cup - Qualification CONCACAF",
+    "country": "World",
+    "date": "2025-11-13T22:00:00+00:00",
+    "home_team": "Suriname",
+    "away_team": "El Salvador",
+    "home_logo": "https://media.api-sports.io/football/teams/8171.png",
+    "away_logo": "https://media.api-sports.io/football/teams/5159.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.7,
+        "draw": 3.4,
+        "away": 4.9
+      },
+      "over_2_5": {
+        "over": 5.8,
+        "under": 1.33
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.2,
+        "no": 1.2
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1484999,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-13T12:30:00+00:00",
+    "home_team": "Thailand",
+    "away_team": "Singapore",
+    "home_logo": "https://media.api-sports.io/football/teams/1564.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1546.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.24,
+        "draw": 5.35,
+        "away": 10.47
+      },
+      "over_2_5": {
+        "over": 2.9,
+        "under": 1.35
+      },
+      "over_1_5": {
+        "over": 1.41,
+        "under": 3.46
+      },
+      "btts": {
+        "yes": 3.32,
+        "no": 2.29
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.7297634717819731,
+        "prob": 0.7297634717819731
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.45370956441314836,
+        "prob": 0.45370956441314836
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7113937321427951
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.917735641732794
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.33997600435486236,
+        "prob": 0.33997600435486236
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.16491786734697408
+      },
+      {
+        "score": "2-0",
+        "prob": 0.16491786734697408
+      },
+      {
+        "score": "3-0",
+        "prob": 0.10994524489798273
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.7297634717819731,
+    "intlA": true
+  },
+  {
+    "match_id": 1484998,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-13T12:00:00+00:00",
+    "home_team": "Hong Kong",
+    "away_team": "Cambodia",
+    "home_logo": "https://media.api-sports.io/football/teams/4460.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1543.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 1.61,
+        "draw": 3.88,
+        "away": 8.2
+      },
+      "over_2_5": {
+        "over": 3.1,
+        "under": 1.48
+      },
+      "over_1_5": {
+        "over": 1.68,
+        "under": 2.46
+      },
+      "btts": {
+        "yes": 3.27,
+        "no": 1.44
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.6202926692618701,
+        "prob": 0.6202926692618701
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.322695727250057,
+        "prob": 0.322695727250057
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.5936174363500344
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.8780624689873968
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.30559261848764746,
+        "prob": 0.30559261848764746
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.20319128182498286
+      },
+      {
+        "score": "2-0",
+        "prob": 0.1523934613687371
+      },
+      {
+        "score": "0-0",
+        "prob": 0.13546085454998855
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.6202926692618701,
+    "intlA": true
+  },
+  {
+    "match_id": 1468973,
+    "league_id": 1140,
+    "league": "AFC Women's Champions League",
+    "league_name": "AFC Women's Champions League",
+    "country": "World",
+    "date": "2025-11-13T08:00:00+00:00",
+    "home_team": "Melbourne City W",
+    "away_team": "Lion City W",
+    "home_logo": "https://media.api-sports.io/football/teams/1971.png",
+    "away_logo": "https://media.api-sports.io/football/teams/24890.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 54.37,
+        "draw": 2.72,
+        "away": 1.63
+      },
+      "over_2_5": {
+        "over": 11.15,
+        "under": 1.1
+      },
+      "over_1_5": {
+        "over": 3.54,
+        "under": 1.39
+      },
+      "btts": {
+        "yes": 32.44,
+        "no": 1.03
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.6139230927344408,
+        "prob": 0.6139230927344408
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.08964865143196132,
+        "prob": 0.08964865143196132
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.2825678944490231
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.9816082657970859
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.030827389827512607,
+        "prob": 0.030827389827512607
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.34996688075657423
+      },
+      {
+        "score": "0-1",
+        "prob": 0.34996688075657423
+      },
+      {
+        "score": "0-2",
+        "prob": 0.17498344037828711
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.6139230927344408,
+    "intlA": true
+  },
+  {
+    "match_id": 1450867,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-13T17:00:00+00:00",
+    "home_team": "Czech Republic",
+    "away_team": "San Marino",
+    "home_logo": "https://media.api-sports.io/football/teams/770.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1115.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.66,
+        "draw": 47.0,
+        "away": 75.0
+      },
+      "over_2_5": {
+        "over": 1.67,
+        "under": 2.8
+      },
+      "over_1_5": {
+        "over": 1.25,
+        "under": 5.0
+      },
+      "btts": {
+        "yes": 4.7,
+        "no": 1.21
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.6039579046169379,
+        "prob": 0.6039579046169379
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5748471286743536,
+        "prob": 0.5748471286743536
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7999280605526371
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.8166516664170913
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5461562568022144,
+        "prob": 0.5461562568022144
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.1000359697236815
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1000359697236815
+      },
+      {
+        "score": "2-0",
+        "prob": 0.1000359697236815
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.6039579046169379,
+    "intlA": true
+  },
+  {
+    "match_id": 1485001,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-13T17:00:00+00:00",
+    "home_team": "Iran",
+    "away_team": "Cape Verde Islands",
+    "home_logo": "https://media.api-sports.io/football/teams/22.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1533.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.22,
+        "draw": 3.1,
+        "away": 3.34
+      },
+      "over_2_5": {
+        "over": 5.2,
+        "under": 1.14
+      },
+      "over_1_5": {
+        "over": 1.55,
+        "under": 2.82
+      },
+      "btts": {
+        "yes": 3.74,
+        "no": 1.25
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4844338516292614,
+        "prob": 0.4844338516292614
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.37695359720252547,
+        "prob": 0.37695359720252547
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6452404823928972
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.7640080083119626
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.42406356674214224,
+        "prob": 0.42406356674214224
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.14966417149049657
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1272145457669221
+      },
+      {
+        "score": "0-0",
+        "prob": 0.11086234925221967
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.4844338516292614,
+    "intlA": true
+  },
+  {
+    "match_id": 1485004,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T16:00:00+00:00",
+    "home_team": "Angola",
+    "away_team": "Argentina",
+    "home_logo": "https://media.api-sports.io/football/teams/1529.png",
+    "away_logo": "https://media.api-sports.io/football/teams/26.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 14.75,
+        "draw": 6.35,
+        "away": 1.19
+      },
+      "over_2_5": {
+        "over": 3.45,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 1.25,
+        "under": 5.04
+      },
+      "btts": {
+        "yes": 4.3,
+        "no": 1.21
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.9406648371409112,
+        "prob": 0.9406648371409112
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5736311639439503,
+        "prob": 0.5736311639439503
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8015464690674328
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.9972961068138531
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.046258247076780674,
+        "prob": 0.046258247076780674
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-2",
+        "prob": 0.22050392325840815
+      },
+      {
+        "score": "0-3",
+        "prob": 0.22050392325840815
+      },
+      {
+        "score": "0-4",
+        "prob": 0.16537794244380613
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 2
+    },
+    "confidence": 0.9406648371409112,
+    "intlA": true
+  },
+  {
+    "match_id": 1446019,
+    "league_id": 31,
+    "league": "World Cup - Qualification CONCACAF",
+    "league_name": "World Cup - Qualification CONCACAF",
+    "country": "World",
+    "date": "2025-11-14T00:00:00+00:00",
+    "home_team": "Trinidad and Tobago",
+    "away_team": "Jamaica",
+    "home_logo": "https://media.api-sports.io/football/teams/5168.png",
+    "away_logo": "https://media.api-sports.io/football/teams/2385.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 3.5,
+        "draw": 3.3,
+        "away": 2.0
+      },
+      "over_2_5": {
+        "over": 4.45,
+        "under": 1.2
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.4,
+        "no": 1.3
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1446020,
+    "league_id": 31,
+    "league": "World Cup - Qualification CONCACAF",
+    "league_name": "World Cup - Qualification CONCACAF",
+    "country": "World",
+    "date": "2025-11-14T00:00:00+00:00",
+    "home_team": "Bermuda",
+    "away_team": "Curaçao",
+    "home_logo": "https://media.api-sports.io/football/teams/5158.png",
+    "away_logo": "https://media.api-sports.io/football/teams/5530.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 10.38,
+        "draw": 6.1,
+        "away": 1.19
+      },
+      "over_2_5": {
+        "over": 2.79,
+        "under": 1.35
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.26,
+        "no": 1.29
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1446018,
+    "league_id": 31,
+    "league": "World Cup - Qualification CONCACAF",
+    "league_name": "World Cup - Qualification CONCACAF",
+    "country": "World",
+    "date": "2025-11-14T02:00:00+00:00",
+    "home_team": "Guatemala",
+    "away_team": "Panama",
+    "home_logo": "https://media.api-sports.io/football/teams/5161.png",
+    "away_logo": "https://media.api-sports.io/football/teams/11.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 4.01,
+        "draw": 3.3,
+        "away": 1.85
+      },
+      "over_2_5": {
+        "over": 5.25,
+        "under": 1.15
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.8,
+        "no": 1.25
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1446021,
+    "league_id": 31,
+    "league": "World Cup - Qualification CONCACAF",
+    "league_name": "World Cup - Qualification CONCACAF",
+    "country": "World",
+    "date": "2025-11-14T02:00:00+00:00",
+    "home_team": "Nicaragua",
+    "away_team": "Honduras",
+    "home_logo": "https://media.api-sports.io/football/teams/5164.png",
+    "away_logo": "https://media.api-sports.io/football/teams/4672.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 7.0,
+        "draw": 3.95,
+        "away": 1.44
+      },
+      "over_2_5": {
+        "over": 4.83,
+        "under": 1.17
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.25,
+        "no": 1.2
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1446022,
+    "league_id": 31,
+    "league": "World Cup - Qualification CONCACAF",
+    "league_name": "World Cup - Qualification CONCACAF",
+    "country": "World",
+    "date": "2025-11-14T02:00:00+00:00",
+    "home_team": "Haiti",
+    "away_team": "Costa Rica",
+    "home_logo": "https://media.api-sports.io/football/teams/2386.png",
+    "away_logo": "https://media.api-sports.io/football/teams/29.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 3.3,
+        "draw": 3.3,
+        "away": 2.1
+      },
+      "over_2_5": {
+        "over": 4.6,
+        "under": 1.18
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.25,
+        "no": 1.3
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323348,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-14T17:00:00+00:00",
+    "home_team": "Finland",
+    "away_team": "Malta",
+    "home_logo": "https://media.api-sports.io/football/teams/1099.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1112.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.21,
+        "draw": 6.0,
+        "away": 14.0
+      },
+      "over_2_5": {
+        "over": 2.25,
+        "under": 1.43
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.55,
+        "no": 1.21
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323349,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-14T19:45:00+00:00",
+    "home_team": "Slovakia",
+    "away_team": "Northern Ireland",
+    "home_logo": "https://media.api-sports.io/football/teams/773.png",
+    "away_logo": "https://media.api-sports.io/football/teams/771.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.0,
+        "draw": 3.1,
+        "away": 4.25
+      },
+      "over_2_5": {
+        "over": 6.0,
+        "under": 1.5
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.25,
+        "no": 1.21
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1323350,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-14T19:45:00+00:00",
+    "home_team": "Gibraltar",
+    "away_team": "Montenegro",
+    "home_logo": "https://media.api-sports.io/football/teams/1093.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1109.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 13.0,
+        "draw": 6.4,
+        "away": 1.2
+      },
+      "over_2_5": {
+        "over": 2.77,
+        "under": 1.46
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.55,
+        "no": 1.85
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1366314,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-14T19:45:00+00:00",
+    "home_team": "Luxembourg",
+    "away_team": "Germany",
+    "home_logo": "https://media.api-sports.io/football/teams/1102.png",
+    "away_logo": "https://media.api-sports.io/football/teams/25.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 29.0,
+        "draw": 11.5,
+        "away": 1.07
+      },
+      "over_2_5": {
+        "over": 2.65,
+        "under": 1.45
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 4.5,
+        "no": 1.2
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1366315,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-14T19:45:00+00:00",
+    "home_team": "Poland",
+    "away_team": "Netherlands",
+    "home_logo": "https://media.api-sports.io/football/teams/24.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1118.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 4.9,
+        "draw": 3.92,
+        "away": 1.65
+      },
+      "over_2_5": {
+        "over": 3.42,
+        "under": 1.28
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 3.15,
+        "no": 2.08
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1366316,
+    "league_id": 32,
+    "league": "World Cup - Qualification Europe",
+    "league_name": "World Cup - Qualification Europe",
+    "country": "World",
+    "date": "2025-11-14T19:45:00+00:00",
+    "home_team": "Croatia",
+    "away_team": "Faroe Islands",
+    "home_logo": "https://media.api-sports.io/football/teams/3.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1098.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.1,
+        "draw": 9.4,
+        "away": 29.0
+      },
+      "over_2_5": {
+        "over": 3.25,
+        "under": 1.33
+      },
+      "over_1_5": {
+        "over": 213.73,
+        "under": 1.0
+      },
+      "btts": {
+        "yes": 6.4,
+        "no": 1.13
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.9071009257825703,
+        "prob": 0.9071009257825703
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.00015465306996796424,
+        "prob": 0.00015465306996796424
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.0046788401601491085
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9535504628912852
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.002378569034517789,
+        "prob": 0.002378569034517789
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.9048374180362282
+      },
+      {
+        "score": "0-1",
+        "prob": 0.045241870901811414
+      },
+      {
+        "score": "1-0",
+        "prob": 0.045241870901811414
+      }
+    ],
+    "top_scorers": [],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.9071009257825703,
+    "intlA": true
+  },
+  {
+    "match_id": 1485009,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T16:45:00+00:00",
+    "home_team": "Tunisia",
+    "away_team": "Jordan",
+    "home_logo": "https://media.api-sports.io/football/teams/28.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1548.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 1.32,
+        "draw": 4.87,
+        "away": 25.68
+      },
+      "over_2_5": {
+        "over": 3.39,
+        "under": 1.42
+      },
+      "over_1_5": {
+        "over": 1.77,
+        "under": 2.3
+      },
+      "btts": {
+        "yes": 6.75,
+        "no": 1.17
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.7557620065963516,
+        "prob": 0.7557620065963516
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.2949576362311207,
+        "prob": 0.2949576362311207
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.5654361626079172
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.9610582495476114
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.14809213101629864,
+        "prob": 0.14809213101629864
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.25474431847122103
+      },
+      {
+        "score": "2-0",
+        "prob": 0.21653267070053783
+      },
+      {
+        "score": "0-0",
+        "prob": 0.14984959910071827
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.7557620065963516,
+    "intlA": true
+  },
+  {
+    "match_id": 1485003,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T10:20:00+00:00",
+    "home_team": "Japan",
+    "away_team": "Ghana",
+    "home_logo": "https://media.api-sports.io/football/teams/12.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1504.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 1.42,
+        "draw": 4.25,
+        "away": 7.4
+      },
+      "over_2_5": {
+        "over": 4.15,
+        "under": 1.19
+      },
+      "over_1_5": {
+        "over": 1.08,
+        "under": 12.9
+      },
+      "btts": {
+        "yes": 3.74,
+        "no": 1.27
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.7178851492820666,
+        "prob": 0.7178851492820666
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.7891586914633433,
+        "prob": 0.7891586914633433
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.9224915977370718
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.8674491171650313
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.676653760377449,
+        "prob": 0.676653760377449
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-2",
+        "prob": 0.08304471671028066
+      },
+      {
+        "score": "1-3",
+        "prob": 0.08304471671028066
+      },
+      {
+        "score": "0-2",
+        "prob": 0.06643577336822452
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 2
+    },
+    "confidence": 0.7178851492820666,
+    "intlA": true
+  },
+  {
+    "match_id": 1485002,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T05:00:00+00:00",
+    "home_team": "Solomon Islands",
+    "away_team": "New Caledonia",
+    "home_logo": "https://media.api-sports.io/football/teams/5165.png",
+    "away_logo": "https://media.api-sports.io/football/teams/5163.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 54.37,
+        "draw": 2.72,
+        "away": 1.63
+      },
+      "over_2_5": {
+        "over": 11.15,
+        "under": 1.1
+      },
+      "over_1_5": {
+        "over": 3.54,
+        "under": 1.39
+      },
+      "btts": {
+        "yes": 32.44,
+        "no": 1.03
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.6139230927344408,
+        "prob": 0.6139230927344408
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.08964865143196132,
+        "prob": 0.08964865143196132
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.2825678944490231
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.9816082657970859
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.030827389827512607,
+        "prob": 0.030827389827512607
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.34996688075657423
+      },
+      {
+        "score": "0-1",
+        "prob": 0.34996688075657423
+      },
+      {
+        "score": "0-2",
+        "prob": 0.17498344037828711
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.6139230927344408,
+    "intlA": true
+  },
+  {
+    "match_id": 1469290,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T11:00:00+00:00",
+    "home_team": "South Korea",
+    "away_team": "Bolivia",
+    "home_logo": "https://media.api-sports.io/football/teams/17.png",
+    "away_logo": "https://media.api-sports.io/football/teams/2381.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 1.83,
+        "draw": 4.61,
+        "away": 4.22
+      },
+      "over_2_5": {
+        "over": 1.59,
+        "under": 2.69
+      },
+      "over_1_5": {
+        "over": 1.2,
+        "under": 6.04
+      },
+      "btts": {
+        "yes": 1.62,
+        "no": 2.61
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.5459324654421537,
+        "prob": 0.5459324654421537
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.6286312713314287,
+        "prob": 0.6286312713314287
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8344060750854896
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7829123159854826
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.6164150702611292,
+        "prob": 0.6164150702611292
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.09740819112618267
+      },
+      {
+        "score": "2-1",
+        "prob": 0.09740819112618267
+      },
+      {
+        "score": "1-0",
+        "prob": 0.07792655290094613
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.5459324654421537,
+    "intlA": true
+  },
+  {
+    "match_id": 1485008,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T17:00:00+00:00",
+    "home_team": "Uzbekistan",
+    "away_team": "Egypt",
+    "home_logo": "https://media.api-sports.io/football/teams/1568.png",
+    "away_logo": "https://media.api-sports.io/football/teams/32.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 3.33,
+        "draw": 1.98,
+        "away": 5.15
+      },
+      "over_2_5": {
+        "over": 18.22,
+        "under": 1.06
+      },
+      "over_1_5": {
+        "over": 4.78,
+        "under": 1.26
+      },
+      "btts": {
+        "yes": 8.61,
+        "no": 1.13
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 1,
+        "confidence": 0.5055498256751336,
+        "prob": 0.5055498256751336
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.05487769546567269,
+        "prob": 0.05487769546567269
+      },
+      "over_1_5": {
+        "class": 0,
+        "confidence": 0.20928150892549213
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.8057002020554871
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.1161959768969467,
+        "prob": 0.1161959768969467
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.427415400580815
+      },
+      {
+        "score": "1-0",
+        "prob": 0.2137077002904075
+      },
+      {
+        "score": "0-1",
+        "prob": 0.14959539020328524
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.5055498256751336,
+    "intlA": true
+  },
+  {
+    "match_id": 1485006,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T13:00:00+00:00",
+    "home_team": "Egypt",
+    "away_team": "Algeria",
+    "home_logo": "https://media.api-sports.io/football/teams/32.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1532.png",
+    "odds_source": "model",
+    "odds": {
+      "winner": {
+        "home": 2.03,
+        "draw": 4.6,
+        "away": 3.44
+      },
+      "over_2_5": {
+        "over": 1.48,
+        "under": 3.1
+      },
+      "over_1_5": {
+        "over": 1.16,
+        "under": 7.32
+      },
+      "btts": {
+        "yes": 1.49,
+        "no": 3.04
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.49171454269307174,
+        "prob": 0.49171454269307174
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.6773927854853109,
+        "prob": 0.6773927854853109
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8633663562055434
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7826339007732426
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.6710744019477672,
+        "prob": 0.6710744019477672
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.09108909586297101
+      },
+      {
+        "score": "2-1",
+        "prob": 0.09108909586297101
+      },
+      {
+        "score": "1-2",
+        "prob": 0.06831682189722825
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.49171454269307174,
+    "intlA": true
+  },
+  {
+    "match_id": 1457377,
+    "league_id": 10,
+    "league": "Friendlies",
+    "league_name": "Friendlies",
+    "country": "World",
+    "date": "2025-11-14T00:30:00+00:00",
+    "home_team": "Canada",
+    "away_team": "Ecuador",
+    "home_logo": "https://media.api-sports.io/football/teams/5529.png",
+    "away_logo": "https://media.api-sports.io/football/teams/2382.png",
+    "odds_source": "market",
+    "odds": {
+      "winner": {
+        "home": 2.62,
+        "draw": 2.96,
+        "away": 2.76
+      },
+      "over_2_5": {
+        "over": 2.42,
+        "under": 1.55
+      },
+      "over_1_5": {
+        "over": 1.68,
+        "under": 2.46
+      },
+      "btts": {
+        "yes": 3.85,
+        "no": 1.25
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.3457201576354577,
+        "prob": 0.3457201576354577
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.32321091510396355,
+        "prob": 0.32321091510396355
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.5939265490623783
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.6914403152709154
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.3995376841227944,
+        "prob": 0.3995376841227944
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-0",
+        "prob": 0.1353578169792073
+      },
+      {
+        "score": "0-1",
+        "prob": 0.1353578169792073
+      },
+      {
+        "score": "1-0",
+        "prob": 0.1353578169792073
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Krasso",
+        "team": "Ivory Coast",
+        "goals": 17
+      },
+      {
+        "player": "G. Koyalipou",
+        "team": "Central African Republic",
+        "goals": 14
+      },
+      {
+        "player": "B. Borello",
+        "team": "Australia",
+        "goals": 13
+      },
+      {
+        "player": "V. Aboubakar",
+        "team": "Cameroon",
+        "goals": 13
+      },
+      {
+        "player": "B. Traoré",
+        "team": "Ivory Coast",
+        "goals": 12
+      }
+    ],
+    "predicted_score": {
+      "home": 0,
+      "away": 0
+    },
+    "confidence": 0.3457201576354577,
+    "intlA": true
   }
 ]
