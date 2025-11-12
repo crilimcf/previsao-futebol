@@ -39,16 +39,16 @@ function ymd(d: Date) {
   return local.toISOString().split("T")[0];
 }
 // Evita crash se a API der date inválida
-function fixtureDateSafe(d?: string) {
-  const t = d ? Date.parse(d) : NaN;
-  return Number.isFinite(t) ? new Date(d as string) : new Date();
+function safeDate(val?: string | number | Date) {
+  if (val === undefined || val === null) return new Date();
+  const d = new Date(val as any);
+  if (!isNaN(d.getTime())) return d;
+  if (typeof val === "string") {
+    const d2 = new Date(val.replace(" ", "T"));
+    if (!isNaN(d2.getTime())) return d2;
+  }
+  return new Date();
 }
-
-const dateTabs = [
-  { key: "today", label: "Hoje", calc: () => new Date() },
-  { key: "tomorrow", label: "Amanhã", calc: () => new Date(Date.now() + 86400000) },
-  { key: "after", label: "Depois de Amanhã", calc: () => new Date(Date.now() + 2 * 86400000) },
-];
 
 /* ----------------------------- */
 /*   ✨ Helpers de destaque      */
@@ -92,6 +92,7 @@ const CONFED_REGIONS = new Set([
 ]);
 const INTL_KEYWORDS = [
   "world cup",
+  "wc qualification",
   "qualification",
   "qualifiers",
   "uefa euro",
@@ -123,12 +124,14 @@ function isNationalA(p: any): boolean {
   const h = String(p.home_team ?? "").toLowerCase();
   const a = String(p.away_team ?? "").toLowerCase();
 
-  // excluir juvenis/mulheres
-  if (isYouthOrWomenName(h) || isYouthOrWomenName(a)) return false;
+  if (isYouthOrWomenName(h) || isYouthOrWomenName(a)) return false; // exclui U-xx/Women
 
-  // competições internacionais
-  if (CONFED_REGIONS.has(country)) return true;
-  if (containsAny(leagueName, INTL_KEYWORDS)) return true;
+  if (CONFED_REGIONS.has(country)) return true; // país "World/Europe/International"
+  if (containsAny(leagueName, INTL_KEYWORDS)) return true; // nome da competição
+
+  // fallback: equipas com nome de país comum (curto) – evita clubes
+  const looksNational = (x: string) => /^[a-z\s-]{3,20}$/.test(x) && !x.includes(" fc") && !x.includes(" sc");
+  if (looksNational(h) && looksNational(a)) return true;
 
   return false;
 }
@@ -153,13 +156,13 @@ export default function HomeClient() {
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
   /* ----------------------------- */
-  /* 1) Ligas só do backend curado */
+  /* 1) Ligas (backend curado)     */
   /* ----------------------------- */
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues(); // <- só as ligas curadas vindas do backend
+        const ls = await getLeagues();
         setBackendLeagues(ls ?? []);
       } catch {
         setBackendLeagues([]);
@@ -167,7 +170,7 @@ export default function HomeClient() {
     })();
   }, []);
 
-  // limpar possíveis caches antigas do browser (uma vez)
+  // limpar caches antigas do browser (uma vez)
   useEffect(() => {
     try {
       ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
@@ -176,13 +179,11 @@ export default function HomeClient() {
     } catch {}
   }, []);
 
-  // conjunto de IDs permitidos (usamos APENAS quando o user escolhe liga específica)
   const allowedLeagueIds = useMemo(
     () => new Set<string>(backendLeagues.map((x) => String(x.id))),
     [backendLeagues]
   );
 
-  // dropdown de ligas (apenas curadas) — mostra País — Liga
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
     const arr = backendLeagues.map((x) => ({
       id: String(x.id),
@@ -228,7 +229,7 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague, onlyIntlA]);
 
-  // carregar previsões + stats + lastUpdate
+  // -------- carregamento principal com fallback de data ----------
   async function loadMainData() {
     setLoading(true);
     setError("");
@@ -239,17 +240,22 @@ export default function HomeClient() {
           ? { date: selectedDateISO }
           : { date: selectedDateISO, league_id: selectedLeague };
 
-      const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
-      const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
+      // 1ª tentativa: pedir filtrado por data ao backend
+      let preds = await getPredictions(params);
+      let predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
 
-      let arr: Prediction[] = predsArray;
-
-      // 1) filtro Seleções A (se ativo)
-      if (onlyIntlA) {
-        arr = arr.filter(isNationalA);
+      // Fallback: se vier vazio, buscar tudo e filtrar a data no cliente
+      if (!predsArray.length) {
+        const all = await getPredictions({});
+        const allArr = Array.isArray(all) ? (all as Prediction[]) : [];
+        predsArray = allArr.filter((p: any) => ymd(safeDate(p.date)) === selectedDateISO);
       }
 
-      // 2) allow-list SÓ quando o user escolhe liga específica (em "Todos" NÃO restringimos)
+      // 1) filtro Seleções A (se ativo)
+      let arr: Prediction[] = predsArray;
+      if (onlyIntlA) arr = arr.filter(isNationalA);
+
+      // 2) allow-list SÓ quando o user escolhe liga específica
       if (selectedLeague !== "all" && allowedLeagueIds.size > 0) {
         arr = arr.filter((p: any) =>
           allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
@@ -257,6 +263,9 @@ export default function HomeClient() {
       }
 
       setPredictions(arr);
+
+      // stats + lastUpdate
+      const [statsData, lastU] = await Promise.all([getStats(), getLastUpdate()]);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
@@ -284,7 +293,7 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO, onlyIntlA, allowedLeagueIds]);
 
-  // fixtures reais por liga (proxy) — por data (evita jogos “de outro dia”)
+  // fixtures reais por liga (proxy) — por data
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -361,7 +370,7 @@ export default function HomeClient() {
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas dinâmicas (APENAS do backend curado) */}
+          {/* Ligas (APENAS backend curado) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -376,7 +385,11 @@ export default function HomeClient() {
 
           {/* Datas */}
           <div className="flex gap-3 md:gap-4">
-            {dateTabs.map((d) => (
+            {[
+              { key: "today", label: "Hoje" },
+              { key: "tomorrow", label: "Amanhã" },
+              { key: "after", label: "Depois de Amanhã" },
+            ].map((d) => (
               <button
                 key={d.key}
                 onClick={() => setSelectedDateKey(d.key)}
@@ -402,9 +415,7 @@ export default function HomeClient() {
           <button
             onClick={async () => {
               await loadMainData();
-              if (selectedLeague !== "all") {
-                await loadFixtures(true);
-              }
+              if (selectedLeague !== "all") await loadFixtures(true);
             }}
             className="btn btn-ghost"
             disabled={loading || loadingFixtures}
@@ -453,9 +464,8 @@ export default function HomeClient() {
             )}
 
             {(() => {
-              // compara pelos Y-M-D em horário local
               const fixturesDay = (liveFixtures || []).filter(
-                (f: any) => ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
+                (f: any) => ymd(safeDate(f.fixture?.date)) === selectedDateISO
               );
 
               return fixturesDay.length > 0 ? (
@@ -470,7 +480,7 @@ export default function HomeClient() {
                         <Image src={f.teams.away.logo} alt="" width={24} height={24} />
                       </div>
                       <p className="text-sm text-center text-gray-400">
-                        {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
+                        {safeDate(f.fixture?.date).toLocaleString("pt-PT")}
                       </p>
                       <p className="text-xs text-center text-gray-500 mt-1">
                         {f.league.name} ({f.league.country})
@@ -491,7 +501,7 @@ export default function HomeClient() {
           </div>
         )}
 
-        {/* Previsões (já filtradas) */}
+        {/* Previsões */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {predictions.map((p: any) => {
@@ -535,7 +545,7 @@ export default function HomeClient() {
                       {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
                     </div>
                     <div className="text-xs text-gray-500">
-                      {new Date(p.date).toLocaleString("pt-PT", {
+                      {safeDate(p.date).toLocaleString("pt-PT", {
                         day: "2-digit",
                         month: "2-digit",
                         hour: "2-digit",
@@ -553,7 +563,7 @@ export default function HomeClient() {
                     {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
                   </div>
 
-                  {/* Correct score (best) */}
+                  {/* Correct score */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
                     <span className="text-sm text-white">{p?.correct_score_top3?.[0]?.score ?? "—"}</span>
@@ -617,7 +627,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* BTTS (fora do ranking TOP) */}
+                    {/* BTTS */}
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
