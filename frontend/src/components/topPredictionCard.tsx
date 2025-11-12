@@ -2,9 +2,6 @@
 
 import Image from "next/image";
 
-// -----------------------------
-// Utils
-// -----------------------------
 type DCClass = 0 | 1 | 2;
 
 const FALLBACK_SVG =
@@ -17,14 +14,12 @@ function prob01(v?: number | null): number {
 const pct = (v?: number | null) => `${Math.round(prob01(v) * 100)}%`;
 const oddFmt = (v?: number | null) =>
   typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
+const isValidOdd = (v?: number | null) =>
+  typeof v === "number" && isFinite(v) && v >= 1.2 && v <= 100;
 
 const dcLabel = (dc: DCClass | undefined) =>
   dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
 
-const isValidOdd = (v?: number | null) =>
-  typeof v === "number" && isFinite(v) && v >= 1.2 && v <= 100;
-
-// Evita crash/TS error quando date pode vir undefined
 function safeDate(val?: string | number | Date) {
   if (val === undefined || val === null) return new Date();
   const d = new Date(val as any);
@@ -36,19 +31,16 @@ function safeDate(val?: string | number | Date) {
   return new Date();
 }
 
-// -----------------------------
-// Tipos
-// -----------------------------
 export type TopPredictionCardProps = {
   league?: string;
   league_name?: string;
   country?: string;
-  date?: string; // pode faltar -> safeDate trata
+  date?: string;
   home_team: string;
   away_team: string;
   home_logo?: string;
   away_logo?: string;
-  odds_source?: "market" | "model"; // <— para decidir se mostramos OU 2.5
+  odds_source?: "market" | "model";
   predictions?: {
     winner?: { class: 0 | 1 | 2; prob?: number; confidence?: number };
     double_chance?: { class: DCClass; prob?: number; confidence?: number };
@@ -64,7 +56,6 @@ export type TopPredictionCardProps = {
     over_under?: Record<string, { over?: number; under?: number }>;
     btts?: { yes?: number; no?: number };
   };
-  // opcionalmente pode vir algo como "score" agregado
   correct_score_top3?: { score: string; prob: number }[];
 };
 
@@ -97,7 +88,7 @@ export default function TopPredictionCard(props: TopPredictionCardProps) {
   const show1x2 =
     isValidOdd(odds1x2?.home) && isValidOdd(odds1x2?.draw) && isValidOdd(odds1x2?.away);
 
-  // Só mostra OU 2.5 se vier de mercado E for válido
+  // OU 2.5 só se vier do mercado + válido
   const showOU25 =
     odds_source === "market" &&
     isValidOdd(oddsOU25?.over) &&
@@ -166,7 +157,7 @@ export default function TopPredictionCard(props: TopPredictionCardProps) {
         <span className="text-sm text-white">{bestCS}</span>
       </div>
 
-      {/* Destaques rápidos */}
+      {/* Destaques */}
       <div className="grid grid-cols-2 gap-2">
         <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
           <div className="text-xs text-gray-400">Winner</div>
@@ -208,7 +199,7 @@ export default function TopPredictionCard(props: TopPredictionCardProps) {
         </div>
       </div>
 
-      {/* Odds (mostra só sub-blocos válidos) */}
+      {/* Odds */}
       {showAnyOdds && (
         <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
           <div className="text-xs text-gray-400 mb-2">

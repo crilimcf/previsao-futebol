@@ -10,7 +10,6 @@ const FALLBACK_SVG =
 const dcLabel = (dc: DCClass | undefined) =>
   dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
 
-// normaliza 0..1 ou 0..100 para percentagem
 function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
@@ -18,16 +17,13 @@ function prob01(v?: number | null): number {
 const toPct = (v?: number | null) => `${Math.round(prob01(v) * 100)}%`;
 const oddFmt = (v?: number | null) =>
   typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
-
 const isValidOdd = (v?: number | null) =>
   typeof v === "number" && isFinite(v) && v >= 1.2 && v <= 100;
 
-// evita crash se vier undefined ou uma string inválida
 function safeDate(val?: string | number | Date) {
   if (val === undefined || val === null) return new Date();
   const d = new Date(val as any);
   if (!isNaN(d.getTime())) return d;
-  // tenta fallback simples (ex.: "YYYY-MM-DD HH:MM" -> "YYYY-MM-DDTHH:MM")
   if (typeof val === "string") {
     const d2 = new Date(val.replace(" ", "T"));
     if (!isNaN(d2.getTime())) return d2;
@@ -39,12 +35,12 @@ export interface PredictionCardProps {
   league?: string;
   league_name?: string;
   country?: string;
-  date?: string; // pode vir ausente em alguns registos
+  date?: string;
   home_team: string;
   away_team: string;
   home_logo?: string;
   away_logo?: string;
-  odds_source?: "market" | "model"; // <— para ocultar OU 2.5 se não for mercado
+  odds_source?: "market" | "model";
   predictions?: {
     winner?: { class: 0 | 1 | 2; prob?: number; confidence?: number };
     double_chance?: { class: DCClass; prob?: number; confidence?: number };
@@ -90,7 +86,7 @@ export default function PredictionCard({
   const show1x2 =
     isValidOdd(odds1x2?.home) && isValidOdd(odds1x2?.draw) && isValidOdd(odds1x2?.away);
 
-  // Só mostra OU 2.5 se vier de mercado E for válido
+  // OU 2.5 só se vier do mercado + válido
   const showOU25 =
     odds_source === "market" &&
     isValidOdd(oddsOU25?.over) &&
@@ -198,7 +194,7 @@ export default function PredictionCard({
         </div>
       </div>
 
-      {/* odds (mostra só os sub-blocos válidos) */}
+      {/* odds */}
       {showAnyOdds && (
         <div className="rounded-xl bg-gray-900 border border-gray-800 p-3">
           <div className="text-xs text-gray-400 mb-2">
