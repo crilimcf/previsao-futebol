@@ -45,6 +45,7 @@ _BAD_TOKENS = (
     "women", "femin", "female", "w-", "olympic", "olympics",
     "reserves", "amateurs", "b team", "b-team", "b sélection", "seleção b"
 )
+import re
 _UXX_RE = re.compile(r"\b(u-?\d{2})\b", re.IGNORECASE)
 
 def _is_youth_or_women(name: str) -> bool:
@@ -321,7 +322,7 @@ def team_stats(team_id: int, league_id: int, season_hint: Optional[int] = None) 
     /teams/statistics requer 'season'. Tentamos:
       1) season_hint (se vier do fixture.league.season)
       2) SEASON_ENV
-      3) fallback final: retorna {}
+      3) fallback final: {}
     """
     def _try(season_val: Optional[int]) -> Optional[Dict[str, Any]]:
         if not season_val:
@@ -575,5 +576,8 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
 
     matches_sorted = sorted(matches, key=lambda x: x["predictions"]["winner"]["confidence"], reverse=True)
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
-    with open(PRED_PATH), "w", encoding="utf-8") as fp:  # <-- cuidado: parenthesis
-        pass
+    with open(PRED_PATH, "w", encoding="utf-8") as fp:
+        json.dump(matches_sorted, fp, ensure_ascii=False, indent=2)
+
+    logger.info(f"{total} previsões salvas em {PRED_PATH}")
+    return {"status": "ok", "total": total}
