@@ -2,13 +2,13 @@
 import os
 import re
 import json
+import inspect
 import logging
 from typing import Dict, List, Any, Optional
 
 from fastapi import APIRouter, Header, Query
 from fastapi.responses import JSONResponse
 
-# pipeline PRO (gera predictions.json com odds de mercado quando possível)
 from src.api_fetch_pro import fetch_and_save_predictions
 
 router = APIRouter(prefix="/meta", tags=["meta"])
@@ -26,13 +26,7 @@ def _read_json(path: str) -> Any:
         return None
 
 def _expected_key() -> Optional[str]:
-    """
-    Chave para autorizar /meta/update.
-    Aceita:
-      - ENDPOINT_API_KEY (recomendado)
-      - API_UPDATE_TOKEN
-      - API_TOKEN
-    """
+    # aceita várias envs
     return (
         os.getenv("ENDPOINT_API_KEY")
         or os.getenv("API_UPDATE_TOKEN")
@@ -57,10 +51,8 @@ def _is_authorized(authorization: str, x_endpoint_key: str, key_query: Optional[
     """
     expected = _expected_key()
     if not expected:
-        # modo dev/sem chave definida: não bloqueia
         log.warning("⚠️ ENDPOINT_API_KEY/API_UPDATE_TOKEN/API_TOKEN não configurado — /meta/update sem proteção.")
         return True
-
     cand = _extract_bearer(authorization) or (x_endpoint_key or "").strip() or (key_query or "").strip()
     return bool(cand) and cand == expected
 
@@ -70,13 +62,17 @@ INTL_COUNTRIES = {
     "Africa", "Asia", "Oceania", "International"
 }
 INTL_KW = [
-    "world cup", "qualification", "qualifiers", "nations league",
+    "world cup", "qualifying", "qualification", "qualifiers",
+    "nations league",
     "uefa euro", "european championship",
-    "africa cup of nations", "afcon", "asian cup",
-    "copa america", "gold cup", "friendly"
+    "africa cup of nations", "afcon", "afcon qualification",
+    "asian cup",
+    "copa america",
+    "gold cup",
+    "friendly"
 ]
 YOUTH_RE = re.compile(r"\bU(15|16|17|18|19|20|21|22|23)\b", re.I)
-WOMEN_RE = re.compile(r"\b(women|fem|fémin)\b", re.I)
+WOMEN_RE = re.compile(r"\b(women|fem|fémin|feminina|feminino)\b", re.I)
 
 def _is_youth_or_women(s: Optional[str]) -> bool:
     if not s:
@@ -103,7 +99,7 @@ def update_predictions(
     days: int = Query(default=3, ge=1, le=7),
 ):
     """
-    Dispara refresh das previsões (fixtures + odds + poisson + topscorers)
+    Dispara refresh (fixtures + odds + poisson + topscorers)
     e grava em data/predict/predictions.json.
 
     Auth: Authorization: Bearer <token>  |  X-Endpoint-Key: <token>  |  ?key=<token>
@@ -112,21 +108,25 @@ def update_predictions(
     if not _is_authorized(authorization, x_endpoint_key, key):
         return JSONResponse({"status": "forbidden"}, status_code=403)
     try:
-        # Nota: fetch_and_save_predictions() atual não recebe "days".
-        out = fetch_and_save_predictions()
+        # Chama com days se a função suportar, senão sem parâmetro (retro-compat).
+        sig = inspect.signature(fetch_and_save_predictions)
+        if "days" in sig.parameters:
+            out = fetch_and_save_predictions(days=days)  # type: ignore[arg-type]
+        else:
+            out = fetch_and_save_predictions()
         return JSONResponse({"status": "ok", **(out or {})})
     except Exception as e:
         log.exception("Erro no update:")
         return JSONResponse({"status": "error", "detail": str(e)}, status_code=500)
 
 @router.get("/leagues")
-def leagues():
+def leagues(flat: bool = Query(default=False)):
     """
-    Devolve uma LISTA de ligas conhecida a partir de predictions.json.
-    - Dedupe por "id"
+    Devolve ligas conhecidas a partir de predictions.json (dedupe por id).
     - Exclui U-xx e Women
     - Internacionais (Seleções A) primeiro; depois País e Nome
-    - Fallback para config/leagues.json se predictions.json faltar
+    - Fallback para config/leagues.json se predictions.json não existir
+    Por omissão devolve {count, items}; com ?flat=1 devolve lista simples.
     """
     leagues_map: Dict[int, Dict[str, Any]] = {}
 
@@ -134,7 +134,6 @@ def leagues():
     preds = _read_json("data/predict/predictions.json") or []
     try:
         for p in preds:
-            # liga: id correto SEM usar 'league' (nome) como id
             lid = p.get("league_id") or p.get("leagueId")
             try:
                 lid = int(lid)
@@ -146,15 +145,12 @@ def leagues():
             name = p.get("league_name") or p.get("league") or ""
             country = p.get("country") or ""
 
-            # excluir juvenis/mulheres pelo nome da liga
             if _is_youth_or_women(name):
                 continue
 
-            # registo
             if lid not in leagues_map:
                 leagues_map[lid] = {"id": lid, "name": name, "country": country}
             else:
-                # preenche campos em falta (se houver)
                 if not leagues_map[lid].get("name") and name:
                     leagues_map[lid]["name"] = name
                 if not leagues_map[lid].get("country") and country:
@@ -162,7 +158,7 @@ def leagues():
     except Exception as e:
         log.warning(f"Falha a extrair ligas de predictions.json: {e}")
 
-    # 2) fallback: config/leagues.json (curadas)
+    # 2) fallback curado
     if not leagues_map:
         cfg = _read_json("config/leagues.json") or []
         try:
@@ -185,19 +181,29 @@ def leagues():
 
     items: List[Dict[str, Any]] = list(leagues_map.values())
 
-    # ordenação: internacionais primeiro, depois país/nome
     def sort_key(x: Dict[str, Any]):
         intl = 0 if _is_international(x.get("country"), x.get("name")) else 1
         return (intl, (x.get("country") or "ZZZ"), (x.get("name") or ""))
 
     items.sort(key=sort_key)
-    # ⚠️ devolve LISTA simples (frontend espera array)
-    return items
+
+    if flat:
+        return items
+    return {"count": len(items), "items": items}
+
+@router.get("/predictions")
+def predictions():
+    """
+    Devolve diretamente o conteúdo do data/predict/predictions.json
+    (útil para debug/front).
+    """
+    data = _read_json("data/predict/predictions.json") or []
+    return data
 
 @router.get("/calibration")
 def calibration_info():
     base = "data/model"
-    out = {}
+    out: Dict[str, Any] = {}
     for name in ["calibration.json", "cal_winner.json", "cal_over25.json", "cal_btts.json"]:
         path = os.path.join(base, name)
         if os.path.exists(path):
