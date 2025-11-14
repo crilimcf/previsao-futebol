@@ -3,7 +3,7 @@ name: Update predictions (daily + on-push)
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: "5 0 * * *"
+    - cron: "5 0 * * *"   # 00:05 UTC diário
   push:
     branches: [ "main" ]
     paths:
@@ -26,6 +26,7 @@ env:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -46,7 +47,7 @@ jobs:
             echo "Nenhum healthz respondeu 200; continuo para o update."
           fi
 
-      - name: Trigger /meta/update (retries + 3 modos de auth)
+      - name: Trigger /meta/update (3 auth modes + logs)
         env:
           ENDPOINT_API_KEY: ${{ secrets.ENDPOINT_API_KEY }}
         run: |
@@ -55,18 +56,25 @@ jobs:
 
           try_update () {
             url="$1"
+
+            echo ">>> POST $url (Authorization: Bearer ...)"
             code=$(curl -sS -o /tmp/u1.out -w "%{http_code}" -X POST "$url" \
                     -H "Authorization: Bearer $ENDPOINT_API_KEY" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
+            echo "HTTP=$code"; cat /tmp/u1.out || true
             if [ "$code" -ge 200 ] && [ "$code" -lt 300 ]; then return 0; fi
 
+            echo ">>> POST $url (X-Endpoint-Key)"
             code=$(curl -sS -o /tmp/u2.out -w "%{http_code}" -X POST "$url" \
                     -H "X-Endpoint-Key: $ENDPOINT_API_KEY" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
+            echo "HTTP=$code"; cat /tmp/u2.out || true
             if [ "$code" -ge 200 ] && [ "$code" -lt 300 ]; then return 0; fi
 
+            echo ">>> POST ${url}?key=***"
             code=$(curl -sS -o /tmp/u3.out -w "%{http_code}" -X POST "${url}?key=${ENDPOINT_API_KEY}" \
                     -H "Accept: application/json" -H "Content-Type: application/json" || true)
+            echo "HTTP=$code"; cat /tmp/u3.out || true
             if [ "$code" -ge 200 ] && [ "$code" -lt 300 ]; then return 0; fi
 
             return 1
@@ -93,7 +101,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
 
-      - name: Compute seasons
+      - name: Compute seasons (opcional)
         run: |
           set -euxo pipefail
           SEASONS="${{ vars.SEASONS || vars.SEASON || secrets.API_FOOTBALL_SEASONS || secrets.API_FOOTBALL_SEASON || '2024' }}"
@@ -101,14 +109,27 @@ jobs:
           echo "SEASONS=$SEASONS" >> "$GITHUB_ENV"
           echo "Seasons => $SEASONS"
 
-      - name: Ensure curated leagues (fallback if missing)
+      - name: Ensure curated leagues (fallback)
         run: |
           set -euxo pipefail
           mkdir -p config
           if [ -f config/leagues_main.json ]; then
             echo "Usar config/leagues_main.json existente"
           else
-            echo '{"leagues":[{"id":39,"name":"Premier League"},{"id":140,"name":"La Liga"},{"id":135,"name":"Serie A"},{"id":78,"name":"Bundesliga"},{"id":61,"name":"Ligue 1"},{"id":94,"name":"Primeira Liga"},{"id":88,"name":"Eredivisie"},{"id":203,"name":"Super Lig"},{"id":2,"name":"UEFA Champions League"},{"id":3,"name":"UEFA Europa League"}]}' > config/leagues_main.json
+            cat > config/leagues_main.json <<'JSON'
+            {"leagues":[
+              {"id":39,"name":"Premier League"},
+              {"id":140,"name":"La Liga"},
+              {"id":135,"name":"Serie A"},
+              {"id":78,"name":"Bundesliga"},
+              {"id":61,"name":"Ligue 1"},
+              {"id":94,"name":"Primeira Liga"},
+              {"id":88,"name":"Eredivisie"},
+              {"id":203,"name":"Super Lig"},
+              {"id":2,"name":"UEFA Champions League"},
+              {"id":3,"name":"UEFA Europa League"}
+            ]}
+            JSON
           fi
 
       - name: Refresh top scorers (optional)
@@ -124,6 +145,18 @@ jobs:
             --seasons "$SEASONS" \
             --exclude-injured true \
             --cross-check-squads true || true
+
+      - name: Smoke test (meta/leagues tem itens?)
+        run: |
+          set -euxo pipefail
+          curl -fsS "$API_BASE_URL/meta/leagues" -o leagues.json
+          python - <<'PY'
+          import json,sys
+          d=json.load(open('leagues.json','r',encoding='utf-8'))
+          c=int(d.get('count',0))
+          print('meta/leagues count =', c)
+          sys.exit(0 if c>0 else 2)
+          PY
 
       - name: Export predictions (optional)
         if: ${{ hashFiles('scripts/export_predictions.py') != '' }}
