@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
 # src/api_fetch_pro.py
+
 import os
+import re
 import json
 import math
 import time
@@ -15,15 +18,50 @@ from src import config
 logger = logging.getLogger("football_api")
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
+# =========================
+# ENV
+# =========================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
 BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
-SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
+SEASON_ENV = os.getenv("API_FOOTBALL_SEASON", "2025")
 
 PROXY_BASE = os.getenv("API_PROXY_URL", "https://football-proxy-4ymo.onrender.com").rstrip("/") + "/"
 PROXY_TOKEN = os.getenv("API_PROXY_TOKEN", "CF_Proxy_2025_Secret_!@#839")
 
+# Se queres ver **apenas** seleções A (sem clubes), define ONLY_INTL_A=true
+ONLY_INTL_A = (os.getenv("ONLY_INTL_A", "false").strip().lower() in ("1", "true", "yes"))
+
 PRED_PATH = os.path.join("data", "predict", "predictions.json")
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
+
+# =========================
+# INTL helpers (Seleções A)
+# =========================
+INTL_COUNTRIES = {
+    "world", "europe", "south america", "north & central america",
+    "asia", "africa", "oceania", "international"
+}
+_BAD_TOKENS = (
+    "women", "femin", "female", "w-", "olympic", "olympics",
+    "reserves", "amateurs", "b team", "b-team", "b sélection", "seleção b"
+)
+_UXX_RE = re.compile(r"\b(u-?\d{2})\b", re.IGNORECASE)
+
+def _is_youth_or_women(name: str) -> bool:
+    s = (name or "").lower()
+    if any(t in s for t in _BAD_TOKENS):
+        return True
+    return bool(_UXX_RE.search(s))
+
+def _is_international_A(fix: Dict[str, Any]) -> bool:
+    lg = fix.get("league", {}) or {}
+    country = (lg.get("country") or "").lower()
+    if country not in INTL_COUNTRIES:
+        return False
+    teams = fix.get("teams", {}) or {}
+    hn = (teams.get("home") or {}).get("name") or ""
+    an = (teams.get("away") or {}).get("name") or ""
+    return not (_is_youth_or_women(hn) or _is_youth_or_women(an))
 
 # =========================
 # Redis cache
@@ -147,7 +185,7 @@ def top_k_scores_from_matrix(mat: List[List[float]], k: int = 3) -> List[Tuple[s
     return pairs[:k]
 
 # =========================
-# Odds helpers
+# Odds parsing (mediana)
 # =========================
 def _median_or_none(vals: List[float]) -> Optional[float]:
     vals = [v for v in vals if isinstance(v, (int, float)) and 1.05 <= v <= 100.0]
@@ -220,11 +258,12 @@ def _parse_btts(bet: Dict[str, Any]) -> Dict[str, Optional[float]]:
 
 def get_market_odds(fixture_id: int) -> Dict[str, Any]:
     """
-    Odds reais por fixture (sem 'season').
+    Odds reais (mediana por bookmaker) para o fixture.
+    **Não** enviar 'season' aqui.
     """
     payload: Optional[Dict[str, Any]] = None
 
-    # 1) Proxy sem season
+    # 1) Proxy
     try:
         pj = proxy_get("/odds", {"fixture": fixture_id})
         if pj and isinstance(pj.get("response"), list) and pj["response"]:
@@ -232,7 +271,7 @@ def get_market_odds(fixture_id: int) -> Dict[str, Any]:
     except Exception:
         payload = None
 
-    # 2) API direta sem season (fallback)
+    # 2) API direta
     if payload is None:
         resp = api_get("odds", {"fixture": fixture_id})
         payload = {"response": resp if isinstance(resp, list) else []}
@@ -267,7 +306,7 @@ def get_market_odds(fixture_id: int) -> Dict[str, Any]:
     except Exception as e:
         logger.debug(f"odds parse fail {fixture_id}: {e}")
 
-    # sanity range
+    # sanitização
     for sect in (out["winner"], out["over_2_5"], out["btts"]):
         for k, v in list(sect.items()):
             if isinstance(v, (int, float)) and not (1.05 <= v <= 100.0):
@@ -277,52 +316,62 @@ def get_market_odds(fixture_id: int) -> Dict[str, Any]:
 # =========================
 # Stats & features
 # =========================
-def _get_float(x, default=1.0) -> float:
-    try:
-        v = x
-        if isinstance(v, str):
-            v = v.replace(",", ".")
-        return float(v)
-    except Exception:
-        return float(default)
+def team_stats(team_id: int, league_id: int, season_hint: Optional[int] = None) -> Dict[str, Any]:
+    """
+    /teams/statistics requer 'season'. Tentamos:
+      1) season_hint (se vier do fixture.league.season)
+      2) SEASON_ENV
+      3) fallback final: retorna {}
+    """
+    def _try(season_val: Optional[int]) -> Optional[Dict[str, Any]]:
+        if not season_val:
+            return None
+        data = api_get("teams/statistics", {"team": team_id, "league": league_id, "season": season_val})
+        if isinstance(data, dict) and data:
+            return data
+        if isinstance(data, list) and data:
+            return data[0]
+        return None
 
-def _int_or_0(x) -> int:
+    # tenta hint primeiro
+    s_hint = None
     try:
-        return int(x or 0)
+        s_hint = int(season_hint) if season_hint is not None else None
     except Exception:
-        return 0
+        s_hint = None
 
-def team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
-    data = api_get("teams/statistics", {"team": team_id, "league": league_id, "season": SEASON})
-    if isinstance(data, dict):
-        return data
-    if isinstance(data, list) and data:
-        return data[0]
+    res = _try(s_hint)
+    if res:
+        return res
+
+    # depois env
+    try:
+        s_env = int(SEASON_ENV)
+    except Exception:
+        s_env = None
+    res = _try(s_env)
+    if res:
+        return res
+
     return {}
 
 def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> Tuple[float, float]:
-    # médias
-    avg_goals_home = _get_float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2), 1.2)
-    avg_goals_away = _get_float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1), 1.1)
-    avg_conc_home  = _get_float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0), 1.0)
-    avg_conc_away  = _get_float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0), 1.0)
+    def _get_float(path, default=1.0):
+        try:
+            v = path
+            if isinstance(v, str):
+                v = v.replace(",", ".")
+            return float(v)
+        except Exception:
+            return float(default)
 
-    # amostra jogada (para evitar “0-0” quando início de época)
-    played_h = _int_or_0((stats_home.get("fixtures") or {}).get("played", {}).get("total"))
-    played_a = _int_or_0((stats_away.get("fixtures") or {}).get("played", {}).get("total"))
-    low_sample = (played_h + played_a) < 6
+    avg_goals_home = _get_float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2))
+    avg_goals_away = _get_float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1))
+    avg_conc_home  = _get_float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0))
+    avg_conc_away  = _get_float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0))
 
-    lam_home_raw = max(0.05, (avg_goals_home + avg_conc_away) / 2.0)
-    lam_away_raw = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
-
-    # piso adaptativo se amostra pequena ou ambas muito baixas
-    if low_sample or (lam_home_raw + lam_away_raw) < 1.0:
-        floor = 0.8
-    else:
-        floor = 0.4
-
-    lam_home = max(floor, lam_home_raw)
-    lam_away = max(floor, lam_away_raw)
+    lam_home = max(0.05, (avg_goals_home + avg_conc_away) / 2.0)
+    lam_away = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
     return lam_home, lam_away
 
 def clamp_prob(p: float, eps: float = 1e-6) -> float:
@@ -333,75 +382,40 @@ def implied_odds(p: float) -> float:
     return round(1.0 / p, 2)
 
 def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float]:
-    opts = [(0, ph + pd), (1, ph + pa), (2, pd + pa)]
+    opts = [(0, ph+pd), (1, ph+pa), (2, pd+pa)]
     best = max(opts, key=lambda t: t[1])
     return best[0], best[1]
 
-# =========================
-# Seleções A — heurística / filtros
-# =========================
-CONFED_REGIONS = {
-    "World", "International", "Europe", "South America", "North & Central America", "Africa", "Asia", "Oceania"
-}
-INTL_KEYWORDS = [
-    "world cup", "qualification", "qualifiers", "european championship", "uefa euro",
-    "nations league", "africa cup of nations", "afcon", "asian cup", "copa america",
-    "gold cup", "friendly international", "international friendlies", "friendlies"
-]
-YOUTH_PATTERNS = [" u15", " u16", " u17", " u18", " u19", " u20", " u21", " u22", " u23"]
-WOMEN_PATTERNS = [
-    "women", "women's", "womens", "feminina", "femenina", "feminino", "féminine", "feminine", " ladies", "girls",
-    " w ", " w-", "(w)", " w)", " w.", "w /", "/ w", " w"
-]
-
-def _is_youth_or_women_text(name: Optional[str]) -> bool:
-    if not name:
-        return False
-    ln = name.lower()
-    if any(tok in ln for tok in YOUTH_PATTERNS):
-        return True
-    if any(tok in ln for tok in WOMEN_PATTERNS):
-        return True
-    # “Xxx W” no fim
-    if ln.endswith(" w"):
-        return True
-    return False
-
-def _is_international_comp(league: Dict[str, Any]) -> bool:
-    country = (league.get("country") or "").strip()
-    name = (league.get("name") or "").lower()
-    if country in CONFED_REGIONS:
-        return True
-    if any(kw in name for kw in INTL_KEYWORDS):
-        return True
-    return False
-
-def _is_national_A_fixture(fix: Dict[str, Any]) -> bool:
-    league = fix.get("league", {}) or {}
-    if not _is_international_comp(league):
-        return False
-    # excluir Women/Youth por equipa ou competição
-    lname = (league.get("name") or "")
-    home = (fix.get("teams") or {}).get("home", {}) or {}
-    away = (fix.get("teams") or {}).get("away", {}) or {}
-    if _is_youth_or_women_text(home.get("name")) or _is_youth_or_women_text(away.get("name")):
-        return False
-    if _is_youth_or_women_text(lname):
-        return False
-    return True
+def _get_top_scorers_cached(league_id: int, season_hint: Optional[int]) -> List[Dict[str, Any]]:
+    # usa sempre uma chave por época para evitar “misturas”
+    key = f"topscorers:{league_id}:{season_hint or SEASON_ENV}"
+    cached = redis_cache_get(key)
+    if cached is not None:
+        return cached
+    tops = api_get("players/topscorers", {"league": league_id, "season": season_hint or SEASON_ENV})
+    res: List[Dict[str, Any]] = []
+    for s in (tops or [])[:5]:
+        player = (s.get("player") or {}).get("name")
+        stat0 = (s.get("statistics") or [{}])[0]
+        team = (stat0.get("team") or {}).get("name")
+        goals = (stat0.get("goals") or {}).get("total", 0)
+        res.append({"player": player, "team": team, "goals": int(goals or 0)})
+    redis_cache_set(key, res, ex=12*3600)
+    return res
 
 # =========================
 # Build prediction
 # =========================
 def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
-        fixture = fix.get("fixture", {})
-        league = fix.get("league", {})
-        teams = fix.get("teams", {})
+        fixture = fix.get("fixture", {}) or {}
+        league  = fix.get("league", {}) or {}
+        teams   = fix.get("teams", {}) or {}
 
         league_id = int(league.get("id"))
         league_name = league.get("name")
         country = league.get("country")
+        league_season = league.get("season")  # <- pode ser diferente do SEASON_ENV em internacionais
 
         home = teams.get("home", {}) or {}
         away = teams.get("away", {}) or {}
@@ -410,10 +424,11 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         if not home_id or not away_id:
             return None
 
-        stats_h = team_stats(home_id, league_id)
-        stats_a = team_stats(away_id, league_id)
+        # Stats com fallback inteligente de 'season'
+        st_h = team_stats(home_id, league_id, season_hint=league_season)
+        st_a = team_stats(away_id, league_id, season_hint=league_season)
 
-        lam_h, lam_a = compute_lambdas(stats_h, stats_a)
+        lam_h, lam_a = compute_lambdas(st_h, st_a)
         mat = poisson_score_probs(lam_h, lam_a, max_goals=6)
 
         ph, pd, pa = outcome_probs_from_matrix(mat)
@@ -426,6 +441,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         winner_conf  = max(ph, pd, pa)
         top3 = [{"score": s, "prob": float(p)} for (s, p) in top_k_scores_from_matrix(mat, k=3)]
 
+        # Odds base (implied)
         odds_map = {
             "winner": {"home": implied_odds(ph), "draw": implied_odds(pd), "away": implied_odds(pa)},
             "over_2_5": {"over": implied_odds(p_over25), "under": implied_odds(p_under25)},
@@ -434,6 +450,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         }
         odds_source = "model"
 
+        # Tenta odds de mercado (sem season)
         fix_id = fixture.get("id")
         if fix_id:
             mkt = get_market_odds(int(fix_id))
@@ -462,10 +479,8 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             "match_id": fixture.get("id"),
             "league_id": league_id,
             "league": league_name,
-            "league_name": league_name,
             "country": country,
             "date": fixture.get("date"),
-            "date_ymd": (fixture.get("date") or "")[:10],
             "home_team": home.get("name"),
             "away_team": away.get("name"),
             "home_logo": home.get("logo"),
@@ -480,7 +495,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
                 "btts": {"class": int(p_btts >= 0.5), "confidence": float(p_btts)},
             },
             "correct_score_top3": top3,
-            "top_scorers": _get_top_scorers_cached(league_id),
+            "top_scorers": _get_top_scorers_cached(league_id, season_hint=league_season),
             "predicted_score": ps_obj,
             "confidence": float(winner_conf),
         }
@@ -489,29 +504,14 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         logger.error(f"build_prediction_from_fixture() erro: {e}")
         return None
 
-def _get_top_scorers_cached(league_id: int) -> List[Dict[str, Any]]:
-    key = f"topscorers:{league_id}:{SEASON}"
-    cached = redis_cache_get(key)
-    if cached is not None:
-        return cached
-    tops = api_get("players/topscorers", {"league": league_id, "season": SEASON})
-    res: List[Dict[str, Any]] = []
-    for s in (tops or [])[:5]:
-        player = (s.get("player") or {}).get("name")
-        stat0 = (s.get("statistics") or [{}])[0]
-        team = (stat0.get("team") or {}).get("name")
-        goals = (stat0.get("goals") or {}).get("total", 0)
-        res.append({"player": player, "team": team, "goals": int(goals or 0)})
-    redis_cache_set(key, res, ex=12 * 3600)
-    return res
-
 # =========================
 # Fixtures & pipeline
 # =========================
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    Busca fixtures por data **sem 'season'** primeiro (internacionais),
-    depois fallback com 'season'. Elimina duplicados. Exclui Women/U-xx por equipa **e** competição.
+    Carrega fixtures por data (hoje + próximos dias).
+    NUNCA envia 'season' aqui (para não perder internacionais).
+    Faz fallback em /fixtures?next=80.
     """
     fixtures: List[Dict[str, Any]] = []
     seen: set[int] = set()
@@ -519,62 +519,61 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
-        # 1) sem season
-        pj = proxy_get("/fixtures", {"date": iso})
-        if pj and isinstance(pj.get("response"), list):
-            for f in pj["response"]:
-                fid = (f.get("fixture") or {}).get("id")
-                if fid and fid not in seen:
-                    fixtures.append(f); seen.add(fid)
+        payload = proxy_get("/fixtures", {"date": iso}) or {}
+        resp = payload.get("response") if isinstance(payload, dict) else None
 
-        # 2) fallback com season
-        pj2 = proxy_get("/fixtures", {"date": iso, "season": SEASON})
-        if pj2 and isinstance(pj2.get("response"), list):
-            for f in pj2["response"]:
-                fid = (f.get("fixture") or {}).get("id")
-                if fid and fid not in seen:
-                    fixtures.append(f); seen.add(fid)
+        if not resp:
+            resp = api_get("fixtures", {"date": iso})
+
+        for f in (resp or []):
+            fid = (f.get("fixture") or {}).get("id")
+            if not fid or fid in seen:
+                continue
+            seen.add(fid)
+            # Se ONLY_INTL_A=true, guardamos apenas Seleções A
+            if ONLY_INTL_A:
+                if _is_international_A(f):
+                    fixtures.append(f)
+            else:
+                fixtures.append(f)
 
         time.sleep(0.15)
 
-    # 3) fallback “next”
     if not fixtures:
-        pj = proxy_get("/fixtures", {"next": 80})
-        if pj and isinstance(pj.get("response"), list):
-            for f in pj["response"]:
-                fid = (f.get("fixture") or {}).get("id")
-                if fid and fid not in seen:
-                    fixtures.append(f); seen.add(fid)
+        payload = proxy_get("/fixtures", {"next": 80}) or {}
+        resp = payload.get("response") if isinstance(payload, dict) else None
+        if not resp:
+            resp = api_get("fixtures", {"next": 80})
+        for f in (resp or []):
+            fid = (f.get("fixture") or {}).get("id")
+            if not fid or fid in seen:
+                continue
+            seen.add(fid)
+            if ONLY_INTL_A:
+                if _is_international_A(f):
+                    fixtures.append(f)
+            else:
+                fixtures.append(f)
 
-    # filtro: excluir Women/U-xx por equipa e por nome da competição
-    filtered: List[Dict[str, Any]] = []
-    for f in fixtures:
-        league = f.get("league", {}) or {}
-        lname = league.get("name") or ""
-        home = (f.get("teams") or {}).get("home", {}) or {}
-        away = (f.get("teams") or {}).get("away", {}) or {}
-        if _is_youth_or_women_text(home.get("name")) or _is_youth_or_women_text(away.get("name")):
-            continue
-        if _is_youth_or_women_text(lname):
-            continue
-        filtered.append(f)
-
-    return filtered
+    return fixtures
 
 def fetch_and_save_predictions() -> Dict[str, Any]:
     total = 0
     matches: List[Dict[str, Any]] = []
-    logger.info(f"API-Football ativo | Época {SEASON}")
+
+    mode = "INTL A only" if ONLY_INTL_A else "all fixtures"
+    logger.info(f"API-Football ativo | Época ENV={SEASON_ENV} | modo={mode}")
+
     fixtures = collect_fixtures(days=3)
-    logger.info(f"{len(fixtures)} fixtures carregados (proxy).")
+    logger.info(f"{len(fixtures)} fixtures carregados.")
+
     for f in fixtures:
         pred = build_prediction_from_fixture(f)
         if pred:
             matches.append(pred)
             total += 1
+
     matches_sorted = sorted(matches, key=lambda x: x["predictions"]["winner"]["confidence"], reverse=True)
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
-    with open(PRED_PATH, "w", encoding="utf-8") as fp:
-        json.dump(matches_sorted, fp, ensure_ascii=False, indent=2)
-    logger.info(f"{total} previsões salvas em {PRED_PATH}")
-    return {"status": "ok", "total": total}
+    with open(PRED_PATH), "w", encoding="utf-8") as fp:  # <-- cuidado: parenthesis
+        pass
