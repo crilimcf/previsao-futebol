@@ -19,10 +19,14 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # ENV
 # ==============================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
-BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
+BASE_URL = os.getenv(
+    "API_FOOTBALL_BASE", "https://v3.football.api-sports.io/"
+).rstrip("/") + "/"
 SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
 
-PROXY_BASE = os.getenv("API_PROXY_URL", "https://football-proxy-4ymo.onrender.com").rstrip("/") + "/"
+PROXY_BASE = os.getenv(
+    "API_PROXY_URL", "https://football-proxy-4ymo.onrender.com"
+).rstrip("/") + "/"
 PROXY_TOKEN = os.getenv("API_PROXY_TOKEN", "CF_Proxy_2025_Secret_!@#839")
 
 PRED_PATH = os.path.join("data", "predict", "predictions.json")
@@ -49,10 +53,13 @@ def redis_cache_set(key: str, value: Any, ex: int = 1800) -> None:
     except Exception:
         pass
 
+
 # ==============================
 # HTTP
 # ==============================
-def proxy_get(path: str, params: Optional[Dict[str, Any]] = None, timeout: int = 8) -> Optional[Dict[str, Any]]:
+def proxy_get(
+    path: str, params: Optional[Dict[str, Any]] = None, timeout: int = 8
+) -> Optional[Dict[str, Any]]:
     url = urljoin(PROXY_BASE, path.lstrip("/"))
     try:
         r = requests.get(
@@ -69,7 +76,9 @@ def proxy_get(path: str, params: Optional[Dict[str, Any]] = None, timeout: int =
     return None
 
 
-def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int = 8) -> Any:
+def api_get(
+    endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int = 8
+) -> Any:
     if not API_KEY:
         logger.warning("API_FOOTBALL_KEY ausente.")
         return []
@@ -89,6 +98,7 @@ def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int
         logger.error(f"API erro {endpoint}: {e}")
     return []
 
+
 # ==============================
 # Poisson (fallback simples)
 # ==============================
@@ -101,7 +111,9 @@ def _poisson_pmf(lmbda: float, k: int) -> float:
         return 0.0
 
 
-def poisson_score_probs(lambda_home: float, lambda_away: float, max_goals: int = 6) -> List[List[float]]:
+def poisson_score_probs(
+    lambda_home: float, lambda_away: float, max_goals: int = 6
+) -> List[List[float]]:
     mat: List[List[float]] = []
     for h in range(max_goals + 1):
         row = []
@@ -140,7 +152,9 @@ def btts_prob_from_matrix(mat: List[List[float]]) -> float:
     return p
 
 
-def over_under_prob_from_matrix(mat: List[List[float]], line: float) -> Tuple[float, float]:
+def over_under_prob_from_matrix(
+    mat: List[List[float]], line: float
+) -> Tuple[float, float]:
     n = len(mat)
     p_over = 0.0
     for h in range(n):
@@ -150,7 +164,9 @@ def over_under_prob_from_matrix(mat: List[List[float]], line: float) -> Tuple[fl
     return p_over, 1.0 - p_over
 
 
-def top_k_scores_from_matrix(mat: List[List[float]], k: int = 3) -> List[Tuple[str, float]]:
+def top_k_scores_from_matrix(
+    mat: List[List[float]], k: int = 3
+) -> List[Tuple[str, float]]:
     pairs: List[Tuple[str, float]] = []
     n = len(mat)
     for h in range(n):
@@ -158,6 +174,7 @@ def top_k_scores_from_matrix(mat: List[List[float]], k: int = 3) -> List[Tuple[s
             pairs.append((f"{h}-{a}", mat[h][a]))
     pairs.sort(key=lambda t: t[1], reverse=True)
     return pairs[:k]
+
 
 # ==============================
 # Odds helpers
@@ -303,9 +320,11 @@ def get_market_odds(fixture_id: int) -> Dict[str, Any]:
     _merge_payload(payload)
 
     # se nada útil, tenta sem season
-    if not any(v for v in out["winner"].values()) and not any(
-        v for v in out["over_2_5"].values()
-    ) and not any(v for v in out["btts"].values()):
+    if (
+        not any(v for v in out["winner"].values())
+        and not any(v for v in out["over_2_5"].values())
+        and not any(v for v in out["btts"].values())
+    ):
         payload2 = _read_payload({"fixture": fixture_id})
         _merge_payload(payload2)
 
@@ -315,6 +334,7 @@ def get_market_odds(fixture_id: int) -> Dict[str, Any]:
             if isinstance(v, (int, float)) and not (1.05 <= v <= 100.0):
                 sect[k] = None
     return out
+
 
 # ==============================
 # Fixtures helpers
@@ -327,6 +347,7 @@ def _dedupe_fixtures(arr: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             seen.add(fid)
             out.append(f)
     return out
+
 
 # ==============================
 # Features/Stats
@@ -398,6 +419,7 @@ def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float]:
     best = max(opts, key=lambda t: t[1])
     return best[0], best[1]
 
+
 # ==============================
 # Top scorers cache
 # ==============================
@@ -416,6 +438,7 @@ def _get_top_scorers_cached(league_id: int) -> List[Dict[str, Any]]:
         res.append({"player": player, "team": team, "goals": int(goals or 0)})
     redis_cache_set(key, res, ex=12 * 3600)
     return res
+
 
 # ==============================
 # Build prediction
@@ -551,35 +574,63 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         logger.error(f"build_prediction_from_fixture() erro: {e}")
         return None
 
+
 # ==============================
 # Fixtures & pipeline
 # ==============================
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    Junta fixtures de clubes via proxy, usando apenas date + season.
+    Junta fixtures via proxy:
+      - por data + season (se SEASON estiver definida)
+      - e também só por data (sem season).
     Sem filtros de seleções.
     """
     fixtures: List[Dict[str, Any]] = []
+
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
-        pj = proxy_get("/fixtures", {"date": iso, "season": SEASON})
-        if pj and isinstance(pj.get("response"), list):
-            logger.info(f"collect_fixtures: {iso} season={SEASON} -> {len(pj['response'])} fixtures")
-            fixtures.extend(pj["response"])
+        # 1) Tentativa com season
+        params_with_season: Dict[str, Any] = {"date": iso}
+        if SEASON:
+            params_with_season["season"] = SEASON
+
+        pjA = proxy_get("/fixtures", params_with_season)
+        if pjA and isinstance(pjA.get("response"), list):
+            logger.info(
+                f"[collect] {iso} com season={SEASON} -> {len(pjA['response'])} fixtures"
+            )
+            fixtures.extend(pjA["response"])
         else:
-            logger.info(f"collect_fixtures: {iso} season={SEASON} -> 0 fixtures")
+            logger.info(f"[collect] {iso} com season={SEASON} -> 0 fixtures")
+
+        # 2) Também tentar sem season
+        pjB = proxy_get("/fixtures", {"date": iso})
+        if pjB and isinstance(pjB.get("response"), list):
+            logger.info(
+                f"[collect] {iso} sem season -> {len(pjB['response'])} fixtures"
+            )
+            fixtures.extend(pjB["response"])
+        else:
+            logger.info(f"[collect] {iso} sem season -> 0 fixtures")
 
         time.sleep(0.2)
 
+    logger.info(f"[collect] Total bruto antes dedupe: {len(fixtures)}")
     fixtures = _dedupe_fixtures(fixtures)
+    logger.info(f"[collect] Após dedupe: {len(fixtures)}")
 
     # Fallback: se por algum motivo não houver nada, tenta next=50
     if not fixtures:
-        pj = proxy_get("/fixtures", {"next": 50, "season": SEASON})
+        params_next: Dict[str, Any] = {"next": 50}
+        if SEASON:
+            params_next["season"] = SEASON
+        pj = proxy_get("/fixtures", params_next)
         if pj and isinstance(pj.get("response"), list):
             fixtures = _dedupe_fixtures(pj["response"])
-            logger.info(f"collect_fixtures: fallback next=50 -> {len(fixtures)} fixtures")
+            logger.info(
+                f"[collect] fallback next=50 season={SEASON} -> {len(fixtures)} fixtures"
+            )
 
     return fixtures
 
