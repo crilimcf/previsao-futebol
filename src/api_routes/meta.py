@@ -82,17 +82,23 @@ def update_predictions(
     days: int = Query(default=3, ge=1, le=7),
 ):
     """
-    Dispara o refresh das previsões (fixtures + odds reais + poisson + topscorers) e grava data/predict/predictions.json.
+    Dispara o refresh das previsões (fixtures + odds reais + poisson + topscorers)
+    e grava data/predict/predictions.json.
 
     Auth: Authorization: Bearer <token>  |  X-Endpoint-Key: <token>  |  ?key=<token>
     O <token> deve corresponder a ENDPOINT_API_KEY (ou API_UPDATE_TOKEN/API_TOKEN) no ambiente do backend.
+
+    Query:
+      - days: número de dias a partir de hoje (incluindo hoje) para puxar fixtures (1 a 7).
     """
     if not _is_authorized(authorization, x_endpoint_key, key):
         return JSONResponse({"status": "forbidden"}, status_code=403)
 
+    log.info(f"🔁 /meta/update chamado com days={days}")
+
     try:
-        # fetch_and_save_predictions já grava o ficheiro final e retorna {"status":"ok","total":N}
-        out = fetch_and_save_predictions()
+        # fetch_and_save_predictions já grava o ficheiro final e retorna {"status":"ok","total":N,"days":days}
+        out = fetch_and_save_predictions(days=days)
         return JSONResponse({"status": "ok", **(out or {})})
     except Exception as e:
         log.exception("Erro no update:")
@@ -145,7 +151,7 @@ def leagues():
 @router.get("/calibration")
 def calibration_info():
     base = "data/model"
-    out = {}
+    out: Dict[str, Any] = {}
     for name in ["calibration.json", "cal_winner.json", "cal_over25.json", "cal_btts.json"]:
         path = os.path.join(base, name)
         if os.path.exists(path):
