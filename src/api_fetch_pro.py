@@ -6,7 +6,7 @@ import time
 import logging
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
-from datetime import date, timedelta, datetime
+from datetime import date, timedelta
 
 import requests
 
@@ -23,14 +23,11 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # ===========================================================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
 BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
-SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
+SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")  # época "normal" (clubes)
 
-# ⚽ World Cup - Qualification Europe (seleções A, homens)
-#   League ID = 32  | Season = 2024  | Datas: 2025-03-21 a 2025-11-18
+# 🌍 Mundial – Qualificação Europa (seleções A, homens)
 WCQ_EUROPE_LEAGUE_ID = int(os.getenv("API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID", "32"))
 WCQ_EUROPE_SEASON = os.getenv("API_FOOTBALL_WCQ_EUROPE_SEASON", "2024")
-WCQ_EUROPE_START = date(2025, 3, 21)
-WCQ_EUROPE_END = date(2025, 11, 18)
 
 # Proxy seguro (teu serviço em Render)
 PROXY_BASE = os.getenv("API_PROXY_URL", "https://football-proxy-4ymo.onrender.com").rstrip("/") + "/"
@@ -56,6 +53,7 @@ def redis_cache_get(key: str) -> Optional[Any]:
     except Exception:
         pass
     return None
+
 
 def redis_cache_set(key: str, value: Any, ex: int = 1800) -> None:
     try:
@@ -114,7 +112,6 @@ def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int
     except Exception as e:
         logger.error(f"❌ API erro {endpoint}: {e}")
     return []
-
 
 # ===========================================================
 # Poisson helpers (com fallback)
@@ -191,7 +188,6 @@ except Exception:
         pairs.sort(key=lambda t: t[1], reverse=True)
         return pairs[:k]
 
-
 # ===========================================================
 # Modelagem prob/odds
 # ===========================================================
@@ -216,7 +212,16 @@ def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float]:
 # Estatísticas & features
 # ===========================================================
 def team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
-    data = api_get("teams/statistics", {"team": team_id, "league": league_id, "season": SEASON})
+    """
+    Busca estatísticas de equipa.
+    Para WCQ Europe (league 32) usa season=2024; para resto, season "normal" (SEASON).
+    """
+    if league_id == WCQ_EUROPE_LEAGUE_ID:
+        season = WCQ_EUROPE_SEASON
+    else:
+        season = SEASON
+
+    data = api_get("teams/statistics", {"team": team_id, "league": league_id, "season": season})
     if isinstance(data, dict):
         return data
     if isinstance(data, list) and data:
@@ -242,7 +247,6 @@ def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> T
     lam_away = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
     return lam_home, lam_away
 
-
 def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
         fixture = fix.get("fixture", {})
@@ -267,11 +271,11 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         lam_h, lam_a = compute_lambdas(stats_h, stats_a)
         mat = poisson_score_probs(lam_h, lam_a, max_goals=6)
 
-        ph, pd, pa = outcome_probs_from_matrix(mat)
-        p_btts = btts_prob_from_matrix(mat)
+        ph, pd, pa    = outcome_probs_from_matrix(mat)
+        p_btts        = btts_prob_from_matrix(mat)
         p_over25, p_under25 = over_under_prob_from_matrix(mat, 2.5)
         p_over15, p_under15 = over_under_prob_from_matrix(mat, 1.5)
-        dc_class, p_dc = pick_dc_class(ph, pd, pa)
+        dc_class, p_dc      = pick_dc_class(ph, pd, pa)
 
         winner_class = int(max([(0, ph), (1, pd), (2, pa)], key=lambda t: t[1])[0])
         winner_conf  = max(ph, pd, pa)
@@ -281,10 +285,11 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             for (s, p) in top_k_scores_from_matrix(mat, k=3)
         ]
 
-        scorers_cache_key = f"topscorers:{league_id}:{SEASON}"
+        scorers_cache_key = f"topscorers:{league_id}:{('WCQ' if league_id == WCQ_EUROPE_LEAGUE_ID else SEASON)}"
         top_scorers = redis_cache_get(scorers_cache_key)
         if top_scorers is None:
-            tops = api_get("players/topscorers", {"league": league_id, "season": SEASON})
+            season_for_scorers = WCQ_EUROPE_SEASON if league_id == WCQ_EUROPE_LEAGUE_ID else SEASON
+            tops = api_get("players/topscorers", {"league": league_id, "season": season_for_scorers})
             res = []
             for s in (tops or [])[:5]:
                 player = (s.get("player") or {}).get("name")
@@ -335,11 +340,11 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
 
             "odds": odds_map,
             "predictions": {
-                "winner": {"class": winner_class, "confidence": float(winner_conf)},
-                "over_2_5": {"class": int(p_over25 >= 0.5), "confidence": float(p_over25)},
-                "over_1_5": {"class": int(p_over15 >= 0.5), "confidence": float(p_over15)},
-                "double_chance": {"class": dc_class, "confidence": float(p_dc)},
-                "btts": {"class": int(p_btts >= 0.5), "confidence": float(p_btts)},
+                "winner":       {"class": winner_class, "confidence": float(winner_conf)},
+                "over_2_5":     {"class": int(p_over25 >= 0.5), "confidence": float(p_over25)},
+                "over_1_5":     {"class": int(p_over15 >= 0.5), "confidence": float(p_over15)},
+                "double_chance":{"class": dc_class,            "confidence": float(p_dc)},
+                "btts":         {"class": int(p_btts >= 0.5),  "confidence": float(p_btts)},
             },
             "correct_score_top3": top3,
             "top_scorers": top_scorers,
@@ -357,52 +362,48 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
     Busca fixtures via proxy por data (hoje + N-1 dias).
-    Inclui:
-      - todas as ligas normais (season=SEASON)
-      - + World Cup - Qualification Europe (league=32, season=2024)
+    - Clubes: usa season "normal" (SEASON)
+    - Seleções (WCQ Europe): usa season 2024 (WCQ_EUROPE_SEASON) e league 32
     """
     fixtures: List[Dict[str, Any]] = []
-    today = date.today()
+    seen: set[int] = set()
+
+    def _append_batch(batch: List[Dict[str, Any]]):
+        nonlocal fixtures, seen
+        for fx in batch:
+            fid = fx.get("fixture", {}).get("id")
+            if fid and fid not in seen:
+                fixtures.append(fx)
+                seen.add(fid)
 
     for d in range(days):
-        day = today + timedelta(days=d)
-        iso = day.strftime("%Y-%m-%d")
+        iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
-        # 1) Jogos "normais" (clubes, etc.) na época principal SEASON (ex.: 2025)
-        main_payload = proxy_get("/fixtures", {"date": iso, "season": SEASON})
-        if main_payload and isinstance(main_payload, dict) and isinstance(main_payload.get("response"), list):
-            fixtures.extend(main_payload["response"])
-            logger.info(f"📅 {iso}: {len(main_payload['response'])} fixtures (season={SEASON})")
+        # 1) Clubes (season "normal")
+        payload = proxy_get("/fixtures", {"date": iso, "season": SEASON})
+        if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
+            _append_batch(payload["response"])
         else:
-            logger.warning(f"⚠️ Sem fixtures via proxy para {iso} (season={SEASON}).")
+            logger.warning(f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON}).")
 
-        # 2) World Cup - Qualification Europe (league=32, season=2024)
-        #    Apenas se a data estiver dentro da janela da qualificação
-        if WCQ_EUROPE_LEAGUE_ID and WCQ_EUROPE_START <= day <= WCQ_EUROPE_END:
-            wcq_params = {
-                "league": WCQ_EUROPE_LEAGUE_ID,
-                "season": WCQ_EUROPE_SEASON,
-                "date": iso,
-            }
-            wcq_payload = proxy_get("/fixtures", wcq_params)
-            if wcq_payload and isinstance(wcq_payload, dict) and isinstance(wcq_payload.get("response"), list):
-                count = len(wcq_payload["response"])
-                if count:
-                    fixtures.extend(wcq_payload["response"])
-                    logger.info(
-                        f"🌍 {iso}: {count} fixtures WCQ Europe "
-                        f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON})"
-                    )
+        # 2) WCQ Europe (seleções A) -> league=32, season=2024
+        if WCQ_EUROPE_LEAGUE_ID and WCQ_EUROPE_SEASON:
+            payload_wcq = proxy_get(
+                "/fixtures",
+                {"date": iso, "season": WCQ_EUROPE_SEASON, "league": WCQ_EUROPE_LEAGUE_ID},
+            )
+            if payload_wcq and isinstance(payload_wcq, dict) and isinstance(payload_wcq.get("response"), list):
+                _append_batch(payload_wcq["response"])
+            else:
+                logger.info(f"ℹ️ Sem WCQ Europe para {iso} (league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON}).")
 
         time.sleep(0.2)
 
-    # fallback global: se por algum motivo nada veio, tenta próximos N
+    # fallback geral: próximos 50 (clubes) se ficarmos a zeros
     if not fixtures:
         payload = proxy_get("/fixtures", {"next": 50, "season": SEASON})
         if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
-            fixtures = payload["response"]
-            logger.warning("⚠️ Fallback: usando /fixtures?next=50")
-
+            _append_batch(payload["response"])
     return fixtures
 
 
@@ -410,9 +411,9 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
     total = 0
     matches: List[Dict[str, Any]] = []
 
-    logger.info(f"🌍 API-Football ativo | Época base {SEASON}")
+    logger.info(f"🌍 API-Football ativo | Época clubes={SEASON} | WCQ Europe season={WCQ_EUROPE_SEASON}")
     fixtures = collect_fixtures(days=7)
-    logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy).")
+    logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy + WCQ Europe).")
 
     for f in fixtures:
         pred = build_prediction_from_fixture(f)
@@ -420,7 +421,11 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
             matches.append(pred)
             total += 1
 
-    matches_sorted = sorted(matches, key=lambda x: x["predictions"]["winner"]["confidence"], reverse=True)
+    matches_sorted = sorted(
+        matches,
+        key=lambda x: x["predictions"]["winner"]["confidence"],
+        reverse=True,
+    )
 
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
     with open(PRED_PATH, "w", encoding="utf-8") as fp:
