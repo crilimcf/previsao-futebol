@@ -369,7 +369,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         logger.error(f"❌ build_prediction_from_fixture() erro: {e}")
         return None
 
-# ===========================================================
+~# ===========================================================
 # PIPELINE
 # ===========================================================
 def _dedupe_fixtures(fixtures: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -405,7 +405,9 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
         if payload_clubs and isinstance(payload_clubs, dict) and isinstance(payload_clubs.get("response"), list):
             fixtures.extend(payload_clubs["response"])
         else:
-            logger.warning(f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS}).")
+            logger.warning(
+                f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS})."
+            )
 
         # 2) World Cup - Qualification Europe (seleções)
         if WCQ_EUROPE_LEAGUE_ID:
@@ -414,7 +416,12 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
                 {"date": iso, "league": WCQ_EUROPE_LEAGUE_ID, "season": WCQ_EUROPE_SEASON},
             )
             if payload_wcq and isinstance(payload_wcq, dict) and isinstance(payload_wcq.get("response"), list):
-                fixtures.extend(payload_wcq["response"])
+                wcq_list = payload_wcq["response"]
+                fixtures.extend(wcq_list)
+                logger.info(
+                    f"🌍 WCQ Europe: {len(wcq_list)} jogos para {iso} "
+                    f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON})"
+                )
             else:
                 logger.info(
                     f"ℹ️ Sem fixtures WCQ Europe para {iso} "
@@ -435,12 +442,14 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     return fixtures
 
 
-def fetch_and_save_predictions() -> Dict[str, Any]:
+def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     total = 0
     matches: List[Dict[str, Any]] = []
 
-    logger.info(f"🌍 API-Football ativo | Época clubes={SEASON_CLUBS}, WCQ_Europe={WCQ_EUROPE_SEASON}")
-    fixtures = collect_fixtures(days=3)
+    logger.info(
+        f"🌍 API-Football ativo | Época clubes={SEASON_CLUBS}, WCQ_Europe={WCQ_EUROPE_SEASON}, days={days}"
+    )
+    fixtures = collect_fixtures(days=days)
     logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy).")
 
     for f in fixtures:
@@ -449,7 +458,11 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
             matches.append(pred)
             total += 1
 
-    matches_sorted = sorted(matches, key=lambda x: x["predictions"]["winner"]["confidence"], reverse=True)
+    matches_sorted = sorted(
+        matches,
+        key=lambda x: x["predictions"]["winner"]["confidence"],
+        reverse=True,
+    )
 
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
     with open(PRED_PATH, "w", encoding="utf-8") as fp:
