@@ -25,6 +25,36 @@ API_KEY = os.getenv("API_FOOTBALL_KEY")
 BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
 SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
 
+# -------------------------------------------
+# Ligas internacionais (seleções A masculinas)
+#   - World Cup - Qualification Europe (6943)
+#   - No futuro: Euro, Euro Qual, World Cup final, etc.
+# -------------------------------------------
+def _env_int(name: str) -> Optional[int]:
+    v = os.getenv(name)
+    if v is None:
+        return None
+    v = str(v).strip()
+    if not v:
+        return None
+    try:
+        return int(v)
+    except ValueError:
+        return None
+
+INTERNATIONAL_LEAGUES: List[int] = [
+    _env_int("API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID"),   # ex: 6943
+    _env_int("API_FOOTBALL_EURO_LEAGUE_ID"),         # futuro: Euro Championship
+    _env_int("API_FOOTBALL_EURO_Q_LEAGUE_ID"),       # futuro: Euro Qualification
+    _env_int("API_FOOTBALL_WORLD_CUP_LEAGUE_ID"),    # futuro: World Cup final
+]
+INTERNATIONAL_LEAGUES = [lid for lid in INTERNATIONAL_LEAGUES if lid is not None]
+
+if INTERNATIONAL_LEAGUES:
+    logger.info(f"🌍 Ligas internacionais ativas: {INTERNATIONAL_LEAGUES}")
+else:
+    logger.info("🌍 Nenhuma liga internacional configurada (INTERNATIONAL_LEAGUES vazia).")
+
 # Proxy seguro (teu serviço em Render)
 PROXY_BASE = os.getenv("API_PROXY_URL", "https://football-proxy-4ymo.onrender.com").rstrip("/") + "/"
 PROXY_TOKEN = os.getenv("API_PROXY_TOKEN", "CF_Proxy_2025_Secret_!@#839")
@@ -350,21 +380,72 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
     Busca fixtures via proxy por data (hoje + N-1 dias).
+
+    - 1º: clubes/ligas normais  -> /fixtures?date=YYYY-MM-DD&season=SEASON
+    - 2º: seleções A internacionais (Mundial/Euro etc) -> /fixtures?date=YYYY-MM-DD
+         filtrado pelos league_id em INTERNATIONAL_LEAGUES (ex.: 6943).
     """
     fixtures: List[Dict[str, Any]] = []
+    seen_ids: set[int] = set()
+
+    def _add(f: Dict[str, Any]) -> None:
+        fid = (((f or {}).get("fixture") or {}).get("id"))
+        try:
+            fid_int = int(fid) if fid is not None else None
+        except Exception:
+            fid_int = None
+        if fid_int is not None and fid_int not in seen_ids:
+            seen_ids.add(fid_int)
+            fixtures.append(f)
+
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
+
+        # 1) CLUBES / ligas normais -> season=SEASON (comportamento antigo)
         payload = proxy_get("/fixtures", {"date": iso, "season": SEASON})
         if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
-            fixtures.extend(payload["response"])
+            for f in payload["response"]:
+                _add(f)
+            logger.info(
+                f"📅 {iso} season={SEASON} -> {len(payload['response'])} fixtures (clubes/ligas)"
+            )
         else:
-            logger.warning(f"⚠️ Sem fixtures via proxy para {iso}.")
+            logger.warning(f"⚠️ Sem fixtures via proxy para {iso} (season={SEASON}).")
+
+        # 2) SELEÇÕES A INTERNACIONAIS (Mundial/Euro, etc.) via league IDs explícitos
+        if INTERNATIONAL_LEAGUES:
+            payload_intl = proxy_get("/fixtures", {"date": iso})
+            if (
+                payload_intl
+                and isinstance(payload_intl, dict)
+                and isinstance(payload_intl.get("response"), list)
+            ):
+                added = 0
+                for f in payload_intl["response"]:
+                    league = (f.get("league") or {})
+                    lid = league.get("id")
+                    try:
+                        lid_int = int(lid) if lid is not None else None
+                    except Exception:
+                        lid_int = None
+                    if lid_int in INTERNATIONAL_LEAGUES:
+                        _add(f)
+                        added += 1
+                if added:
+                    logger.info(
+                        f"🌍 {iso} +{added} fixtures internacionais (IDs {INTERNATIONAL_LEAGUES})"
+                    )
+
         time.sleep(0.2)
 
+    # fallback: tentar próximos N (se deu zero)
     if not fixtures:
         payload = proxy_get("/fixtures", {"next": 50})
         if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
-            fixtures = payload["response"]
+            for f in payload["response"]:
+                _add(f)
+            logger.info(f"fallback next=50 -> {len(fixtures)} fixtures")
+
     return fixtures
 
 
@@ -382,7 +463,11 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
             matches.append(pred)
             total += 1
 
-    matches_sorted = sorted(matches, key=lambda x: x["predictions"]["winner"]["confidence"], reverse=True)
+    matches_sorted = sorted(
+        matches,
+        key=lambda x: x["predictions"]["winner"]["confidence"],
+        reverse=True,
+    )
 
     os.makedirs(os.path.dirname(PRED_PATH), exist_ok=True)
     with open(PRED_PATH, "w", encoding="utf-8") as fp:
