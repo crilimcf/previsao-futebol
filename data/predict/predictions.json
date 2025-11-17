@@ -16,16 +16,16 @@
         "away": 3.3
       },
       "over_2_5": {
-        "over": 6.0,
-        "under": 1.12
+        "over": 5.5,
+        "under": 1.14
       },
       "over_1_5": {
-        "over": 2.5,
-        "under": 1.5
+        "over": 2.38,
+        "under": 1.53
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 3.75,
+        "no": 1.25
       }
     },
     "predicted_score": {
@@ -512,9 +512,9 @@
     "away_logo": "https://media.api-sports.io/football/teams/136.png",
     "odds": {
       "winner": {
-        "home": 1.25,
-        "draw": 6.0,
-        "away": 12.0
+        "home": 1.33,
+        "draw": 5.25,
+        "away": 9.0
       },
       "over_2_5": {
         "over": 1.67,
