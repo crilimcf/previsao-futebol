@@ -4,7 +4,7 @@ import json
 import math
 import time
 import logging
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Set
 from urllib.parse import urljoin
 from datetime import date, timedelta
 
@@ -23,34 +23,27 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # ===========================================================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
 BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
-SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")
-
-# LIGA INTERNACIONAL: World Cup - Qualification Europe (seleções A, homens)
-# ID e season vêm do ambiente para não ficarem hard-coded.
-def _env_int(name: str) -> Optional[int]:
-    v = os.getenv(name)
-    if not v:
-        return None
-    try:
-        return int(v.strip())
-    except Exception:
-        return None
-
-
-WCQ_EUROPE_LEAGUE_ID: Optional[int] = _env_int("API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID")
-WCQ_EUROPE_SEASON: str = os.getenv("API_FOOTBALL_WCQ_EUROPE_SEASON", "2024")
-
-if WCQ_EUROPE_LEAGUE_ID:
-    logger.info(
-        f"🌍 Liga internacional ativa: World Cup - Qualification Europe "
-        f"(league_id={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON})"
-    )
-else:
-    logger.info("ℹ️ Nenhuma liga internacional configurada (WCQ_EUROPE_LEAGUE_ID em falta).")
+SEASON = os.getenv("API_FOOTBALL_SEASON", "2025")  # épocas de clubes (2025, etc.)
 
 # Proxy seguro (teu serviço em Render)
 PROXY_BASE = os.getenv("API_PROXY_URL", "https://football-proxy-4ymo.onrender.com").rstrip("/") + "/"
 PROXY_TOKEN = os.getenv("API_PROXY_TOKEN", "CF_Proxy_2025_Secret_!@#839")
+
+# World Cup Qualification Europe (seleções A masculinas)
+def _env_int(name: str, default: Optional[int] = None) -> Optional[int]:
+    v = os.getenv(name)
+    if v is None:
+        return default
+    v = v.strip()
+    if not v:
+        return default
+    try:
+        return int(v)
+    except ValueError:
+        return default
+
+WCQ_EUROPE_LEAGUE_ID: Optional[int] = _env_int("API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID")
+WCQ_EUROPE_SEASON: str = os.getenv("API_FOOTBALL_WCQ_EUROPE_SEASON", "2024")
 
 # ficheiro de saída
 PRED_PATH = os.path.join("data", "predict", "predictions.json")
@@ -80,7 +73,6 @@ def redis_cache_set(key: str, value: Any, ex: int = 1800) -> None:
             config.redis_client.set(key, json.dumps(value), ex=ex)
     except Exception:
         pass
-
 
 # ===========================================================
 # HTTP helpers
@@ -132,7 +124,6 @@ def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int
     except Exception as e:
         logger.error(f"❌ API erro {endpoint}: {e}")
     return []
-
 
 # ===========================================================
 # Poisson helpers (com fallback)
@@ -209,7 +200,6 @@ except Exception:
         pairs.sort(key=lambda t: t[1], reverse=True)
         return pairs[:k]
 
-
 # ===========================================================
 # Modelagem prob/odds
 # ===========================================================
@@ -231,7 +221,6 @@ def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float]:
     ]
     best = max(opts, key=lambda t: t[1])
     return best[0], best[1]
-
 
 # ===========================================================
 # Estatísticas & features
@@ -272,7 +261,9 @@ def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> T
     lam_away = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
     return lam_home, lam_away
 
-
+# ===========================================================
+# Build prediction
+# ===========================================================
 def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
         fixture = fix.get("fixture", {})
@@ -337,7 +328,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             },
             "over_1_5": {
                 "over": implied_odds(p_over15),
-                "under": implied_odds(p_over15),
+                "under": implied_odds(p_under15),
             },
             "btts": {
                 "yes": implied_odds(p_btts),
@@ -380,83 +371,73 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         logger.error(f"❌ build_prediction_from_fixture() erro: {e}")
         return None
 
-
-# ===========================================================
-# Helpers de fixtures
-# ===========================================================
-def _dedupe_fixtures(arr: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    Remove duplicados com base em fixture.id (útil porque vamos buscar clubes + seleções).
-    """
-    seen = set()
-    out: List[Dict[str, Any]] = []
-    for f in arr or []:
-        fid = ((f.get("fixture") or {}).get("id"))
-        if fid and fid not in seen:
-            seen.add(fid)
-            out.append(f)
-    return out
-
-
 # ===========================================================
 # PIPELINE
 # ===========================================================
+def _append_fixtures_from_payload(
+    fixtures: List[Dict[str, Any]],
+    seen_ids: Set[int],
+    payload: Optional[Dict[str, Any]],
+    label: str,
+    day_iso: str,
+) -> None:
+    if not payload or not isinstance(payload, dict):
+        logger.warning(f"⚠️ Sem payload ({label}) para {day_iso}.")
+        return
+    arr = payload.get("response") or []
+    added = 0
+    for f in arr:
+        fid = (((f or {}).get("fixture") or {}).get("id"))
+        if not fid:
+            continue
+        if fid in seen_ids:
+            continue
+        seen_ids.add(fid)
+        fixtures.append(f)
+        added += 1
+    logger.info(f"📅 {day_iso} | {label}: {added} fixtures adicionados.")
+
+
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    Busca fixtures via proxy por data (clubes) + World Cup Qualification Europe, se configurada.
+    Busca fixtures via proxy por data (hoje + N-1 dias).
+
+    - Clubes: usa season=API_FOOTBALL_SEASON (ex: 2025)
+    - World Cup Qual. Europe: league=WCQ_EUROPE_LEAGUE_ID, season=WCQ_EUROPE_SEASON (ex: 6943 / 2024)
     """
     fixtures: List[Dict[str, Any]] = []
+    seen_ids: Set[int] = set()
 
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
-        clubes_count = 0
-        intl_count = 0
-
-        # 1) Clubes: season padrão
-        payload = proxy_get("/fixtures", {"date": iso, "season": SEASON})
-        if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
-            arr = payload["response"]
-            clubes_count = len(arr)
-            fixtures.extend(arr)
+        # 1) Clubes (ligas normais)
+        payload_main = proxy_get("/fixtures", {"date": iso, "season": SEASON})
+        if payload_main:
+            _append_fixtures_from_payload(fixtures, seen_ids, payload_main, "clubes", iso)
         else:
-            logger.warning(f"⚠️ Sem fixtures de clubes via proxy para {iso} (season={SEASON}).")
+            logger.warning(f"⚠️ Sem fixtures de clubes via proxy para {iso}.")
 
-        # 2) Seleções A – World Cup Qualification Europe (league=6943 / season=2024)
+        # 2) World Cup Qualification Europe (seleções A)
         if WCQ_EUROPE_LEAGUE_ID:
-            payload_intl = proxy_get(
-                "/fixtures",
-                {"date": iso, "league": WCQ_EUROPE_LEAGUE_ID, "season": WCQ_EUROPE_SEASON},
-            )
-            if payload_intl and isinstance(payload_intl, dict) and isinstance(payload_intl.get("response"), list):
-                arr_intl = payload_intl["response"]
-                intl_count = len(arr_intl)
-                fixtures.extend(arr_intl)
+            params_wcq = {
+                "date": iso,
+                "season": WCQ_EUROPE_SEASON,
+                "league": WCQ_EUROPE_LEAGUE_ID,
+            }
+            payload_wcq = proxy_get("/fixtures", params_wcq)
+            if payload_wcq:
+                _append_fixtures_from_payload(fixtures, seen_ids, payload_wcq, "WCQ_Europe", iso)
             else:
-                # não faz warning forte porque pode simplesmente não haver jogos nesse dia
-                logger.info(
-                    f"ℹ️ Sem fixtures de WCQ Europe para {iso} "
-                    f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON})."
-                )
-
-        logger.info(
-            f"📅 collect_fixtures {iso}: clubes={clubes_count}, "
-            f"wcq_europe={intl_count}, acumulado={len(fixtures)}"
-        )
+                logger.info(f"ℹ️ Sem fixtures WCQ Europe para {iso} (league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON}).")
 
         time.sleep(0.2)
 
-    # Fallback: se tudo der 0 (improvável), tenta próximos 50 (clubes)
+    # fallback: se mesmo assim ficar vazio, tenta próximos N (clubes)
     if not fixtures:
-        payload = proxy_get("/fixtures", {"next": 50})
-        if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
-            fixtures = payload["response"]
-            logger.info(f"📊 Fallback next=50 -> {len(fixtures)} fixtures.")
-        else:
-            logger.warning("⚠️ Fallback next=50 também não devolveu fixtures.")
+        payload = proxy_get("/fixtures", {"next": 50, "season": SEASON})
+        _append_fixtures_from_payload(fixtures, seen_ids, payload, "fallback_next50", "N/A")
 
-    fixtures = _dedupe_fixtures(fixtures)
-    logger.info(f"📊 Total final de fixtures (dedupe): {len(fixtures)}")
     return fixtures
 
 
@@ -464,9 +445,9 @@ def fetch_and_save_predictions() -> Dict[str, Any]:
     total = 0
     matches: List[Dict[str, Any]] = []
 
-    logger.info(f"🌍 API-Football ativo | Época {SEASON}")
+    logger.info(f"🌍 API-Football ativo | Época clubes={SEASON} | WCQ_Europe={WCQ_EUROPE_LEAGUE_ID}/{WCQ_EUROPE_SEASON}")
     fixtures = collect_fixtures(days=3)
-    logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy + internacionais).")
+    logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy, clubes + WCQ_Europe).")
 
     for f in fixtures:
         pred = build_prediction_from_fixture(f)
