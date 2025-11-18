@@ -7,7 +7,6 @@ import logging
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
 from datetime import date, timedelta
-from collections import Counter
 
 import requests
 
@@ -390,56 +389,92 @@ def _dedupe_fixtures(fixtures: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    Busca fixtures via proxy por data (hoje + N-1 dias).
+    Busca fixtures via proxy:
 
-    Inclui:
-      - Ligas de clubes com season SEASON_CLUBS
-      - World Cup - Qualification Europe (league 32, season 2024)
+      1) Ligas de clubes (season SEASON_CLUBS) por data:
+         - hoje + (days - 1) dias
+
+      2) World Cup - Qualification Europe (league 32, season 2024)
+         - próximos N jogos via `next=50`
+
+    No fim faz merge + dedupe por fixture.id.
     """
     fixtures: List[Dict[str, Any]] = []
 
+    # -----------------------
+    # 1) CLUBES POR DATA
+    # -----------------------
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
-        # 1) Clubes (season “normal”)
         payload_clubs = proxy_get("/fixtures", {"date": iso, "season": SEASON_CLUBS})
         if payload_clubs and isinstance(payload_clubs, dict) and isinstance(payload_clubs.get("response"), list):
+            num = len(payload_clubs["response"])
+            logger.info(f"📅 {iso} | Clubes season={SEASON_CLUBS}: {num} fixtures")
             fixtures.extend(payload_clubs["response"])
         else:
-            logger.warning(f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS}).")
+            logger.warning(f"⚠️ {iso} | Sem fixtures (clubes) via proxy (season={SEASON_CLUBS}).")
 
-        # 2) World Cup - Qualification Europe (seleções)
-        if WCQ_EUROPE_LEAGUE_ID:
-            payload_wcq = proxy_get(
-                "/fixtures",
-                {"date": iso, "league": WCQ_EUROPE_LEAGUE_ID, "season": WCQ_EUROPE_SEASON},
-            )
+        time.sleep(0.15)
+
+    # -----------------------
+    # 2) WCQ EUROPE (LEAGUE 32)
+    # -----------------------
+    if WCQ_EUROPE_LEAGUE_ID:
+        try:
+            params_wcq = {
+                "league": WCQ_EUROPE_LEAGUE_ID,
+                "season": WCQ_EUROPE_SEASON,
+                "next": 50,  # próximos 50 jogos da qualificação
+            }
+            payload_wcq = proxy_get("/fixtures", params_wcq)
             if payload_wcq and isinstance(payload_wcq, dict) and isinstance(payload_wcq.get("response"), list):
+                num_wcq = len(payload_wcq["response"])
+                logger.info(
+                    f"🌍 WCQ Europe league={WCQ_EUROPE_LEAGUE_ID} "
+                    f"season={WCQ_EUROPE_SEASON} | next=50 => {num_wcq} fixtures"
+                )
                 fixtures.extend(payload_wcq["response"])
             else:
-                logger.info(
-                    f"ℹ️ Sem fixtures WCQ Europe para {iso} "
-                    f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON})."
+                logger.warning(
+                    f"ℹ️ WCQ Europe sem fixtures (league={WCQ_EUROPE_LEAGUE_ID}, "
+                    f"season={WCQ_EUROPE_SEASON}, next=50)."
                 )
+        except Exception as e:
+            logger.error(f"❌ Erro a buscar WCQ Europe via proxy: {e}")
 
-        # pausazinha para não saturar proxy/API
-        time.sleep(0.2)
-
+    # -----------------------
+    # 3) FALLBACK ANTIGO (só clubes)
+    # -----------------------
     if not fixtures:
-        # fallback antigo: próximos N jogos (apenas clubes, porque WCQ tem season 2024)
         payload = proxy_get("/fixtures", {"next": 50, "season": SEASON_CLUBS})
         if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
+            logger.info(f"🔁 Fallback: próximos 50 (clubes) season={SEASON_CLUBS}")
             fixtures = payload["response"]
 
     fixtures = _dedupe_fixtures(fixtures)
     logger.info(f"📊 Total fixtures após merge + dedupe: {len(fixtures)}")
+
+    # log rápido por liga, para confirmar que a 32 entrou
+    try:
+        by_league: Dict[int, int] = {}
+        for f in fixtures:
+            lid = int((f.get("league") or {}).get("id") or 0)
+            if not lid:
+                continue
+            by_league[lid] = by_league.get(lid, 0) + 1
+        logger.info(f"📊 Fixtures por liga: {by_league}")
+    except Exception:
+        pass
+
     return fixtures
 
 
 def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     """
     Corre o pipeline completo:
-      - busca fixtures (clubes + WCQ Europe) para hoje + N-1 dias
+      - busca fixtures (clubes + WCQ Europe) para hoje + (days-1) dias
+        + próximos 50 da WCQ Europe
       - calcula previsões
       - grava em data/predict/predictions.json
     """
@@ -452,20 +487,6 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     )
     fixtures = collect_fixtures(days=days)
     logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy).")
-
-    # breakdown por liga – ajuda a ver se a 32 está presente
-    league_counts = Counter()
-    for f in fixtures:
-        try:
-            lg = int(f.get("league", {}).get("id"))
-            league_counts[lg] += 1
-        except Exception:
-            pass
-    if league_counts:
-        logger.info(
-            "📌 Fixtures por liga: "
-            + ", ".join(f"{lid}={cnt}" for lid, cnt in sorted(league_counts.items()))
-        )
 
     for f in fixtures:
         pred = build_prediction_from_fixture(f)
