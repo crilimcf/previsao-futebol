@@ -7,7 +7,6 @@ from typing import Dict, List, Any, Optional
 from fastapi import APIRouter, Header, Query
 from fastapi.responses import JSONResponse
 
-# usamos o pipeline PRO (odds reais via /odds do proxy)
 from src.api_fetch_pro import fetch_and_save_predictions
 
 router = APIRouter(prefix="/meta", tags=["meta"])
@@ -82,24 +81,18 @@ def update_predictions(
     days: int = Query(default=3, ge=1, le=7),
 ):
     """
-    Dispara o refresh das previsões (fixtures + odds reais + poisson + topscorers)
-    e grava data/predict/predictions.json.
+    Dispara o refresh das previsões (fixtures + odds reais + poisson + topscorers) e grava data/predict/predictions.json.
 
     Auth: Authorization: Bearer <token>  |  X-Endpoint-Key: <token>  |  ?key=<token>
     O <token> deve corresponder a ENDPOINT_API_KEY (ou API_UPDATE_TOKEN/API_TOKEN) no ambiente do backend.
-
-    Query:
-      - days: número de dias a partir de hoje (incluindo hoje) para puxar fixtures (1 a 7).
     """
     if not _is_authorized(authorization, x_endpoint_key, key):
         return JSONResponse({"status": "forbidden"}, status_code=403)
 
-    log.info(f"🔁 /meta/update chamado com days={days}")
-
     try:
-        # fetch_and_save_predictions já grava o ficheiro final e retorna {"status":"ok","total":N,"days":days}
-        out = fetch_and_save_predictions(days=days)
-        return JSONResponse({"status": "ok", **(out or {})})
+        out = fetch_and_save_predictions(days=days) or {}
+        # resposta FINAL (sem "result" aninhado)
+        return JSONResponse({"status": "ok", "days": days, **out})
     except Exception as e:
         log.exception("Erro no update:")
         return JSONResponse({"status": "error", "detail": str(e)}, status_code=500)
@@ -108,9 +101,9 @@ def update_predictions(
 @router.get("/leagues")
 def leagues():
     """
-    Devolve a lista de ligas conhecidas:
-    - Primeiro tenta inferir de data/predict/predictions.json
-    - Caso vazio, tenta config/leagues.json
+    Devolve a lista de ligas conhecidas com nº de jogos:
+    - Lido a partir de data/predict/predictions.json
+    - Se vazio, faz fallback para config/leagues.json (matches=0)
     """
     leagues_map: Dict[str, Dict[str, Any]] = {}
 
@@ -121,13 +114,17 @@ def leagues():
             lid = str(p.get("league_id") or p.get("league") or "").strip()
             if not lid:
                 continue
-            name = p.get("league_name") or p.get("league") or "League"
+            name = p.get("league") or p.get("league_name") or "League"
             country = p.get("country")
-            leagues_map[lid] = {"id": lid, "name": name, "country": country}
+            rec = leagues_map.get(lid)
+            if not rec:
+                rec = {"id": lid, "name": name, "country": country, "matches": 0}
+                leagues_map[lid] = rec
+            rec["matches"] += 1
     except Exception as e:
         log.warning(f"Falha a extrair ligas de predictions.json: {e}")
 
-    # 2) fallback: config/leagues.json
+    # 2) fallback: config/leagues.json (se predictions vazio)
     if not leagues_map:
         cfg = _read_json("config/leagues.json") or []
         try:
@@ -137,7 +134,7 @@ def leagues():
                     continue
                 name = row.get("name") or row.get("league") or "League"
                 country = row.get("country")
-                leagues_map[lid] = {"id": lid, "name": name, "country": country}
+                leagues_map[lid] = {"id": lid, "name": name, "country": country, "matches": 0}
         except Exception as e:
             log.warning(f"Falha a extrair ligas de config/leagues.json: {e}")
 
@@ -145,7 +142,7 @@ def leagues():
         leagues_map.values(),
         key=lambda x: ((x.get("country") or ""), (x.get("name") or ""))
     )
-    return {"count": len(items), "items": items}
+    return {"leagues": items}
 
 
 @router.get("/calibration")
