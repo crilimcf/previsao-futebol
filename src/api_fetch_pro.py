@@ -7,6 +7,7 @@ import logging
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
 from datetime import date, timedelta
+from collections import Counter
 
 import requests
 
@@ -47,7 +48,6 @@ PRED_PATH = os.path.join("data", "predict", "predictions.json")
 # ===========================================================
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-
 # ===========================================================
 # Redis helper (cache leve)
 # ===========================================================
@@ -68,7 +68,6 @@ def redis_cache_set(key: str, value: Any, ex: int = 1800) -> None:
             config.redis_client.set(key, json.dumps(value), ex=ex)
     except Exception:
         pass
-
 
 # ===========================================================
 # HTTP helpers
@@ -120,7 +119,6 @@ def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int
     except Exception as e:
         logger.error(f"❌ API erro {endpoint}: {e}")
     return []
-
 
 # ===========================================================
 # Poisson helpers (com fallback)
@@ -197,7 +195,6 @@ except Exception:
         pairs.sort(key=lambda t: t[1], reverse=True)
         return pairs[:k]
 
-
 # ===========================================================
 # Modelagem prob/odds
 # ===========================================================
@@ -219,7 +216,6 @@ def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float]:
     ]
     best = max(opts, key=lambda t: t[1])
     return best[0], best[1]
-
 
 # ===========================================================
 # Estatísticas & features
@@ -256,8 +252,8 @@ def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> T
 
     avg_goals_home = _get_float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2))
     avg_goals_away = _get_float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1))
-    avg_conc_home = _get_float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0))
-    avg_conc_away = _get_float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0))
+    avg_conc_home  = _get_float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0))
+    avg_conc_away  = _get_float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0))
 
     lam_home = max(0.05, (avg_goals_home + avg_conc_away) / 2.0)
     lam_away = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
@@ -295,7 +291,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         dc_class, p_dc = pick_dc_class(ph, pd, pa)
 
         winner_class = int(max([(0, ph), (1, pd), (2, pa)], key=lambda t: t[1])[0])
-        winner_conf = max(ph, pd, pa)
+        winner_conf  = max(ph, pd, pa)
 
         top3 = [
             {"score": s, "prob": float(p)}
@@ -374,7 +370,6 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         logger.error(f"❌ build_prediction_from_fixture() erro: {e}")
         return None
 
-
 # ===========================================================
 # PIPELINE
 # ===========================================================
@@ -398,7 +393,7 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     Busca fixtures via proxy por data (hoje + N-1 dias).
 
     Inclui:
-      - Ligas de clubes com season SEASON_CLUBS (tudo o que vier dessa season)
+      - Ligas de clubes com season SEASON_CLUBS
       - World Cup - Qualification Europe (league 32, season 2024)
     """
     fixtures: List[Dict[str, Any]] = []
@@ -458,6 +453,20 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     fixtures = collect_fixtures(days=days)
     logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy).")
 
+    # breakdown por liga – ajuda a ver se a 32 está presente
+    league_counts = Counter()
+    for f in fixtures:
+        try:
+            lg = int(f.get("league", {}).get("id"))
+            league_counts[lg] += 1
+        except Exception:
+            pass
+    if league_counts:
+        logger.info(
+            "📌 Fixtures por liga: "
+            + ", ".join(f"{lid}={cnt}" for lid, cnt in sorted(league_counts.items()))
+        )
+
     for f in fixtures:
         pred = build_prediction_from_fixture(f)
         if pred:
@@ -471,4 +480,4 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
         json.dump(matches_sorted, fp, ensure_ascii=False, indent=2)
 
     logger.info(f"✅ {total} previsões salvas em {PRED_PATH}")
-    return {"status": "ok", "total": total}
+    return {"status": "ok", "total": total, "days": days}
