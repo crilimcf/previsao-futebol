@@ -438,6 +438,9 @@ export default function HomeClient() {
               const topEntry = marketEntries.reduce((a, b) => (b[1] > a[1] ? b : a), ["winner", -1]);
               const isTop = (k: string) => topEntry[0] === k;
 
+              // 🔍 novas linhas de explicação vindas do backend
+              const explanationLines: string[] = Array.isArray(p.explanation) ? p.explanation : [];
+
               return (
                 <div
                   key={String(p.match_id ?? p.fixture_id)}
@@ -479,11 +482,20 @@ export default function HomeClient() {
                     <div className={`rounded-xl border p-3 ${tileClass(prWinner, isTop("winner"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Winner</span>
-                        {isTop("winner") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                        {isTop("winner") && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">
+                            TOP
+                          </span>
+                        )}
                       </div>
                       <div className="text-sm text-white mt-0.5">
                         {winnerLabel}{" "}
-                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prWinner, isTop("winner"))}`}>
+                        <span
+                          className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
+                            prWinner,
+                            isTop("winner")
+                          )}`}
+                        >
                           {pctStr01(winner?.confidence ?? winner?.prob)}
                         </span>
                       </div>
@@ -493,11 +505,20 @@ export default function HomeClient() {
                     <div className={`rounded-xl border p-3 ${tileClass(prDC, isTop("double"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Double Chance</span>
-                        {isTop("double") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                        {isTop("double") && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">
+                            TOP
+                          </span>
+                        )}
                       </div>
                       <div className="text-sm text-white mt-0.5">
                         {dcLabel(dc?.class)}{" "}
-                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prDC, isTop("double"))}`}>
+                        <span
+                          className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
+                            prDC,
+                            isTop("double")
+                          )}`}
+                        >
                           {pctStr01(dc?.confidence ?? dc?.prob)}
                         </span>
                       </div>
@@ -507,11 +528,20 @@ export default function HomeClient() {
                     <div className={`rounded-xl border p-3 ${tileClass(prO25, isTop("over25"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 2.5</span>
-                        {isTop("over25") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                        {isTop("over25") && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">
+                            TOP
+                          </span>
+                        )}
                       </div>
                       <div className="text-sm text-white mt-0.5">
                         {over25?.class ? "Sim" : "Não"}{" "}
-                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prO25, isTop("over25"))}`}>
+                        <span
+                          className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
+                            prO25,
+                            isTop("over25")
+                          )}`}
+                        >
                           {pctStr01(over25?.confidence ?? over25?.prob)}
                         </span>
                       </div>
@@ -521,11 +551,20 @@ export default function HomeClient() {
                     <div className={`rounded-xl border p-3 ${tileClass(prO15, isTop("over15"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 1.5</span>
-                        {isTop("over15") && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">TOP</span>}
+                        {isTop("over15") && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/80 text-white">
+                            TOP
+                          </span>
+                        )}
                       </div>
                       <div className="text-sm text-white mt-0.5">
                         {over15?.class ? "Sim" : "Não"}{" "}
-                        <span className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(prO15, isTop("over15"))}`}>
+                        <span
+                          className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
+                            prO15,
+                            isTop("over15")
+                          )}`}
+                        >
                           {pctStr01(over15?.confidence ?? over15?.prob)}
                         </span>
                       </div>
@@ -536,10 +575,26 @@ export default function HomeClient() {
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
                         {btts?.class ? "Sim" : "Não"}{" "}
-                        <span className="text-gray-400 ml-1">({toPct(btts?.confidence ?? btts?.prob)})</span>
+                        <span className="text-gray-400 ml-1">
+                          ({toPct(btts?.confidence ?? btts?.prob)})
+                        </span>
                       </div>
                     </div>
                   </div>
+
+                  {/* 🧠 Explicação “Porque esta pick” */}
+                  {explanationLines.length > 0 && (
+                    <div className="rounded-xl bg-emerald-500/5 border border-emerald-400/40 p-3 text-xs text-gray-100 space-y-1">
+                      <div className="text-[11px] uppercase tracking-wide text-emerald-300 mb-1">
+                        Porque esta pick
+                      </div>
+                      {explanationLines.map((line, idx) => (
+                        <p key={idx} className="leading-snug">
+                          • {line}
+                        </p>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Odds */}
                   {(odds1x2 || oddsOU25 || oddsBTTS) && (
@@ -584,7 +639,9 @@ export default function HomeClient() {
                             .map((cs: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{cs.score}</span>
-                                <span className="text-gray-400">{Math.round(prob01(cs.prob) * 1000) / 10}%</span>
+                                <span className="text-gray-400">
+                                  {Math.round(prob01(cs.prob) * 1000) / 10}%
+                                </span>
                               </li>
                             ))}
                           {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? []).length === 0) && (
@@ -602,10 +659,14 @@ export default function HomeClient() {
                             {(p.predicted_scorers?.home ?? []).slice(0, 3).map((sc: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{sc.player}</span>
-                                <span className="text-gray-400">{Math.round(prob01(sc.prob) * 100)}%</span>
+                                <span className="text-gray-400">
+                                  {Math.round(prob01(sc.prob) * 100)}%
+                                </span>
                               </li>
                             ))}
-                            {!(p.predicted_scorers?.home ?? []).length && <li className="text-gray-500">—</li>}
+                            {!(p.predicted_scorers?.home ?? []).length && (
+                              <li className="text-gray-500">—</li>
+                            )}
                           </ul>
 
                           <ul className="text-sm text-white space-y-1">
@@ -613,10 +674,14 @@ export default function HomeClient() {
                             {(p.predicted_scorers?.away ?? []).slice(0, 3).map((sc: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{sc.player}</span>
-                                <span className="text-gray-400">{Math.round(prob01(sc.prob) * 100)}%</span>
+                                <span className="text-gray-400">
+                                  {Math.round(prob01(sc.prob) * 100)}%
+                                </span>
                               </li>
                             ))}
-                            {!(p.predicted_scorers?.away ?? []).length && <li className="text-gray-500">—</li>}
+                            {!(p.predicted_scorers?.away ?? []).length && (
+                              <li className="text-gray-500">—</li>
+                            )}
                           </ul>
                         </div>
                       </div>
