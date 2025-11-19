@@ -1,172 +1,5 @@
 [
   {
-    "match_id": 1478009,
-    "league_id": 71,
-    "league": "Serie A",
-    "country": "Brazil",
-    "date": "2025-11-18T23:30:00+00:00",
-    "home_team": "Botafogo",
-    "away_team": "Sport Recife",
-    "home_logo": "https://media.api-sports.io/football/teams/120.png",
-    "away_logo": "https://media.api-sports.io/football/teams/123.png",
-    "odds": {
-      "winner": {
-        "home": 1.64,
-        "draw": 4.4,
-        "away": 6.15
-      },
-      "over_2_5": {
-        "over": 2.08,
-        "under": 1.92
-      },
-      "over_1_5": {
-        "over": 1.37,
-        "under": 3.73
-      },
-      "btts": {
-        "yes": 2.18,
-        "no": 1.85
-      }
-    },
-    "predicted_score": {
-      "home": 1,
-      "away": 0
-    },
-    "confidence": 0.6104,
-    "predictions": {
-      "winner": {
-        "class": 0,
-        "confidence": 0.6104,
-        "prob": 0.6104
-      },
-      "double_chance": {
-        "class": 0,
-        "confidence": 0.8374
-      },
-      "over_2_5": {
-        "class": 0,
-        "confidence": 0.4802,
-        "prob": 0.4802
-      },
-      "over_1_5": {
-        "class": 1,
-        "confidence": 0.7319
-      },
-      "btts": {
-        "class": 0,
-        "confidence": 0.4594,
-        "prob": 0.4594
-      }
-    },
-    "correct_score_top3": [
-      {
-        "score": "1-0",
-        "prob": 0.134
-      },
-      {
-        "score": "2-0",
-        "prob": 0.1206
-      },
-      {
-        "score": "1-1",
-        "prob": 0.1072
-      }
-    ],
-    "top_scorers": [
-      {
-        "player": "Kaio Jorge",
-        "team": "Cruzeiro",
-        "goals": 17
-      },
-      {
-        "player": "G. de Arrascaeta",
-        "team": "Flamengo",
-        "goals": 17
-      },
-      {
-        "player": "Vitor Roque",
-        "team": "Palmeiras",
-        "goals": 16
-      },
-      {
-        "player": "P. Vegetti",
-        "team": "Vasco DA Gama",
-        "goals": 14
-      },
-      {
-        "player": "Pedro",
-        "team": "Flamengo",
-        "goals": 12
-      }
-    ],
-    "predicted_scorers": {
-      "home": [
-        {
-          "player": "Kauê",
-          "prob": 0.3571,
-          "xg": 0.442,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Igor Jesus",
-          "prob": 0.3084,
-          "xg": 0.369,
-          "position": "Attacker"
-        },
-        {
-          "player": "Álvaro Montoro",
-          "prob": 0.2033,
-          "xg": 0.227,
-          "position": "Midfielder"
-        },
-        {
-          "player": "Arthur Cabral",
-          "prob": 0.1786,
-          "xg": 0.197,
-          "position": "Attacker"
-        },
-        {
-          "player": "Serafim",
-          "prob": 0.0975,
-          "xg": 0.103,
-          "position": "Defender"
-        }
-      ],
-      "away": [
-        {
-          "player": "Carlos Alberto",
-          "prob": 0.1946,
-          "xg": 0.216,
-          "position": "Attacker"
-        },
-        {
-          "player": "Chico",
-          "prob": 0.1085,
-          "xg": 0.115,
-          "position": "Defender"
-        },
-        {
-          "player": "Marcelo Ajul",
-          "prob": 0.1059,
-          "xg": 0.112,
-          "position": "Defender"
-        },
-        {
-          "player": "João Silva",
-          "prob": 0.1056,
-          "xg": 0.112,
-          "position": "Defender"
-        },
-        {
-          "player": "Hyoran",
-          "prob": 0.0437,
-          "xg": 0.045,
-          "position": "Midfielder"
-        }
-      ]
-    }
-  },
-  {
     "match_id": 1478010,
     "league_id": 71,
     "league": "Serie A",
@@ -346,8 +179,8 @@
     "odds": {
       "winner": {
         "home": 1.33,
-        "draw": 5.25,
-        "away": 8.5
+        "draw": 5.0,
+        "away": 9.0
       },
       "over_2_5": {
         "over": 1.67,
@@ -358,8 +191,8 @@
         "under": 1.73
       },
       "btts": {
-        "yes": 4.0,
-        "no": 1.22
+        "yes": 4.33,
+        "no": 1.2
       }
     },
     "predicted_score": {
@@ -495,6 +328,4317 @@
           "player": "Jamerson",
           "prob": 0.0362,
           "xg": 0.037,
+          "position": "Defender"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1478013,
+    "league_id": 71,
+    "league": "Serie A",
+    "country": "Brazil",
+    "date": "2025-11-20T00:30:00+00:00",
+    "home_team": "Fluminense",
+    "away_team": "Flamengo",
+    "home_logo": "https://media.api-sports.io/football/teams/124.png",
+    "away_logo": "https://media.api-sports.io/football/teams/127.png",
+    "odds": {
+      "winner": {
+        "home": 4.2,
+        "draw": 3.2,
+        "away": 2.0
+      },
+      "over_2_5": {
+        "over": 6.5,
+        "under": 1.11
+      },
+      "over_1_5": {
+        "over": 2.5,
+        "under": 1.5
+      },
+      "btts": {
+        "yes": 4.0,
+        "no": 1.22
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.3998,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.3998,
+        "prob": 0.3998
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7216
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.4195,
+        "prob": 0.4195
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6826
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4778,
+        "prob": 0.4778
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1309
+      },
+      {
+        "score": "0-1",
+        "prob": 0.119
+      },
+      {
+        "score": "1-0",
+        "prob": 0.1039
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kaio Jorge",
+        "team": "Cruzeiro",
+        "goals": 17
+      },
+      {
+        "player": "G. de Arrascaeta",
+        "team": "Flamengo",
+        "goals": 17
+      },
+      {
+        "player": "Vitor Roque",
+        "team": "Palmeiras",
+        "goals": 16
+      },
+      {
+        "player": "P. Vegetti",
+        "team": "Vasco DA Gama",
+        "goals": 14
+      },
+      {
+        "player": "Pedro",
+        "team": "Flamengo",
+        "goals": 12
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "G. Cano",
+          "prob": 0.2822,
+          "xg": 0.332,
+          "position": "Attacker"
+        },
+        {
+          "player": "Keno",
+          "prob": 0.156,
+          "xg": 0.17,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Arias",
+          "prob": 0.1075,
+          "xg": 0.114,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Nonato",
+          "prob": 0.1063,
+          "xg": 0.112,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Kauã Elias",
+          "prob": 0.0852,
+          "xg": 0.089,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Matheus Gonçalves",
+          "prob": 0.336,
+          "xg": 0.41,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Guilherme",
+          "prob": 0.2078,
+          "xg": 0.233,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Gerson",
+          "prob": 0.2064,
+          "xg": 0.231,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Pulgar",
+          "prob": 0.0394,
+          "xg": 0.04,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. de la Cruz",
+          "prob": 0.0383,
+          "xg": 0.039,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1478014,
+    "league_id": 71,
+    "league": "Serie A",
+    "country": "Brazil",
+    "date": "2025-11-20T00:30:00+00:00",
+    "home_team": "Gremio",
+    "away_team": "Vasco DA Gama",
+    "home_logo": "https://media.api-sports.io/football/teams/130.png",
+    "away_logo": "https://media.api-sports.io/football/teams/133.png",
+    "odds": {
+      "winner": {
+        "home": 2.2,
+        "draw": 3.3,
+        "away": 3.3
+      },
+      "over_2_5": {
+        "over": 5.5,
+        "under": 1.14
+      },
+      "over_1_5": {
+        "over": 2.25,
+        "under": 1.57
+      },
+      "btts": {
+        "yes": 3.5,
+        "no": 1.28
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.3846,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.3846,
+        "prob": 0.3846
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7313
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.4609,
+        "prob": 0.4609
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7166
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5126,
+        "prob": 0.5126
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1277
+      },
+      {
+        "score": "1-0",
+        "prob": 0.1047
+      },
+      {
+        "score": "0-1",
+        "prob": 0.0982
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kaio Jorge",
+        "team": "Cruzeiro",
+        "goals": 17
+      },
+      {
+        "player": "G. de Arrascaeta",
+        "team": "Flamengo",
+        "goals": 17
+      },
+      {
+        "player": "Vitor Roque",
+        "team": "Palmeiras",
+        "goals": 16
+      },
+      {
+        "player": "P. Vegetti",
+        "team": "Vasco DA Gama",
+        "goals": 14
+      },
+      {
+        "player": "Pedro",
+        "team": "Flamengo",
+        "goals": 12
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "Gustavo Martins",
+          "prob": 0.2837,
+          "xg": 0.334,
+          "position": "Defender"
+        },
+        {
+          "player": "Jemerson",
+          "prob": 0.1672,
+          "xg": 0.183,
+          "position": "Defender"
+        },
+        {
+          "player": "F. Cristaldo",
+          "prob": 0.0706,
+          "xg": 0.073,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Camilo",
+          "prob": 0.0702,
+          "xg": 0.073,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Igor",
+          "prob": 0.0698,
+          "xg": 0.072,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Paulo Henrique",
+          "prob": 0.3004,
+          "xg": 0.357,
+          "position": "Defender"
+        },
+        {
+          "player": "Mateus Cocão",
+          "prob": 0.0739,
+          "xg": 0.077,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Dominguez",
+          "prob": 0.0722,
+          "xg": 0.075,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Souza",
+          "prob": 0.0721,
+          "xg": 0.075,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jair",
+          "prob": 0.0715,
+          "xg": 0.074,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1478016,
+    "league_id": 71,
+    "league": "Serie A",
+    "country": "Brazil",
+    "date": "2025-11-20T00:30:00+00:00",
+    "home_team": "Santos",
+    "away_team": "Mirassol",
+    "home_logo": "https://media.api-sports.io/football/teams/128.png",
+    "away_logo": "https://media.api-sports.io/football/teams/7848.png",
+    "odds": {
+      "winner": {
+        "home": 2.1,
+        "draw": 3.4,
+        "away": 3.5
+      },
+      "over_2_5": {
+        "over": 4.5,
+        "under": 1.18
+      },
+      "over_1_5": {
+        "over": 2.1,
+        "under": 1.67
+      },
+      "btts": {
+        "yes": 3.4,
+        "no": 1.3
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.3659,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.3659,
+        "prob": 0.3659
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7118
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3878,
+        "prob": 0.3878
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.655
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4537,
+        "prob": 0.4537
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1335
+      },
+      {
+        "score": "1-0",
+        "prob": 0.1214
+      },
+      {
+        "score": "0-1",
+        "prob": 0.1171
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kaio Jorge",
+        "team": "Cruzeiro",
+        "goals": 17
+      },
+      {
+        "player": "G. de Arrascaeta",
+        "team": "Flamengo",
+        "goals": 17
+      },
+      {
+        "player": "Vitor Roque",
+        "team": "Palmeiras",
+        "goals": 16
+      },
+      {
+        "player": "P. Vegetti",
+        "team": "Vasco DA Gama",
+        "goals": 14
+      },
+      {
+        "player": "Pedro",
+        "team": "Flamengo",
+        "goals": 12
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "Guilherme",
+          "prob": 0.3038,
+          "xg": 0.362,
+          "position": "Attacker"
+        },
+        {
+          "player": "Á. Barreal",
+          "prob": 0.1475,
+          "xg": 0.16,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Díaz",
+          "prob": 0.1186,
+          "xg": 0.126,
+          "position": "Attacker"
+        },
+        {
+          "player": "Neymar",
+          "prob": 0.1171,
+          "xg": 0.125,
+          "position": "Attacker"
+        },
+        {
+          "player": "Thaciano",
+          "prob": 0.0976,
+          "xg": 0.103,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Francisco da Costa",
+          "prob": 0.1757,
+          "xg": 0.193,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gabriel",
+          "prob": 0.1307,
+          "xg": 0.14,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Alesson",
+          "prob": 0.1145,
+          "xg": 0.122,
+          "position": "Attacker"
+        },
+        {
+          "player": "Edson",
+          "prob": 0.1128,
+          "xg": 0.12,
+          "position": "Attacker"
+        },
+        {
+          "player": "Guilherme Marques",
+          "prob": 0.0786,
+          "xg": 0.082,
+          "position": "Attacker"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1478015,
+    "league_id": 71,
+    "league": "Serie A",
+    "country": "Brazil",
+    "date": "2025-11-20T19:00:00+00:00",
+    "home_team": "Juventude",
+    "away_team": "Cruzeiro",
+    "home_logo": "https://media.api-sports.io/football/teams/152.png",
+    "away_logo": "https://media.api-sports.io/football/teams/135.png",
+    "odds": {
+      "winner": {
+        "home": 4.5,
+        "draw": 3.75,
+        "away": 1.75
+      },
+      "over_2_5": {
+        "over": 5.0,
+        "under": 1.17
+      },
+      "over_1_5": {
+        "over": 2.2,
+        "under": 1.62
+      },
+      "btts": {
+        "yes": 3.75,
+        "no": 1.25
+      }
+    },
+    "predicted_score": {
+      "home": 0,
+      "away": 1
+    },
+    "confidence": 0.3929,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.3929,
+        "prob": 0.3929
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.7016
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3178,
+        "prob": 0.3178
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.5885
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.3919,
+        "prob": 0.3919
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-1",
+        "prob": 0.1491
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1381
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1342
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kaio Jorge",
+        "team": "Cruzeiro",
+        "goals": 17
+      },
+      {
+        "player": "G. de Arrascaeta",
+        "team": "Flamengo",
+        "goals": 17
+      },
+      {
+        "player": "Vitor Roque",
+        "team": "Palmeiras",
+        "goals": 16
+      },
+      {
+        "player": "P. Vegetti",
+        "team": "Vasco DA Gama",
+        "goals": 14
+      },
+      {
+        "player": "Pedro",
+        "team": "Flamengo",
+        "goals": 12
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "E. Batalla",
+          "prob": 0.2788,
+          "xg": 0.327,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Ênio",
+          "prob": 0.1071,
+          "xg": 0.113,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Mandaca",
+          "prob": 0.1052,
+          "xg": 0.111,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Gabriel Taliari",
+          "prob": 0.0847,
+          "xg": 0.089,
+          "position": "Attacker"
+        },
+        {
+          "player": "Adriano Martins",
+          "prob": 0.0442,
+          "xg": 0.045,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "Kaio Jorge",
+          "prob": 0.3336,
+          "xg": 0.406,
+          "position": "Attacker"
+        },
+        {
+          "player": "Gabriel Barbosa",
+          "prob": 0.221,
+          "xg": 0.25,
+          "position": "Attacker"
+        },
+        {
+          "player": "Christian",
+          "prob": 0.134,
+          "xg": 0.144,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Romero",
+          "prob": 0.0668,
+          "xg": 0.069,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Eduardo",
+          "prob": 0.0668,
+          "xg": 0.069,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1478008,
+    "league_id": 71,
+    "league": "Serie A",
+    "country": "Brazil",
+    "date": "2025-11-20T21:00:00+00:00",
+    "home_team": "Bahia",
+    "away_team": "Fortaleza EC",
+    "home_logo": "https://media.api-sports.io/football/teams/118.png",
+    "away_logo": "https://media.api-sports.io/football/teams/154.png",
+    "odds": {
+      "winner": {
+        "home": 1.5,
+        "draw": 4.5,
+        "away": 6.0
+      },
+      "over_2_5": {
+        "over": 3.75,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 1.83,
+        "under": 1.83
+      },
+      "btts": {
+        "yes": 3.25,
+        "no": 1.33
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.6052,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.6052,
+        "prob": 0.6052
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.8329
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.4852,
+        "prob": 0.4852
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7358
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4668,
+        "prob": 0.4668
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.1314
+      },
+      {
+        "score": "2-0",
+        "prob": 0.1182
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1077
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kaio Jorge",
+        "team": "Cruzeiro",
+        "goals": 17
+      },
+      {
+        "player": "G. de Arrascaeta",
+        "team": "Flamengo",
+        "goals": 17
+      },
+      {
+        "player": "Vitor Roque",
+        "team": "Palmeiras",
+        "goals": 16
+      },
+      {
+        "player": "P. Vegetti",
+        "team": "Vasco DA Gama",
+        "goals": 14
+      },
+      {
+        "player": "Pedro",
+        "team": "Flamengo",
+        "goals": 12
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "N. Acevedo",
+          "prob": 0.4805,
+          "xg": 0.655,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Kanu",
+          "prob": 0.3951,
+          "xg": 0.503,
+          "position": "Defender"
+        },
+        {
+          "player": "Yago Felipe",
+          "prob": 0.1039,
+          "xg": 0.11,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jota",
+          "prob": 0.1003,
+          "xg": 0.106,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Sidney",
+          "prob": 0.1002,
+          "xg": 0.106,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Yago Pikachu",
+          "prob": 0.1992,
+          "xg": 0.222,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Pochettino",
+          "prob": 0.113,
+          "xg": 0.12,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Lucas Sasha",
+          "prob": 0.1126,
+          "xg": 0.119,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Matheus Pereira",
+          "prob": 0.1001,
+          "xg": 0.106,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Brítez",
+          "prob": 0.0487,
+          "xg": 0.05,
+          "position": "Defender"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1478012,
+    "league_id": 71,
+    "league": "Serie A",
+    "country": "Brazil",
+    "date": "2025-11-20T22:30:00+00:00",
+    "home_team": "Corinthians",
+    "away_team": "Sao Paulo",
+    "home_logo": "https://media.api-sports.io/football/teams/131.png",
+    "away_logo": "https://media.api-sports.io/football/teams/126.png",
+    "odds": {
+      "winner": {
+        "home": 2.4,
+        "draw": 2.88,
+        "away": 3.4
+      },
+      "over_2_5": {
+        "over": 6.5,
+        "under": 1.11
+      },
+      "over_1_5": {
+        "over": 2.62,
+        "under": 1.44
+      },
+      "btts": {
+        "yes": 4.0,
+        "no": 1.22
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.4579,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4579,
+        "prob": 0.4579
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.7417
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.377,
+        "prob": 0.377
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6453
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4316,
+        "prob": 0.4316
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.1441
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1297
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1109
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kaio Jorge",
+        "team": "Cruzeiro",
+        "goals": 17
+      },
+      {
+        "player": "G. de Arrascaeta",
+        "team": "Flamengo",
+        "goals": 17
+      },
+      {
+        "player": "Vitor Roque",
+        "team": "Palmeiras",
+        "goals": 16
+      },
+      {
+        "player": "P. Vegetti",
+        "team": "Vasco DA Gama",
+        "goals": 14
+      },
+      {
+        "player": "Pedro",
+        "team": "Flamengo",
+        "goals": 12
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "Yuri Alberto",
+          "prob": 0.2532,
+          "xg": 0.292,
+          "position": "Attacker"
+        },
+        {
+          "player": "Á. Romero",
+          "prob": 0.2099,
+          "xg": 0.236,
+          "position": "Attacker"
+        },
+        {
+          "player": "Talles Magno",
+          "prob": 0.2062,
+          "xg": 0.231,
+          "position": "Attacker"
+        },
+        {
+          "player": "Igor Coronado",
+          "prob": 0.1368,
+          "xg": 0.147,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Alex Santana",
+          "prob": 0.1343,
+          "xg": 0.144,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Erick",
+          "prob": 0.4822,
+          "xg": 0.658,
+          "position": "Attacker"
+        },
+        {
+          "player": "Henrique",
+          "prob": 0.0472,
+          "xg": 0.048,
+          "position": "Attacker"
+        },
+        {
+          "player": "G. Tapia",
+          "prob": 0.04,
+          "xg": 0.041,
+          "position": "Attacker"
+        },
+        {
+          "player": "Felipe Negrucci",
+          "prob": 0.0396,
+          "xg": 0.04,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Igor Vinicius",
+          "prob": 0.0292,
+          "xg": 0.03,
+          "position": "Defender"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1478011,
+    "league_id": 71,
+    "league": "Serie A",
+    "country": "Brazil",
+    "date": "2025-11-21T00:30:00+00:00",
+    "home_team": "Ceara",
+    "away_team": "Internacional",
+    "home_logo": "https://media.api-sports.io/football/teams/129.png",
+    "away_logo": "https://media.api-sports.io/football/teams/119.png",
+    "odds": {
+      "winner": {
+        "home": 2.2,
+        "draw": 3.1,
+        "away": 3.6
+      },
+      "over_2_5": {
+        "over": 6.5,
+        "under": 1.11
+      },
+      "over_1_5": {
+        "over": 2.62,
+        "under": 1.44
+      },
+      "btts": {
+        "yes": 4.33,
+        "no": 1.2
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.4902,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4902,
+        "prob": 0.4902
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.766
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3876,
+        "prob": 0.3876
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6549
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4316,
+        "prob": 0.4316
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.147
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1264
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1065
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kaio Jorge",
+        "team": "Cruzeiro",
+        "goals": 17
+      },
+      {
+        "player": "G. de Arrascaeta",
+        "team": "Flamengo",
+        "goals": 17
+      },
+      {
+        "player": "Vitor Roque",
+        "team": "Palmeiras",
+        "goals": 16
+      },
+      {
+        "player": "P. Vegetti",
+        "team": "Vasco DA Gama",
+        "goals": 14
+      },
+      {
+        "player": "Pedro",
+        "team": "Flamengo",
+        "goals": 12
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "Pedro Raul",
+          "prob": 0.2496,
+          "xg": 0.287,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Mugni",
+          "prob": 0.2173,
+          "xg": 0.245,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Matheus Araújo",
+          "prob": 0.2054,
+          "xg": 0.23,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Fernando Sobral",
+          "prob": 0.1257,
+          "xg": 0.134,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Lourenço",
+          "prob": 0.123,
+          "xg": 0.131,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Alan Patrick",
+          "prob": 0.4297,
+          "xg": 0.562,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Bernabéi",
+          "prob": 0.0845,
+          "xg": 0.088,
+          "position": "Defender"
+        },
+        {
+          "player": "Victor Gabriel",
+          "prob": 0.0746,
+          "xg": 0.078,
+          "position": "Defender"
+        },
+        {
+          "player": "Thiago Maia",
+          "prob": 0.0339,
+          "xg": 0.035,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Yago",
+          "prob": 0.0237,
+          "xg": 0.024,
+          "position": "Attacker"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1435990,
+    "league_id": 307,
+    "league": "Pro League",
+    "country": "Saudi-Arabia",
+    "date": "2025-11-21T14:50:00+00:00",
+    "home_team": "Al Kholood",
+    "away_team": "Al-Hazm",
+    "home_logo": "https://media.api-sports.io/football/teams/10509.png",
+    "away_logo": "https://media.api-sports.io/football/teams/2945.png",
+    "odds": {
+      "winner": {
+        "home": 1.73,
+        "draw": 3.6,
+        "away": 4.1
+      },
+      "over_2_5": {
+        "over": 4.33,
+        "under": 1.2
+      },
+      "over_1_5": {
+        "over": 2.0,
+        "under": 1.73
+      },
+      "btts": {
+        "yes": 3.4,
+        "no": 1.3
+      }
+    },
+    "predicted_score": {
+      "home": 2,
+      "away": 1
+    },
+    "confidence": 0.5642,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.5642,
+        "prob": 0.5642
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.8017
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.725,
+        "prob": 0.725
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8897
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.6914,
+        "prob": 0.6914
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "2-1",
+        "prob": 0.0906
+      },
+      {
+        "score": "1-1",
+        "prob": 0.0781
+      },
+      {
+        "score": "3-1",
+        "prob": 0.0701
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "João Félix",
+        "team": "Al-Nassr",
+        "goals": 10
+      },
+      {
+        "player": "J. King",
+        "team": "Al Khaleej Saihat",
+        "goals": 9
+      },
+      {
+        "player": "Cristiano Ronaldo",
+        "team": "Al-Nassr",
+        "goals": 9
+      },
+      {
+        "player": "J. Quiñones",
+        "team": "Al-Qadisiyah FC",
+        "goals": 6
+      },
+      {
+        "player": "Marcos Leonardo",
+        "team": "Al-Hilal Saudi FC",
+        "goals": 6
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "R. Enrique",
+          "prob": 0.4993,
+          "xg": 0.692,
+          "position": "Attacker"
+        },
+        {
+          "player": "Hattan Bahbri",
+          "prob": 0.4102,
+          "xg": 0.528,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Buckley",
+          "prob": 0.2379,
+          "xg": 0.272,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Maolida",
+          "prob": 0.2067,
+          "xg": 0.232,
+          "position": "Attacker"
+        },
+        {
+          "player": "Muhammad Sawan",
+          "prob": 0.1537,
+          "xg": 0.167,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Sayoud",
+          "prob": 0.3368,
+          "xg": 0.411,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Fábio Martins",
+          "prob": 0.3042,
+          "xg": 0.363,
+          "position": "Attacker"
+        },
+        {
+          "player": "Yousef Al Shammari",
+          "prob": 0.2708,
+          "xg": 0.316,
+          "position": "Attacker"
+        },
+        {
+          "player": "Nawaf Al Habashi",
+          "prob": 0.1129,
+          "xg": 0.12,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Mokwana",
+          "prob": 0.09,
+          "xg": 0.094,
+          "position": "Attacker"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1435988,
+    "league_id": 307,
+    "league": "Pro League",
+    "country": "Saudi-Arabia",
+    "date": "2025-11-21T15:15:00+00:00",
+    "home_team": "Al-Ittihad FC",
+    "away_team": "Al Riyadh",
+    "home_logo": "https://media.api-sports.io/football/teams/2938.png",
+    "away_logo": "https://media.api-sports.io/football/teams/10511.png",
+    "odds": {
+      "winner": {
+        "home": 1.22,
+        "draw": 5.75,
+        "away": 10.0
+      },
+      "over_2_5": {
+        "over": 2.62,
+        "under": 1.44
+      },
+      "over_1_5": {
+        "over": 1.53,
+        "under": 2.38
+      },
+      "btts": {
+        "yes": 3.0,
+        "no": 1.36
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.5133,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.5133,
+        "prob": 0.5133
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.768
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5756,
+        "prob": 0.5756
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8003
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5829,
+        "prob": 0.5829
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1078
+      },
+      {
+        "score": "2-1",
+        "prob": 0.0971
+      },
+      {
+        "score": "1-0",
+        "prob": 0.0899
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "João Félix",
+        "team": "Al-Nassr",
+        "goals": 10
+      },
+      {
+        "player": "J. King",
+        "team": "Al Khaleej Saihat",
+        "goals": 9
+      },
+      {
+        "player": "Cristiano Ronaldo",
+        "team": "Al-Nassr",
+        "goals": 9
+      },
+      {
+        "player": "J. Quiñones",
+        "team": "Al-Qadisiyah FC",
+        "goals": 6
+      },
+      {
+        "player": "Marcos Leonardo",
+        "team": "Al-Hilal Saudi FC",
+        "goals": 6
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "K. Benzema",
+          "prob": 0.4079,
+          "xg": 0.524,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Bergwijn",
+          "prob": 0.2515,
+          "xg": 0.29,
+          "position": "Attacker"
+        },
+        {
+          "player": "Saleh Al Shehri",
+          "prob": 0.1764,
+          "xg": 0.194,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Diaby",
+          "prob": 0.1727,
+          "xg": 0.19,
+          "position": "Attacker"
+        },
+        {
+          "player": "Roger Fernandes",
+          "prob": 0.0972,
+          "xg": 0.102,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "M. Sylla",
+          "prob": 0.3582,
+          "xg": 0.443,
+          "position": "Attacker"
+        },
+        {
+          "player": "Tozé",
+          "prob": 0.2443,
+          "xg": 0.28,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Khalil Al Absi",
+          "prob": 0.1169,
+          "xg": 0.124,
+          "position": "Attacker"
+        },
+        {
+          "player": "Sergio González",
+          "prob": 0.0617,
+          "xg": 0.064,
+          "position": "Defender"
+        },
+        {
+          "player": "T. Okou",
+          "prob": 0.0249,
+          "xg": 0.025,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1388725,
+    "league_id": 79,
+    "league": "2. Bundesliga",
+    "country": "Germany",
+    "date": "2025-11-21T17:30:00+00:00",
+    "home_team": "Hertha BSC",
+    "away_team": "Eintracht Braunschweig",
+    "home_logo": "https://media.api-sports.io/football/teams/159.png",
+    "away_logo": "https://media.api-sports.io/football/teams/744.png",
+    "odds": {
+      "winner": {
+        "home": 1.53,
+        "draw": 4.33,
+        "away": 5.5
+      },
+      "over_2_5": {
+        "over": 3.75,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 1.83,
+        "under": 1.83
+      },
+      "btts": {
+        "yes": 3.25,
+        "no": 1.33
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.4124,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4124,
+        "prob": 0.4124
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.7108
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3448,
+        "prob": 0.3448
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6151
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4129,
+        "prob": 0.4129
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.145
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1334
+      },
+      {
+        "score": "0-0",
+        "prob": 0.125
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "I. Lidberg",
+        "team": "SV Darmstadt 98",
+        "goals": 9
+      },
+      {
+        "player": "Y. Ebnoutalib",
+        "team": "SV Elversberg",
+        "goals": 9
+      },
+      {
+        "player": "I. Prtajin",
+        "team": "1. FC Kaiserslautern",
+        "goals": 8
+      },
+      {
+        "player": "F. Bilbija",
+        "team": "SC Paderborn 07",
+        "goals": 8
+      },
+      {
+        "player": "F. Schleusener",
+        "team": "Karlsruher SC",
+        "goals": 6
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "M. Cuisance",
+          "prob": 0.232,
+          "xg": 0.264,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Grønning",
+          "prob": 0.1827,
+          "xg": 0.202,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Þorsteinsson",
+          "prob": 0.1783,
+          "xg": 0.196,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Eitschberger",
+          "prob": 0.043,
+          "xg": 0.044,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Winkler",
+          "prob": 0.0409,
+          "xg": 0.042,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "F. Di Michele Sanchez",
+          "prob": 0.2735,
+          "xg": 0.319,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Köhler",
+          "prob": 0.1584,
+          "xg": 0.172,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Conteh",
+          "prob": 0.1146,
+          "xg": 0.122,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Tempelmann",
+          "prob": 0.0328,
+          "xg": 0.033,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Aydın",
+          "prob": 0.0291,
+          "xg": 0.03,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1388722,
+    "league_id": 79,
+    "league": "2. Bundesliga",
+    "country": "Germany",
+    "date": "2025-11-21T17:30:00+00:00",
+    "home_team": "VfL Bochum",
+    "away_team": "Dynamo Dresden",
+    "home_logo": "https://media.api-sports.io/football/teams/176.png",
+    "away_logo": "https://media.api-sports.io/football/teams/183.png",
+    "odds": {
+      "winner": {
+        "home": 1.8,
+        "draw": 3.9,
+        "away": 4.1
+      },
+      "over_2_5": {
+        "over": 3.5,
+        "under": 1.28
+      },
+      "over_1_5": {
+        "over": 1.8,
+        "under": 1.91
+      },
+      "btts": {
+        "yes": 2.75,
+        "no": 1.4
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.5087,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.5087,
+        "prob": 0.5087
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7647
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5621,
+        "prob": 0.5621
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7912
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5732,
+        "prob": 0.5732
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1101
+      },
+      {
+        "score": "2-1",
+        "prob": 0.0969
+      },
+      {
+        "score": "1-0",
+        "prob": 0.0933
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "I. Lidberg",
+        "team": "SV Darmstadt 98",
+        "goals": 9
+      },
+      {
+        "player": "Y. Ebnoutalib",
+        "team": "SV Elversberg",
+        "goals": 9
+      },
+      {
+        "player": "I. Prtajin",
+        "team": "1. FC Kaiserslautern",
+        "goals": 8
+      },
+      {
+        "player": "F. Bilbija",
+        "team": "SC Paderborn 07",
+        "goals": 8
+      },
+      {
+        "player": "F. Schleusener",
+        "team": "Karlsruher SC",
+        "goals": 6
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "M. Bero",
+          "prob": 0.2429,
+          "xg": 0.278,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Broschinski",
+          "prob": 0.2097,
+          "xg": 0.235,
+          "position": "Attacker"
+        },
+        {
+          "player": "G. Holtmann",
+          "prob": 0.2095,
+          "xg": 0.235,
+          "position": "Attacker"
+        },
+        {
+          "player": "I. Sissoko",
+          "prob": 0.2094,
+          "xg": 0.235,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Bamba",
+          "prob": 0.1835,
+          "xg": 0.203,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "C. Daferner",
+          "prob": 0.5336,
+          "xg": 0.763,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Rossipal",
+          "prob": 0.0828,
+          "xg": 0.086,
+          "position": "Defender"
+        },
+        {
+          "player": "J. Lemmer",
+          "prob": 0.0296,
+          "xg": 0.03,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Kofi Jeremy Amoako",
+          "prob": 0.0296,
+          "xg": 0.03,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Šapina",
+          "prob": 0.0292,
+          "xg": 0.03,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1435993,
+    "league_id": 307,
+    "league": "Pro League",
+    "country": "Saudi-Arabia",
+    "date": "2025-11-21T17:30:00+00:00",
+    "home_team": "Al-Ahli Jeddah",
+    "away_team": "Al-Qadisiyah FC",
+    "home_logo": "https://media.api-sports.io/football/teams/2929.png",
+    "away_logo": "https://media.api-sports.io/football/teams/2933.png",
+    "odds": {
+      "winner": {
+        "home": 1.9,
+        "draw": 3.6,
+        "away": 3.5
+      },
+      "over_2_5": {
+        "over": 4.0,
+        "under": 1.22
+      },
+      "over_1_5": {
+        "over": 2.0,
+        "under": 1.73
+      },
+      "btts": {
+        "yes": 3.25,
+        "no": 1.33
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.3745,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.3745,
+        "prob": 0.3745
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7489
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5394,
+        "prob": 0.5394
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7753
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5747,
+        "prob": 0.5747
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.118
+      },
+      {
+        "score": "1-2",
+        "prob": 0.0838
+      },
+      {
+        "score": "2-1",
+        "prob": 0.0838
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "João Félix",
+        "team": "Al-Nassr",
+        "goals": 10
+      },
+      {
+        "player": "J. King",
+        "team": "Al Khaleej Saihat",
+        "goals": 9
+      },
+      {
+        "player": "Cristiano Ronaldo",
+        "team": "Al-Nassr",
+        "goals": 9
+      },
+      {
+        "player": "J. Quiñones",
+        "team": "Al-Qadisiyah FC",
+        "goals": 6
+      },
+      {
+        "player": "Marcos Leonardo",
+        "team": "Al-Hilal Saudi FC",
+        "goals": 6
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "I. Toney",
+          "prob": 0.3972,
+          "xg": 0.506,
+          "position": "Attacker"
+        },
+        {
+          "player": "F. Kessié",
+          "prob": 0.0963,
+          "xg": 0.101,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Atangana Edoa",
+          "prob": 0.0952,
+          "xg": 0.1,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Millot",
+          "prob": 0.0916,
+          "xg": 0.096,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Mahrez",
+          "prob": 0.0809,
+          "xg": 0.084,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "J. Quiñones",
+          "prob": 0.3159,
+          "xg": 0.38,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Retegui",
+          "prob": 0.2745,
+          "xg": 0.321,
+          "position": "Attacker"
+        },
+        {
+          "player": "Abdulaziz Al Othman",
+          "prob": 0.2292,
+          "xg": 0.26,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Nández",
+          "prob": 0.0851,
+          "xg": 0.089,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Musab Al Juwayr",
+          "prob": 0.0848,
+          "xg": 0.089,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1379442,
+    "league_id": 119,
+    "league": "Superliga",
+    "country": "Denmark",
+    "date": "2025-11-21T18:00:00+00:00",
+    "home_team": "Silkeborg",
+    "away_team": "Aarhus",
+    "home_logo": "https://media.api-sports.io/football/teams/2073.png",
+    "away_logo": "https://media.api-sports.io/football/teams/406.png",
+    "odds": {
+      "winner": {
+        "home": 3.9,
+        "draw": 3.9,
+        "away": 1.8
+      },
+      "over_2_5": {
+        "over": 3.5,
+        "under": 1.28
+      },
+      "over_1_5": {
+        "over": 1.8,
+        "under": 1.91
+      },
+      "btts": {
+        "yes": 2.75,
+        "no": 1.4
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 2
+    },
+    "confidence": 0.5296,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.5296,
+        "prob": 0.5296
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7874
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.6734,
+        "prob": 0.6734
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8611
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.6586,
+        "prob": 0.6586
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-2",
+        "prob": 0.0939
+      },
+      {
+        "score": "1-1",
+        "prob": 0.0903
+      },
+      {
+        "score": "0-2",
+        "prob": 0.0671
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Franculino Djú",
+        "team": "FC Midtjylland",
+        "goals": 14
+      },
+      {
+        "player": "C. McCowatt",
+        "team": "Silkeborg",
+        "goals": 8
+      },
+      {
+        "player": "T. Bech",
+        "team": "Aarhus",
+        "goals": 8
+      },
+      {
+        "player": "N. Ganaus",
+        "team": "Odense",
+        "goals": 7
+      },
+      {
+        "player": "T. Adamsen",
+        "team": "Silkeborg",
+        "goals": 7
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "T. Adamsen",
+          "prob": 0.431,
+          "xg": 0.564,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. McCowatt",
+          "prob": 0.19,
+          "xg": 0.211,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Berger",
+          "prob": 0.1168,
+          "xg": 0.124,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Gammelby",
+          "prob": 0.0836,
+          "xg": 0.087,
+          "position": "Defender"
+        },
+        {
+          "player": "P. Mattsson",
+          "prob": 0.0349,
+          "xg": 0.036,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Kristian Fredrik Malt Arnstad",
+          "prob": 0.377,
+          "xg": 0.473,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Mortensen",
+          "prob": 0.3769,
+          "xg": 0.473,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Anderson",
+          "prob": 0.2242,
+          "xg": 0.254,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Kevin Yakob",
+          "prob": 0.1741,
+          "xg": 0.191,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Beijmo",
+          "prob": 0.1522,
+          "xg": 0.165,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1389252,
+    "league_id": 62,
+    "league": "Ligue 2",
+    "country": "France",
+    "date": "2025-11-21T19:00:00+00:00",
+    "home_team": "Laval",
+    "away_team": "Estac Troyes",
+    "home_logo": "https://media.api-sports.io/football/teams/433.png",
+    "away_logo": "https://media.api-sports.io/football/teams/110.png",
+    "odds": {
+      "winner": {
+        "home": 3.4,
+        "draw": 3.0,
+        "away": 2.05
+      },
+      "over_2_5": {
+        "over": 6.0,
+        "under": 1.12
+      },
+      "over_1_5": {
+        "over": 2.5,
+        "under": 1.5
+      },
+      "btts": {
+        "yes": 4.0,
+        "no": 1.22
+      }
+    },
+    "predicted_score": {
+      "home": 0,
+      "away": 1
+    },
+    "confidence": 0.4488,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.4488,
+        "prob": 0.4488
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.7479
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3286,
+        "prob": 0.3286
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.5993
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.391,
+        "prob": 0.391
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-1",
+        "prob": 0.1592
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1327
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1306
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "T. Bentayeb",
+        "team": "Estac Troyes",
+        "goals": 8
+      },
+      {
+        "player": "D. Durand",
+        "team": "RED Star FC 93",
+        "goals": 7
+      },
+      {
+        "player": "E. Bardeli",
+        "team": "Dunkerque",
+        "goals": 6
+      },
+      {
+        "player": "Z. Davitashvili",
+        "team": "Saint Etienne",
+        "goals": 6
+      },
+      {
+        "player": "M. Essimi Ateba",
+        "team": "Dunkerque",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "E. Clavreul",
+          "prob": 0.2008,
+          "xg": 0.224,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Tchokounté",
+          "prob": 0.1223,
+          "xg": 0.13,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Thomas",
+          "prob": 0.0815,
+          "xg": 0.085,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Maggiotti",
+          "prob": 0.0814,
+          "xg": 0.085,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Camara",
+          "prob": 0.0682,
+          "xg": 0.071,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "T. Bentayeb",
+          "prob": 0.2895,
+          "xg": 0.342,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Assoumou",
+          "prob": 0.1764,
+          "xg": 0.194,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Adeline",
+          "prob": 0.1491,
+          "xg": 0.161,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. El Idrissy",
+          "prob": 0.125,
+          "xg": 0.133,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Diop",
+          "prob": 0.1104,
+          "xg": 0.117,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1389247,
+    "league_id": 62,
+    "league": "Ligue 2",
+    "country": "France",
+    "date": "2025-11-21T19:00:00+00:00",
+    "home_team": "PAU",
+    "away_team": "Le Mans",
+    "home_logo": "https://media.api-sports.io/football/teams/1297.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1298.png",
+    "odds": {
+      "winner": {
+        "home": 2.25,
+        "draw": 3.1,
+        "away": 2.8
+      },
+      "over_2_5": {
+        "over": 4.5,
+        "under": 1.18
+      },
+      "over_1_5": {
+        "over": 2.1,
+        "under": 1.67
+      },
+      "btts": {
+        "yes": 3.4,
+        "no": 1.3
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.3764,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.3764,
+        "prob": 0.3764
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7528
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5579,
+        "prob": 0.5579
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7882
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5892,
+        "prob": 0.5892
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1151
+      },
+      {
+        "score": "1-2",
+        "prob": 0.0841
+      },
+      {
+        "score": "2-1",
+        "prob": 0.0841
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "T. Bentayeb",
+        "team": "Estac Troyes",
+        "goals": 8
+      },
+      {
+        "player": "D. Durand",
+        "team": "RED Star FC 93",
+        "goals": 7
+      },
+      {
+        "player": "E. Bardeli",
+        "team": "Dunkerque",
+        "goals": 6
+      },
+      {
+        "player": "Z. Davitashvili",
+        "team": "Saint Etienne",
+        "goals": 6
+      },
+      {
+        "player": "M. Essimi Ateba",
+        "team": "Dunkerque",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "G. Versini",
+          "prob": 0.2151,
+          "xg": 0.242,
+          "position": "Midfielder"
+        },
+        {
+          "player": "O. Sadik",
+          "prob": 0.1796,
+          "xg": 0.198,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Bobichon",
+          "prob": 0.1537,
+          "xg": 0.167,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Messi",
+          "prob": 0.1278,
+          "xg": 0.137,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Sissoko",
+          "prob": 0.1259,
+          "xg": 0.135,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "D. Guèye",
+          "prob": 0.2563,
+          "xg": 0.296,
+          "position": "Attacker"
+        },
+        {
+          "player": "W. Harhouz",
+          "prob": 0.2525,
+          "xg": 0.291,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Calodat",
+          "prob": 0.1551,
+          "xg": 0.169,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Quarshie",
+          "prob": 0.0963,
+          "xg": 0.101,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Vercruysse",
+          "prob": 0.096,
+          "xg": 0.101,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1389250,
+    "league_id": 62,
+    "league": "Ligue 2",
+    "country": "France",
+    "date": "2025-11-21T19:00:00+00:00",
+    "home_team": "Boulogne",
+    "away_team": "Grenoble",
+    "home_logo": "https://media.api-sports.io/football/teams/1299.png",
+    "away_logo": "https://media.api-sports.io/football/teams/101.png",
+    "odds": {
+      "winner": {
+        "home": 2.25,
+        "draw": 3.1,
+        "away": 2.88
+      },
+      "over_2_5": {
+        "over": 5.5,
+        "under": 1.14
+      },
+      "over_1_5": {
+        "over": 2.38,
+        "under": 1.53
+      },
+      "btts": {
+        "yes": 3.75,
+        "no": 1.25
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.495,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.495,
+        "prob": 0.495
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7652
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5757,
+        "prob": 0.5757
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8003
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.588,
+        "prob": 0.588
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1089
+      },
+      {
+        "score": "1-2",
+        "prob": 0.0959
+      },
+      {
+        "score": "0-1",
+        "prob": 0.0879
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "T. Bentayeb",
+        "team": "Estac Troyes",
+        "goals": 8
+      },
+      {
+        "player": "D. Durand",
+        "team": "RED Star FC 93",
+        "goals": 7
+      },
+      {
+        "player": "E. Bardeli",
+        "team": "Dunkerque",
+        "goals": 6
+      },
+      {
+        "player": "Z. Davitashvili",
+        "team": "Saint Etienne",
+        "goals": 6
+      },
+      {
+        "player": "M. Essimi Ateba",
+        "team": "Dunkerque",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "C. Fatou",
+          "prob": 0.2802,
+          "xg": 0.329,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Bultel",
+          "prob": 0.1168,
+          "xg": 0.124,
+          "position": "Midfielder"
+        },
+        {
+          "player": "E. Boula",
+          "prob": 0.1154,
+          "xg": 0.123,
+          "position": "Midfielder"
+        },
+        {
+          "player": "N. Fatar",
+          "prob": 0.0988,
+          "xg": 0.104,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. El Farissi",
+          "prob": 0.0988,
+          "xg": 0.104,
+          "position": "Attacker"
+        }
+      ],
+      "away": [
+        {
+          "player": "Y. Diaby",
+          "prob": 0.412,
+          "xg": 0.531,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Elphege",
+          "prob": 0.28,
+          "xg": 0.329,
+          "position": "Attacker"
+        },
+        {
+          "player": "J. Benet",
+          "prob": 0.1375,
+          "xg": 0.148,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Bangré",
+          "prob": 0.1353,
+          "xg": 0.145,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Xantippe",
+          "prob": 0.1069,
+          "xg": 0.113,
+          "position": "Defender"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1389253,
+    "league_id": 62,
+    "league": "Ligue 2",
+    "country": "France",
+    "date": "2025-11-21T19:00:00+00:00",
+    "home_team": "Rodez",
+    "away_team": "Dunkerque",
+    "home_logo": "https://media.api-sports.io/football/teams/1301.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1304.png",
+    "odds": {
+      "winner": {
+        "home": 2.6,
+        "draw": 3.2,
+        "away": 2.4
+      },
+      "over_2_5": {
+        "over": 4.33,
+        "under": 1.2
+      },
+      "over_1_5": {
+        "over": 2.0,
+        "under": 1.73
+      },
+      "btts": {
+        "yes": 3.25,
+        "no": 1.33
+      }
+    },
+    "predicted_score": {
+      "home": 0,
+      "away": 1
+    },
+    "confidence": 0.3996,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.3996,
+        "prob": 0.3996
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7086
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3717,
+        "prob": 0.3717
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6404
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4378,
+        "prob": 0.4378
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-1",
+        "prob": 0.1334
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1334
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1131
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "T. Bentayeb",
+        "team": "Estac Troyes",
+        "goals": 8
+      },
+      {
+        "player": "D. Durand",
+        "team": "RED Star FC 93",
+        "goals": 7
+      },
+      {
+        "player": "E. Bardeli",
+        "team": "Dunkerque",
+        "goals": 6
+      },
+      {
+        "player": "Z. Davitashvili",
+        "team": "Saint Etienne",
+        "goals": 6
+      },
+      {
+        "player": "M. Essimi Ateba",
+        "team": "Dunkerque",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "I. Baldé",
+          "prob": 0.1773,
+          "xg": 0.195,
+          "position": "Attacker"
+        },
+        {
+          "player": "S. Benchamma",
+          "prob": 0.1493,
+          "xg": 0.162,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Arconte",
+          "prob": 0.1263,
+          "xg": 0.135,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Nagera",
+          "prob": 0.1262,
+          "xg": 0.135,
+          "position": "Attacker"
+        },
+        {
+          "player": "O. Joly",
+          "prob": 0.0846,
+          "xg": 0.088,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "E. Bardeli",
+          "prob": 0.2322,
+          "xg": 0.264,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Essimi Ateba",
+          "prob": 0.2052,
+          "xg": 0.23,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Robinet",
+          "prob": 0.1705,
+          "xg": 0.187,
+          "position": "Attacker"
+        },
+        {
+          "player": "Y. Sekongo",
+          "prob": 0.1661,
+          "xg": 0.182,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Aristide Zossou",
+          "prob": 0.108,
+          "xg": 0.114,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1396829,
+    "league_id": 62,
+    "league": "Ligue 2",
+    "country": "France",
+    "date": "2025-11-21T19:00:00+00:00",
+    "home_team": "Annecy",
+    "away_team": "Bastia",
+    "home_logo": "https://media.api-sports.io/football/teams/3012.png",
+    "away_logo": "https://media.api-sports.io/football/teams/1305.png",
+    "odds": {
+      "winner": {
+        "home": 2.25,
+        "draw": 2.88,
+        "away": 3.1
+      },
+      "over_2_5": {
+        "over": 7.0,
+        "under": 1.1
+      },
+      "over_1_5": {
+        "over": 2.62,
+        "under": 1.44
+      },
+      "btts": {
+        "yes": 4.33,
+        "no": 1.2
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.5955,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.5955,
+        "prob": 0.5955
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.8864
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.2425,
+        "prob": 0.2425
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.5066
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.2398,
+        "prob": 0.2398
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.2376
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1828
+      },
+      {
+        "score": "2-0",
+        "prob": 0.1544
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "T. Bentayeb",
+        "team": "Estac Troyes",
+        "goals": 8
+      },
+      {
+        "player": "D. Durand",
+        "team": "RED Star FC 93",
+        "goals": 7
+      },
+      {
+        "player": "E. Bardeli",
+        "team": "Dunkerque",
+        "goals": 6
+      },
+      {
+        "player": "Z. Davitashvili",
+        "team": "Saint Etienne",
+        "goals": 6
+      },
+      {
+        "player": "M. Essimi Ateba",
+        "team": "Dunkerque",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "W. Tiendrébéogo",
+          "prob": 0.2245,
+          "xg": 0.254,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Rambaud",
+          "prob": 0.193,
+          "xg": 0.214,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Billemaz",
+          "prob": 0.1369,
+          "xg": 0.147,
+          "position": "Attacker"
+        },
+        {
+          "player": "Quentin Paris",
+          "prob": 0.1364,
+          "xg": 0.147,
+          "position": "Attacker"
+        },
+        {
+          "player": "V. Pajot",
+          "prob": 0.092,
+          "xg": 0.096,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Boutrah",
+          "prob": 0.1088,
+          "xg": 0.115,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Ducrocq",
+          "prob": 0.061,
+          "xg": 0.063,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Sebas",
+          "prob": 0.0508,
+          "xg": 0.052,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Roncaglia",
+          "prob": 0.0259,
+          "xg": 0.026,
+          "position": "Defender"
+        },
+        {
+          "player": "D. Guidi",
+          "prob": 0.0246,
+          "xg": 0.025,
+          "position": "Defender"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1388403,
+    "league_id": 78,
+    "league": "Bundesliga",
+    "country": "Germany",
+    "date": "2025-11-21T19:30:00+00:00",
+    "home_team": "FSV Mainz 05",
+    "away_team": "1899 Hoffenheim",
+    "home_logo": "https://media.api-sports.io/football/teams/164.png",
+    "away_logo": "https://media.api-sports.io/football/teams/167.png",
+    "odds": {
+      "winner": {
+        "home": 2.4,
+        "draw": 3.6,
+        "away": 2.75
+      },
+      "over_2_5": {
+        "over": 3.75,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 1.83,
+        "under": 1.83
+      },
+      "btts": {
+        "yes": 2.75,
+        "no": 1.4
+      }
+    },
+    "predicted_score": {
+      "home": 0,
+      "away": 2
+    },
+    "confidence": 0.6677,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.6677,
+        "prob": 0.6677
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.8543
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.625,
+        "prob": 0.625
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.8324
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5534,
+        "prob": 0.5534
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-2",
+        "prob": 0.1027
+      },
+      {
+        "score": "1-2",
+        "prob": 0.0986
+      },
+      {
+        "score": "0-1",
+        "prob": 0.0901
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "H. Kane",
+        "team": "Bayern München",
+        "goals": 13
+      },
+      {
+        "player": "L. Díaz",
+        "team": "Bayern München",
+        "goals": 6
+      },
+      {
+        "player": "H. Tabaković",
+        "team": "Borussia Mönchengladbach",
+        "goals": 6
+      },
+      {
+        "player": "J. Burkardt",
+        "team": "Eintracht Frankfurt",
+        "goals": 6
+      },
+      {
+        "player": "C. Uzun",
+        "team": "Eintracht Frankfurt",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "N. Amiri",
+          "prob": 0.2761,
+          "xg": 0.323,
+          "position": "Midfielder"
+        },
+        {
+          "player": "K. Sano",
+          "prob": 0.0527,
+          "xg": 0.054,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Widmer",
+          "prob": 0.0521,
+          "xg": 0.054,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Nordin",
+          "prob": 0.05,
+          "xg": 0.051,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Maloney",
+          "prob": 0.049,
+          "xg": 0.05,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Max Moerstedt",
+          "prob": 0.2832,
+          "xg": 0.333,
+          "position": "Attacker"
+        },
+        {
+          "player": "W. Burger",
+          "prob": 0.2832,
+          "xg": 0.333,
+          "position": "Midfielder"
+        },
+        {
+          "player": "G. Prömel",
+          "prob": 0.2584,
+          "xg": 0.299,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Kramarić",
+          "prob": 0.2494,
+          "xg": 0.287,
+          "position": "Attacker"
+        },
+        {
+          "player": "G. Orban",
+          "prob": 0.2459,
+          "xg": 0.282,
+          "position": "Attacker"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1391922,
+    "league_id": 141,
+    "league": "Segunda División",
+    "country": "Spain",
+    "date": "2025-11-21T19:30:00+00:00",
+    "home_team": "Las Palmas",
+    "away_team": "Albacete",
+    "home_logo": "https://media.api-sports.io/football/teams/534.png",
+    "away_logo": "https://media.api-sports.io/football/teams/722.png",
+    "odds": {
+      "winner": {
+        "home": 1.73,
+        "draw": 3.6,
+        "away": 4.5
+      },
+      "over_2_5": {
+        "over": 5.0,
+        "under": 1.17
+      },
+      "over_1_5": {
+        "over": 2.2,
+        "under": 1.62
+      },
+      "btts": {
+        "yes": 3.75,
+        "no": 1.25
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.4073,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4073,
+        "prob": 0.4073
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7525
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5533,
+        "prob": 0.5533
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7851
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5845,
+        "prob": 0.5845
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1156
+      },
+      {
+        "score": "2-1",
+        "prob": 0.0879
+      },
+      {
+        "score": "1-0",
+        "prob": 0.0838
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Adri Embarba",
+        "team": "Almeria",
+        "goals": 8
+      },
+      {
+        "player": "Asier Villalibre",
+        "team": "Racing Santander",
+        "goals": 8
+      },
+      {
+        "player": "Z. Eddahchouri",
+        "team": "Deportivo La Coruna",
+        "goals": 7
+      },
+      {
+        "player": "Jeremy Arévalo",
+        "team": "Racing Santander",
+        "goals": 7
+      },
+      {
+        "player": "Jonathan Dubasin",
+        "team": "Sporting Gijon",
+        "goals": 7
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "Ale García",
+          "prob": 0.3621,
+          "xg": 0.45,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Luković",
+          "prob": 0.2491,
+          "xg": 0.286,
+          "position": "Attacker"
+        },
+        {
+          "player": "Iván Gil",
+          "prob": 0.2094,
+          "xg": 0.235,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Pejiño",
+          "prob": 0.0985,
+          "xg": 0.104,
+          "position": "Attacker"
+        },
+        {
+          "player": "Mika Màrmol",
+          "prob": 0.0935,
+          "xg": 0.098,
+          "position": "Defender"
+        }
+      ],
+      "away": [
+        {
+          "player": "Antonio Puertas",
+          "prob": 0.2896,
+          "xg": 0.342,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Agus Medina",
+          "prob": 0.2601,
+          "xg": 0.301,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Jon Morcillo",
+          "prob": 0.2269,
+          "xg": 0.257,
+          "position": "Midfielder"
+        },
+        {
+          "player": "José Carlos Lazo",
+          "prob": 0.1127,
+          "xg": 0.12,
+          "position": "Attacker"
+        },
+        {
+          "player": "Jefté Betancor",
+          "prob": 0.1125,
+          "xg": 0.119,
+          "position": "Attacker"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1419718,
+    "league_id": 136,
+    "league": "Serie B",
+    "country": "Italy",
+    "date": "2025-11-21T19:30:00+00:00",
+    "home_team": "Catanzaro",
+    "away_team": "Pescara",
+    "home_logo": "https://media.api-sports.io/football/teams/1687.png",
+    "away_logo": "https://media.api-sports.io/football/teams/525.png",
+    "odds": {
+      "winner": {
+        "home": 1.67,
+        "draw": 3.6,
+        "away": 5.25
+      },
+      "over_2_5": {
+        "over": 5.0,
+        "under": 1.17
+      },
+      "over_1_5": {
+        "over": 2.2,
+        "under": 1.62
+      },
+      "btts": {
+        "yes": 3.75,
+        "no": 1.25
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.599,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.599,
+        "prob": 0.599
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.824
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5098,
+        "prob": 0.5098
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7542
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.492,
+        "prob": 0.492
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.1216
+      },
+      {
+        "score": "2-0",
+        "prob": 0.1118
+      },
+      {
+        "score": "1-1",
+        "prob": 0.107
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "E. Gliozzi",
+        "team": "Modena",
+        "goals": 7
+      },
+      {
+        "player": "M. Bortolussi",
+        "team": "Padova",
+        "goals": 6
+      },
+      {
+        "player": "A. Cissè",
+        "team": "Catanzaro",
+        "goals": 5
+      },
+      {
+        "player": "A. Tiritiello",
+        "team": "Virtus Entella",
+        "goals": 5
+      },
+      {
+        "player": "B. Popov",
+        "team": "Empoli",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "R. Oudin",
+          "prob": 0.1358,
+          "xg": 0.146,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. Buglio",
+          "prob": 0.1358,
+          "xg": 0.146,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Pontisso",
+          "prob": 0.1216,
+          "xg": 0.13,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Fabio Rispoli",
+          "prob": 0.1216,
+          "xg": 0.13,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Nuamah",
+          "prob": 0.1214,
+          "xg": 0.129,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Antonio Di Nardo",
+          "prob": 0.288,
+          "xg": 0.34,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Oliveri",
+          "prob": 0.1554,
+          "xg": 0.169,
+          "position": "Defender"
+        },
+        {
+          "player": "R. Capellini",
+          "prob": 0.0615,
+          "xg": 0.063,
+          "position": "Defender"
+        },
+        {
+          "player": "T. Corazza",
+          "prob": 0.025,
+          "xg": 0.025,
+          "position": "Midfielder"
+        },
+        {
+          "player": "F. Caligara",
+          "prob": 0.0234,
+          "xg": 0.024,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1387811,
+    "league_id": 61,
+    "league": "Ligue 1",
+    "country": "France",
+    "date": "2025-11-21T19:45:00+00:00",
+    "home_team": "Nice",
+    "away_team": "Marseille",
+    "home_logo": "https://media.api-sports.io/football/teams/84.png",
+    "away_logo": "https://media.api-sports.io/football/teams/81.png",
+    "odds": {
+      "winner": {
+        "home": 3.9,
+        "draw": 3.7,
+        "away": 1.9
+      },
+      "over_2_5": {
+        "over": 3.75,
+        "under": 1.25
+      },
+      "over_1_5": {
+        "over": 1.83,
+        "under": 1.83
+      },
+      "btts": {
+        "yes": 3.0,
+        "no": 1.36
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.4355,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4355,
+        "prob": 0.4355
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7258
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.4247,
+        "prob": 0.4247
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.687
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4771,
+        "prob": 0.4771
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1291
+      },
+      {
+        "score": "1-0",
+        "prob": 0.1241
+      },
+      {
+        "score": "0-1",
+        "prob": 0.0963
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Panichelli",
+        "team": "Strasbourg",
+        "goals": 9
+      },
+      {
+        "player": "M. Greenwood",
+        "team": "Marseille",
+        "goals": 8
+      },
+      {
+        "player": "E. Lepaul",
+        "team": "Rennes",
+        "goals": 7
+      },
+      {
+        "player": "S. Diop",
+        "team": "Nice",
+        "goals": 6
+      },
+      {
+        "player": "I. Kebbal",
+        "team": "Paris FC",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "Kevin Carlos",
+          "prob": 0.3762,
+          "xg": 0.472,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Cho",
+          "prob": 0.2098,
+          "xg": 0.235,
+          "position": "Attacker"
+        },
+        {
+          "player": "C. Vanhoutte",
+          "prob": 0.0501,
+          "xg": 0.051,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Louchet",
+          "prob": 0.0481,
+          "xg": 0.049,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Abdul Samed",
+          "prob": 0.048,
+          "xg": 0.049,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Igor Paixão",
+          "prob": 0.2841,
+          "xg": 0.334,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Greenwood",
+          "prob": 0.1425,
+          "xg": 0.154,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Weah",
+          "prob": 0.1379,
+          "xg": 0.148,
+          "position": "Midfielder"
+        },
+        {
+          "player": "P. Aubameyang",
+          "prob": 0.1209,
+          "xg": 0.129,
+          "position": "Attacker"
+        },
+        {
+          "player": "P. Højbjerg",
+          "prob": 0.0252,
+          "xg": 0.026,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1382544,
+    "league_id": 144,
+    "league": "Jupiler Pro League",
+    "country": "Belgium",
+    "date": "2025-11-21T19:45:00+00:00",
+    "home_team": "Standard Liege",
+    "away_team": "Zulte Waregem",
+    "home_logo": "https://media.api-sports.io/football/teams/733.png",
+    "away_logo": "https://media.api-sports.io/football/teams/600.png",
+    "odds": {
+      "winner": {
+        "home": 2.15,
+        "draw": 3.4,
+        "away": 3.0
+      },
+      "over_2_5": {
+        "over": 4.33,
+        "under": 1.2
+      },
+      "over_1_5": {
+        "over": 2.0,
+        "under": 1.73
+      },
+      "btts": {
+        "yes": 3.25,
+        "no": 1.33
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.3813,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.3813,
+        "prob": 0.3813
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7538
+      },
+      "over_2_5": {
+        "class": 1,
+        "confidence": 0.5625,
+        "prob": 0.5625
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7914
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5927,
+        "prob": 0.5927
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1144
+      },
+      {
+        "score": "1-2",
+        "prob": 0.0847
+      },
+      {
+        "score": "2-1",
+        "prob": 0.0835
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "J. Erenbjerg",
+        "team": "Zulte Waregem",
+        "goals": 8
+      },
+      {
+        "player": "O. Gandelman",
+        "team": "Gent",
+        "goals": 7
+      },
+      {
+        "player": "K. Rodríguez",
+        "team": "Union St. Gilloise",
+        "goals": 7
+      },
+      {
+        "player": "R. Florucz",
+        "team": "Union St. Gilloise",
+        "goals": 6
+      },
+      {
+        "player": "C. Tzolis",
+        "team": "Club Brugge KV",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "R. Saïd",
+          "prob": 0.2365,
+          "xg": 0.27,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Henry",
+          "prob": 0.2328,
+          "xg": 0.265,
+          "position": "Attacker"
+        },
+        {
+          "player": "M. Ilaimaharitra",
+          "prob": 0.2009,
+          "xg": 0.224,
+          "position": "Midfielder"
+        },
+        {
+          "player": "C. Nielsen",
+          "prob": 0.1284,
+          "xg": 0.137,
+          "position": "Midfielder"
+        },
+        {
+          "player": "A. Abid",
+          "prob": 0.1282,
+          "xg": 0.137,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "J. Erenbjerg",
+          "prob": 0.4216,
+          "xg": 0.548,
+          "position": "Midfielder"
+        },
+        {
+          "player": "M. Aké",
+          "prob": 0.1529,
+          "xg": 0.166,
+          "position": "Midfielder"
+        },
+        {
+          "player": "J. Vossen",
+          "prob": 0.1277,
+          "xg": 0.137,
+          "position": "Attacker"
+        },
+        {
+          "player": "T. Claes",
+          "prob": 0.1186,
+          "xg": 0.126,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Ujka",
+          "prob": 0.0867,
+          "xg": 0.091,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1386742,
+    "league_id": 40,
+    "league": "Championship",
+    "country": "England",
+    "date": "2025-11-21T20:00:00+00:00",
+    "home_team": "Preston",
+    "away_team": "Blackburn",
+    "home_logo": "https://media.api-sports.io/football/teams/59.png",
+    "away_logo": "https://media.api-sports.io/football/teams/67.png",
+    "odds": {
+      "winner": {
+        "home": 2.55,
+        "draw": 3.2,
+        "away": 2.88
+      },
+      "over_2_5": {
+        "over": 6.0,
+        "under": 1.12
+      },
+      "over_1_5": {
+        "over": 2.5,
+        "under": 1.5
+      },
+      "btts": {
+        "yes": 3.75,
+        "no": 1.25
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.432,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.432,
+        "prob": 0.432
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.7176
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3824,
+        "prob": 0.3824
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6501
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.442,
+        "prob": 0.442
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.1369
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1314
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1087
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "B. Thomas-Asante",
+        "team": "Coventry",
+        "goals": 10
+      },
+      {
+        "player": "C. Morris",
+        "team": "Derby",
+        "goals": 10
+      },
+      {
+        "player": "H. Wright",
+        "team": "Coventry",
+        "goals": 8
+      },
+      {
+        "player": "J. Gelhardt",
+        "team": "Hull City",
+        "goals": 7
+      },
+      {
+        "player": "K. Moore",
+        "team": "Wrexham",
+        "goals": 7
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "M. Osmajić",
+          "prob": 0.4295,
+          "xg": 0.561,
+          "position": "Attacker"
+        },
+        {
+          "player": "L. Dobbin",
+          "prob": 0.1511,
+          "xg": 0.164,
+          "position": "Attacker"
+        },
+        {
+          "player": "Pol Valentín",
+          "prob": 0.1007,
+          "xg": 0.106,
+          "position": "Defender"
+        },
+        {
+          "player": "H. Armstrong",
+          "prob": 0.0438,
+          "xg": 0.045,
+          "position": "Midfielder"
+        },
+        {
+          "player": "S. Þórðarson",
+          "prob": 0.0419,
+          "xg": 0.043,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "A. Guðjohnsen",
+          "prob": 0.2781,
+          "xg": 0.326,
+          "position": "Attacker"
+        },
+        {
+          "player": "R. Morishita",
+          "prob": 0.1358,
+          "xg": 0.146,
+          "position": "Midfielder"
+        },
+        {
+          "player": "R. Hedges",
+          "prob": 0.1181,
+          "xg": 0.126,
+          "position": "Midfielder"
+        },
+        {
+          "player": "D. De Neve",
+          "prob": 0.1137,
+          "xg": 0.121,
+          "position": "Midfielder"
+        },
+        {
+          "player": "T. Gardner-Hickman",
+          "prob": 0.0242,
+          "xg": 0.025,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1390947,
+    "league_id": 140,
+    "league": "La Liga",
+    "country": "Spain",
+    "date": "2025-11-21T20:00:00+00:00",
+    "home_team": "Valencia",
+    "away_team": "Levante",
+    "home_logo": "https://media.api-sports.io/football/teams/532.png",
+    "away_logo": "https://media.api-sports.io/football/teams/539.png",
+    "odds": {
+      "winner": {
+        "home": 2.1,
+        "draw": 3.4,
+        "away": 3.4
+      },
+      "over_2_5": {
+        "over": 4.5,
+        "under": 1.18
+      },
+      "over_1_5": {
+        "over": 2.1,
+        "under": 1.67
+      },
+      "btts": {
+        "yes": 3.4,
+        "no": 1.3
+      }
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 1
+    },
+    "confidence": 0.3804,
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.3804,
+        "prob": 0.3804
+      },
+      "double_chance": {
+        "class": 1,
+        "confidence": 0.7324
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.466,
+        "prob": 0.466
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.7206
+      },
+      "btts": {
+        "class": 1,
+        "confidence": 0.5168,
+        "prob": 0.5168
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-1",
+        "prob": 0.1272
+      },
+      {
+        "score": "1-0",
+        "prob": 0.1026
+      },
+      {
+        "score": "0-1",
+        "prob": 0.0979
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Kylian Mbappé",
+        "team": "Real Madrid",
+        "goals": 13
+      },
+      {
+        "player": "R. Lewandowski",
+        "team": "Barcelona",
+        "goals": 7
+      },
+      {
+        "player": "J. Álvarez",
+        "team": "Atletico Madrid",
+        "goals": 7
+      },
+      {
+        "player": "V. Muriqi",
+        "team": "Mallorca",
+        "goals": 6
+      },
+      {
+        "player": "C. Hernández",
+        "team": "Real Betis",
+        "goals": 5
+      }
+    ],
+    "predicted_scorers": {
+      "home": [
+        {
+          "player": "A. Danjuma",
+          "prob": 0.2476,
+          "xg": 0.284,
+          "position": "Attacker"
+        },
+        {
+          "player": "Hugo Duro",
+          "prob": 0.2457,
+          "xg": 0.282,
+          "position": "Attacker"
+        },
+        {
+          "player": "Diego López",
+          "prob": 0.2091,
+          "xg": 0.235,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Luis Rioja",
+          "prob": 0.12,
+          "xg": 0.128,
+          "position": "Midfielder"
+        },
+        {
+          "player": "B. Santamaría",
+          "prob": 0.1193,
+          "xg": 0.127,
+          "position": "Midfielder"
+        }
+      ],
+      "away": [
+        {
+          "player": "Iván Romero",
+          "prob": 0.3631,
+          "xg": 0.451,
+          "position": "Attacker"
+        },
+        {
+          "player": "Carlos Espí",
+          "prob": 0.1829,
+          "xg": 0.202,
+          "position": "Attacker"
+        },
+        {
+          "player": "K. Arriaga",
+          "prob": 0.1425,
+          "xg": 0.154,
+          "position": "Midfielder"
+        },
+        {
+          "player": "José Luis Morales",
+          "prob": 0.1238,
+          "xg": 0.132,
+          "position": "Midfielder"
+        },
+        {
+          "player": "Unai Elgezabal",
+          "prob": 0.1168,
+          "xg": 0.124,
+          "position": "Midfielder"
+        }
+      ]
+    }
+  },
+  {
+    "match_id": 1482543,
+    "league_id": 96,
+    "league": "Taça de Portugal",
+    "country": "Portugal",
+    "date": "2025-11-21T20:30:00+00:00",
+    "home_team": "Atlético CP",
+    "away_team": "Benfica",
+    "home_logo": "https://media.api-sports.io/football/teams/4872.png",
+    "away_logo": "https://media.api-sports.io/football/teams/211.png",
+    "odds": {
+      "winner": {
+        "home": 3.62,
+        "draw": 3.39,
+        "away": 2.33
+      },
+      "over_2_5": {
+        "over": 2.86,
+        "under": 1.54
+      },
+      "over_1_5": {
+        "over": 1.61,
+        "under": 2.63
+      },
+      "btts": {
+        "yes": 2.41,
+        "no": 1.71
+      }
+    },
+    "predicted_score": {
+      "home": 0,
+      "away": 1
+    },
+    "confidence": 0.429,
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "confidence": 0.429,
+        "prob": 0.429
+      },
+      "double_chance": {
+        "class": 2,
+        "confidence": 0.7241
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 0.3502,
+        "prob": 0.3502
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6203
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.4146,
+        "prob": 0.4146
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "0-1",
+        "prob": 0.147
+      },
+      {
+        "score": "1-1",
+        "prob": 0.1323
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1225
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "V. Pavlidis",
+        "team": "Benfica",
+        "goals": 2
+      },
+      {
+        "player": "H. Sudakov",
+        "team": "Benfica",
+        "goals": 0
+      },
+      {
+        "player": "Ivan Lima",
+        "team": "Benfica",
+        "goals": 0
+      },
+      {
+        "player": "João Veloso",
+        "team": "Benfica",
+        "goals": 0
+      },
+      {
+        "player": "F. Ivanović",
+        "team": "Benfica",
+        "goals": 0
+      }
+    ],
+    "predicted_scorers": {
+      "home": [],
+      "away": [
+        {
+          "player": "Á. Di María",
+          "prob": 0.3622,
+          "xg": 0.45,
+          "position": "Midfielder"
+        },
+        {
+          "player": "L. Barreiro",
+          "prob": 0.2078,
+          "xg": 0.233,
+          "position": "Midfielder"
+        },
+        {
+          "player": "V. Pavlidis",
+          "prob": 0.101,
+          "xg": 0.107,
+          "position": "Attacker"
+        },
+        {
+          "player": "A. Schjelderup",
+          "prob": 0.0937,
+          "xg": 0.098,
+          "position": "Attacker"
+        },
+        {
+          "player": "N. Otamendi",
+          "prob": 0.0522,
+          "xg": 0.054,
           "position": "Defender"
         }
       ]
