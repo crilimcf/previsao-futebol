@@ -1,0 +1,63 @@
+name: Train Over25 model & update predictions
+
+on:
+  # podes correr à mão pelo GitHub
+  workflow_dispatch:
+  # e também automático todos os dias às 01:00 UTC
+  schedule:
+    - cron: "0 1 * * *"
+
+jobs:
+  train-and-update:
+    runs-on: ubuntu-latest
+
+    env:
+      # API-Football para o treino
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_BASE: https://v3.football.api-sports.io/
+      API_FOOTBALL_SEASON: "2025"
+      API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID: "32"
+      API_FOOTBALL_WCQ_EUROPE_SEASON: "2024"
+
+      # Backend FastAPI em Render
+      API_BASE_URL: https://previsao-futebol.onrender.com
+      BACKEND_API_TOKEN: ${{ secrets.BACKEND_API_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Train Over 2.5 model
+        run: python src/ml/train_over25_model.py
+
+      - name: Commit updated model (if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git status --porcelain | grep -q "data/models/over25_model.pkl"; then
+            echo "🔁 Modelo alterado, a fazer commit..."
+            git add data/models/over25_model.pkl
+            git commit -m "chore: update Over25 model [CI]"
+            git push
+          else
+            echo "✅ Modelo igual, nada para commitar."
+          fi
+
+      - name: Trigger backend /meta/update
+        run: |
+          echo "🚀 A chamar /meta/update no backend..."
+          curl -X POST \
+            -H "Authorization: Bearer $BACKEND_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "$API_BASE_URL/meta/update?days=7"

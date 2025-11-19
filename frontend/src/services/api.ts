@@ -56,7 +56,9 @@ function wantV2(): boolean {
       if (ls === "1") return true;
       if (ls === "0") return false;
     }
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return wantV2FromEnv();
 }
 
@@ -83,6 +85,11 @@ export type Prediction = {
   away_team: string;
   home_logo?: string;
   away_logo?: string;
+
+  // novo: lambdas guardados pelo backend
+  lambda_home?: number;
+  lambda_away?: number;
+
   odds?: OddsMap;
   predictions: {
     winner: { class: 0 | 1 | 2; confidence?: number; prob?: number };
@@ -98,6 +105,9 @@ export type Prediction = {
     home?: { player: string; prob: number; xg: number; position?: string }[];
     away?: { player: string; prob: number; xg: number; position?: string }[];
   };
+
+  // novo: explicação gerada pelo backend
+  explanation?: string[];
 };
 
 export type LastUpdate = { last_update: string | null };
@@ -183,32 +193,50 @@ function normalizePredArray(data: any): Prediction[] {
 
   // Garantir campos mínimos e strings
   return arr
-    .map((p) => ({
-      match_id: String(p.match_id ?? p.fixture_id ?? p.id ?? ""),
-      league_id: String(p.league_id ?? p.league?.id ?? ""),
-      league: p.league ?? p.league_name ?? undefined,
-      league_name: p.league_name ?? p.league ?? undefined,
-      country: p.country ?? p.country_name ?? undefined,
-      date: String(p.date ?? p.fixture_date ?? p.kickoff ?? ""),
-      home_team: String(p.home_team ?? p.home?.name ?? p.home ?? ""),
-      away_team: String(p.away_team ?? p.away?.name ?? p.away ?? ""),
-      home_logo: p.home_logo ?? p.home?.logo ?? undefined,
-      away_logo: p.away_logo ?? p.away?.logo ?? undefined,
-      odds: p.odds ?? undefined,
-      predictions: p.predictions ?? {
-        winner: { class: 1 as 0 | 1 | 2, prob: 0.33 },
-        over_2_5: { class: 0 as 0 | 1, prob: 0.5 },
-        over_1_5: { class: 1 as 0 | 1, prob: 0.6 },
-        double_chance: { class: 0 as DCClass, prob: 0.5 },
-        btts: { class: 0 as 0 | 1, prob: 0.5 },
-      },
-      correct_score_top3:
-        p.correct_score_top3 ??
-        p.predictions?.correct_score?.top3 ??
-        [],
-      top_scorers: p.top_scorers ?? [],
-      predicted_scorers: p.predicted_scorers ?? {},
-    }))
+    .map((p) => {
+      const explanation = Array.isArray(p.explanation)
+        ? p.explanation.map((s: any) => String(s))
+        : undefined;
+
+      const lambdaHome =
+        typeof p.lambda_home === "number" ? p.lambda_home : undefined;
+      const lambdaAway =
+        typeof p.lambda_away === "number" ? p.lambda_away : undefined;
+
+      return {
+        match_id: String(p.match_id ?? p.fixture_id ?? p.id ?? ""),
+        league_id: String(p.league_id ?? p.league?.id ?? ""),
+        league: p.league ?? p.league_name ?? undefined,
+        league_name: p.league_name ?? p.league ?? undefined,
+        country: p.country ?? p.country_name ?? undefined,
+        date: String(p.date ?? p.fixture_date ?? p.kickoff ?? ""),
+        home_team: String(p.home_team ?? p.home?.name ?? p.home ?? ""),
+        away_team: String(p.away_team ?? p.away?.name ?? p.away ?? ""),
+        home_logo: p.home_logo ?? p.home?.logo ?? undefined,
+        away_logo: p.away_logo ?? p.away?.logo ?? undefined,
+        odds: p.odds ?? undefined,
+        predictions:
+          p.predictions ??
+          ({
+            winner: { class: 1 as 0 | 1 | 2, prob: 0.33 },
+            over_2_5: { class: 0 as 0 | 1, prob: 0.5 },
+            over_1_5: { class: 1 as 0 | 1, prob: 0.6 },
+            double_chance: { class: 0 as DCClass, prob: 0.5 },
+            btts: { class: 0 as 0 | 1, prob: 0.5 },
+          } as Prediction["predictions"]),
+        correct_score_top3:
+          p.correct_score_top3 ??
+          p.predictions?.correct_score?.top3 ??
+          [],
+        top_scorers: p.top_scorers ?? [],
+        predicted_scorers: p.predicted_scorers ?? {},
+
+        // novos campos
+        lambda_home: lambdaHome,
+        lambda_away: lambdaAway,
+        explanation,
+      } as Prediction;
+    })
     .filter((x) => x.match_id && x.date && x.home_team && x.away_team);
 }
 

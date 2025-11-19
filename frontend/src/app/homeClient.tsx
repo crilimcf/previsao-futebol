@@ -30,11 +30,13 @@ function timeSince(ts: number) {
   const h = Math.floor(m / 60);
   return `${h}h atrás`;
 }
+
 function ymd(d: Date) {
   const off = d.getTimezoneOffset();
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().split("T")[0];
 }
+
 // Evita crash se a API der date inválida
 function fixtureDateSafe(d?: string) {
   const t = d ? Date.parse(d) : NaN;
@@ -54,9 +56,11 @@ function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
 }
+
 function pctStr01(v?: number | null): string {
   return `${Math.round(prob01(v) * 100)}%`;
 }
+
 function tileClass(prob: number, isMax: boolean): string {
   const p = Math.round(prob * 100);
   if (isMax) return "bg-emerald-600/15 border-emerald-500/60 ring-2 ring-emerald-400";
@@ -65,6 +69,7 @@ function tileClass(prob: number, isMax: boolean): string {
   if (p >= 50) return "bg-sky-500/10 border-sky-400/40";
   return "bg-white/5 border-white/10";
 }
+
 function badgeClass(prob: number, isMax: boolean): string {
   const p = Math.round(prob * 100);
   if (isMax) return "bg-emerald-600 text-white font-semibold";
@@ -96,6 +101,7 @@ export default function HomeClient() {
   /* 1) Ligas só do backend curado */
   /* ----------------------------- */
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -438,8 +444,7 @@ export default function HomeClient() {
               const topEntry = marketEntries.reduce((a, b) => (b[1] > a[1] ? b : a), ["winner", -1]);
               const isTop = (k: string) => topEntry[0] === k;
 
-              // 🔍 novas linhas de explicação vindas do backend
-              const explanationLines: string[] = Array.isArray(p.explanation) ? p.explanation : [];
+              const explanation: string[] = Array.isArray(p.explanation) ? p.explanation : [];
 
               return (
                 <div
@@ -582,17 +587,26 @@ export default function HomeClient() {
                     </div>
                   </div>
 
-                  {/* 🧠 Explicação “Porque esta pick” */}
-                  {explanationLines.length > 0 && (
-                    <div className="rounded-xl bg-emerald-500/5 border border-emerald-400/40 p-3 text-xs text-gray-100 space-y-1">
-                      <div className="text-[11px] uppercase tracking-wide text-emerald-300 mb-1">
-                        Porque esta pick
+                  {/* 🧠 Explicação da IA */}
+                  {explanation.length > 0 && (
+                    <div className="rounded-xl bg-emerald-500/5 border border-emerald-500/40 p-3 text-xs text-gray-100 space-y-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="uppercase tracking-wide text-[10px] text-emerald-300 font-semibold">
+                          🧠 Explicação da IA
+                        </span>
+                        {typeof p.lambda_home === "number" &&
+                          typeof p.lambda_away === "number" && (
+                            <span className="text-[10px] text-gray-400">
+                              xG casa {p.lambda_home.toFixed(2)} · xG fora{" "}
+                              {p.lambda_away.toFixed(2)}
+                            </span>
+                          )}
                       </div>
-                      {explanationLines.map((line, idx) => (
-                        <p key={idx} className="leading-snug">
-                          • {line}
-                        </p>
-                      ))}
+                      <ul className="list-disc list-inside space-y-1">
+                        {explanation.map((line: string, idx: number) => (
+                          <li key={idx}>{line}</li>
+                        ))}
+                      </ul>
                     </div>
                   )}
 
@@ -644,9 +658,8 @@ export default function HomeClient() {
                                 </span>
                               </li>
                             ))}
-                          {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? []).length === 0) && (
-                            <li className="text-gray-500">—</li>
-                          )}
+                          {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
+                            .length === 0) && <li className="text-gray-500">—</li>}
                         </ul>
                       </div>
 
@@ -697,7 +710,9 @@ export default function HomeClient() {
 
         {lastUpdate && (
           <div className="w-full text-center mt-10">
-            <span className="text-xs text-gray-400">Última atualização global: {lastUpdate}</span>
+            <span className="text-xs text-gray-400">
+              Última atualização global: {lastUpdate}
+            </span>
           </div>
         )}
       </main>
