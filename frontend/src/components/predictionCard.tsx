@@ -35,6 +35,22 @@ function safeDate(val?: string | number | Date) {
   return new Date();
 }
 
+// -----------------------------
+// TIPOS
+// -----------------------------
+
+type ProbableScorer = {
+  player_id?: number;
+  name: string;
+  team_id?: number;
+  team_name?: string;
+  position?: string;
+  photo?: string;
+  stats?: any;
+  probability?: number;      // 0..1
+  probability_pct?: number;  // 0..100
+};
+
 export interface PredictionCardProps {
   league?: string;
   league_name?: string;
@@ -60,7 +76,13 @@ export interface PredictionCardProps {
     over_under?: Record<string, { over?: number; under?: number }>;
     btts?: { yes?: number; no?: number };
   };
+  // ranking geral da liga (mantido como fallback)
   top_scorers?: { player: string; team: string; goals: number }[];
+  // NOVO: marcadores prováveis por jogo (casa/fora)
+  probable_scorers?: {
+    home?: ProbableScorer[];
+    away?: ProbableScorer[];
+  };
 }
 
 export default function PredictionCard({
@@ -76,6 +98,7 @@ export default function PredictionCard({
   odds,
   top_scorers,
   odds_source,
+  probable_scorers, // NOVO
 }: PredictionCardProps) {
   const winnerClass = predictions?.winner?.class;
   const winnerLabel =
@@ -108,6 +131,10 @@ export default function PredictionCard({
 
   const prob = (x?: { prob?: number; confidence?: number }) =>
     x?.confidence ?? x?.prob;
+
+  // NOVO: arrays de marcadores prováveis casa/fora
+  const homeProbScorers = probable_scorers?.home ?? [];
+  const awayProbScorers = probable_scorers?.away ?? [];
 
   return (
     <div className="p-5 rounded-2xl border border-gray-800 bg-gray-950 hover:border-green-500 transition flex flex-col gap-4">
@@ -257,19 +284,75 @@ export default function PredictionCard({
               )}
             </ul>
           </div>
+
+          {/* NOVO BLOCO: Marcadores Prováveis por equipa com fallback para top_scorers */}
           <div>
-            <div className="text-xs text-gray-400 mb-1">Top Scorers (liga)</div>
-            <ul className="text-sm text-white space-y-1">
-              {(top_scorers ?? []).slice(0, 5).map((sc, idx) => (
-                <li key={idx} className="flex justify-between">
-                  <span>
-                    {sc.player} <span className="text-gray-400">({sc.team})</span>
-                  </span>
-                  <span className="text-gray-400">{sc.goals} golos</span>
-                </li>
-              ))}
-              {!(top_scorers ?? []).length && <li className="text-gray-500">—</li>}
-            </ul>
+            <div className="text-xs text-gray-400 mb-1">Marcadores Prováveis</div>
+
+            {homeProbScorers.length || awayProbScorers.length ? (
+              <div className="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+                <div>
+                  <div className="font-semibold text-gray-300 mb-1">{home_team}</div>
+                  <ul className="space-y-1">
+                    {homeProbScorers.slice(0, 3).map((p, idx) => (
+                      <li
+                        key={p.player_id ?? `${p.name}-${idx}`}
+                        className="flex justify-between"
+                      >
+                        <span>{p.name}</span>
+                        <span className="text-gray-400">
+                          {Math.round(
+                            prob01(p.probability_pct ?? p.probability) * 1000
+                          ) / 10}
+                          %
+                        </span>
+                      </li>
+                    ))}
+                    {!homeProbScorers.length && (
+                      <li className="text-gray-500">—</li>
+                    )}
+                  </ul>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-300 mb-1">{away_team}</div>
+                  <ul className="space-y-1">
+                    {awayProbScorers.slice(0, 3).map((p, idx) => (
+                      <li
+                        key={p.player_id ?? `${p.name}-${idx}`}
+                        className="flex justify-between"
+                      >
+                        <span>{p.name}</span>
+                        <span className="text-gray-400">
+                          {Math.round(
+                            prob01(p.probability_pct ?? p.probability) * 1000
+                          ) / 10}
+                          %
+                        </span>
+                      </li>
+                    ))}
+                    {!awayProbScorers.length && (
+                      <li className="text-gray-500">—</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              // fallback: se por algum motivo não vier probable_scorers,
+              // mostra ranking da liga como antes
+              <ul className="text-sm text-white space-y-1">
+                {(top_scorers ?? []).slice(0, 5).map((sc, idx) => (
+                  <li key={idx} className="flex justify-between">
+                    <span>
+                      {sc.player} <span className="text-gray-400">({sc.team})</span>
+                    </span>
+                    <span className="text-gray-400">{sc.goals} golos</span>
+                  </li>
+                ))}
+                {!(top_scorers ?? []).length && (
+                  <li className="text-gray-500">—</li>
+                )}
+              </ul>
+            )}
           </div>
         </div>
       </details>

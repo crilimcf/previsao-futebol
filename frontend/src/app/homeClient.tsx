@@ -446,6 +446,17 @@ export default function HomeClient() {
 
               const explanation: string[] = Array.isArray(p.explanation) ? p.explanation : [];
 
+              // Marcadores prováveis por jogo (novo) com fallback para predicted_scorers
+              const homeScorers =
+                p.probable_scorers?.home && p.probable_scorers.home.length
+                  ? p.probable_scorers.home
+                  : p.predicted_scorers?.home ?? [];
+
+              const awayScorers =
+                p.probable_scorers?.away && p.probable_scorers.away.length
+                  ? p.probable_scorers.away
+                  : p.predicted_scorers?.away ?? [];
+
               return (
                 <div
                   key={String(p.match_id ?? p.fixture_id)}
@@ -667,32 +678,64 @@ export default function HomeClient() {
                       <div>
                         <div className="text-xs text-gray-400 mb-1">Marcadores Prováveis</div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {/* Casa */}
                           <ul className="text-sm text-white space-y-1">
                             <li className="text-emerald-400">{p.home_team}</li>
-                            {(p.predicted_scorers?.home ?? []).slice(0, 3).map((sc: any, idx: number) => (
-                              <li key={idx} className="flex justify-between">
-                                <span>{sc.player}</span>
-                                <span className="text-gray-400">
-                                  {Math.round(prob01(sc.prob) * 100)}%
-                                </span>
-                              </li>
-                            ))}
-                            {!(p.predicted_scorers?.home ?? []).length && (
+                            {homeScorers.slice(0, 3).map((sc: any, idx: number) => {
+                              const name =
+                                sc.name ??
+                                sc.player ??
+                                sc.full_name ??
+                                `Jogador ${idx + 1}`;
+                              const rawProb =
+                                sc.probability_pct ??
+                                sc.probability ??
+                                sc.prob ??
+                                sc.confidence;
+                              return (
+                                <li
+                                  key={sc.player_id ?? name ?? idx}
+                                  className="flex justify-between"
+                                >
+                                  <span>{name}</span>
+                                  <span className="text-gray-400">
+                                    {Math.round(prob01(rawProb) * 100)}%
+                                  </span>
+                                </li>
+                              );
+                            })}
+                            {!homeScorers.length && (
                               <li className="text-gray-500">—</li>
                             )}
                           </ul>
 
+                          {/* Fora */}
                           <ul className="text-sm text-white space-y-1">
                             <li className="text-emerald-400">{p.away_team}</li>
-                            {(p.predicted_scorers?.away ?? []).slice(0, 3).map((sc: any, idx: number) => (
-                              <li key={idx} className="flex justify-between">
-                                <span>{sc.player}</span>
-                                <span className="text-gray-400">
-                                  {Math.round(prob01(sc.prob) * 100)}%
-                                </span>
-                              </li>
-                            ))}
-                            {!(p.predicted_scorers?.away ?? []).length && (
+                            {awayScorers.slice(0, 3).map((sc: any, idx: number) => {
+                              const name =
+                                sc.name ??
+                                sc.player ??
+                                sc.full_name ??
+                                `Jogador ${idx + 1}`;
+                              const rawProb =
+                                sc.probability_pct ??
+                                sc.probability ??
+                                sc.prob ??
+                                sc.confidence;
+                              return (
+                                <li
+                                  key={sc.player_id ?? name ?? idx}
+                                  className="flex justify-between"
+                                >
+                                  <span>{name}</span>
+                                  <span className="text-gray-400">
+                                    {Math.round(prob01(rawProb) * 100)}%
+                                  </span>
+                                </li>
+                              );
+                            })}
+                            {!awayScorers.length && (
                               <li className="text-gray-500">—</li>
                             )}
                           </ul>

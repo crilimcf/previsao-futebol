@@ -200,7 +200,17 @@ def _iter_candidate_players(
         if not statistics:
             continue
 
-        stats = statistics[0]
+        stats = next(
+            (
+                st
+                for st in statistics
+                if (st.get("team") or {}).get("id") == team_id
+            ),
+            None,
+        )
+
+        if not stats:
+            continue
         score = _calc_score_from_stats(stats)
         if score <= 0:
             continue
