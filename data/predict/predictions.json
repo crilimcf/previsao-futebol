@@ -4639,92 +4639,6 @@
     ]
   },
   {
-    "match_id": 1481284,
-    "league_id": 386,
-    "league": "Ligue 1",
-    "country": "Ivory-Coast",
-    "date": "2025-11-20T15:30:00+00:00",
-    "home_team": "Olympique Sport d'Abobo",
-    "away_team": "Bouaké",
-    "home_logo": "https://media.api-sports.io/football/teams/24756.png",
-    "away_logo": "https://media.api-sports.io/football/teams/4516.png",
-    "lambda_home": 1.5,
-    "lambda_away": 0.9,
-    "odds": {
-      "winner": {
-        "home": 1.95,
-        "draw": 3.82,
-        "away": 4.42
-      },
-      "over_2_5": {
-        "over": 1000000.0,
-        "under": 1.0
-      },
-      "over_1_5": {
-        "over": 1.45,
-        "under": 3.24
-      },
-      "btts": {
-        "yes": 2.17,
-        "no": 1.85
-      }
-    },
-    "predictions": {
-      "winner": {
-        "class": 0,
-        "confidence": 0.5121532042920065,
-        "prob": 0.5121532042920065
-      },
-      "over_2_5": {
-        "class": 0,
-        "confidence": 1e-06,
-        "prob": 1e-06
-      },
-      "over_1_5": {
-        "class": 1,
-        "confidence": 0.6912596806186727
-      },
-      "double_chance": {
-        "class": 0,
-        "confidence": 0.7736797120155134
-      },
-      "btts": {
-        "class": 0,
-        "confidence": 0.46088170197271877,
-        "prob": 0.46088170197271877
-      }
-    },
-    "correct_score_top3": [
-      {
-        "score": "1-0",
-        "prob": 0.13620896443293865
-      },
-      {
-        "score": "1-1",
-        "prob": 0.12258806798964479
-      },
-      {
-        "score": "2-0",
-        "prob": 0.10215672332470398
-      }
-    ],
-    "top_scorers": [],
-    "probable_scorers": {
-      "home": [],
-      "away": []
-    },
-    "predicted_score": {
-      "home": 1,
-      "away": 0
-    },
-    "confidence": 0.5121532042920065,
-    "explanation": [
-      "Golos esperados: 2.40 no total (casa 1.50, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
-      "Tendência para Under 2.5 golos (100%)."
-    ]
-  },
-  {
     "match_id": 1486732,
     "league_id": 240,
     "league": "Primera B",
@@ -7846,6 +7760,92 @@
     "explanation": [
       "Golos esperados: 2.25 no total (casa 1.30, fora 0.95).",
       "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
+      "Tendência para Under 2.5 golos (100%)."
+    ]
+  },
+  {
+    "match_id": 1481284,
+    "league_id": 386,
+    "league": "Ligue 1",
+    "country": "Ivory-Coast",
+    "date": "2025-11-20T15:30:00+00:00",
+    "home_team": "Olympique Sport d'Abobo",
+    "away_team": "Bouaké",
+    "home_logo": "https://media.api-sports.io/football/teams/24756.png",
+    "away_logo": "https://media.api-sports.io/football/teams/4516.png",
+    "lambda_home": 1.25,
+    "lambda_away": 0.9,
+    "odds": {
+      "winner": {
+        "home": 2.25,
+        "draw": 3.45,
+        "away": 3.75
+      },
+      "over_2_5": {
+        "over": 1000000.0,
+        "under": 1.0
+      },
+      "over_1_5": {
+        "over": 1.58,
+        "under": 2.72
+      },
+      "btts": {
+        "yes": 2.36,
+        "no": 1.73
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 0,
+        "confidence": 0.4436127386205662,
+        "prob": 0.4436127386205662
+      },
+      "over_2_5": {
+        "class": 0,
+        "confidence": 1e-06,
+        "prob": 1e-06
+      },
+      "over_1_5": {
+        "class": 1,
+        "confidence": 0.6329414716272176
+      },
+      "double_chance": {
+        "class": 0,
+        "confidence": 0.7330491083745716
+      },
+      "btts": {
+        "class": 0,
+        "confidence": 0.42334266644504565,
+        "prob": 0.42334266644504565
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.14565814617967549
+      },
+      {
+        "score": "1-1",
+        "prob": 0.13109233156170794
+      },
+      {
+        "score": "0-0",
+        "prob": 0.11652651694374037
+      }
+    ],
+    "top_scorers": [],
+    "probable_scorers": {
+      "home": [],
+      "away": []
+    },
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.4436127386205662,
+    "explanation": [
+      "Golos esperados: 2.15 no total (casa 1.25, fora 0.90).",
+      "Casa ligeiramente favorita (1X), prob. 44% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
     ]
   },
