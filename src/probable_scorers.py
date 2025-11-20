@@ -1,13 +1,4 @@
-
 from __future__ import annotations
-# --- Utilitário para garantir atualização do plantel em memória ---
-def clear_squad_lru_cache(team_id: int):
-    try:
-        get_current_squad_ids.cache_clear()
-        get_players_for_team_season.cache_clear()
-    except Exception:
-        pass
-# src/probable_scorers.py
 
 import json
 import logging
@@ -21,7 +12,7 @@ from src import config
 logger = logging.getLogger("football_api.scorers")
 
 API_KEY = os.getenv("API_FOOTBALL_KEY", "")
-BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
+BASE_URL = (os.getenv("API_FOOTBALL_BASE") or "https://v3.football.api-sports.io/").rstrip("/") + "/"
 HEADERS = {
     "x-apisports-key": API_KEY,
     "Accept": "application/json",
@@ -44,7 +35,8 @@ def redis_cache_get(key: str):
             if raw:
                 return json.loads(raw)
     except Exception:
-        pass
+        # não queremos que um erro no Redis parta tudo
+        logger.debug("Falha ao ler do Redis (key=%s)", key, exc_info=True)
     return None
 
 
@@ -53,7 +45,8 @@ def redis_cache_set(key: str, value: Any, ex: int = 4 * 3600) -> None:
         if config.redis_client:
             config.redis_client.set(key, json.dumps(value), ex=ex)
     except Exception:
-        pass
+        # idem, falha no Redis não deve rebentar o endpoint
+        logger.debug("Falha ao escrever no Redis (key=%s)", key, exc_info=True)
 
 
 session = requests.Session()
@@ -109,6 +102,8 @@ def get_current_squad_ids(team_id: int) -> Set[int]:
             pid = p.get("id")
             if isinstance(pid, int):
                 ids.add(pid)
+
+    logger.info("Plantel atual carregado para team_id=%s (%d jogadores)", team_id, len(ids))
     return ids
 
 
@@ -137,6 +132,12 @@ def get_players_for_team_season(team_id: int, season: int) -> List[Dict[str, Any
             break
         page += 1
 
+    logger.info(
+        "Estatísticas de jogadores carregadas para team_id=%s season=%s (total=%d registos)",
+        team_id,
+        season,
+        len(results),
+    )
     return results
 
 
@@ -153,6 +154,8 @@ def get_injured_players_for_fixture(fixture_id: int) -> Set[int]:
         pid = player.get("id")
         if isinstance(pid, int):
             injured.add(pid)
+
+    logger.info("Injuries para fixture_id=%s: %d jogadores", fixture_id, len(injured))
     return injured
 
 
@@ -196,7 +199,7 @@ def _iter_candidate_players(
         if not isinstance(pid, int):
             continue
 
-        # fora se já não está no plantel atual
+        # fora se já não está no plantel atual (ex-jogadores)
         if squad_ids and pid not in squad_ids:
             continue
 
@@ -208,6 +211,7 @@ def _iter_candidate_players(
         if not statistics:
             continue
 
+        # escolhe as stats relativas AO CLUBE ATUAL
         stats = next(
             (
                 st
@@ -216,9 +220,9 @@ def _iter_candidate_players(
             ),
             None,
         )
-
         if not stats:
             continue
+
         score = _calc_score_from_stats(stats)
         if score <= 0:
             continue
@@ -323,14 +327,33 @@ def probable_scorers_for_match(
         home_team_id = int((teams.get("home") or {}).get("id") or 0)
         away_team_id = int((teams.get("away") or {}).get("id") or 0)
     except Exception as exc:
-        raise ApiFootballError(f"Fixture inválido para probable_scorers: {exc} | {fixture_payload!r}") from exc
+        raise ApiFootballError(
+            f"Fixture inválido para probable_scorers: {exc} | {fixture_payload!r}"
+        ) from exc
 
     if not (fixture_id and season and home_team_id and away_team_id):
         raise ApiFootballError(f"Dados incompletos no fixture: {fixture_payload!r}")
 
     injured_ids = get_injured_players_for_fixture(fixture_id)
 
-    home = probable_scorers_for_team(home_team_id, season, injured_ids=injured_ids, limit=limit)
-    away = probable_scorers_for_team(away_team_id, season, injured_ids=injured_ids, limit=limit)
+    home = probable_scorers_for_team(
+        home_team_id, season, injured_ids=injured_ids, limit=limit
+    )
+    away = probable_scorers_for_team(
+        away_team_id, season, injured_ids=injured_ids, limit=limit
+    )
 
     return {"home": home, "away": away}
+
+
+# --- Utilitário para garantir atualização do plantel em memória ---
+def clear_squad_lru_cache(team_id: int | None = None) -> None:
+    """
+    Limpa o cache em memória (LRU) dos plantéis e stats de jogadores.
+    O parâmetro team_id é ignorado, existe só por compatibilidade.
+    """
+    try:
+        get_current_squad_ids.cache_clear()
+        get_players_for_team_season.cache_clear()
+    except Exception:
+        logger.debug("Falha ao limpar caches de plantel", exc_info=True)
