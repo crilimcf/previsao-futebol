@@ -76,25 +76,56 @@ def redis_cache_set(key: str, value: Any, ex: int = 1800) -> None:
 # ===========================================================
 # HTTP helpers
 # ===========================================================
-def proxy_get(path: str, params: Optional[Dict[str, Any]] = None, timeout: int = 8) -> Optional[Dict[str, Any]]:
+def proxy_get(
+    path: str,
+    params: Optional[Dict[str, Any]] = None,
+    timeout: int = 8,
+) -> Optional[Dict[str, Any]]:
     """
     Chama o teu proxy (Render) com URL join correto + x-proxy-token.
     Retorna JSON (dict) ou None.
+
+    Proteções:
+      - cache leve em Redis por (path+params)
+      - se der erro (incluindo 429 Too Many Requests), tenta usar cache antiga
     """
     url = urljoin(PROXY_BASE, path.lstrip("/"))
+    params = params or {}
+
+    cache_key = f"proxy:{path}:{json.dumps(params, sort_keys=True)}"
     try:
         r = requests.get(
             url,
-            params=params or {},
+            params=params,
             headers={"x-proxy-token": PROXY_TOKEN, "Accept": "application/json"},
             timeout=timeout,
         )
         if r.status_code == 200:
-            return r.json()
+            data = r.json()
+            # cache suave: 10 minutos
+            redis_cache_set(cache_key, data, ex=600)
+            return data
+
+        # Se vier 429 ou outro erro, tenta usar cache anterior
         logger.error(f"❌ Proxy {url} {r.status_code}: {r.text[:200]}")
+        cached = redis_cache_get(cache_key)
+        if cached is not None:
+            logger.warning(
+                f"⚠️ A usar resposta em cache de proxy para {path} "
+                f"(params={params}) após erro {r.status_code}."
+            )
+            return cached
         return None
+
     except Exception as e:
         logger.error(f"❌ Proxy erro {url}: {e}")
+        cached = redis_cache_get(cache_key)
+        if cached is not None:
+            logger.warning(
+                f"⚠️ A usar resposta em cache de proxy para {path} "
+                f"(params={params}) após exceção."
+            )
+            return cached
         return None
 
 
@@ -501,6 +532,16 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
     fixtures: List[Dict[str, Any]] = []
 
+    # garante bounds razoáveis no days
+    try:
+        days = int(days)
+    except Exception:
+        days = 3
+    if days < 1:
+        days = 1
+    if days > 7:
+        days = 7
+
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
@@ -545,6 +586,9 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
       - busca fixtures (clubes + WCQ Europe) para hoje + N-1 dias
       - calcula previsões
       - grava em data/predict/predictions.json
+
+    Proteções:
+      - se não houver fixtures ou previsões, NÃO sobrescreve o ficheiro antigo
     """
     total = 0
     matches: List[Dict[str, Any]] = []
@@ -556,11 +600,25 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     fixtures = collect_fixtures(days=days)
     logger.info(f"📊 {len(fixtures)} fixtures carregados (proxy).")
 
+    if not fixtures:
+        logger.warning(
+            "⚠️ Nenhuma fixture obtida (possível erro 429 do proxy/API). "
+            "A NÃO sobrescrever data/predict/predictions.json."
+        )
+        return {"status": "no-fixtures", "total": 0}
+
     for f in fixtures:
         pred = build_prediction_from_fixture(f)
         if pred:
             matches.append(pred)
             total += 1
+
+    if total == 0:
+        logger.warning(
+            "⚠️ Nenhuma previsão calculada a partir das fixtures. "
+            "A NÃO sobrescrever data/predict/predictions.json."
+        )
+        return {"status": "no-predictions", "total": 0}
 
     matches_sorted = sorted(
         matches,
@@ -600,7 +658,7 @@ if __name__ == "__main__":
     # Permite correr localmente:
     #   python -m src.api_fetch_pro
     # ou
-    #   python src/api_fetch_pro.py
+    #   python src.api_fetch_pro.py
     #
     # Podes controlar os dias pela env API_FETCH_DAYS (default=3).
     try:
