@@ -11,22 +11,42 @@ from src import config
 
 logger = logging.getLogger("football_api.scorers")
 
+# ================================================
+# Configuração HTTP: API-Football DIRETO ou PROXY
+# ================================================
 API_KEY = os.getenv("API_FOOTBALL_KEY", "")
+# Em produção, aqui costuma ir a URL DO PROXY
+# Ex.: https://football-proxy.onrender.com/
 BASE_URL = (os.getenv("API_FOOTBALL_BASE") or "https://v3.football.api-sports.io/").rstrip("/") + "/"
-HEADERS = {
-    "x-apisports-key": API_KEY,
-    "Accept": "application/json",
-} if API_KEY else {}
+
+# Token para proxy (se usares um header próprio no proxy)
+FOOTBALL_PROXY_TOKEN = os.getenv("FOOTBALL_PROXY_TOKEN", "")
 
 DEFAULT_TIMEOUT = 15
 
+# Cabeçalhos base:
+# - Em modo direto: usa x-apisports-key
+# - Em modo proxy: normalmente NÃO precisamos de x-apisports-key (fica só no proxy)
+BASE_HEADERS: Dict[str, str] = {
+    "Accept": "application/json",
+}
+
+if API_KEY and not FOOTBALL_PROXY_TOKEN:
+    # Cenário: chamada direta à API-Football
+    BASE_HEADERS["x-apisports-key"] = API_KEY
+
+if FOOTBALL_PROXY_TOKEN:
+    # Cenário: estás a falar com o proxy e ele espera um token
+    # ajusta o nome do header se no teu proxy usares outro (Authorization, X-Proxy-Token, etc.)
+    BASE_HEADERS["X-Proxy-Token"] = FOOTBALL_PROXY_TOKEN
+
 
 class ApiFootballError(RuntimeError):
-    """Erro genérico ao chamar API-FOOTBALL para marcadores prováveis."""
+    """Erro genérico ao chamar API-FOOTBALL / proxy para marcadores prováveis."""
 
 
 # -------------------------------------------------------------------
-# Redis cache leve (partilha com o que já tens no api_fetch_pro.py)
+# Redis cache leve (partilha com o que já tens no config.redis_client)
 # -------------------------------------------------------------------
 def redis_cache_get(key: str):
     try:
@@ -54,12 +74,18 @@ session = requests.Session()
 
 def _api_get(path: str, params: Dict[str, Any] | None = None) -> Dict[str, Any]:
     """
-    GET diretamente à API-FOOTBALL com cache em Redis.
-    Aqui NÃO usamos o proxy porque /players, /injuries, /players/squads
-    são chamados com mais frequência e queremos reusar o cache por chave.
+    GET à API-Football, podendo ser DIRETO ou via PROXY, com cache em Redis.
+
+    - Se API_FOOTBALL_BASE aponta para https://v3.football.api-sports.io/ e tens API_FOOTBALL_KEY:
+        -> vai direto à API-Football com x-apisports-key.
+
+    - Se API_FOOTBALL_BASE aponta para o teu PROXY (ex.: https://football-proxy...):
+        -> chama o proxy com FOOTBALL_PROXY_TOKEN (header X-Proxy-Token),
+           e o proxy fala com a API-Football.
     """
-    if not API_KEY:
-        raise ApiFootballError("API_FOOTBALL_KEY não está definido nas variáveis de ambiente.")
+    if not API_KEY and not FOOTBALL_PROXY_TOKEN:
+        # Se não tens nem key nem token, é quase certo que está mal configurado
+        logger.warning("Nem API_FOOTBALL_KEY nem FOOTBALL_PROXY_TOKEN estão definidos.")
 
     url = BASE_URL + path.lstrip("/")
     params = params or {}
@@ -70,7 +96,7 @@ def _api_get(path: str, params: Dict[str, Any] | None = None) -> Dict[str, Any]:
         return cached
 
     try:
-        resp = session.get(url, headers=HEADERS, params=params, timeout=DEFAULT_TIMEOUT)
+        resp = session.get(url, headers=BASE_HEADERS, params=params, timeout=DEFAULT_TIMEOUT)
     except Exception as exc:
         raise ApiFootballError(f"Erro ao chamar {url}: {exc}") from exc
 
@@ -94,6 +120,7 @@ def get_current_squad_ids(team_id: int) -> Set[int]:
     """
     Usa /players/squads para obter o PLANTEL ATUAL do clube.
     Isto evita ex-jogadores (tipo Di María no Benfica) aparecerem.
+    Se a API devolver vazio, devolvemos set() e não filtramos por plantel.
     """
     payload = _api_get("players/squads", {"team": team_id})
     ids: Set[int] = set()
@@ -178,6 +205,27 @@ def _calc_score_from_stats(stats: Dict[str, Any]) -> float:
     return total_goals + goals_per_90
 
 
+# --------------------------------------
+# Blacklist manual para ex-jogadores
+# --------------------------------------
+# Se a API-Football continuar a devolver estatísticas/plantel errados
+# (ex.: Di María ainda ligado ao Benfica), filtramos aqui.
+BLACKLIST_BY_TEAM_NAME_SUBSTRING = {
+    # team_id: [substrings proibidas em name.lower()]
+    211: ["di maria"],   # Benfica - ajusta o team_id se for outro no teu dataset
+}
+
+
+def _is_blacklisted(team_id: int, player_name: str | None) -> bool:
+    if not player_name:
+        return False
+    name = player_name.lower()
+    for substr in BLACKLIST_BY_TEAM_NAME_SUBSTRING.get(team_id, []):
+        if substr in name:
+            return True
+    return False
+
+
 def _iter_candidate_players(
     team_id: int,
     season: int,
@@ -186,9 +234,10 @@ def _iter_candidate_players(
     """
     Gera jogadores candidatos a marcar golo para uma equipa:
 
-    - só quem está NO PLANTEL ATUAL (players/squads)
+    - só quem está NO PLANTEL ATUAL (players/squads), SE a API devolver algo
     - exclui lesionados/ausentes (injuries por fixture)
     - exclui quem não tem golos / minutos nesta época
+    - exclui jogadores em blacklist manual (ex.: Di María no Benfica)
     """
     injured_set = set(injured_ids or [])
     squad_ids = get_current_squad_ids(team_id)
@@ -199,7 +248,14 @@ def _iter_candidate_players(
         if not isinstance(pid, int):
             continue
 
+        name = player.get("name")
+
+        # Blacklist manual (casos como Di María)
+        if _is_blacklisted(team_id, name):
+            continue
+
         # fora se já não está no plantel atual (ex-jogadores)
+        # (só aplicamos este filtro se a API devolveu algum id no plantel)
         if squad_ids and pid not in squad_ids:
             continue
 
@@ -232,7 +288,7 @@ def _iter_candidate_players(
 
         yield {
             "player_id": pid,
-            "name": player.get("name"),
+            "name": name,
             "team_id": int(team_info.get("id") or team_id),
             "team_name": team_info.get("name"),
             "position": games.get("position") or player.get("position"),
