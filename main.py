@@ -1,14 +1,13 @@
-# main.py (RAIZ DO PROJETO) — runner CLI simples e robusto
+
 import sys
 import logging
 import argparse
+from src.train import train_model
+from src.predict import main as run_predictions
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 log = logging.getLogger("runner")
-
 # -- imports obrigatórios
-from src.train import train_model
-from src.predict import main as run_predictions
 
 # -- imports opcionais (existem em alguns repos, noutros não)
 _update_hist = None
@@ -74,7 +73,7 @@ def main():
             do_check_results()
 
         log.info("✅ Concluído sem erros.")
-    except Exception as e:
+    except Exception:
         log.exception("❌ Falhou a execução.")
         sys.exit(1)
 

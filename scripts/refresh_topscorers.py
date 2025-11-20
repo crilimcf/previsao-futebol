@@ -3,11 +3,24 @@
 # estatísticas (players) e lesões (injuries) para evitar jogadores transferidos
 # e identificar lesionados.
 
-import os, json, time, math, argparse
+import os
+import json
+import time
+import argparse
+import sys
+
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Set
 import requests
+
+# Importa utilitário para limpar cache Redis de squads
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/utils')))
+try:
+    from redis_tools import clear_team_cache
+except ImportError:
+    def clear_team_cache(team_id, season=None):
+        pass
 
 API_KEY = os.getenv("API_FOOTBALL_KEY", "")
 BASE = (os.getenv("API_FOOTBALL_BASE") or "https://v3.football.api-sports.io").rstrip("/")
@@ -21,7 +34,7 @@ def req(path: str, params: Dict[str, Any]) -> Dict[str, Any]:
             r = requests.get(url, headers=HEADERS, params=params, timeout=30)
             r.raise_for_status()
             return r.json() or {}
-        except requests.HTTPError as e:
+        except requests.HTTPError:
             # 429/5xx -> retry leve
             if r is not None and r.status_code in (429, 500, 502, 503, 504):
                 time.sleep(1.0 + i * 0.7)
@@ -157,10 +170,13 @@ def main():
         teams = list_teams_for_league(lg, season)
         league_entry = {"league_id": lg, "season": season, "teams": []}
 
+
         for t in teams:
             tid = t["team_id"]
             tname = t["name"]
             try:
+                # Limpa cache Redis do squad antes de atualizar
+                clear_team_cache(tid, season)
                 squad_ids = set_squad(tid)
                 inj = injuries_set(tid, season)
                 goals = goals_by_player(tid, lg, season)

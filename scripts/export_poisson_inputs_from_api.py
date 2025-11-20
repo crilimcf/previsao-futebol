@@ -1,6 +1,9 @@
 # scripts/export_poisson_inputs_from_api.py
 # Cria data/train/poisson_inputs.csv a partir da API-Football (paginação + fallback)
-import os, json, time, math, argparse
+import os
+import json
+import time
+import argparse
 from pathlib import Path
 from typing import List, Dict, Any
 import requests

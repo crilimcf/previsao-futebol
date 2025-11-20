@@ -4,18 +4,16 @@
 # --- garantir import do pacote local "src" mesmo no CI ---
 import sys
 from pathlib import Path
+import json
+import math
+import pandas as pd
+from scipy.optimize import minimize
+from src.ml.bivar import bivar_pmf, _safe
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
 # ----------------------------------------------------------
-
-import json, math
-from pathlib import Path
-import pandas as pd
-import numpy as np
-from scipy.optimize import minimize
-
-from src.ml.bivar import bivar_pmf, _safe
 
 DATA = Path("data/train/poisson_inputs.csv")
 OUT  = Path("models/bivar_lambda3.json")

@@ -2,7 +2,6 @@
 # src/ml/predict_over25.py
 # Lê modelo treinado e prevê probabilidade ajustada Over 2.5
 # ===============================================================
-import os
 import joblib
 import numpy as np
 from pathlib import Path

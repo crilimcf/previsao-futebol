@@ -1,7 +1,8 @@
 # ============================================================
 # scripts/backtest_metrics.py
 # ============================================================
-import json, math
+import json
+import math
 from pathlib import Path
 import argparse
 import pandas as pd
@@ -12,7 +13,7 @@ def brier_score(y_prob, y_true):
     # para 1X2: y_true ∈ {0,1,2}; y_prob=(pH,pD,pA)
     s = 0.0
     n = 0
-    for (ph, pd, pa), y in zip(y_prob, y_true):
+    for (ph, pdraw, pa), y in zip(y_prob, y_true):
         onehot = np.array([0.0, 0.0, 0.0])
         onehot[int(y)] = 1.0
         p = np.array([ph, pd, pa], dtype=float)
@@ -23,7 +24,7 @@ def brier_score(y_prob, y_true):
 def log_loss(y_prob, y_true, eps=1e-12):
     s = 0.0
     n = 0
-    for (ph, pd, pa), y in zip(y_prob, y_true):
+    for (ph, pdraw, pa), y in zip(y_prob, y_true):
         p = [ph, pd, pa][int(y)]
         p = max(eps, min(1.0, p))
         s += -math.log(p)

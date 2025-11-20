@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -6,9 +7,6 @@ app = FastAPI()
 @app.get("/myip")
 async def get_my_ip(request: Request):
     return {"ip": request.client.host}
-# ----------------------------------------------------
-
-from fastapi.responses import JSONResponse
 
 PROXY_TOKEN = "CF_Proxy_2025_Secret_!@#839"
 

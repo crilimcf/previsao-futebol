@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-import os, json, time, sys
+import os
+import json
+import sys
 from datetime import datetime, timedelta
 import urllib.request
 
@@ -52,14 +54,16 @@ def main():
         # sem filtro (para apanhar ligas novas)
         try:
             ps = http("GET", f"/predictions?date={d}", headers=HEADERS_JSON) or []
-            if isinstance(ps, list): all_preds.extend(ps)
+            if isinstance(ps, list):
+                all_preds.extend(ps)
         except Exception as e:
             print(f"WARN: /predictions?date={d} failed:", e, file=sys.stderr)
         # com filtro por liga (alguns backends só devolvem completo por liga)
         for lid in league_ids:
             try:
                 ps = http("GET", f"/predictions?date={d}&league_id={lid}", headers=HEADERS_JSON) or []
-                if isinstance(ps, list): all_preds.extend(ps)
+                if isinstance(ps, list):
+                    all_preds.extend(ps)
             except Exception:
                 pass
 
@@ -69,7 +73,8 @@ def main():
     for p in all_preds:
         key = (str(p.get("match_id") or p.get("fixture_id") or ""), p.get("date",""))
         if key not in seen:
-            dedup.append(p); seen.add(key)
+            dedup.append(p)
+            seen.add(key)
 
     # 4) stats
     try:
@@ -88,7 +93,8 @@ def main():
         if os.path.exists(hist_path):
             with open(hist_path, "r", encoding="utf-8") as f:
                 hist = json.load(f)
-            if not isinstance(hist, list): hist = []
+            if not isinstance(hist, list):
+                hist = []
         else:
             hist = []
         hist.append({

@@ -1,9 +1,7 @@
 # src/api_fetch.py
 import os
 import json
-import time
 import math
-import random
 import logging
 from datetime import date, timedelta
 from typing import Dict, Any, List, Optional, Tuple
@@ -86,7 +84,7 @@ def get_odds_for_fixture(fixture_id: int) -> Dict[str, Any]:
                                 continue
                             try:
                                 odd = float(odd)
-                            except:
+                            except Exception:
                                 continue
                             if label in ("home", "1"):
                                 tmp["home"] = odd
@@ -109,7 +107,7 @@ def get_odds_for_fixture(fixture_id: int) -> Dict[str, Any]:
                                 continue
                             try:
                                 odd = float(odd)
-                            except:
+                            except Exception:
                                 continue
                             if "over 2.5" in label:
                                 tmp["over"] = odd
@@ -129,7 +127,7 @@ def get_odds_for_fixture(fixture_id: int) -> Dict[str, Any]:
                                 continue
                             try:
                                 odd = float(odd)
-                            except:
+                            except Exception:
                                 continue
                             if "over 1.5" in label:
                                 tmp["over"] = odd
@@ -149,7 +147,7 @@ def get_odds_for_fixture(fixture_id: int) -> Dict[str, Any]:
                                 continue
                             try:
                                 odd = float(odd)
-                            except:
+                            except Exception:
                                 continue
                             if "yes" in label:
                                 tmp["yes"] = odd

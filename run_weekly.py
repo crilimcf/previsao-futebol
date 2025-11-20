@@ -1,10 +1,11 @@
-from dotenv import load_dotenv
-load_dotenv()
+
 import subprocess
 import logging
 import requests
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+load_dotenv()
 
 # ==============================
 # CONFIGURAÇÕES

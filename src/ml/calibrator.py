@@ -7,7 +7,6 @@ from functools import lru_cache
 from typing import Dict, Tuple, Optional
 
 import joblib
-import numpy as np
 
 # Estrutura esperada em models/calibrators/:
 #  └─ {league_id}_1x2.pkl     -> dict {'home': IsoReg, 'draw': IsoReg, 'away': IsoReg}

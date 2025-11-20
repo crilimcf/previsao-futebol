@@ -4,7 +4,6 @@ import os
 import json
 import math
 import time
-from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin
 
@@ -197,7 +196,7 @@ def main():
         try:
             st_h = team_stats(int(home_id), int(lg_id))
             st_a = team_stats(int(away_id), int(lg_id))
-        except SystemExit as e:
+        except SystemExit:
             # se rebentar numa equipa, salta
             continue
 

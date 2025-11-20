@@ -28,13 +28,15 @@ def _extract_model_1x2(p: Dict[str, Any]) -> Tuple[float,float,float]:
         base[cl] = float(pr)
         rest = (1.0 - base[cl]) / 2.0
         for i in range(3):
-            if i != cl: base[i] = rest
+            if i != cl:
+                base[i] = rest
     return renorm_triplet(*base)
 
 def _extract_model_binary(node: Dict[str, Any]) -> float:
     # aceita 'prob/confidence' (1=Sim)
     p = _num(node.get("prob"), None)
-    if p is None: p = _num(node.get("confidence"), 0.5)
+    if p is None:
+        p = _num(node.get("confidence"), 0.5)
     return float(max(0.0, min(1.0, p)))
 
 def _extract_odds_1x2(odds: Dict[str, Any]) -> Tuple[float,float,float]:

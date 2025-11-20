@@ -11,7 +11,13 @@ Env vars:
 """
 
 from __future__ import annotations
-import os, json, unicodedata, requests, sys, pathlib, re
+import os
+import json
+import unicodedata
+import requests
+import sys
+import pathlib
+import re
 from typing import Dict, List, Any, Set, Tuple
 
 API_KEY = os.getenv("API_FOOTBALL_KEY", "")
@@ -215,7 +221,8 @@ def season_run(season: str, ids_map: Dict[str, Dict[str, Any]]) -> List[Dict[str
         m = pick_best(resp, key, country, ltype, keywords, preferred)
         if m:
             if m["id"] not in seen_ids:
-                out.append(m); seen_ids.add(m["id"])
+                out.append(m)
+                seen_ids.add(m["id"])
             # atualiza mapeamento fixo
             ids_map[key] = {
                 "id": m["id"], "country": country, "type": ltype,
@@ -231,7 +238,8 @@ def season_run(season: str, ids_map: Dict[str, Dict[str, Any]]) -> List[Dict[str
                     "country": country, "type": ltype,
                 }
                 if entry["id"] not in seen_ids:
-                    out.append(entry); seen_ids.add(entry["id"])
+                    out.append(entry)
+                    seen_ids.add(entry["id"])
                 print(f"[INFO] Usado ID fixo {entry['id']} para {country}/{ltype} ({preferred}) em {season}")
             else:
                 anykw = next(iter(keywords)) if keywords else "—"

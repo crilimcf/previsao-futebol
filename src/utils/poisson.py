@@ -31,13 +31,19 @@ def probs_from_matrix(mat: List[List[float]]) -> Dict[str, float]:
     for i in range(max_g + 1):
         for j in range(max_g + 1):
             p = mat[i][j]
-            if i > j: p_home += p
-            elif i == j: p_draw += p
-            else: p_away += p
+            if i > j:
+                p_home += p
+            elif i == j:
+                p_draw += p
+            else:
+                p_away += p
 
-            if i + j >= 2: p_o15 += p
-            if i + j >= 3: p_o25 += p
-            if i >= 1 and j >= 1: p_btts += p
+            if i + j >= 2:
+                p_o15 += p
+            if i + j >= 3:
+                p_o25 += p
+            if i >= 1 and j >= 1:
+                p_btts += p
 
     return {
         "home": p_home,
