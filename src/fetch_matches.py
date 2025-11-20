@@ -185,36 +185,44 @@ def fetch_today_matches(days: int = 1) -> None:
     """
     Compatibilidade com src/api_routes/predict.py.
 
-    /meta/update chama fetch_today_matches() mas a lógica principal
-    de atualização está hoje em api_fetch_pro + workflows do GitHub.
-    Aqui fazemos um wrapper para esse módulo.
+    /meta/update chama fetch_today_matches() mas hoje a lógica
+    principal de atualização está em src/api_fetch_pro.
 
-    Se api_fetch_pro tiver main(days=...), chamamos assim.
-    Se não tiver, tentamos main() ou run().
+    Aqui tentamos encontrar um entrypoint razoável em api_fetch_pro:
+      - update_predictions(days=?)
+      - main(days=?)
+      - run(days=?)
+
+    Se nenhuma destas funções existir, apenas registamos em log e saímos.
     """
     logger.info("fetch_today_matches() chamado com days=%s", days)
 
     try:
-        from src import api_fetch_pro
+        from src import api_fetch_pro  # type: ignore
     except Exception as exc:
-        logger.warning("api_fetch_pro não encontrado: %s", exc)
+        logger.info("api_fetch_pro não encontrado; nada para atualizar: %s", exc)
         return
 
-    # tenta encontrar um entrypoint razoável
-    if hasattr(api_fetch_pro, "main"):
-        logger.info("A chamar api_fetch_pro.main(days=%s)", days)
+    # ordem de preferência dos possíveis entrypoints
+    for attr in ("update_predictions", "main", "run"):
+        fn = getattr(api_fetch_pro, attr, None)
+        if not callable(fn):
+            continue
+
+        logger.info("A chamar api_fetch_pro.%s(days=%s)", attr, days)
         try:
-            api_fetch_pro.main(days=days)  # type: ignore[attr-defined]
+            # tenta com o argumento days
+            fn(days=days)  # type: ignore[misc]
         except TypeError:
-            api_fetch_pro.main()  # type: ignore[attr-defined]
-    elif hasattr(api_fetch_pro, "run"):
-        logger.info("A chamar api_fetch_pro.run(days=%s)", days)
-        try:
-            api_fetch_pro.run(days=days)  # type: ignore[attr-defined]
-        except TypeError:
-            api_fetch_pro.run()  # type: ignore[attr-defined]
-    else:
-        logger.warning(
-            "api_fetch_pro não tem main() nem run(); "
-            "fetch_today_matches não executou nenhuma atualização."
-        )
+            # função não aceita days → tenta sem argumentos
+            fn()  # type: ignore[call-arg]
+        except Exception as exc:  # pragma: no cover - só logging
+            logger.error("Erro ao chamar api_fetch_pro.%s: %s", attr, exc)
+        else:
+            # se correu sem lançar exceção, acabou o trabalho
+            return
+
+    logger.info(
+        "api_fetch_pro não expõe nenhuma função pública (update_predictions/main/run); "
+        "fetch_today_matches terminou sem executar atualização."
+    )
