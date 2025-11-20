@@ -181,7 +181,7 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
 # ----------------------------------------------------------------------
 # Wrapper de compatibilidade para /meta/update
 # ----------------------------------------------------------------------
-def fetch_today_matches(days: int = 1) -> None:
+def fetch_today_matches(days: int = 3) -> Optional[Dict[str, Any]]:
     """
     Compatibilidade com src/api_routes/predict.py.
 
@@ -189,7 +189,8 @@ def fetch_today_matches(days: int = 1) -> None:
     principal de atualização está em src/api_fetch_pro.
 
     Aqui tentamos encontrar um entrypoint razoável em api_fetch_pro:
-      - update_predictions(days=?)
+      - update_predictions(days=?, force=?)
+      - fetch_and_save_predictions(days=?)
       - main(days=?)
       - run(days=?)
 
@@ -200,29 +201,45 @@ def fetch_today_matches(days: int = 1) -> None:
     try:
         from src import api_fetch_pro  # type: ignore
     except Exception as exc:
-        logger.info("api_fetch_pro não encontrado; nada para atualizar: %s", exc)
-        return
+        logger.warning("api_fetch_pro não encontrado; nada para atualizar: %s", exc)
+        return None
 
-    # ordem de preferência dos possíveis entrypoints
-    for attr in ("update_predictions", "main", "run"):
+    # 1) Preferimos update_predictions (API oficial)
+    if hasattr(api_fetch_pro, "update_predictions"):
+        fn = getattr(api_fetch_pro, "update_predictions")
+        logger.info("A chamar api_fetch_pro.update_predictions(days=%s)", days)
+        try:
+            return fn(days=days, force=False)  # type: ignore[call-arg]
+        except TypeError:
+            # versão antiga sem 'force' ou 'days'
+            try:
+                return fn(days=days)  # type: ignore[call-arg]
+            except TypeError:
+                return fn()  # type: ignore[call-arg]
+
+    # 2) Versões antigas com fetch_and_save_predictions
+    if hasattr(api_fetch_pro, "fetch_and_save_predictions"):
+        fn = getattr(api_fetch_pro, "fetch_and_save_predictions")
+        logger.info("A chamar api_fetch_pro.fetch_and_save_predictions(days=%s)", days)
+        try:
+            return fn(days=days)  # type: ignore[call-arg]
+        except TypeError:
+            return fn()  # type: ignore[call-arg]
+
+    # 3) Fallbacks bem antigos: main()/run()
+    for attr in ("main", "run"):
         fn = getattr(api_fetch_pro, attr, None)
         if not callable(fn):
             continue
 
         logger.info("A chamar api_fetch_pro.%s(days=%s)", attr, days)
         try:
-            # tenta com o argumento days
-            fn(days=days)  # type: ignore[misc]
+            return fn(days=days)  # type: ignore[call-arg]
         except TypeError:
-            # função não aceita days → tenta sem argumentos
-            fn()  # type: ignore[call-arg]
-        except Exception as exc:  # pragma: no cover - só logging
-            logger.error("Erro ao chamar api_fetch_pro.%s: %s", attr, exc)
-        else:
-            # se correu sem lançar exceção, acabou o trabalho
-            return
+            return fn()  # type: ignore[call-arg]
 
     logger.info(
-        "api_fetch_pro não expõe nenhuma função pública (update_predictions/main/run); "
-        "fetch_today_matches terminou sem executar atualização."
+        "api_fetch_pro não expõe nenhuma função pública (update_predictions/"
+        "fetch_and_save_predictions/main/run); fetch_today_matches terminou sem executar atualização."
     )
+    return None

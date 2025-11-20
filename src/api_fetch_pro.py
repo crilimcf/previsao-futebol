@@ -4,6 +4,7 @@ import json
 import math
 import time
 import logging
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
 from datetime import date, timedelta
@@ -45,6 +46,26 @@ PRED_PATH = os.path.join("data", "predict", "predictions.json")
 
 # Flag para camada ML opcional (Over 2.5)
 USE_ML_LAYER = os.getenv("ML_LAYER_ENABLED", "false").lower() == "true"
+
+# ===========================================================
+# LEAGUES ALLOWLIST (para evitar Bósnias & cia)
+# ===========================================================
+LEAGUES_CONFIG_PATH = Path("config/leagues.json")
+ALLOWED_LEAGUES: set[int] = set()
+try:
+    if LEAGUES_CONFIG_PATH.exists():
+        raw = json.loads(LEAGUES_CONFIG_PATH.read_text(encoding="utf-8"))
+        if isinstance(raw, list):
+            for obj in raw:
+                lid = obj.get("id")
+                try:
+                    ALLOWED_LEAGUES.add(int(lid))
+                except Exception:
+                    continue
+    logger.info(f"✅ Allowlist de ligas carregada: {sorted(ALLOWED_LEAGUES)}")
+except Exception as e:
+    logger.warning(f"⚠️ Falha ao ler config/leagues.json: {e}")
+    ALLOWED_LEAGUES = set()
 
 # ===========================================================
 # HEADERS API-FOOTBALL
@@ -338,6 +359,14 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         league_name = league.get("name")
         country = league.get("country")
 
+        # -------------------------
+        # Filtro de ligas (allowlist)
+        # -------------------------
+        if ALLOWED_LEAGUES:
+            if league_id not in ALLOWED_LEAGUES and league_id != WCQ_EUROPE_LEAGUE_ID:
+                # ignora, liga que não queremos (ex: Bósnia, 2ªs divisões, etc.)
+                return None
+
         home = teams.get("home", {})
         away = teams.get("away", {})
 
@@ -615,7 +644,7 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
 
     if total == 0:
         logger.warning(
-            "⚠️ Nenhuma previsão calculada a partir das fixtures. "
+            "⚠️ Nenhuma previsão calculada a partir das fixtures (todas filtradas ou erro). "
             "A NÃO sobrescrever data/predict/predictions.json."
         )
         return {"status": "no-predictions", "total": 0}
@@ -643,7 +672,7 @@ def update_predictions(days: int = 3, force: bool = False) -> Dict[str, Any]:
       - src.fetch_matches.fetch_today_matches() (via /meta/update)
       - GitHub Actions ou scripts externos, se quiseres.
 
-    `force` está aqui só para compatibilidade futura / logs.
+    'days' = quantos dias a partir de hoje (ex: 3 -> hoje + 2).
     """
     try:
         d = int(days) if days is not None else 3
