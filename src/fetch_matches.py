@@ -128,19 +128,6 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
                 "peso": peso,
             })
 
-            peso = g90 * min_factor * pos_w
-
-            out.append({
-                "id": player_id,
-                "name": name,
-                "position": position,
-                "minutes": minutes,
-                "apps": apps,
-                "goals": goals,
-                "g90": g90,
-                "peso": peso,
-            })
-
     # Salva em cache por 24h
     _rset(ck, json.dumps(out), ex=86400)
     return out
