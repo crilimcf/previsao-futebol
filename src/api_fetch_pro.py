@@ -11,6 +11,7 @@ from datetime import date, timedelta
 import requests
 
 from src import config
+from src.probable_scorers import probable_scorers_for_match  # NOVO
 
 # ===========================================================
 # LOG
@@ -349,7 +350,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
           for (s, p) in top_k_scores_from_matrix(mat, k=3)
       ]
 
-      # season correcta para topscorers
+      # season correcta para topscorers (ranking geral da liga)
       season = _season_for_league(league_id)
       scorers_cache_key = f"topscorers:{league_id}:{season}"
       top_scorers = redis_cache_get(scorers_cache_key)
@@ -364,6 +365,17 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
               res.append({"player": player, "team": team, "goals": int(goals or 0)})
           top_scorers = res
           redis_cache_set(scorers_cache_key, top_scorers, ex=12 * 3600)
+
+      # ============================
+      # Marcadores prováveis por jogo (plantel atual + lesões) - NOVO
+      # ============================
+      try:
+          probable_scorers = probable_scorers_for_match(fix, limit=4)
+      except Exception as e_ps:
+          logger.warning(
+              f"⚠️ Erro a calcular marcadores prováveis para fixture {fixture.get('id')}: {e_ps}"
+          )
+          probable_scorers = {"home": [], "away": []}
 
       odds_map = {
           "winner": {
@@ -447,11 +459,12 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
               "btts": {"class": int(p_btts >= 0.5), "confidence": float(p_btts)},
           },
           "correct_score_top3": top3,
-          "top_scorers": top_scorers,
+          "top_scorers": top_scorers,            # ranking geral da liga (mantido)
+          "probable_scorers": probable_scorers,  # NOVO: marcadores prováveis por jogo
           "predicted_score": ps_obj,
           "confidence": float(winner_conf),
 
-          # novo campo para front mostrar texto
+          # texto para o front
           "explanation": explanation,
       }
       return out
