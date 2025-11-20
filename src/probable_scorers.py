@@ -1,5 +1,13 @@
-# src/probable_scorers.py
+
 from __future__ import annotations
+# --- Utilitário para garantir atualização do plantel em memória ---
+def clear_squad_lru_cache(team_id: int):
+    try:
+        get_current_squad_ids.cache_clear()
+        get_players_for_team_season.cache_clear()
+    except Exception:
+        pass
+# src/probable_scorers.py
 
 import json
 import logging

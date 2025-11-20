@@ -7,8 +7,8 @@ import os
 import json
 import time
 import argparse
-import sys
 
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Set
@@ -20,6 +20,14 @@ try:
     from redis_tools import clear_team_cache
 except ImportError:
     def clear_team_cache(team_id, season=None):
+        pass
+
+# Importa função para limpar o lru_cache do plantel em memória
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+try:
+    from probable_scorers import clear_squad_lru_cache
+except ImportError:
+    def clear_squad_lru_cache(team_id):
         pass
 
 API_KEY = os.getenv("API_FOOTBALL_KEY", "")
@@ -175,8 +183,9 @@ def main():
             tid = t["team_id"]
             tname = t["name"]
             try:
-                # Limpa cache Redis do squad antes de atualizar
+                # Limpa cache Redis e cache em memória do squad antes de atualizar
                 clear_team_cache(tid, season)
+                clear_squad_lru_cache(tid)
                 squad_ids = set_squad(tid)
                 inj = injuries_set(tid, season)
                 goals = goals_by_player(tid, lg, season)
