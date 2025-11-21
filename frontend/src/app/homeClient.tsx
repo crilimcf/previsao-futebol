@@ -111,6 +111,9 @@ export default function HomeClient() {
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
+  // 👉 v1 / v2 (IA Clássica vs IA Avançada)
+  const [predVersion, setPredVersion] = useState<"v1" | "v2">("v2");
+
   /* ----------------------------- */
   /* 1) Ligas só do backend curado */
   /* ----------------------------- */
@@ -122,18 +125,18 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Carrega ligas do backend curado, filtradas pela data selecionada
+  // Carrega ligas do backend curado (lista global)
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues({ date: selectedDateISO });
+        const ls = await getLeagues();
         setBackendLeagues(ls ?? []);
       } catch (e) {
         console.error("Erro a carregar ligas:", e);
         setBackendLeagues([]);
       }
     })();
-  }, [selectedDateISO]);
+  }, []);
 
   // limpar possíveis caches antigas do browser (uma vez)
   useEffect(() => {
@@ -163,11 +166,13 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*   Estado inicial via query    */
-/* ----------------------------- */
+  /* ----------------------------- */
 
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
+    const qpVersion = search.get("version");
+
     if (qpLeague) setSelectedLeague(qpLeague);
 
     if (qpDate) {
@@ -184,22 +189,30 @@ export default function HomeClient() {
           : "today";
       setSelectedDateKey(key);
     }
+
+    if (qpVersion === "v1" || qpVersion === "v2") {
+      setPredVersion(qpVersion);
+    } else {
+      // default: v2
+      setPredVersion("v2");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // reflete filtros na URL
+  // reflete filtros + versão na URL
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
+    params.set("version", predVersion);
     if (selectedLeague && selectedLeague !== "all") params.set("league_id", String(selectedLeague));
     else params.delete("league_id");
     router.replace(`?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDateISO, selectedLeague]);
+  }, [selectedDateISO, selectedLeague, predVersion]);
 
   /* ----------------------------- */
   /*   Carregar previsões + stats  */
-/* ----------------------------- */
+  /* ----------------------------- */
 
   async function loadMainData() {
     setLoading(true);
@@ -212,7 +225,8 @@ export default function HomeClient() {
           : { date: selectedDateISO, league_id: selectedLeague };
 
       const [predsRaw, statsData, lastU] = await Promise.all([
-        getPredictions(params),
+        // 👉 usa v1 ou v2 consoante o toggle
+        getPredictions(params, { version: predVersion, allowFallback: true }),
         getStats(),
         getLastUpdate(),
       ]);
@@ -273,11 +287,11 @@ export default function HomeClient() {
   useEffect(() => {
     loadMainData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
+  }, [selectedLeague, selectedDateISO, allowedLeagueIds, predVersion]);
 
   /* ----------------------------- */
   /*      Fixtures reais (proxy)   */
-/* ----------------------------- */
+  /* ----------------------------- */
 
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
@@ -369,7 +383,7 @@ export default function HomeClient() {
         {stats ? <StatsAverage stats={stats} /> : null}
 
         {/* Filtros */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-center gap-3 md:gap-4 mb-8">
           {/* Ligas (backend curado) */}
           <select
             value={selectedLeague}
@@ -394,6 +408,35 @@ export default function HomeClient() {
                 {d.label}
               </button>
             ))}
+          </div>
+
+          {/* Toggle v1 / v2 */}
+          <div className="flex items-center gap-2 text-xs text-gray-300">
+            <span>Modelo:</span>
+            <div className="inline-flex rounded-xl border border-white/10 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setPredVersion("v1")}
+                className={`px-3 py-1 text-xs ${
+                  predVersion === "v1"
+                    ? "bg-emerald-500 text-black font-semibold"
+                    : "bg-transparent text-gray-300"
+                }`}
+              >
+                IA Clássica
+              </button>
+              <button
+                type="button"
+                onClick={() => setPredVersion("v2")}
+                className={`px-3 py-1 text-xs ${
+                  predVersion === "v2"
+                    ? "bg-emerald-500 text-black font-semibold"
+                    : "bg-transparent text-gray-300"
+                }`}
+              >
+                IA Avançada
+              </button>
+            </div>
           </div>
 
           {/* Atualizar */}
@@ -423,12 +466,14 @@ export default function HomeClient() {
               }
               setSelectedLeague("all");
               setSelectedDateKey("today");
+              setPredVersion("v2");
               setPredictions([]);
               setLiveFixtures([]);
               setLastFixturesUpdate(null);
               setError("");
               const params = new URLSearchParams();
               params.set("date", ymd(new Date()));
+              params.set("version", "v2");
               router.replace(`?${params.toString()}`);
               loadMainData();
             }}
@@ -558,13 +603,18 @@ export default function HomeClient() {
                       {(p.league_name ?? p.league) || "Liga"}{" "}
                       {p.country ? `(${p.country})` : ""}
                     </div>
-                    <div className="text-xs text-gray-500">
-                      {new Date(p.date).toLocaleString("pt-PT", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                    <div className="flex flex-col items-end gap-1">
+                      <div className="text-xs text-gray-500">
+                        {new Date(p.date).toLocaleString("pt-PT", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </div>
+                      <span className="text-[10px] text-gray-400 uppercase">
+                        {predVersion === "v2" ? "IA Avançada (v2)" : "IA Clássica (v1)"}
+                      </span>
                     </div>
                   </div>
 
