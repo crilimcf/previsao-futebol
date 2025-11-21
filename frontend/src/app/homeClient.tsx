@@ -7,7 +7,7 @@ import Image from "next/image";
 
 import Header from "@/components/header";
 import InfoCard from "@/components/infoCards";
-import StatsAverage, { StatsType } from "@/components/StatsAverage";
+import StatsAverage from "@/components/StatsAverage";
 import CardSkeleton from "@/components/CardSkeleton";
 import StatsSkeleton from "@/components/StatsSkeleton";
 import {
@@ -15,8 +15,6 @@ import {
   getStats,
   getLastUpdate,
   getLeagues,
-  type Prediction,
-  type LeagueItem,
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
@@ -90,6 +88,96 @@ function badgeClass(prob: number, isMax: boolean): string {
 }
 
 /* ----------------------------- */
+/*       Helpers de mercado      */
+/* ----------------------------- */
+
+function dcLabel(dc: DCClass | undefined) {
+  return dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+}
+
+function toPct(v?: number | null) {
+  return typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
+}
+
+function oddFmt(v?: number | null) {
+  return typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
+}
+
+function bestCorrectScore(p: any) {
+  return (
+    p?.correct_score_top3?.[0]?.score ??
+    p?.predictions?.correct_score?.best ??
+    "—"
+  );
+}
+
+/**
+ * Gera a explicação da IA **no frontend**, para ficar coerente com
+ * os mesmos números que mostramos nos cards.
+ */
+function buildExplanation(
+  p: any,
+  dc: any,
+  over25: any,
+  btts: any,
+  prDC: number,
+  prO25: number,
+  prBTTS: number
+): string[] {
+  const lines: string[] = [];
+
+  const hasLambdaHome = typeof p?.lambda_home === "number";
+  const hasLambdaAway = typeof p?.lambda_away === "number";
+
+  if (hasLambdaHome && hasLambdaAway) {
+    const lh = p.lambda_home as number;
+    const la = p.lambda_away as number;
+    const total = lh + la;
+    lines.push(
+      `Golos esperados: ${total.toFixed(2)} no total (casa ${lh.toFixed(
+        2
+      )}, fora ${la.toFixed(2)}).`
+    );
+  }
+
+  // Double Chance
+  if (dc && typeof dc.class === "number") {
+    const pct = Math.round(prDC * 100);
+    let frase: string;
+    if (dc.class === 0) {
+      frase = `Casa em vantagem (1X), prob. ${pct}% para não perder.`;
+    } else if (dc.class === 1) {
+      frase = `Jogo aberto (12), prob. ${pct}% para vitória de qualquer lado.`;
+    } else {
+      frase = `Visitante em vantagem (X2), prob. ${pct}% para não perder.`;
+    }
+    lines.push(frase);
+  }
+
+  // Over / Under 2.5
+  if (over25) {
+    const pct = Math.round(prO25 * 100);
+    if (over25.class) {
+      lines.push(`Tendência para Over 2.5 golos (${pct}%).`);
+    } else {
+      lines.push(`Tendência para Under 2.5 golos (${pct}%).`);
+    }
+  }
+
+  // BTTS
+  if (btts) {
+    const pct = Math.round(prBTTS * 100);
+    if (btts.class) {
+      lines.push(`Boa probabilidade de ambas marcarem (BTTS Sim ${pct}%).`);
+    } else {
+      lines.push(`Pouca probabilidade de ambas marcarem (BTTS Não ${pct}%).`);
+    }
+  }
+
+  return lines;
+}
+
+/* ----------------------------- */
 /*       Component principal     */
 /* ----------------------------- */
 
@@ -101,8 +189,8 @@ export default function HomeClient() {
   const [loadingFixtures, setLoadingFixtures] = useState(false);
   const [error, setError] = useState<string>("");
 
-  const [predictions, setPredictions] = useState<Prediction[]>([]);
-  const [stats, setStats] = useState<StatsType | null>(null);
+  const [predictions, setPredictions] = useState<any[]>([]);
+  const [stats, setStats] = useState<any | null>(null);
   const [lastUpdate, setLastUpdate] = useState("");
 
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
@@ -115,26 +203,25 @@ export default function HomeClient() {
   /* 1) Ligas só do backend curado */
   /* ----------------------------- */
 
-  const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
+  const [backendLeagues, setBackendLeagues] = useState<any[]>([]);
 
   const selectedDateISO = useMemo(() => {
     const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Carrega ligas do backend curado (sem filtrar por data aqui)
-  // /meta/leagues já vem curado pelo backend.
+  // Carrega ligas do backend curado, filtradas pela data selecionada
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues(); // assinatura: (season?: string)
-        setBackendLeagues(ls ?? []);
+        const ls: any[] = (await getLeagues({ date: selectedDateISO })) ?? [];
+        setBackendLeagues(ls);
       } catch (e) {
         console.error("Erro a carregar ligas:", e);
         setBackendLeagues([]);
       }
     })();
-  }, []);
+  }, [selectedDateISO]);
 
   // limpar possíveis caches antigas do browser (uma vez)
   useEffect(() => {
@@ -149,13 +236,13 @@ export default function HomeClient() {
 
   // conjunto de IDs permitidos (filtro extra em previsões)
   const allowedLeagueIds = useMemo(
-    () => new Set<string>(backendLeagues.map((x) => String(x.id))),
+    () => new Set<string>(backendLeagues.map((x: any) => String(x.id))),
     [backendLeagues]
   );
 
   // dropdown de ligas (apenas curadas) — mostra País — Liga
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
-    const arr = backendLeagues.map((x) => ({
+    const arr = backendLeagues.map((x: any) => ({
       id: String(x.id),
       name: `${x.country ?? "—"} — ${x.name}`,
     }));
@@ -207,7 +294,7 @@ export default function HomeClient() {
     setError("");
 
     try {
-      const params =
+      const params: any =
         selectedLeague === "all"
           ? { date: selectedDateISO }
           : { date: selectedDateISO, league_id: selectedLeague };
@@ -218,10 +305,10 @@ export default function HomeClient() {
         getLastUpdate(),
       ]);
 
-      const predsArray = Array.isArray(predsRaw)
-        ? (predsRaw as Prediction[])
+      const predsArray: any[] = Array.isArray(predsRaw)
+        ? (predsRaw as any[])
         : Array.isArray((predsRaw as any)?.predictions)
-        ? ((predsRaw as any).predictions as Prediction[])
+        ? ((predsRaw as any).predictions as any[])
         : [];
 
       // Garante que só mostramos jogos do dia escolhido
@@ -247,8 +334,13 @@ export default function HomeClient() {
         return ta - tb;
       });
 
-      setPredictions(filteredPreds as Prediction[]);
-      setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
+      setPredictions(filteredPreds);
+
+      setStats(
+        statsData && typeof statsData === "object" && Object.keys(statsData as any).length > 0
+          ? (statsData as any)
+          : null
+      );
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
       if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
@@ -278,7 +370,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*      Fixtures reais (proxy)   */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
@@ -288,7 +380,7 @@ export default function HomeClient() {
     }
     try {
       setLoadingFixtures(true);
-      const data = await getFixturesByLeague(
+      const data: any = await getFixturesByLeague(
         Number(selectedLeague),
         selectedDateISO,
         ignoreCache ? 0 : 5
@@ -306,24 +398,6 @@ export default function HomeClient() {
     loadFixtures();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
-
-  /* ----------------------------- */
-  /*          Helpers UI           */
-/* ----------------------------- */
-
-  const dcLabel = (dc: DCClass | undefined) =>
-    dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
-
-  const toPct = (v?: number | null) =>
-    typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
-
-  const oddFmt = (v?: number | null) =>
-    typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
-
-  const bestCorrectScore = (p: any) =>
-    p?.correct_score_top3?.[0]?.score ??
-    p?.predictions?.correct_score?.best ??
-    "—";
 
   /* ----------------------------- */
   /*         Estados base          */
@@ -536,6 +610,9 @@ export default function HomeClient() {
               );
               const isTop = (k: string) => topEntry[0] === k;
 
+              // Explicação calculada no frontend, coerente com os números acima
+              const explanation = buildExplanation(p, dc, over25, btts, prDC, prO25, prBTTS);
+
               // Marcadores prováveis por jogo com fallback
               const homeScorers =
                 p.probable_scorers?.home && p.probable_scorers.home.length
@@ -546,74 +623,6 @@ export default function HomeClient() {
                 p.probable_scorers?.away && p.probable_scorers.away.length
                   ? p.probable_scorers.away
                   : p.predicted_scorers?.away ?? [];
-
-              // -------------------------
-              // Explicação da IA (frontend)
-              // -------------------------
-              const explanation: string[] = [];
-
-              if (typeof p.lambda_home === "number" && typeof p.lambda_away === "number") {
-                const total = p.lambda_home + p.lambda_away;
-                explanation.push(
-                  `Golos esperados: ${total.toFixed(2)} no total (casa ${p.lambda_home.toFixed(
-                    2
-                  )}, fora ${p.lambda_away.toFixed(2)}).`
-                );
-              }
-
-              // Vantagem / Double Chance
-              if (dc?.class !== undefined) {
-                const dcCls: DCClass = dc.class as DCClass;
-                const label = dcLabel(dcCls);
-                const pct = Math.round(prDC * 100);
-                let side: string;
-                if (dcCls === 0) side = "Casa";
-                else if (dcCls === 2) side = "Visitante";
-                else side = "Jogo em aberto";
-
-                if (side === "Jogo em aberto") {
-                  explanation.push(
-                    `Jogo em aberto (${label}), prob. ${pct}% de não terminar empatado.`
-                  );
-                } else {
-                  explanation.push(
-                    `${side} em vantagem (${label}), prob. ${pct}% para não perder.`
-                  );
-                }
-              } else if (winner) {
-                const pct = Math.round(prWinner * 100);
-                explanation.push(
-                  `Maior probabilidade de vitória para ${winnerLabel} (${pct}%).`
-                );
-              }
-
-              // Tendência Over/Under 2.5
-              if (over25) {
-                const pct = Math.round(prO25 * 100);
-                if (prO25 >= 0.6) {
-                  explanation.push(`Tendência para Over 2.5 golos (${pct}%).`);
-                } else if (prO25 <= 0.4) {
-                  explanation.push(`Tendência para Under 2.5 golos (${100 - pct}%).`);
-                } else {
-                  explanation.push(`Equilíbrio entre Over e Under 2.5 golos (${pct}%).`);
-                }
-              }
-
-              // BTTS
-              if (btts) {
-                const pct = Math.round(prBTTS * 100);
-                if (prBTTS >= 0.6) {
-                  explanation.push(
-                    `Boa probabilidade de ambas marcarem (BTTS Sim ${pct}%).`
-                  );
-                } else if (prBTTS <= 0.4) {
-                  explanation.push(
-                    `Pouca probabilidade de ambas marcarem (BTTS Não ${100 - pct}%).`
-                  );
-                } else {
-                  explanation.push(`Jogo equilibrado para BTTS (${pct}% para Sim).`);
-                }
-              }
 
               return (
                 <div
