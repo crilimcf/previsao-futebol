@@ -54,9 +54,14 @@ def postprocess_item(item: Dict[str, Any], league_id: str) -> Dict[str, Any]:
     # ------- 1X2 -------
     p_model_1x2 = _extract_model_1x2(preds)
     p_blended_1x2 = blend_triplet(league_id, p_model_1x2, _extract_odds_1x2(odds))
+    # Evita probabilidades finais extremas; clamp e renormaliza
+    MIN_P = 0.01
+    clipped = [max(MIN_P, min(0.99, float(v))) for v in p_blended_1x2]
+    s = sum(clipped) or 1.0
+    final_triplet = (clipped[0] / s, clipped[1] / s, clipped[2] / s)
     item.setdefault("v2", {})["p1x2"] = {
         "model": {"home": p_model_1x2[0], "draw": p_model_1x2[1], "away": p_model_1x2[2]},
-        "final": {"home": p_blended_1x2[0], "draw": p_blended_1x2[1], "away": p_blended_1x2[2]},
+        "final": {"home": final_triplet[0], "draw": final_triplet[1], "away": final_triplet[2]},
     }
 
     # ------- O/U 2.5 -------
@@ -66,6 +71,9 @@ def postprocess_item(item: Dict[str, Any], league_id: str) -> Dict[str, Any]:
     cal_ou25 = load_binary_calibrator(league_id, "ou25")
     p_yes_cal = float(calibrate_binary([p_yes_model], cal_ou25)[0])
     p_yes_final = blend_binary(league_id, p_yes_cal, _extract_odds_binary((odds.get("over_2_5") or {}), "over", "under"), "o25")
+    # Clamp final binary probability para evitar extremos e devolver pairover/under
+    MIN_PB = 0.01
+    p_yes_final = max(MIN_PB, min(0.99, float(p_yes_final)))
     py, pn = renorm_binary(p_yes_final)
     item["v2"]["ou25"] = {"model": p_yes_model, "calibrated": p_yes_cal, "final": {"over": py, "under": pn}}
 
@@ -75,6 +83,7 @@ def postprocess_item(item: Dict[str, Any], league_id: str) -> Dict[str, Any]:
     cal_btts = load_binary_calibrator(league_id, "btts")
     p_yes_cal = float(calibrate_binary([p_yes_model], cal_btts)[0])
     p_yes_final = blend_binary(league_id, p_yes_cal, _extract_odds_binary((odds.get("btts") or {}), "yes", "no"), "btts")
+    p_yes_final = max(MIN_PB, min(0.99, float(p_yes_final)))
     py, pn = renorm_binary(p_yes_final)
     item["v2"]["btts"] = {"model": p_yes_model, "calibrated": p_yes_cal, "final": {"yes": py, "no": pn}}
 
