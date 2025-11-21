@@ -38,7 +38,15 @@ def probs_from_decimal_odds_1x2(home: Optional[float], draw: Optional[float], aw
     s = sum(arr)
     if s <= 0:
         return (0.0, 0.0, 0.0)
-    p = [v/s for v in arr]
+    # Protege contra odds de mercado extremas: clamp implícitas antes de normalizar
+    MIN_PM = 0.02
+    MAX_PM = 0.98
+    clamped = [max(MIN_PM, min(MAX_PM, v)) if v > 0 else 0.0 for v in arr]
+    s2 = sum(clamped)
+    if s2 <= 0:
+        p = [v/s for v in arr]
+    else:
+        p = [v/s2 for v in clamped]
     # remover vigorish: renormaliza já cumpre
     return (float(p[0]), float(p[1]), float(p[2]))
 
@@ -52,7 +60,15 @@ def probs_from_decimal_odds_binary(yes: Optional[float], no: Optional[float]) ->
     s = sum(arr)
     if s <= 0:
         return (0.0, 0.0)
-    p = [v/s for v in arr]
+    # Clamp market implied probabilities to avoid extreme market odds dominating
+    MIN_PM = 0.02
+    MAX_PM = 0.98
+    clamped = [max(MIN_PM, min(MAX_PM, v)) if v > 0 else 0.0 for v in arr]
+    s2 = sum(clamped)
+    if s2 <= 0:
+        p = [v/s for v in arr]
+    else:
+        p = [v/s2 for v in clamped]
     return (float(p[0]), float(p[1]))
 
 def blend_triplet(league_id: str, p_model: Tuple[float,float,float], odds: Tuple[Optional[float],Optional[float],Optional[float]]) -> Tuple[float,float,float]:
