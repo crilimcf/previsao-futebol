@@ -192,16 +192,15 @@
     "type": "Cup"
   },
   {
-    "id": 3,
-    "name": "UEFA Europa League",
+    "id": 848,
+    "name": "UEFA Europa Conference League",
     "country": "World",
     "type": "Cup"
   },
   {
-    "id": 32,
-    "name": "World Cup - Qualification Europe",
+    "id": 3,
+    "name": "UEFA Europa League",
     "country": "World",
-    "type": "League"
+    "type": "Cup"
   }
-]
 ]
