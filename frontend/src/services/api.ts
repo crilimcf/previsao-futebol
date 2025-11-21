@@ -1,8 +1,8 @@
 // =====================================================
 // src/services/api.ts
 // Cliente HTTP para comunicar com a API FastAPI (Render)
-// Agora com toggle v1/v2 (env + localStorage) e suporte
-// para marcadores prováveis da V2 + ligas por data.
+// Agora com toggle v1/v2 (env + localStorage) e fallback automático
+// + getLeagues compatível com string OU objeto { season?, date? }
 // =====================================================
 
 import axios from "axios";
@@ -75,21 +75,6 @@ export type OddsMap = {
   btts?: { yes?: number | null; no?: number | null } | null;
 };
 
-export type ScorerEntry = {
-  player_id?: number | string;
-  name?: string;
-  player?: string;
-  full_name?: string;
-  team_id?: number | string;
-  team_name?: string;
-  position?: string;
-  probability?: number;
-  probability_pct?: number;
-  prob?: number;
-  confidence?: number;
-  [key: string]: any;
-};
-
 export type Prediction = {
   match_id: number | string;
   league_id: number | string;
@@ -97,8 +82,6 @@ export type Prediction = {
   league_name?: string;
   country?: string;
   date: string; // ISO
-  date_ymd?: string;
-
   home_team: string;
   away_team: string;
   home_logo?: string;
@@ -109,32 +92,22 @@ export type Prediction = {
   lambda_away?: number;
 
   odds?: OddsMap;
-
   predictions: {
     winner: { class: 0 | 1 | 2; confidence?: number; prob?: number };
     over_2_5: { class: 0 | 1; confidence?: number; prob?: number };
     over_1_5: { class: 0 | 1; confidence?: number; prob?: number };
-    double_chance: { class: DCClass; confidence?: number; prob?: number; label?: string };
+    double_chance: { class: DCClass; confidence?: number; prob?: number };
     btts: { class: 0 | 1; confidence?: number; prob?: number };
     correct_score?: { best?: string; top3?: { score: string; prob: number }[] };
   };
-
   correct_score_top3?: { score: string; prob: number }[];
-
   top_scorers?: { player: string; team: string; goals: number }[];
-
-  // V1: predicted_scorers, V2: probable_scorers(_home/_away)
   predicted_scorers?: {
-    home?: ScorerEntry[];
-    away?: ScorerEntry[];
+    home?: { player: string; prob: number; xg: number; position?: string }[];
+    away?: { player: string; prob: number; xg: number; position?: string }[];
   };
 
-  probable_scorers?: {
-    home?: ScorerEntry[];
-    away?: ScorerEntry[];
-  };
-
-  // novo: explicação gerada pelo backend
+  // novo: explicação gerada pelo backend (já não usamos texto cru)
   explanation?: string[];
 };
 
@@ -207,7 +180,7 @@ export async function getPredictions(
   }
 }
 
-/** Normaliza array de previsões (v1 ou v2) para Prediction[] seguro. */
+/** Normaliza qualquer payload de previsões para Prediction[] seguro. */
 function normalizePredArray(data: any): Prediction[] {
   const arr: any[] = Array.isArray(data)
     ? data
@@ -219,12 +192,7 @@ function normalizePredArray(data: any): Prediction[] {
     ? data.predictions
     : [];
 
-  const normScorers = (homeRaw: any, awayRaw: any): { home?: ScorerEntry[]; away?: ScorerEntry[] } => {
-    const home = Array.isArray(homeRaw) ? homeRaw : [];
-    const away = Array.isArray(awayRaw) ? awayRaw : [];
-    return { home, away };
-  };
-
+  // Garantir campos mínimos e strings
   return arr
     .map((p) => {
       const explanation = Array.isArray(p.explanation)
@@ -236,61 +204,18 @@ function normalizePredArray(data: any): Prediction[] {
       const lambdaAway =
         typeof p.lambda_away === "number" ? p.lambda_away : undefined;
 
-      // --- marcadores ---
-      // V2 pode mandar:
-      //  - probable_scorers: { home: [...], away: [...] }
-      //  - probable_scorers_home / probable_scorers_away
-      const probable = normScorers(
-        p.probable_scorers?.home ?? p.probable_scorers_home,
-        p.probable_scorers?.away ?? p.probable_scorers_away
-      );
-
-      // V1 pode mandar predicted_scorers
-      const predictedRaw = p.predicted_scorers || {};
-      const predicted: { home?: ScorerEntry[]; away?: ScorerEntry[] } = {
-        home:
-          Array.isArray(predictedRaw.home) && predictedRaw.home.length
-            ? predictedRaw.home
-            : probable.home,
-        away:
-          Array.isArray(predictedRaw.away) && predictedRaw.away.length
-            ? predictedRaw.away
-            : probable.away,
-      };
-
-      const dateStr: string =
-        typeof p.date === "string"
-          ? p.date
-          : typeof p.fixture_date === "string"
-          ? p.fixture_date
-          : typeof p.kickoff === "string"
-          ? p.kickoff
-          : "";
-
-      const dateYmd =
-        typeof p.date_ymd === "string"
-          ? p.date_ymd
-          : dateStr
-          ? dateStr.slice(0, 10)
-          : undefined;
-
       return {
         match_id: String(p.match_id ?? p.fixture_id ?? p.id ?? ""),
         league_id: String(p.league_id ?? p.league?.id ?? ""),
         league: p.league ?? p.league_name ?? undefined,
         league_name: p.league_name ?? p.league ?? undefined,
         country: p.country ?? p.country_name ?? undefined,
-
-        date: dateStr,
-        date_ymd: dateYmd,
-
+        date: String(p.date ?? p.fixture_date ?? p.kickoff ?? ""),
         home_team: String(p.home_team ?? p.home?.name ?? p.home ?? ""),
         away_team: String(p.away_team ?? p.away?.name ?? p.away ?? ""),
         home_logo: p.home_logo ?? p.home?.logo ?? undefined,
         away_logo: p.away_logo ?? p.away?.logo ?? undefined,
-
         odds: p.odds ?? undefined,
-
         predictions:
           p.predictions ??
           ({
@@ -300,18 +225,14 @@ function normalizePredArray(data: any): Prediction[] {
             double_chance: { class: 0 as DCClass, prob: 0.5 },
             btts: { class: 0 as 0 | 1, prob: 0.5 },
           } as Prediction["predictions"]),
-
         correct_score_top3:
           p.correct_score_top3 ??
           p.predictions?.correct_score?.top3 ??
           [],
-
         top_scorers: p.top_scorers ?? [],
+        predicted_scorers: p.predicted_scorers ?? {},
 
-        // unificação V1 + V2
-        probable_scorers: probable,
-        predicted_scorers: predicted,
-
+        // novos campos
         lambda_home: lambdaHome,
         lambda_away: lambdaAway,
         explanation,
@@ -363,30 +284,45 @@ export async function getApiHealth() {
   }
 }
 
-// ---------------------------
-// Ligas / Taças do backend
-// ---------------------------
+// =====================================================
+// 📚 Ligas – sempre via TEU backend (meta/leagues ou fallback /leagues)
+// Agora aceita:
+//   - getLeagues()
+//   - getLeagues("2024")
+//   - getLeagues({ season: "2024", date: "2025-11-21" })
+//   - getLeagues({ date })
+// =====================================================
 
-type GetLeaguesParams = {
+type LeagueFilters = {
   season?: string;
   date?: string;
 };
 
-/**
- * ✅ Lista curada de ligas/taças servida pelo TEU backend.
- * - Aceita { season?, date? }.
- * - Primeiro tenta /meta/leagues; se não existir, cai para /leagues.
- */
-export async function getLeagues(params?: GetLeaguesParams): Promise<LeagueItem[]> {
+export async function getLeagues(
+  filters?: string | number | LeagueFilters
+): Promise<LeagueItem[]> {
+  let season: string | undefined;
+  const extra: Record<string, any> = {};
+
+  if (typeof filters === "string" || typeof filters === "number") {
+    season = String(filters);
+  } else if (filters && typeof filters === "object") {
+    if (filters.season) {
+      season = filters.season;
+    }
+    if (filters.date) {
+      extra.date = filters.date;
+    }
+  }
+
+  const s = season ?? (process.env.NEXT_PUBLIC_SEASON ?? "2024");
+
   try {
-    const season = params?.season ?? (process.env.NEXT_PUBLIC_SEASON ?? "2024");
-
-    const baseQuery: Record<string, any> = { season };
-    if (params?.date) baseQuery.date = params.date;
-
     // 1) tenta /meta/leagues
     try {
-      const r1 = await api.get("/meta/leagues", { params: withTs(baseQuery) });
+      const r1 = await api.get("/meta/leagues", {
+        params: withTs({ season: s, ...extra }),
+      });
       const data1 = r1?.data as any;
       const arr1: any[] = Array.isArray(data1)
         ? data1
@@ -406,7 +342,9 @@ export async function getLeagues(params?: GetLeaguesParams): Promise<LeagueItem[
     }
 
     // 2) fallback /leagues
-    const r2 = await api.get("/leagues", { params: withTs(baseQuery) });
+    const r2 = await api.get("/leagues", {
+      params: withTs({ season: s, ...extra }),
+    });
     const data2 = r2?.data as any;
     const arr2: any[] = Array.isArray(data2)
       ? data2
