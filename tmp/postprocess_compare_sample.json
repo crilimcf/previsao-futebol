@@ -1,0 +1,182 @@
+[
+  {
+    "key": "1377974",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1377975",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1377976",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1377977",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.999,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.999,
+    "tmp_over_final": 0.99
+  },
+  {
+    "key": "1377978",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1377979",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1377982",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.3333333333333333,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.3333333333333333,
+    "tmp_over_final": 0.3333333333333333
+  },
+  {
+    "key": "1377983",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1379079",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.999,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.999,
+    "tmp_over_final": 0.99
+  },
+  {
+    "key": "1379080",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1379081",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.999,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.999,
+    "tmp_over_final": 0.99
+  },
+  {
+    "key": "1379082",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1379083",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1379084",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1379085",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1379087",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.001,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.001,
+    "tmp_over_final": 0.01
+  },
+  {
+    "key": "1379088",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.999,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.999,
+    "tmp_over_final": 0.99
+  },
+  {
+    "key": "1379439",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.3333333333333333,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.3333333333333333,
+    "tmp_over_final": 0.3333333333333333
+  },
+  {
+    "key": "1379440",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.999,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.999,
+    "tmp_over_final": 0.99
+  },
+  {
+    "key": "1379442",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.999,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.999,
+    "tmp_over_final": 0.99
+  }
+]

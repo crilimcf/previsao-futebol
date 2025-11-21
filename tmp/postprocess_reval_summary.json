@@ -1,0 +1,10 @@
+{
+  "prod_count": 180,
+  "tmp_count": 180,
+  "prod_v2_count": 0,
+  "tmp_v2_count": 180,
+  "prod_extreme_count": 0,
+  "tmp_extreme_count": 0,
+  "low": 0.005,
+  "high": 0.995
+}

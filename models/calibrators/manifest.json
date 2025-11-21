@@ -1,0 +1,11 @@
+{
+  "min_samples": 150,
+  "output_dir": "models\\calibrators",
+  "files": [
+    "models\\calibrators\\45_btts.pkl",
+    "models\\calibrators\\45_over15.pkl",
+    "models\\calibrators\\71_1x2.pkl",
+    "models\\calibrators\\71_btts.pkl",
+    "models\\calibrators\\848_btts.pkl"
+  ]
+}
