@@ -1,9 +1,4 @@
 // frontend/src/app/homeClient.tsx
-// Desliga o TypeScript neste ficheiro para não rebentar o build do Vercel
-// (o resto do projeto continua tipado normalmente).
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -12,7 +7,7 @@ import Image from "next/image";
 
 import Header from "@/components/header";
 import InfoCard from "@/components/infoCards";
-import StatsAverage from "@/components/StatsAverage";
+import StatsAverage, { StatsType } from "@/components/StatsAverage";
 import CardSkeleton from "@/components/CardSkeleton";
 import StatsSkeleton from "@/components/StatsSkeleton";
 import {
@@ -20,8 +15,12 @@ import {
   getStats,
   getLastUpdate,
   getLeagues,
+  type Prediction,
+  type LeagueItem,
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
+
+type DCClass = 0 | 1 | 2; // 0 = 1X, 1 = 12, 2 = X2
 
 /* ----------------------------- */
 /*   Helpers de datas / tempo    */
@@ -42,6 +41,7 @@ function ymd(d: Date) {
   return local.toISOString().split("T")[0];
 }
 
+// Evita crash se a API der date inválida
 function fixtureDateSafe(d?: string) {
   const t = d ? Date.parse(d) : NaN;
   return Number.isFinite(t) ? new Date(d as string) : new Date();
@@ -63,23 +63,14 @@ const dateTabs = [
 
 function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
-  return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
+  // Aceita 0..1 ou 0..100
+  const x = v > 1 ? v / 100 : v;
+  if (!isFinite(x)) return 0;
+  return Math.min(1, Math.max(0, x));
 }
 
 function pctStr01(v?: number | null): string {
   return `${Math.round(prob01(v) * 100)}%`;
-}
-
-// devolve a prob. do lado PREVISTO (por ex. se class=0 significa “Não” e prob é da parte “Sim”)
-function sideProbability(entry: any | undefined | null): number {
-  if (!entry) return 0;
-  const p = prob01(entry.confidence ?? entry.prob);
-  const cls = typeof entry.class === "number" ? entry.class : 0;
-  // Convenção: markets binários:
-  // class === 1 -> "Sim/Over/Sim BTTS"  => usa p
-  // class === 0 -> "Não/Under/N BTTS"  => usa 1-p
-  if (cls === 1) return p;
-  return 1 - p;
 }
 
 function tileClass(prob: number, isMax: boolean): string {
@@ -100,10 +91,87 @@ function badgeClass(prob: number, isMax: boolean): string {
   return "bg-gray-100 text-gray-700";
 }
 
-type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
+/* ----------------------------- */
+/*   Explicação IA Avançada      */
+/* ----------------------------- */
 
-function dcLabel(dc: DCClass | undefined) {
-  return dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+function buildAdvancedExplanation(p: any): string[] {
+  const lines: string[] = [];
+
+  const lambdaHome = typeof p.lambda_home === "number" ? p.lambda_home : undefined;
+  const lambdaAway = typeof p.lambda_away === "number" ? p.lambda_away : undefined;
+
+  if (lambdaHome !== undefined && lambdaAway !== undefined) {
+    const total = lambdaHome + lambdaAway;
+    lines.push(
+      `Golos esperados: ${total.toFixed(2)} no total (casa ${lambdaHome.toFixed(
+        2
+      )}, fora ${lambdaAway.toFixed(2)}).`
+    );
+  }
+
+  const preds = p?.predictions ?? {};
+  const winner = preds.winner as any | undefined;
+  const dc = preds.double_chance as any | undefined;
+  const over25 = preds.over_2_5 as any | undefined;
+  const btts = preds.btts as any | undefined;
+
+  // 2) Vantagem (1X / X2 / 12) alinhada com double_chance.prob
+  if (dc && typeof dc.class === "number") {
+    const dcProb = prob01(dc.prob ?? dc.confidence);
+    const dcPct = Math.round(dcProb * 100);
+    let msg = "";
+
+    if (dc.class === 0) {
+      // 1X
+      msg = `Casa em vantagem (1X), prob. ${dcPct}% para não perder.`;
+    } else if (dc.class === 2) {
+      // X2
+      msg = `Visitante em vantagem (X2), prob. ${dcPct}% para não perder.`;
+    } else {
+      // 12
+      msg = `Jogo aberto (12), prob. ${dcPct}% para não terminar empatado.`;
+    }
+
+    lines.push(msg);
+  } else if (winner && typeof winner.class === "number") {
+    const wProb = prob01(winner.prob ?? winner.confidence);
+    const wPct = Math.round(wProb * 100);
+    if (winner.class === 0) {
+      lines.push(`Leve favoritismo da equipa da casa, prob. ${wPct}% para vencer.`);
+    } else if (winner.class === 2) {
+      lines.push(`Leve favoritismo da equipa visitante, prob. ${wPct}% para vencer.`);
+    } else {
+      lines.push(`Jogo equilibrado, prob. ${wPct}% para terminar empatado.`);
+    }
+  }
+
+  // 3) Tendência Over/Under 2.5
+  if (over25 && typeof over25.class === "number") {
+    const pOver = prob01(over25.prob ?? over25.confidence);
+    const pctOver = Math.round(pOver * 100);
+    if (over25.class === 1) {
+      lines.push(`Tendência para Over 2.5 golos (${pctOver}%).`);
+    } else {
+      const pctUnder = 100 - pctOver;
+      lines.push(`Tendência para Under 2.5 golos (${pctUnder}%).`);
+    }
+  }
+
+  // 4) BTTS
+  if (btts && typeof btts.class === "number") {
+    const pBtts = prob01(btts.prob ?? btts.confidence);
+    const pctYes = Math.round(pBtts * 100);
+    const pctNo = 100 - pctYes;
+
+    if (btts.class === 1) {
+      lines.push(`Boa probabilidade de ambas marcarem (BTTS Sim ${pctYes}%).`);
+    } else {
+      lines.push(`Pouca probabilidade de ambas marcarem (BTTS Não ${pctNo}%).`);
+    }
+  }
+
+  return lines;
 }
 
 /* ----------------------------- */
@@ -118,8 +186,8 @@ export default function HomeClient() {
   const [loadingFixtures, setLoadingFixtures] = useState(false);
   const [error, setError] = useState<string>("");
 
-  const [predictions, setPredictions] = useState<any[]>([]);
-  const [stats, setStats] = useState<any | null>(null);
+  const [predictions, setPredictions] = useState<Prediction[]>([]);
+  const [stats, setStats] = useState<StatsType | null>(null);
   const [lastUpdate, setLastUpdate] = useState("");
 
   const [selectedLeague, setSelectedLeague] = useState<string>("all");
@@ -128,8 +196,7 @@ export default function HomeClient() {
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
   const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
-  // ligas vindas do backend (já curadas)
-  const [backendLeagues, setBackendLeagues] = useState<any[]>([]);
+  const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
 
   const selectedDateISO = useMemo(() => {
     const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
@@ -137,14 +204,14 @@ export default function HomeClient() {
   }, [selectedDateKey]);
 
   /* ----------------------------- */
-  /*  Ligas do backend por data    */
+  /* 1) Ligas só do backend curado */
   /* ----------------------------- */
 
   useEffect(() => {
     (async () => {
       try {
         const ls = await getLeagues({ date: selectedDateISO });
-        setBackendLeagues(Array.isArray(ls) ? ls : []);
+        setBackendLeagues(ls ?? []);
       } catch (e) {
         console.error("Erro a carregar ligas:", e);
         setBackendLeagues([]);
@@ -152,7 +219,7 @@ export default function HomeClient() {
     })();
   }, [selectedDateISO]);
 
-  // limpar caches antigas de ligas
+  // limpar caches antigas de ligas (uma vez)
   useEffect(() => {
     try {
       ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
@@ -168,6 +235,7 @@ export default function HomeClient() {
     [backendLeagues]
   );
 
+  // dropdown de ligas (apenas curadas) — mostra País — Liga
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
     const arr = backendLeagues.map((x) => ({
       id: String(x.id),
@@ -207,15 +275,18 @@ export default function HomeClient() {
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
-    if (selectedLeague && selectedLeague !== "all") params.set("league_id", String(selectedLeague));
-    else params.delete("league_id");
+    if (selectedLeague && selectedLeague !== "all") {
+      params.set("league_id", String(selectedLeague));
+    } else {
+      params.delete("league_id");
+    }
     router.replace(`?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague]);
 
   /* ----------------------------- */
   /*   Carregar previsões + stats  */
-/* ----------------------------- */
+  /* ----------------------------- */
 
   async function loadMainData() {
     setLoading(true);
@@ -233,19 +304,21 @@ export default function HomeClient() {
         getLastUpdate(),
       ]);
 
-      const predsArray: any[] = Array.isArray(predsRaw)
-        ? predsRaw
+      const predsArray: Prediction[] = Array.isArray(predsRaw)
+        ? (predsRaw as Prediction[])
         : Array.isArray((predsRaw as any)?.predictions)
-        ? (predsRaw as any).predictions
+        ? ((predsRaw as any).predictions as Prediction[])
         : [];
 
+      // Garante que só mostramos jogos do dia escolhido
       const byDate = predsArray.filter((p: any) => {
         const dy =
-          p.date_ymd ??
+          (p.date_ymd as string | undefined) ??
           (typeof p.date === "string" ? p.date.slice(0, 10) : "");
         return dy === selectedDateISO;
       });
 
+      // Filtro extra pelas ligas curadas
       const filteredPreds =
         allowedLeagueIds.size > 0
           ? byDate.filter((p: any) =>
@@ -253,16 +326,17 @@ export default function HomeClient() {
             )
           : byDate;
 
+      // Ordena por hora
       filteredPreds.sort((a: any, b: any) => {
         const ta = Date.parse(a.date ?? a.fixture_date ?? 0);
         const tb = Date.parse(b.date ?? b.fixture_date ?? 0);
         return ta - tb;
       });
 
-      setPredictions(filteredPreds);
-      setStats(statsData && Object.keys(statsData as any).length > 0 ? statsData : null);
+      setPredictions(filteredPreds as Prediction[]);
+      setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
-      const lastUpdateRaw = (lastU as any)?.last_update;
+      const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
       if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
         const d = new Date(lastUpdateRaw.replace(" ", "T"));
         setLastUpdate(
@@ -290,7 +364,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*      Fixtures reais (proxy)   */
-/* ----------------------------- */
+  /* ----------------------------- */
 
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
@@ -318,6 +392,24 @@ export default function HomeClient() {
     loadFixtures();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
+
+  /* ----------------------------- */
+  /*          Helpers UI           */
+/* ----------------------------- */
+
+  const dcLabel = (dc: DCClass | undefined) =>
+    dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+
+  const toPct = (v?: number | null) =>
+    typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
+
+  const oddFmt = (v?: number | null) =>
+    typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
+
+  const bestCorrectScore = (p: any) =>
+    p?.correct_score_top3?.[0]?.score ??
+    p?.predictions?.correct_score?.best ??
+    "—";
 
   /* ----------------------------- */
   /*         Estados base          */
@@ -365,7 +457,7 @@ export default function HomeClient() {
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas */}
+          {/* Ligas (backend curado) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -488,15 +580,17 @@ export default function HomeClient() {
           </div>
         )}
 
-        {/* Cartões de previsões */}
+        {/* Previsões (já filtradas por data + ligas curadas) */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {predictions.map((p: any) => {
-              const winner = p?.predictions?.winner;
-              const dc = p?.predictions?.double_chance;
-              const over25 = p?.predictions?.over_2_5;
-              const over15 = p?.predictions?.over_1_5;
-              const btts = p?.predictions?.btts;
+              const preds = p?.predictions ?? {};
+
+              const winner = preds.winner as any | undefined;
+              const dc = preds.double_chance as any | undefined;
+              const over25 = preds.over_2_5 as any | undefined;
+              const over15 = preds.over_1_5 as any | undefined;
+              const btts = preds.btts as any | undefined;
 
               const winnerLabel =
                 winner?.class === 0
@@ -511,46 +605,42 @@ export default function HomeClient() {
               const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
               const oddsBTTS = p?.odds?.btts ?? {};
 
-              const prWinner = prob01(winner?.confidence ?? winner?.prob ?? p?.confidence);
-              const prDC = prob01(dc?.confidence ?? dc?.prob);
-              const prO25Side = sideProbability(over25);
-              const prO15Side = sideProbability(over15);
-              const prBTTSSide = sideProbability(btts); // usado só para % entre parêntesis
+              const prWinner = prob01(winner?.prob ?? winner?.confidence);
+              const prDC = prob01(dc?.prob ?? dc?.confidence);
+              const prO25 = prob01(over25?.prob ?? over25?.confidence);
+              const prO15 = prob01(over15?.prob ?? over15?.confidence);
 
               const marketEntries: [string, number][] = [
                 ["winner", prWinner],
                 ["double", prDC],
-                ["over25", prO25Side],
-                ["over15", prO15Side],
+                ["over25", prO25],
+                ["over15", prO15],
               ];
-
               const topEntry = marketEntries.reduce(
                 (a, b) => (b[1] > a[1] ? b : a),
                 ["winner", -1]
               );
               const isTop = (k: string) => topEntry[0] === k;
 
-              const explanation: string[] = Array.isArray(p.explanation) ? p.explanation : [];
+              const isAdvancedModel =
+                typeof p.model === "string" || (p.lambda_used && typeof p.lambda_used === "object");
 
+              const explanation: string[] = isAdvancedModel
+                ? buildAdvancedExplanation(p)
+                : Array.isArray(p.explanation)
+                ? (p.explanation as string[])
+                : [];
+
+              // Marcadores prováveis por jogo com fallback
               const homeScorers =
                 p.probable_scorers?.home && p.probable_scorers.home.length
                   ? p.probable_scorers.home
-                  : p.predicted_scorers?.home ?? p.probable_scorers_home ?? [];
+                  : p.predicted_scorers?.home ?? [];
 
               const awayScorers =
                 p.probable_scorers?.away && p.probable_scorers.away.length
                   ? p.probable_scorers.away
-                  : p.predicted_scorers?.away ?? p.probable_scorers_away ?? [];
-
-              const bestCorrectScore =
-                p?.predictions?.correct_score?.best ??
-                p?.correct_score_top3?.[0]?.score ??
-                "—";
-
-              const top3Scores =
-                p.correct_score_top3 ??
-                p?.predictions?.correct_score?.top3 ??
-                [];
+                  : p.predicted_scorers?.away ?? [];
 
               return (
                 <div
@@ -560,16 +650,26 @@ export default function HomeClient() {
                   {/* Header */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-400">
-                      {(p.league_name ?? p.league) || "Liga"}{" "}
-                      {p.country ? `(${p.country})` : ""}
+                      {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
                     </div>
-                    <div className="text-xs text-gray-500">
-                      {new Date(p.date).toLocaleString("pt-PT", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      {isAdvancedModel ? (
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300">
+                          IA Avançada (v2)
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-300">
+                          IA Clássica (v1)
+                        </span>
+                      )}
+                      <span>
+                        {new Date(p.date).toLocaleString("pt-PT", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
                     </div>
                   </div>
 
@@ -585,10 +685,10 @@ export default function HomeClient() {
                   {/* Correct score (melhor) */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
-                    <span className="text-sm text-white">{bestCorrectScore}</span>
+                    <span className="text-sm text-white">{bestCorrectScore(p)}</span>
                   </div>
 
-                  {/* Tiles principais */}
+                  {/* Tips com destaque */}
                   <div className="grid grid-cols-2 gap-2">
                     {/* Winner */}
                     <div className={`rounded-xl border p-3 ${tileClass(prWinner, isTop("winner"))}`}>
@@ -608,7 +708,7 @@ export default function HomeClient() {
                             isTop("winner")
                           )}`}
                         >
-                          {pctStr01(winner?.confidence ?? winner?.prob ?? p?.confidence)}
+                          {pctStr01(winner?.prob ?? winner?.confidence)}
                         </span>
                       </div>
                     </div>
@@ -631,13 +731,13 @@ export default function HomeClient() {
                             isTop("double")
                           )}`}
                         >
-                          {pctStr01(dc?.confidence ?? dc?.prob)}
+                          {pctStr01(dc?.prob ?? dc?.confidence)}
                         </span>
                       </div>
                     </div>
 
                     {/* Over 2.5 */}
-                    <div className={`rounded-xl border p-3 ${tileClass(prO25Side, isTop("over25"))}`}>
+                    <div className={`rounded-xl border p-3 ${tileClass(prO25, isTop("over25"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 2.5</span>
                         {isTop("over25") && (
@@ -650,17 +750,17 @@ export default function HomeClient() {
                         {over25?.class === 1 ? "Sim" : "Não"}{" "}
                         <span
                           className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
-                            prO25Side,
+                            prO25,
                             isTop("over25")
                           )}`}
                         >
-                          {pctStr01(prO25Side)}
+                          {pctStr01(over25?.prob ?? over25?.confidence)}
                         </span>
                       </div>
                     </div>
 
                     {/* Over 1.5 */}
-                    <div className={`rounded-xl border p-3 ${tileClass(prO15Side, isTop("over15"))}`}>
+                    <div className={`rounded-xl border p-3 ${tileClass(prO15, isTop("over15"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 1.5</span>
                         {isTop("over15") && (
@@ -673,11 +773,11 @@ export default function HomeClient() {
                         {over15?.class === 1 ? "Sim" : "Não"}{" "}
                         <span
                           className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
-                            prO15Side,
+                            prO15,
                             isTop("over15")
                           )}`}
                         >
-                          {pctStr01(prO15Side)}
+                          {pctStr01(over15?.prob ?? over15?.confidence)}
                         </span>
                       </div>
                     </div>
@@ -688,7 +788,7 @@ export default function HomeClient() {
                       <div className="text-sm text-white">
                         {btts?.class === 1 ? "Sim" : "Não"}{" "}
                         <span className="text-gray-400 ml-1">
-                          ({pctStr01(prBTTSSide)})
+                          ({toPct(btts?.prob ?? btts?.confidence)})
                         </span>
                       </div>
                     </div>
@@ -725,43 +825,20 @@ export default function HomeClient() {
                         <div>
                           <div className="text-gray-400 text-xs mb-1">1X2</div>
                           <div className="text-white">
-                            {odds1x2?.home?.toFixed
-                              ? odds1x2.home.toFixed(2)
-                              : odds1x2.home ?? "—"}{" "}
-                            /{" "}
-                            {odds1x2?.draw?.toFixed
-                              ? odds1x2.draw.toFixed(2)
-                              : odds1x2.draw ?? "—"}{" "}
-                            /{" "}
-                            {odds1x2?.away?.toFixed
-                              ? odds1x2.away.toFixed(2)
-                              : odds1x2.away ?? "—"}
+                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} /{" "}
+                            {oddFmt(odds1x2?.away)}
                           </div>
                         </div>
                         <div>
                           <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
                           <div className="text-white">
-                            O{" "}
-                            {oddsOU25?.over?.toFixed
-                              ? oddsOU25.over.toFixed(2)
-                              : oddsOU25.over ?? "—"}{" "}
-                            · U{" "}
-                            {oddsOU25?.under?.toFixed
-                              ? oddsOU25.under.toFixed(2)
-                              : oddsOU25.under ?? "—"}
+                            O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
                           </div>
                         </div>
                         <div>
                           <div className="text-gray-400 text-xs mb-1">BTTS</div>
                           <div className="text-white">
-                            Sim{" "}
-                            {oddsBTTS?.yes?.toFixed
-                              ? oddsBTTS.yes.toFixed(2)
-                              : oddsBTTS.yes ?? "—"}{" "}
-                            · Não{" "}
-                            {oddsBTTS?.no?.toFixed
-                              ? oddsBTTS.no.toFixed(2)
-                              : oddsBTTS.no ?? "—"}
+                            Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
                           </div>
                         </div>
                       </div>
@@ -779,17 +856,18 @@ export default function HomeClient() {
                       <div>
                         <div className="text-xs text-gray-400 mb-1">Top-3 Correct Score</div>
                         <ul className="text-sm text-white space-y-1">
-                          {top3Scores.slice(0, 3).map((cs: any, idx: number) => (
-                            <li key={idx} className="flex justify-between">
-                              <span>{cs.score}</span>
-                              <span className="text-gray-400">
-                                {Math.round(prob01(cs.prob) * 1000) / 10}%
-                              </span>
-                            </li>
-                          ))}
-                          {top3Scores.length === 0 && (
-                            <li className="text-gray-500">—</li>
-                          )}
+                          {(p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
+                            .slice(0, 3)
+                            .map((cs: any, idx: number) => (
+                              <li key={idx} className="flex justify-between">
+                                <span>{cs.score}</span>
+                                <span className="text-gray-400">
+                                  {Math.round(prob01(cs.prob) * 1000) / 10}%
+                                </span>
+                              </li>
+                            ))}
+                          {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
+                            .length === 0) && <li className="text-gray-500">—</li>}
                         </ul>
                       </div>
 
@@ -802,10 +880,7 @@ export default function HomeClient() {
                             <li className="text-emerald-400">{p.home_team}</li>
                             {homeScorers.slice(0, 3).map((sc: any, idx: number) => {
                               const name =
-                                sc.name ??
-                                sc.player ??
-                                sc.full_name ??
-                                `Jogador ${idx + 1}`;
+                                sc.name ?? sc.player ?? sc.full_name ?? `Jogador ${idx + 1}`;
                               const rawProb =
                                 sc.probability_pct ??
                                 sc.probability ??
@@ -833,10 +908,7 @@ export default function HomeClient() {
                             <li className="text-emerald-400">{p.away_team}</li>
                             {awayScorers.slice(0, 3).map((sc: any, idx: number) => {
                               const name =
-                                sc.name ??
-                                sc.player ??
-                                sc.full_name ??
-                                `Jogador ${idx + 1}`;
+                                sc.name ?? sc.player ?? sc.full_name ?? `Jogador ${idx + 1}`;
                               const rawProb =
                                 sc.probability_pct ??
                                 sc.probability ??
