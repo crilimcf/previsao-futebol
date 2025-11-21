@@ -191,7 +191,6 @@ function normalizePredArray(data: any): Prediction[] {
     ? data.predictions
     : [];
 
-  // Garantir campos mínimos e strings
   return arr
     .map((p) => {
       const explanation = Array.isArray(p.explanation)
@@ -231,7 +230,6 @@ function normalizePredArray(data: any): Prediction[] {
         top_scorers: p.top_scorers ?? [],
         predicted_scorers: p.predicted_scorers ?? {},
 
-        // novos campos
         lambda_home: lambdaHome,
         lambda_away: lambdaAway,
         explanation,
@@ -285,49 +283,35 @@ export async function getApiHealth() {
 
 /**
  * ✅ Lista curada de ligas/taças servida pelo TEU backend.
- * Primeiro tenta /meta/leagues (o que já tens no Render). Se não existir, cai para /leagues.
- * NUNCA chama a API-Football diretamente.
+ * Usa sempre /meta/leagues, opcionalmente filtrado por data.
  */
-export async function getLeagues(season?: string): Promise<LeagueItem[]> {
+export async function getLeagues(params?: {
+  date?: string;
+  season?: string;
+}): Promise<LeagueItem[]> {
   try {
-    const s = season ?? (process.env.NEXT_PUBLIC_SEASON ?? "2024");
+    const season = params?.season ?? process.env.NEXT_PUBLIC_SEASON ?? "2024";
+    const r = await api.get("/meta/leagues", {
+      params: withTs({
+        season,
+        date: params?.date,
+      }),
+    });
 
-    // 1) tenta /meta/leagues
-    try {
-      const r1 = await api.get("/meta/leagues", { params: withTs({ season: s }) });
-      const data1 = r1?.data as any;
-      const arr1: any[] = Array.isArray(data1)
-        ? data1
-        : Array.isArray(data1?.items)
-        ? data1.items
-        : Array.isArray(data1?.data)
-        ? data1.data
-        : Array.isArray(data1?.leagues)
-        ? data1.leagues
-        : [];
-
-      if (arr1.length) {
-        return normalizeLeagues(arr1);
-      }
-    } catch {
-      /* continua para /leagues */
-    }
-
-    // 2) fallback /leagues
-    const r2 = await api.get("/leagues", { params: withTs({ season: s }) });
-    const data2 = r2?.data as any;
-    const arr2: any[] = Array.isArray(data2)
-      ? data2
-      : Array.isArray(data2?.items)
-      ? data2.items
-      : Array.isArray(data2?.data)
-      ? data2.data
-      : Array.isArray(data2?.leagues)
-      ? data2.leagues
+    const data = r?.data as any;
+    const arr: any[] = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.items)
+      ? data.items
+      : Array.isArray(data?.data)
+      ? data.data
+      : Array.isArray(data?.leagues)
+      ? data.leagues
       : [];
 
-    return normalizeLeagues(arr2);
-  } catch {
+    return normalizeLeagues(arr);
+  } catch (e) {
+    console.error("Erro a carregar /meta/leagues:", e);
     return [];
   }
 }

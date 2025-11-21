@@ -117,16 +117,23 @@ export default function HomeClient() {
 
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
 
+  const selectedDateISO = useMemo(() => {
+    const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
+    return ymd(tab.calc());
+  }, [selectedDateKey]);
+
+  // Carrega ligas do backend curado, filtradas pela data selecionada
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues(); // <- backend curado
+        const ls = await getLeagues({ date: selectedDateISO });
         setBackendLeagues(ls ?? []);
-      } catch {
+      } catch (e) {
+        console.error("Erro a carregar ligas:", e);
         setBackendLeagues([]);
       }
     })();
-  }, []);
+  }, [selectedDateISO]);
 
   // limpar possíveis caches antigas do browser (uma vez)
   useEffect(() => {
@@ -156,7 +163,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*   Estado inicial via query    */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   useEffect(() => {
     const qpLeague = search.get("league_id");
@@ -179,11 +186,6 @@ export default function HomeClient() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const selectedDateISO = useMemo(() => {
-    const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
-    return ymd(tab.calc());
-  }, [selectedDateKey]);
 
   // reflete filtros na URL
   useEffect(() => {
@@ -223,7 +225,9 @@ export default function HomeClient() {
 
       // Garante que só mostramos jogos do dia escolhido
       const byDate = predsArray.filter((p: any) => {
-        const dy = (p.date_ymd as string | undefined) ?? (typeof p.date === "string" ? p.date.slice(0, 10) : "");
+        const dy =
+          (p.date_ymd as string | undefined) ??
+          (typeof p.date === "string" ? p.date.slice(0, 10) : "");
         return dy === selectedDateISO;
       });
 
@@ -524,7 +528,10 @@ export default function HomeClient() {
                 ["over25", prO25],
                 ["over15", prO15],
               ];
-              const topEntry = marketEntries.reduce((a, b) => (b[1] > a[1] ? b : a), ["winner", -1]);
+              const topEntry = marketEntries.reduce(
+                (a, b) => (b[1] > a[1] ? b : a),
+                ["winner", -1]
+              );
               const isTop = (k: string) => topEntry[0] === k;
 
               const explanation: string[] = Array.isArray(p.explanation) ? p.explanation : [];
