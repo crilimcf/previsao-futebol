@@ -24,7 +24,10 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # ENV
 # ===========================================================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
-BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
+BASE_URL = os.getenv(
+    "API_FOOTBALL_BASE",
+    "https://v3.football.api-sports.io/",
+).rstrip("/") + "/"
 
 # Season “normal” de clubes
 SEASON_CLUBS = os.getenv("API_FOOTBALL_SEASON", "2025")
@@ -34,7 +37,10 @@ WCQ_EUROPE_LEAGUE_ID = int(os.getenv("API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID", "32"))
 WCQ_EUROPE_SEASON = os.getenv("API_FOOTBALL_WCQ_EUROPE_SEASON", "2024")
 
 # Proxy seguro (Render)
-PROXY_BASE = os.getenv("API_PROXY_URL", "https://football-proxy-4ymo.onrender.com").rstrip("/") + "/"
+PROXY_BASE = os.getenv(
+    "API_PROXY_URL",
+    "https://football-proxy-4ymo.onrender.com",
+).rstrip("/") + "/"
 PROXY_TOKEN = os.getenv("API_PROXY_TOKEN", "CF_Proxy_2025_Secret_!@#839")
 
 # ficheiro de saída
@@ -101,6 +107,10 @@ def proxy_get(
     """
     Chama o proxy (Render) com URL join correto + x-proxy-token.
     Retorna JSON (dict) ou None.
+
+    Proteções:
+      - cache leve em Redis por (path+params)
+      - se der erro, tenta usar cache antiga
     """
     url = urljoin(PROXY_BASE, path.lstrip("/"))
     params = params or {}
@@ -189,7 +199,11 @@ except Exception:
         except OverflowError:
             return 0.0
 
-    def poisson_score_probs(lambda_home: float, lambda_away: float, max_goals: int = 6) -> List[List[float]]:
+    def poisson_score_probs(
+        lambda_home: float,
+        lambda_away: float,
+        max_goals: int = 6,
+    ) -> List[List[float]]:
         mat: List[List[float]] = []
         for h in range(max_goals + 1):
             row = []
@@ -225,7 +239,10 @@ except Exception:
                 p += mat[h][a]
         return p
 
-    def over_under_prob_from_matrix(mat: List[List[float]], line: float) -> Tuple[float, float]:
+    def over_under_prob_from_matrix(
+        mat: List[List[float]],
+        line: float,
+    ) -> Tuple[float, float]:
         n = len(mat)
         p_over = 0.0
         for h in range(n):
@@ -235,7 +252,10 @@ except Exception:
         p_under = 1.0 - p_over
         return p_over, p_under
 
-    def top_k_scores_from_matrix(mat: List[List[float]], k: int = 3) -> List[Tuple[str, float]]:
+    def top_k_scores_from_matrix(
+        mat: List[List[float]],
+        k: int = 3,
+    ) -> List[Tuple[str, float]]:
         pairs: List[Tuple[str, float]] = []
         n = len(mat)
         for h in range(n):
@@ -269,7 +289,9 @@ def apply_ml_over25(
     if not USE_ML_LAYER or _ml_over25 is None:
         return p_over25_poisson
     try:
-        return float(_ml_over25(lambda_home, lambda_away, match_conf, ph, p_over25_poisson))
+        return float(
+            _ml_over25(lambda_home, lambda_away, match_conf, ph, p_over25_poisson)
+        )
     except Exception:
         return p_over25_poisson
 
@@ -285,7 +307,11 @@ def clamp_prob(p: float, eps: float = 1e-3) -> float:
     return max(eps, min(1.0 - eps, p))
 
 
-def implied_odds(p: float, min_odds: float = 1.01, max_odds: float = 50.0) -> float:
+def implied_odds(
+    p: float,
+    min_odds: float = 1.01,
+    max_odds: float = 50.0,
+) -> float:
     """
     Converte probabilidade em odd decimal, limitada a um intervalo razoável.
     """
@@ -295,7 +321,11 @@ def implied_odds(p: float, min_odds: float = 1.01, max_odds: float = 50.0) -> fl
     return round(odds, 2)
 
 
-def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float, Dict[str, float]]:
+def pick_dc_class(
+    ph: float,
+    pd: float,
+    pa: float,
+) -> Tuple[int, float, Dict[str, float]]:
     """
     0 = 1X, 1 = 12, 2 = X2
 
@@ -341,7 +371,10 @@ def team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
     return {}
 
 
-def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> Tuple[float, float]:
+def compute_lambdas(
+    stats_home: Dict[str, Any],
+    stats_away: Dict[str, Any],
+) -> Tuple[float, float]:
     def _get_float(v, default=1.0):
         try:
             if isinstance(v, str):
@@ -350,10 +383,24 @@ def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> T
         except Exception:
             return float(default)
 
-    avg_goals_home = _get_float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2))
-    avg_goals_away = _get_float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1))
-    avg_conc_home = _get_float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0))
-    avg_conc_away = _get_float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0))
+    avg_goals_home = _get_float(
+        stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2)
+    )
+    avg_goals_away = _get_float(
+        stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1)
+    )
+    avg_conc_home = _get_float(
+        stats_home.get("goals", {})
+        .get("against", {})
+        .get("average", {})
+        .get("home", 1.0)
+    )
+    avg_conc_away = _get_float(
+        stats_away.get("goals", {})
+        .get("against", {})
+        .get("average", {})
+        .get("away", 1.0)
+    )
 
     lam_home = max(0.05, (avg_goals_home + avg_conc_away) / 2.0)
     lam_away = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
@@ -375,6 +422,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         # -------------------------
         if ALLOWED_LEAGUES:
             if league_id not in ALLOWED_LEAGUES and league_id != WCQ_EUROPE_LEAGUE_ID:
+                # ignora ligas não desejadas
                 return None
 
         home = teams.get("home", {})
@@ -398,7 +446,16 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
 
         dc_class, p_dc, dc_probs = pick_dc_class(ph, pd, pa)
 
-        winner_class = int(max([(0, ph), (1, pd), (2, pa)], key=lambda t: t[1])[0])
+        winner_class = int(
+            max(
+                [
+                    (0, ph),
+                    (1, pd),
+                    (2, pa),
+                ],
+                key=lambda t: t[1],
+            )[0]
+        )
         winner_conf = max(ph, pd, pa)
 
         # ============================
@@ -426,14 +483,19 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         scorers_cache_key = f"topscorers:{league_id}:{season}"
         top_scorers = redis_cache_get(scorers_cache_key)
         if top_scorers is None:
-            tops = api_get("players/topscorers", {"league": league_id, "season": season})
+            tops = api_get(
+                "players/topscorers",
+                {"league": league_id, "season": season},
+            )
             res = []
             for s in (tops or [])[:5]:
                 player = (s.get("player") or {}).get("name")
                 stat0 = (s.get("statistics") or [{}])[0]
                 team = (stat0.get("team") or {}).get("name")
                 goals = (stat0.get("goals") or {}).get("total", 0)
-                res.append({"player": player, "team": team, "goals": int(goals or 0)})
+                res.append(
+                    {"player": player, "team": team, "goals": int(goals or 0)}
+                )
             top_scorers = res
             redis_cache_set(scorers_cache_key, top_scorers, ex=12 * 3600)
 
@@ -444,7 +506,8 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             probable_scorers = probable_scorers_for_match(fix, limit=4)
         except Exception as e_ps:
             logger.warning(
-                f"⚠️ Erro a calcular marcadores prováveis para fixture {fixture.get('id')}: {e_ps}"
+                f"⚠️ Erro a calcular marcadores prováveis para fixture "
+                f"{fixture.get('id')}: {e_ps}"
             )
             probable_scorers = {"home": [], "away": []}
 
@@ -460,7 +523,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             },
             "over_1_5": {
                 "over": implied_odds(p_over15),
-                "under": implied_odds(p_under15),
+                "under": implied_odds(p_over15 if p_over15 < 1 else p_under15),
             },
             "btts": {
                 "yes": implied_odds(p_btts),
@@ -487,21 +550,35 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         )
 
         if winner_class == 0:
-            explanation.append(f"Casa ligeiramente favorita (1X), prob. {ph*100:.0f}% para vitória.")
+            explanation.append(
+                f"Casa ligeiramente favorita (1X), "
+                f"prob. {ph*100:.0f}% para vitória."
+            )
         elif winner_class == 1:
             explanation.append(f"Jogo equilibrado, prob. de empate {pd*100:.0f}%.")
         else:
-            explanation.append(f"Visitante em vantagem (X2), prob. {pa*100:.0f}% para não perder.")
+            explanation.append(
+                f"Visitante em vantagem (X2), prob. {pa*100:.0f}% para não perder."
+            )
 
         if p_over25 >= 0.6:
-            explanation.append(f"Tendência para Over 2.5 golos ({p_over25*100:.0f}%).")
+            explanation.append(
+                f"Tendência para Over 2.5 golos ({p_over25*100:.0f}%)."
+            )
         elif p_over25 <= 0.4:
-            explanation.append(f"Tendência para Under 2.5 golos ({(1-p_over25)*100:.0f}%).")
+            explanation.append(
+                f"Tendência para Under 2.5 golos ({(1-p_over25)*100:.0f}%)."
+            )
 
         if p_btts >= 0.55:
-            explanation.append(f"Boa probabilidade de ambas marcarem (BTTS Sim {p_btts*100:.0f}%).")
+            explanation.append(
+                f"Boa probabilidade de ambas marcarem (BTTS Sim {p_btts*100:.0f}%)."
+            )
         elif p_btts <= 0.40:
-            explanation.append(f"Pouca probabilidade de ambas marcarem (BTTS Não {(1-p_btts)*100:.0f}%).")
+            explanation.append(
+                f"Pouca probabilidade de ambas marcarem "
+                f"(BTTS Não {(1-p_btts)*100:.0f}%)."
+            )
 
         winner_label_map = {0: "home", 1: "draw", 2: "away"}
         dc_label_map = {0: "1X", 1: "12", 2: "X2"}
@@ -564,8 +641,16 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             "correct_score_top3": top3,
             "top_scorers": top_scorers,
             "probable_scorers": probable_scorers,
-            "probable_scorers_home": probable_scorers.get("home") if isinstance(probable_scorers, dict) else [],
-            "probable_scorers_away": probable_scorers.get("away") if isinstance(probable_scorers, dict) else [],
+            "probable_scorers_home": (
+                probable_scorers.get("home")
+                if isinstance(probable_scorers, dict)
+                else []
+            ),
+            "probable_scorers_away": (
+                probable_scorers.get("away")
+                if isinstance(probable_scorers, dict)
+                else []
+            ),
             "predicted_score": ps_obj,
             "confidence": float(winner_conf),
 
@@ -603,9 +688,10 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     Inclui:
       - Ligas de clubes com season SEASON_CLUBS
       - World Cup - Qualification Europe (league 32, season 2024)
-    """
-    fixtures: List[Dict[str, Any]] = []
 
+    Se depois do dedupe não houver fixtures válidas (sem fixture.id),
+    faz fallback para /fixtures?next=50&season=SEASON_CLUBS.
+    """
     try:
         days = int(days)
     except Exception:
@@ -615,38 +701,64 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     if days > 7:
         days = 7
 
+    raw_fixtures: List[Dict[str, Any]] = []
+
     for d in range(days):
         iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
 
-        # 1) Clubes
+        # 1) Clubes (season “normal”)
         payload_clubs = proxy_get("/fixtures", {"date": iso, "season": SEASON_CLUBS})
-        if payload_clubs and isinstance(payload_clubs, dict) and isinstance(payload_clubs.get("response"), list):
-            fixtures.extend(payload_clubs["response"])
+        if (
+            payload_clubs
+            and isinstance(payload_clubs, dict)
+            and isinstance(payload_clubs.get("response"), list)
+        ):
+            raw_fixtures.extend(payload_clubs["response"])
         else:
-            logger.warning(f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS}).")
+            logger.warning(
+                f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS})."
+            )
 
-        # 2) WCQ Europe
+        # 2) World Cup - Qualification Europe (seleções)
         if WCQ_EUROPE_LEAGUE_ID:
             payload_wcq = proxy_get(
                 "/fixtures",
                 {"date": iso, "league": WCQ_EUROPE_LEAGUE_ID, "season": WCQ_EUROPE_SEASON},
             )
-            if payload_wcq and isinstance(payload_wcq, dict) and isinstance(payload_wcq.get("response"), list):
-                fixtures.extend(payload_wcq["response"])
+            if (
+                payload_wcq
+                and isinstance(payload_wcq, dict)
+                and isinstance(payload_wcq.get("response"), list)
+            ):
+                raw_fixtures.extend(payload_wcq["response"])
             else:
                 logger.info(
                     f"ℹ️ Sem fixtures WCQ Europe para {iso} "
                     f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON})."
                 )
 
+        # pausazinha para não saturar proxy/API
         time.sleep(0.2)
 
-    if not fixtures:
-        payload = proxy_get("/fixtures", {"next": 50, "season": SEASON_CLUBS})
-        if payload and isinstance(payload, dict) and isinstance(payload.get("response"), list):
-            fixtures = payload["response"]
+    # dedupe com base em fixture.id
+    fixtures = _dedupe_fixtures(raw_fixtures)
 
-    fixtures = _dedupe_fixtures(fixtures)
+    # Se depois disto não houver nenhum jogo válido, faz fallback “next 50”
+    if not fixtures:
+        logger.warning(
+            "⚠️ Nenhuma fixture válida por data (sem fixture.id). "
+            "A usar fallback /fixtures?next=50."
+        )
+        payload = proxy_get("/fixtures", {"next": 50, "season": SEASON_CLUBS})
+        if (
+            payload
+            and isinstance(payload, dict)
+            and isinstance(payload.get("response"), list)
+        ):
+            fixtures = _dedupe_fixtures(payload["response"])
+        else:
+            fixtures = []
+
     logger.info(f"📊 Total fixtures após merge + dedupe: {len(fixtures)}")
     return fixtures
 
