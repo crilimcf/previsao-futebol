@@ -201,7 +201,8 @@ export default function HomeClient() {
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues({ date: selectedDateISO });
+        const season = selectedDateISO.slice(0, 4);
+        const ls = await getLeagues(season);
         setBackendLeagues(ls ?? []);
       } catch {
         // em produção ignoramos o erro, só não aparecem ligas
