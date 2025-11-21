@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
-from datetime import date, timedelta
+from datetime import date, timedelta  # ainda usado em alguns contextos
 
 import requests
 
@@ -598,7 +598,6 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             "home_logo": home.get("logo"),
             "away_logo": away.get("logo"),
 
-            # lambdas guardadas para treino/analytics
             "lambda_home": float(lam_h),
             "lambda_away": float(lam_a),
 
@@ -657,7 +656,6 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             "predicted_score": ps_obj,
             "confidence": float(winner_conf),
 
-            # texto para o front
             "explanation": explanation,
         }
         return out
@@ -688,111 +686,50 @@ def _extract_fixtures(payload: Any) -> List[Dict[str, Any]]:
     """
     Extrai lista de fixtures de vários formatos possíveis:
       - dict com 'response': [...]
-      - dict com 'data' → pode ter 'response' ou já ser lista
       - lista direta
+    (é o formato que o teu proxy está a devolver)
     """
     if not payload:
         return []
 
-    # já é lista de fixtures
     if isinstance(payload, list):
         return [x for x in payload if isinstance(x, dict)]
 
     if isinstance(payload, dict):
-        # formato API-Football normal
         resp = payload.get("response")
         if isinstance(resp, list):
             return [x for x in resp if isinstance(x, dict)]
-
-        # formato possivelmente embrulhado em "data"
-        data = payload.get("data")
-        if isinstance(data, list):
-            return [x for x in data if isinstance(x, dict)]
-        if isinstance(data, dict):
-            resp2 = data.get("response")
-            if isinstance(resp2, list):
-                return [x for x in resp2 if isinstance(x, dict)]
 
     return []
 
 
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    Busca fixtures via proxy por data (hoje + N-1 dias).
+    VERSÃO SIMPLIFICADA:
+    - Ignora 'days'
+    - Usa apenas o proxy:
+        GET /fixtures?next=150
+    - Depois faz dedupe por fixture.id
 
-    Inclui:
-      - Ligas de clubes com season SEASON_CLUBS
-      - World Cup - Qualification Europe (league 32, season 2024)
-
-    Se depois do dedupe não houver fixtures válidas (sem fixture.id),
-    faz fallback para /fixtures?next=50.
+    Isto garante que:
+      - O comportamento é semelhante ao que tinhas antes (next=50)
+      - Evita problemas de datas que estavam a dar 'no-fixtures'
     """
-    try:
-        days = int(days)
-    except Exception:
-        days = 3
-    if days < 1:
-        days = 1
-    if days > 7:
-        days = 7
+    payload = proxy_get("/fixtures", {"next": 150})
+    fixtures_raw = _extract_fixtures(payload)
+    fixtures = _dedupe_fixtures(fixtures_raw)
 
-    raw_fixtures: List[Dict[str, Any]] = []
-
-    for d in range(days):
-        iso = (date.today() + timedelta(days=d)).strftime("%Y-%m-%d")
-
-        # 1) Clubes (season “normal”)
-        payload_clubs = proxy_get("/fixtures", {"date": iso, "season": SEASON_CLUBS})
-        fixtures_clubs = _extract_fixtures(payload_clubs)
-        if fixtures_clubs:
-            raw_fixtures.extend(fixtures_clubs)
-        else:
-            logger.warning(
-                f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS}). "
-                f"payload_type={type(payload_clubs).__name__}"
-            )
-
-        # 2) World Cup - Qualification Europe (seleções)
-        if WCQ_EUROPE_LEAGUE_ID:
-            payload_wcq = proxy_get(
-                "/fixtures",
-                {"date": iso, "league": WCQ_EUROPE_LEAGUE_ID, "season": WCQ_EUROPE_SEASON},
-            )
-            fixtures_wcq = _extract_fixtures(payload_wcq)
-            if fixtures_wcq:
-                raw_fixtures.extend(fixtures_wcq)
-            else:
-                logger.info(
-                    f"ℹ️ Sem fixtures WCQ Europe para {iso} "
-                    f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON}). "
-                    f"payload_type={type(payload_wcq).__name__}"
-                )
-
-        # pausazinha para não saturar proxy/API
-        time.sleep(0.2)
-
-    # dedupe com base em fixture.id
-    fixtures = _dedupe_fixtures(raw_fixtures)
-
-    # Se depois disto não houver nenhum jogo válido, faz fallback “next 50”
-    if not fixtures:
-        logger.warning(
-            "⚠️ Nenhuma fixture válida por data (sem fixture.id). "
-            "A usar fallback /fixtures?next=50."
-        )
-        # IMPORTANTE: aqui não passo season, deixo o API-Football escolher
-        payload = proxy_get("/fixtures", {"next": 50})
-        fixtures_fb = _extract_fixtures(payload)
-        fixtures = _dedupe_fixtures(fixtures_fb)
-
-    logger.info(f"📊 Total fixtures após merge + dedupe: {len(fixtures)}")
+    logger.info(
+        f"📊 collect_fixtures via next=150 | bruto={len(fixtures_raw)} "
+        f"após dedupe={len(fixtures)}"
+    )
     return fixtures
 
 
 def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     """
     Corre o pipeline completo:
-      - busca fixtures (clubes + WCQ Europe) para hoje + N-1 dias
+      - busca fixtures via proxy (next=150)
       - calcula previsões
       - grava em data/predict/predictions.json
 
@@ -811,8 +748,7 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
 
     if not fixtures:
         logger.warning(
-            "⚠️ Nenhuma fixture obtida (possível erro 429 do proxy/API "
-            "ou payload inesperado). "
+            "⚠️ Nenhuma fixture obtida via proxy (/fixtures?next=150). "
             "A NÃO sobrescrever data/predict/predictions.json."
         )
         return {"status": "no-fixtures", "total": 0}
@@ -826,7 +762,7 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     if total == 0:
         logger.warning(
             "⚠️ Nenhuma previsão calculada a partir das fixtures "
-            "(todas filtradas ou erro). "
+            "(todas filtradas pelo allowlist ou erro). "
             "A NÃO sobrescrever data/predict/predictions.json."
         )
         return {"status": "no-predictions", "total": 0}
@@ -855,6 +791,7 @@ def update_predictions(days: int = 3, force: bool = False) -> Dict[str, Any]:
       - GitHub Actions ou scripts externos.
 
     'days' = quantos dias a partir de hoje (ex: 3 -> hoje + 2).
+    (Aqui é ignorado na prática, mas mantemos por compat.)
     """
     try:
         d = int(days) if days is not None else 3
