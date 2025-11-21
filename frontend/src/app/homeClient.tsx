@@ -89,87 +89,6 @@ function badgeClass(prob: number, isMax: boolean): string {
   return "bg-gray-100 text-gray-700";
 }
 
-function dcLabel(dc: DCClass | undefined) {
-  return dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
-}
-
-/* ----------------------------- */
-/*   Explicação da IA gerada     */
-/*      a partir do modelo       */
-/* ----------------------------- */
-
-function buildExplanationFromModel(
-  p: any,
-  prWinner: number,
-  prDC: number,
-  prO25: number,
-  prBTTS: number
-): string[] {
-  const lines: string[] = [];
-
-  // xG total
-  if (typeof p.lambda_home === "number" && typeof p.lambda_away === "number") {
-    const total = p.lambda_home + p.lambda_away;
-    lines.push(
-      `Golos esperados: ${total.toFixed(2)} no total (casa ${p.lambda_home.toFixed(
-        2
-      )}, fora ${p.lambda_away.toFixed(2)}).`
-    );
-  }
-
-  // Dupla hipótese (usa a classe escolhida em double_chance)
-  const dc = p?.predictions?.double_chance;
-  if (dc && prDC > 0) {
-    const label = dcLabel(dc.class as DCClass);
-    const pct = Math.round(prDC * 100);
-    let sideText = "";
-    if (label === "1X") {
-      sideText = "Equipa da casa com boa margem para não perder";
-    } else if (label === "X2") {
-      sideText = "Visitante com boa margem para não perder";
-    } else if (label === "12") {
-      sideText = "Jogo com grande probabilidade de não terminar empatado";
-    }
-
-    lines.push(
-      sideText
-        ? `${sideText} (${label}, prob. ${pct}%).`
-        : `Melhor cenário de dupla hipótese é ${label} (prob. ${pct}%).`
-    );
-  }
-
-  // Over 2.5
-  const over25 = p?.predictions?.over_2_5;
-  if (over25 && prO25 >= 0) {
-    const pct = Math.round(prO25 * 100);
-    if (over25.class === 1) {
-      lines.push(`Tendência para Over 2.5 golos (${pct}%).`);
-    } else {
-      lines.push(
-        `Baixa probabilidade de Over 2.5 golos (${pct}%) — tendência para poucos golos.`
-      );
-    }
-  }
-
-  // BTTS
-  const btts = p?.predictions?.btts;
-  if (btts && prBTTS >= 0) {
-    const pct = Math.round(prBTTS * 100);
-    if (btts.class === 1) {
-      lines.push(`Boa probabilidade de ambas marcarem (BTTS Sim ${pct}%).`);
-    } else {
-      lines.push(`Pouca probabilidade de ambas marcarem (BTTS Não ${pct}%).`);
-    }
-  }
-
-  // Se por algum motivo não conseguimos gerar nada, cai para o backend
-  if (!lines.length && Array.isArray(p.explanation)) {
-    return p.explanation;
-  }
-
-  return lines;
-}
-
 /* ----------------------------- */
 /*       Component principal     */
 /* ----------------------------- */
@@ -203,19 +122,18 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Carrega ligas do backend curado, filtradas pela data selecionada
+  // Carrega ligas do backend curado (uma vez, usando season)
   useEffect(() => {
     (async () => {
       try {
-        // @ts-expect-error pass extra filter object se o teu getLeagues aceitar
-        const ls = await getLeagues({ date: selectedDateISO });
+        const ls = await getLeagues();
         setBackendLeagues(ls ?? []);
       } catch (e) {
         console.error("Erro a carregar ligas:", e);
         setBackendLeagues([]);
       }
     })();
-  }, [selectedDateISO]);
+  }, []);
 
   // limpar possíveis caches antigas do browser (uma vez)
   useEffect(() => {
@@ -281,7 +199,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*   Carregar previsões + stats  */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   async function loadMainData() {
     setLoading(true);
@@ -359,7 +277,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*      Fixtures reais (proxy)   */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
@@ -390,7 +308,10 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*          Helpers UI           */
-  /* ----------------------------- */
+/* ----------------------------- */
+
+  const dcLabel = (dc: DCClass | undefined) =>
+    dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
 
   const toPct = (v?: number | null) =>
     typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
@@ -405,7 +326,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*         Estados base          */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   if (loading) {
     return (
@@ -437,7 +358,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*           UI principal        */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -541,7 +462,7 @@ export default function HomeClient() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {fixturesDay.map((f: any) => (
                     <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
-                      <div className="flex items-center justifycenter gap-3 mb-2">
+                      <div className="flex items-center justify-center gap-3 mb-2">
                         <Image src={f.teams.home.logo} alt="" width={24} height={24} />
                         <span className="text-white font-medium">{f.teams.home.name}</span>
                         <span className="text-gray-400">vs</span>
@@ -600,7 +521,6 @@ export default function HomeClient() {
               const prDC = prob01(dc?.confidence ?? dc?.prob);
               const prO25 = prob01(over25?.confidence ?? over25?.prob);
               const prO15 = prob01(over15?.confidence ?? over15?.prob);
-              const prBTTS = prob01(btts?.confidence ?? btts?.prob);
 
               const marketEntries: [string, number][] = [
                 ["winner", prWinner],
@@ -614,8 +534,7 @@ export default function HomeClient() {
               );
               const isTop = (k: string) => topEntry[0] === k;
 
-              // Explicação sempre calculada a partir do modelo (coerente com os números)
-              const explanation = buildExplanationFromModel(p, prWinner, prDC, prO25, prBTTS);
+              const explanation: string[] = Array.isArray(p.explanation) ? p.explanation : [];
 
               // Marcadores prováveis por jogo com fallback
               const homeScorers =
@@ -770,7 +689,7 @@ export default function HomeClient() {
                     </div>
                   </div>
 
-                  {/* Explicação da IA (agora coerente com os números) */}
+                  {/* Explicação da IA */}
                   {explanation.length > 0 && (
                     <div className="rounded-xl bg-emerald-500/5 border border-emerald-500/40 p-3 text-xs text-gray-100 space-y-1">
                       <div className="flex items-center justify-between mb-1">

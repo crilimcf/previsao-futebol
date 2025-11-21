@@ -1,7 +1,7 @@
 // =====================================================
 // src/services/api.ts
 // Cliente HTTP para comunicar com a API FastAPI (Render)
-// Agora com toggle v1/v2 (env + localStorage) e fallback automático
+// Com toggle v1/v2 (env + localStorage) e fallback automático
 // =====================================================
 
 import axios from "axios";
@@ -81,17 +81,13 @@ export type Prediction = {
   league_name?: string;
   country?: string;
 
-  date: string; // ISO
-  // opcionalmente podes ter date_ymd no payload da API,
-  // mas o frontend usa sempre date.slice(0, 10)
-  // date_ymd?: string;
-
+  date: string; // ISO completo
   home_team: string;
   away_team: string;
   home_logo?: string;
   away_logo?: string;
 
-  // novo: lambdas guardados pelo backend
+  // xG
   lambda_home?: number;
   lambda_away?: number;
 
@@ -115,13 +111,12 @@ export type Prediction = {
     away?: { player: string; prob: number; xg: number; position?: string }[];
   };
 
-  // ⭐ novo: marcadores probáveis avançados (bivariate)
+  // ⭐ marcadores avançados da V2 (bivariate)
   probable_scorers?: {
     home?: any[];
     away?: any[];
   };
 
-  // novo: explicação gerada pelo backend
   explanation?: string[];
 };
 
@@ -206,7 +201,6 @@ function normalizePredArray(data: any): Prediction[] {
     ? data.predictions
     : [];
 
-  // Garantir campos mínimos e strings
   return arr
     .map((p) => {
       const explanation = Array.isArray(p.explanation)
@@ -246,10 +240,9 @@ function normalizePredArray(data: any): Prediction[] {
         top_scorers: p.top_scorers ?? [],
         predicted_scorers: p.predicted_scorers ?? {},
 
-        // ⭐ manter marcadores avançados da V2 (bivariate, iso, etc.)
+        // ⭐ manter marcadores avançados da V2
         probable_scorers: p.probable_scorers ?? undefined,
 
-        // novos campos
         lambda_home: lambdaHome,
         lambda_away: lambdaAway,
         explanation,
@@ -302,47 +295,21 @@ export async function getApiHealth() {
 }
 
 // ---------------------------------------------------
-// Ligas curadas (backend) — agora com {season, date}
+// Ligas curadas (backend) — versão simples (season)
 // ---------------------------------------------------
-
-type GetLeaguesParams = {
-  season?: string;
-  date?: string;
-};
 
 /**
  * ✅ Lista curada de ligas/taças servida pelo TEU backend.
- * - Aceita:
- *    getLeagues("2024")                  // só season
- *    getLeagues({ season: "2024" })      // idem
- *    getLeagues({ date: "2025-11-21" })  // só data
- *    getLeagues({ season: "2024", date: "2025-11-21" })
  * - Primeiro tenta /meta/leagues. Se não existir, cai para /leagues.
  * - NUNCA chama a API-Football diretamente.
  */
-export async function getLeagues(
-  arg?: string | GetLeaguesParams
-): Promise<LeagueItem[]> {
+export async function getLeagues(season?: string): Promise<LeagueItem[]> {
   try {
-    let season: string | undefined;
-    let date: string | undefined;
-
-    if (typeof arg === "string") {
-      season = arg;
-    } else if (arg && typeof arg === "object") {
-      season = arg.season;
-      date = arg.date;
-    }
-
     const s = season ?? (process.env.NEXT_PUBLIC_SEASON ?? "2024");
-    const baseParams: Record<string, any> = { season: s };
-    if (date) {
-      baseParams.date = date;
-    }
 
     // 1) tenta /meta/leagues
     try {
-      const r1 = await api.get("/meta/leagues", { params: withTs(baseParams) });
+      const r1 = await api.get("/meta/leagues", { params: withTs({ season: s }) });
       const data1 = r1?.data as any;
       const arr1: any[] = Array.isArray(data1)
         ? data1
@@ -358,11 +325,11 @@ export async function getLeagues(
         return normalizeLeagues(arr1);
       }
     } catch {
-      /* continua para /leagues */
+      // continua para /leagues
     }
 
     // 2) fallback /leagues
-    const r2 = await api.get("/leagues", { params: withTs(baseParams) });
+    const r2 = await api.get("/leagues", { params: withTs({ season: s }) });
     const data2 = r2?.data as any;
     const arr2: any[] = Array.isArray(data2)
       ? data2
