@@ -20,7 +20,7 @@ import {
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
-type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
+type DCClass = 0 | 1 | 2; // 0 = 1X, 1 = 12, 2 = X2
 
 /* ----------------------------- */
 /*   Helpers de datas / tempo    */
@@ -90,7 +90,93 @@ function badgeClass(prob: number, isMax: boolean): string {
 }
 
 /* ----------------------------- */
-/*       Component principal     */
+/*   Explicação gerada no front  */
+/*   (para alinhar tudo com v1/v2) */
+/* ----------------------------- */
+
+function buildExplanation(p: Prediction & Record<string, any>): string[] {
+  const lines: string[] = [];
+
+  const lambdaHome =
+    typeof p.lambda_home === "number" ? p.lambda_home : undefined;
+  const lambdaAway =
+    typeof p.lambda_away === "number" ? p.lambda_away : undefined;
+
+  if (lambdaHome !== undefined && lambdaAway !== undefined) {
+    const total = lambdaHome + lambdaAway;
+    lines.push(
+      `Golos esperados: ${total.toFixed(2)} no total (casa ${lambdaHome.toFixed(
+        2
+      )}, fora ${lambdaAway.toFixed(2)}).`
+    );
+  }
+
+  const winner = p.predictions?.winner;
+  const dc = p.predictions?.double_chance;
+  const over25 = p.predictions?.over_2_5;
+  const btts = p.predictions?.btts;
+
+  // Favorito (usa Double Chance se existir, senão Winner)
+  if (dc && typeof dc.class === "number") {
+    const pr = prob01(dc.prob ?? dc.confidence);
+    const pct = Math.round(pr * 100);
+    let label: string;
+    if (dc.class === 0) {
+      label = "Casa em vantagem (1X)";
+    } else if (dc.class === 1) {
+      label = "Jogo aberto para qualquer lado (12)";
+    } else {
+      label = "Visitante em vantagem (X2)";
+    }
+    lines.push(`${label}, prob. ${pct}% para não perder.`);
+  } else if (winner && typeof winner.class === "number") {
+    const pr = prob01(winner.prob ?? winner.confidence);
+    const pct = Math.round(pr * 100);
+    let label: string;
+    if (winner.class === 0) {
+      label = "Casa favorita para vencer";
+    } else if (winner.class === 2) {
+      label = "Visitante favorito para vencer";
+    } else {
+      label = "Jogo com tendência para o empate";
+    }
+    lines.push(`${label}, prob. ${pct}% para vitória.`);
+  }
+
+  // Over / Under 2.5
+  if (over25) {
+    const prOver = prob01(over25.prob ?? over25.confidence);
+    const prUnder = 1 - prOver;
+    const classIsOver = over25.class === 1;
+    const baseProb = classIsOver ? prOver : prUnder;
+    const pct = Math.round(baseProb * 100);
+    const side = classIsOver ? "Over 2.5 golos" : "Under 2.5 golos";
+    lines.push(`Tendência para ${side} (${pct}%).`);
+  }
+
+  // BTTS
+  if (btts) {
+    const prYes = prob01(btts.prob ?? btts.confidence);
+    const prNo = 1 - prYes;
+    const classIsYes = btts.class === 1;
+    const baseProb = classIsYes ? prYes : prNo;
+    const pct = Math.round(baseProb * 100);
+    if (classIsYes) {
+      lines.push(
+        `Boa probabilidade de ambas marcarem (BTTS Sim ${pct}%).`
+      );
+    } else {
+      lines.push(
+        `Pouca probabilidade de ambas marcarem (BTTS Não ${pct}%).`
+      );
+    }
+  }
+
+  return lines;
+}
+
+/* ----------------------------- */
+/*       Componente principal    */
 /* ----------------------------- */
 
 export default function HomeClient() {
@@ -109,7 +195,9 @@ export default function HomeClient() {
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
-  const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
+  const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(
+    null
+  );
 
   /* ----------------------------- */
   /* 1) Ligas só do backend curado */
@@ -117,12 +205,13 @@ export default function HomeClient() {
 
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
 
+  // data selecionada em ISO (YYYY-MM-DD)
   const selectedDateISO = useMemo(() => {
     const tab = dateTabs.find((t) => t.key === selectedDateKey) ?? dateTabs[0];
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Carrega ligas do backend curado (uma vez, usando season)
+  // Carrega ligas curadas (uma vez – não depende da data)
   useEffect(() => {
     (async () => {
       try {
@@ -138,8 +227,8 @@ export default function HomeClient() {
   // limpar possíveis caches antigas do browser (uma vez)
   useEffect(() => {
     try {
-      ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
-        localStorage.removeItem(k)
+      ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach(
+        (k) => localStorage.removeItem(k)
       );
     } catch {
       // ignore
@@ -191,15 +280,18 @@ export default function HomeClient() {
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
-    if (selectedLeague && selectedLeague !== "all") params.set("league_id", String(selectedLeague));
-    else params.delete("league_id");
+    if (selectedLeague && selectedLeague !== "all") {
+      params.set("league_id", String(selectedLeague));
+    } else {
+      params.delete("league_id");
+    }
     router.replace(`?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague]);
 
   /* ----------------------------- */
   /*   Carregar previsões + stats  */
-/* ----------------------------- */
+  /* ----------------------------- */
 
   async function loadMainData() {
     setLoading(true);
@@ -247,7 +339,11 @@ export default function HomeClient() {
       });
 
       setPredictions(filteredPreds as Prediction[]);
-      setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
+      setStats(
+        statsData && Object.keys(statsData).length > 0
+          ? (statsData as StatsType)
+          : null
+      );
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
       if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
@@ -257,7 +353,10 @@ export default function HomeClient() {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
-          })} ${d.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}`
+          })} ${d.toLocaleTimeString("pt-PT", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}`
         );
       } else {
         setLastUpdate("");
@@ -277,7 +376,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*      Fixtures reais (proxy)   */
-/* ----------------------------- */
+  /* ----------------------------- */
 
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
@@ -320,8 +419,8 @@ export default function HomeClient() {
     typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
 
   const bestCorrectScore = (p: any) =>
-    p?.correct_score_top3?.[0]?.score ??
     p?.predictions?.correct_score?.best ??
+    p?.correct_score_top3?.[0]?.score ??
     "—";
 
   /* ----------------------------- */
@@ -389,7 +488,9 @@ export default function HomeClient() {
               <button
                 key={d.key}
                 onClick={() => setSelectedDateKey(d.key)}
-                className={`btn ${selectedDateKey === d.key ? "btn-primary" : "btn-ghost"}`}
+                className={`btn ${
+                  selectedDateKey === d.key ? "btn-primary" : "btn-ghost"
+                }`}
               >
                 {d.label}
               </button>
@@ -415,9 +516,12 @@ export default function HomeClient() {
           <button
             onClick={() => {
               try {
-                ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
-                  localStorage.removeItem(k)
-                );
+                [
+                  "leagues",
+                  "all_leagues",
+                  "api_football_leagues",
+                  "api_football|leagues",
+                ].forEach((k) => localStorage.removeItem(k));
               } catch {
                 // ignore
               }
@@ -443,8 +547,12 @@ export default function HomeClient() {
         {selectedLeague !== "all" && (
           <div className="card p-6 mb-10">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-emerald-400">Jogos do dia</h2>
-              <span className="text-xs text-gray-500">Use o botão “Atualizar” no topo</span>
+              <h2 className="text-lg font-semibold text-emerald-400">
+                Jogos do dia
+              </h2>
+              <span className="text-xs text-gray-500">
+                Use o botão “Atualizar” no topo
+              </span>
             </div>
 
             {loadingFixtures && (
@@ -455,22 +563,42 @@ export default function HomeClient() {
 
             {(() => {
               const fixturesDay = (liveFixtures || []).filter(
-                (f: any) => ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
+                (f: any) =>
+                  ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
               );
 
               return fixturesDay.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {fixturesDay.map((f: any) => (
-                    <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
+                    <div
+                      key={f.fixture.id}
+                      className="card p-4 hover:border-emerald-400 transition"
+                    >
                       <div className="flex items-center justify-center gap-3 mb-2">
-                        <Image src={f.teams.home.logo} alt="" width={24} height={24} />
-                        <span className="text-white font-medium">{f.teams.home.name}</span>
+                        <Image
+                          src={f.teams.home.logo}
+                          alt=""
+                          width={24}
+                          height={24}
+                        />
+                        <span className="text-white font-medium">
+                          {f.teams.home.name}
+                        </span>
                         <span className="text-gray-400">vs</span>
-                        <span className="text-white font-medium">{f.teams.away.name}</span>
-                        <Image src={f.teams.away.logo} alt="" width={24} height={24} />
+                        <span className="text-white font-medium">
+                          {f.teams.away.name}
+                        </span>
+                        <Image
+                          src={f.teams.away.logo}
+                          alt=""
+                          width={24}
+                          height={24}
+                        />
                       </div>
                       <p className="text-sm text-center text-gray-400">
-                        {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
+                        {new Date(
+                          fixtureDateSafe(f.fixture?.date)
+                        ).toLocaleString("pt-PT")}
                       </p>
                       <p className="text-xs text-center text-gray-500 mt-1">
                         {f.league.name} ({f.league.country})
@@ -480,7 +608,9 @@ export default function HomeClient() {
                 </div>
               ) : (
                 !loadingFixtures && (
-                  <p className="text-center text-gray-400 mt-4">Sem jogos para esta data.</p>
+                  <p className="text-center text-gray-400 mt-4">
+                    Sem jogos para esta data.
+                  </p>
                 )
               );
             })()}
@@ -514,7 +644,8 @@ export default function HomeClient() {
                   : "—";
 
               const odds1x2 = p?.odds?.winner ?? p?.odds?.["1x2"] ?? {};
-              const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
+              const oddsOU25 =
+                p?.odds?.over_2_5 ?? p?.odds?.over_under?.["2.5"] ?? {};
               const oddsBTTS = p?.odds?.btts ?? {};
 
               const prWinner = prob01(winner?.confidence ?? winner?.prob);
@@ -534,15 +665,16 @@ export default function HomeClient() {
               );
               const isTop = (k: string) => topEntry[0] === k;
 
-              const explanation: string[] = Array.isArray(p.explanation) ? p.explanation : [];
+              // Explicação agora SEMPRE calculada no front
+              const explanation = buildExplanation(p as any);
 
               // Marcadores prováveis por jogo com fallback
-              const homeScorers =
+              const homeScorers: any[] =
                 p.probable_scorers?.home && p.probable_scorers.home.length
                   ? p.probable_scorers.home
                   : p.predicted_scorers?.home ?? [];
 
-              const awayScorers =
+              const awayScorers: any[] =
                 p.probable_scorers?.away && p.probable_scorers.away.length
                   ? p.probable_scorers.away
                   : p.predicted_scorers?.away ?? [];
@@ -570,23 +702,38 @@ export default function HomeClient() {
 
                   {/* Teams */}
                   <div className="flex items-center justify-center gap-3">
-                    {!!p.home_logo && <Image src={p.home_logo} alt="" width={28} height={28} />}
-                    <div className="text-white font-semibold text-center">{p.home_team}</div>
+                    {!!p.home_logo && (
+                      <Image src={p.home_logo} alt="" width={28} height={28} />
+                    )}
+                    <div className="text-white font-semibold text-center">
+                      {p.home_team}
+                    </div>
                     <div className="text-gray-500">vs</div>
-                    <div className="text-white font-semibold text-center">{p.away_team}</div>
-                    {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
+                    <div className="text-white font-semibold text-center">
+                      {p.away_team}
+                    </div>
+                    {!!p.away_logo && (
+                      <Image src={p.away_logo} alt="" width={28} height={28} />
+                    )}
                   </div>
 
                   {/* Correct score (melhor) */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
-                    <span className="text-sm text-white">{bestCorrectScore(p)}</span>
+                    <span className="text-sm text-white">
+                      {bestCorrectScore(p)}
+                    </span>
                   </div>
 
                   {/* Tips com destaque */}
                   <div className="grid grid-cols-2 gap-2">
                     {/* Winner */}
-                    <div className={`rounded-xl border p-3 ${tileClass(prWinner, isTop("winner"))}`}>
+                    <div
+                      className={`rounded-xl border p-3 ${tileClass(
+                        prWinner,
+                        isTop("winner")
+                      )}`}
+                    >
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Winner</span>
                         {isTop("winner") && (
@@ -609,7 +756,12 @@ export default function HomeClient() {
                     </div>
 
                     {/* Double Chance */}
-                    <div className={`rounded-xl border p-3 ${tileClass(prDC, isTop("double"))}`}>
+                    <div
+                      className={`rounded-xl border p-3 ${tileClass(
+                        prDC,
+                        isTop("double")
+                      )}`}
+                    >
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Double Chance</span>
                         {isTop("double") && (
@@ -632,7 +784,12 @@ export default function HomeClient() {
                     </div>
 
                     {/* Over 2.5 */}
-                    <div className={`rounded-xl border p-3 ${tileClass(prO25, isTop("over25"))}`}>
+                    <div
+                      className={`rounded-xl border p-3 ${tileClass(
+                        prO25,
+                        isTop("over25")
+                      )}`}
+                    >
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 2.5</span>
                         {isTop("over25") && (
@@ -655,7 +812,12 @@ export default function HomeClient() {
                     </div>
 
                     {/* Over 1.5 */}
-                    <div className={`rounded-xl border p-3 ${tileClass(prO15, isTop("over15"))}`}>
+                    <div
+                      className={`rounded-xl border p-3 ${tileClass(
+                        prO15,
+                        isTop("over15")
+                      )}`}
+                    >
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 1.5</span>
                         {isTop("over15") && (
@@ -689,7 +851,7 @@ export default function HomeClient() {
                     </div>
                   </div>
 
-                  {/* Explicação da IA */}
+                  {/* Explicação da IA (calculada no front) */}
                   {explanation.length > 0 && (
                     <div className="rounded-xl bg-emerald-500/5 border border-emerald-500/40 p-3 text-xs text-gray-100 space-y-1">
                       <div className="flex items-center justify-between mb-1">
@@ -720,19 +882,24 @@ export default function HomeClient() {
                         <div>
                           <div className="text-gray-400 text-xs mb-1">1X2</div>
                           <div className="text-white">
-                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} / {oddFmt(odds1x2?.away)}
+                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} /{" "}
+                            {oddFmt(odds1x2?.away)}
                           </div>
                         </div>
                         <div>
-                          <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
+                          <div className="text-gray-400 text-xs mb-1">
+                            O/U 2.5
+                          </div>
                           <div className="text-white">
-                            O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
+                            O {oddFmt(oddsOU25?.over)} · U{" "}
+                            {oddFmt(oddsOU25?.under)}
                           </div>
                         </div>
                         <div>
                           <div className="text-gray-400 text-xs mb-1">BTTS</div>
                           <div className="text-white">
-                            Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
+                            Sim {oddFmt(oddsBTTS?.yes)} · Não{" "}
+                            {oddFmt(oddsBTTS?.no)}
                           </div>
                         </div>
                       </div>
@@ -748,9 +915,14 @@ export default function HomeClient() {
                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
                       {/* Correct Score */}
                       <div>
-                        <div className="text-xs text-gray-400 mb-1">Top-3 Correct Score</div>
+                        <div className="text-xs text-gray-400 mb-1">
+                          Top-3 Correct Score
+                        </div>
                         <ul className="text-sm text-white space-y-1">
-                          {(p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
+                          {(p.predictions?.correct_score?.top3 ??
+                            p.correct_score_top3 ??
+                            []
+                          )
                             .slice(0, 3)
                             .map((cs: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
@@ -760,14 +932,20 @@ export default function HomeClient() {
                                 </span>
                               </li>
                             ))}
-                          {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
-                            .length === 0) && <li className="text-gray-500">—</li>}
+                          {((p.predictions?.correct_score?.top3 ??
+                            p.correct_score_top3 ??
+                            []
+                          ).length === 0) && (
+                            <li className="text-gray-500">—</li>
+                          )}
                         </ul>
                       </div>
 
                       {/* Marcadores Prováveis */}
                       <div>
-                        <div className="text-xs text-gray-400 mb-1">Marcadores Prováveis</div>
+                        <div className="text-xs text-gray-400 mb-1">
+                          Marcadores Prováveis
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {/* Casa */}
                           <ul className="text-sm text-white space-y-1">
