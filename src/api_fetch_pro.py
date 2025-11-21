@@ -407,6 +407,9 @@ def compute_lambdas(
     return lam_home, lam_away
 
 
+# ===========================================================
+# Core de previsão por fixture
+# ===========================================================
 def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
         fixture = fix.get("fixture", {})
@@ -523,7 +526,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             },
             "over_1_5": {
                 "over": implied_odds(p_over15),
-                "under": implied_odds(p_over15 if p_over15 < 1 else p_under15),
+                "under": implied_odds(p_under15),
             },
             "btts": {
                 "yes": implied_odds(p_btts),
@@ -681,6 +684,38 @@ def _dedupe_fixtures(fixtures: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return out
 
 
+def _extract_fixtures(payload: Any) -> List[Dict[str, Any]]:
+    """
+    Extrai lista de fixtures de vários formatos possíveis:
+      - dict com 'response': [...]
+      - dict com 'data' → pode ter 'response' ou já ser lista
+      - lista direta
+    """
+    if not payload:
+        return []
+
+    # já é lista de fixtures
+    if isinstance(payload, list):
+        return [x for x in payload if isinstance(x, dict)]
+
+    if isinstance(payload, dict):
+        # formato API-Football normal
+        resp = payload.get("response")
+        if isinstance(resp, list):
+            return [x for x in resp if isinstance(x, dict)]
+
+        # formato possivelmente embrulhado em "data"
+        data = payload.get("data")
+        if isinstance(data, list):
+            return [x for x in data if isinstance(x, dict)]
+        if isinstance(data, dict):
+            resp2 = data.get("response")
+            if isinstance(resp2, list):
+                return [x for x in resp2 if isinstance(x, dict)]
+
+    return []
+
+
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
     Busca fixtures via proxy por data (hoje + N-1 dias).
@@ -690,7 +725,7 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
       - World Cup - Qualification Europe (league 32, season 2024)
 
     Se depois do dedupe não houver fixtures válidas (sem fixture.id),
-    faz fallback para /fixtures?next=50&season=SEASON_CLUBS.
+    faz fallback para /fixtures?next=50.
     """
     try:
         days = int(days)
@@ -708,15 +743,13 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
 
         # 1) Clubes (season “normal”)
         payload_clubs = proxy_get("/fixtures", {"date": iso, "season": SEASON_CLUBS})
-        if (
-            payload_clubs
-            and isinstance(payload_clubs, dict)
-            and isinstance(payload_clubs.get("response"), list)
-        ):
-            raw_fixtures.extend(payload_clubs["response"])
+        fixtures_clubs = _extract_fixtures(payload_clubs)
+        if fixtures_clubs:
+            raw_fixtures.extend(fixtures_clubs)
         else:
             logger.warning(
-                f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS})."
+                f"⚠️ Sem fixtures (clubes) via proxy para {iso} (season={SEASON_CLUBS}). "
+                f"payload_type={type(payload_clubs).__name__}"
             )
 
         # 2) World Cup - Qualification Europe (seleções)
@@ -725,16 +758,14 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
                 "/fixtures",
                 {"date": iso, "league": WCQ_EUROPE_LEAGUE_ID, "season": WCQ_EUROPE_SEASON},
             )
-            if (
-                payload_wcq
-                and isinstance(payload_wcq, dict)
-                and isinstance(payload_wcq.get("response"), list)
-            ):
-                raw_fixtures.extend(payload_wcq["response"])
+            fixtures_wcq = _extract_fixtures(payload_wcq)
+            if fixtures_wcq:
+                raw_fixtures.extend(fixtures_wcq)
             else:
                 logger.info(
                     f"ℹ️ Sem fixtures WCQ Europe para {iso} "
-                    f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON})."
+                    f"(league={WCQ_EUROPE_LEAGUE_ID}, season={WCQ_EUROPE_SEASON}). "
+                    f"payload_type={type(payload_wcq).__name__}"
                 )
 
         # pausazinha para não saturar proxy/API
@@ -749,15 +780,10 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
             "⚠️ Nenhuma fixture válida por data (sem fixture.id). "
             "A usar fallback /fixtures?next=50."
         )
-        payload = proxy_get("/fixtures", {"next": 50, "season": SEASON_CLUBS})
-        if (
-            payload
-            and isinstance(payload, dict)
-            and isinstance(payload.get("response"), list)
-        ):
-            fixtures = _dedupe_fixtures(payload["response"])
-        else:
-            fixtures = []
+        # IMPORTANTE: aqui não passo season, deixo o API-Football escolher
+        payload = proxy_get("/fixtures", {"next": 50})
+        fixtures_fb = _extract_fixtures(payload)
+        fixtures = _dedupe_fixtures(fixtures_fb)
 
     logger.info(f"📊 Total fixtures após merge + dedupe: {len(fixtures)}")
     return fixtures
@@ -785,7 +811,8 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
 
     if not fixtures:
         logger.warning(
-            "⚠️ Nenhuma fixture obtida (possível erro 429 do proxy/API). "
+            "⚠️ Nenhuma fixture obtida (possível erro 429 do proxy/API "
+            "ou payload inesperado). "
             "A NÃO sobrescrever data/predict/predictions.json."
         )
         return {"status": "no-fixtures", "total": 0}
