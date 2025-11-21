@@ -400,37 +400,7 @@
       "Visitante em vantagem (X2), prob. 64% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.1781911148080837,
-          "draw": 0.1781911148080837,
-          "away": 0.6436177703838326
-        },
-        "final": {
-          "home": 0.17562257317556818,
-          "draw": 0.18066181964338607,
-          "away": 0.6437156071810458
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5615258697024539,
-        "calibrated": 0.5615258697024539,
-        "final": {
-          "yes": 0.5615334424490562,
-          "no": 0.43846655755094377
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419718,
@@ -722,37 +692,7 @@
       "Golos esperados: 2.90 no total (casa 2.00, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 63% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6281541507840303,
-          "draw": 0.18592292460798487,
-          "away": 0.18592292460798487
-        },
-        "final": {
-          "home": 0.6281846833857389,
-          "draw": 0.18945237098989154,
-          "away": 0.1823629456243696
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5127372522686999,
-        "calibrated": 0.5127372522686999,
-        "final": {
-          "yes": 0.5127016644283949,
-          "no": 0.48729833557160507
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1396829,
@@ -1317,37 +1257,7 @@
       "Casa ligeiramente favorita (1X), prob. 55% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 72%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5508537030498479,
-          "draw": 0.22457314847507603,
-          "away": 0.22457314847507603
-        },
-        "final": {
-          "home": 0.5507985659963578,
-          "draw": 0.23601711959578353,
-          "away": 0.21318431440785862
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.2807019532403615,
-        "calibrated": 0.2807019532403615,
-        "final": {
-          "yes": 0.28071787237551943,
-          "no": 0.7192821276244805
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435988,
@@ -1912,37 +1822,7 @@
       "Casa ligeiramente favorita (1X), prob. 53% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5347745833022636,
-          "draw": 0.2326127083488682,
-          "away": 0.2326127083488682
-        },
-        "final": {
-          "home": 0.5347983442249225,
-          "draw": 0.23034008547515908,
-          "away": 0.23486157029991844
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6284726221302863,
-        "calibrated": 0.6284726221302863,
-        "final": {
-          "yes": 0.6284774297453228,
-          "no": 0.37152257025467716
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388722,
@@ -2399,37 +2279,7 @@
       "Casa ligeiramente favorita (1X), prob. 52% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5248011579529483,
-          "draw": 0.23759942102352583,
-          "away": 0.23759942102352583
-        },
-        "final": {
-          "home": 0.5247024605754608,
-          "draw": 0.23680104377777383,
-          "away": 0.2384964956467654
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5700616414249148,
-        "calibrated": 0.5700616414249148,
-        "final": {
-          "yes": 0.5702141599170599,
-          "no": 0.4297858400829401
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435990,
@@ -2940,37 +2790,7 @@
       "Casa ligeiramente favorita (1X), prob. 52% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 69%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5226405797662617,
-          "draw": 0.23867971011686917,
-          "away": 0.23867971011686917
-        },
-        "final": {
-          "home": 0.5226886522359464,
-          "draw": 0.23415715746575463,
-          "away": 0.24315419029829896
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6855906502349257,
-        "calibrated": 0.6855906502349257,
-        "final": {
-          "yes": 0.6855537768376179,
-          "no": 0.31444622316238213
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379442,
@@ -3481,37 +3301,7 @@
       "Visitante em vantagem (X2), prob. 51% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.24353687412036373,
-          "draw": 0.24353687412036373,
-          "away": 0.5129262517592725
-        },
-        "final": {
-          "home": 0.24742842532326514,
-          "draw": 0.23967865790661128,
-          "away": 0.5128929167701236
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6508439611712468,
-        "calibrated": 0.6508439611712468,
-        "final": {
-          "yes": 0.6507173669955598,
-          "no": 0.3492826330044402
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1389250,
@@ -4076,37 +3866,7 @@
       "Visitante em vantagem (X2), prob. 50% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.24894138198991644,
-          "draw": 0.24894138198991644,
-          "away": 0.5021172360201671
-        },
-        "final": {
-          "home": 0.2521174880384287,
-          "draw": 0.24574916316156542,
-          "away": 0.5021333488000058
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6126482287682329,
-        "calibrated": 0.6126482287682329,
-        "final": {
-          "yes": 0.6126749849518103,
-          "no": 0.3873250150481897
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478011,
@@ -4616,37 +4376,7 @@
       "Golos esperados: 2.25 no total (casa 1.40, fora 0.85).",
       "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4982034619515817,
-          "draw": 0.25089826902420914,
-          "away": 0.25089826902420914
-        },
-        "final": {
-          "home": 0.4981150694482105,
-          "draw": 0.2543678231491054,
-          "away": 0.24751710740268412
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.43128962565425677,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.4795384182381086,
-          "no": 0.5204615817618914
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1389252,
@@ -5210,37 +4940,7 @@
       "Golos esperados: 2.10 no total (casa 0.85, fora 1.25).",
       "Visitante em vantagem (X2), prob. 46% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.27201298629676063,
-          "draw": 0.27201298629676063,
-          "away": 0.4559740274064788
-        },
-        "final": {
-          "home": 0.26906365316937564,
-          "draw": 0.27491259948222646,
-          "away": 0.4560237473483979
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4084749045257173,
-        "calibrated": 0.4084749045257173,
-        "final": {
-          "yes": 0.4084355529048307,
-          "no": 0.5915644470951693
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388725,
@@ -5696,37 +5396,7 @@
       "Golos esperados: 2.15 no total (casa 1.25, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 44% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4436127386205662,
-          "draw": 0.2781936306897169,
-          "away": 0.2781936306897169
-        },
-        "final": {
-          "home": 0.4436731444297978,
-          "draw": 0.2799008795225528,
-          "away": 0.2764259760476493
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.42334266644504565,
-        "calibrated": 0.42334266644504565,
-        "final": {
-          "yes": 0.423288699241125,
-          "no": 0.576711300758875
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391922,
@@ -6291,37 +5961,7 @@
       "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.43161930618601574,
-          "draw": 0.28419034690699213,
-          "away": 0.28419034690699213
-        },
-        "final": {
-          "home": 0.4316181904402171,
-          "draw": 0.27883249710977226,
-          "away": 0.2895493124500106
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5728053638342702,
-        "calibrated": 0.5728053638342702,
-        "final": {
-          "yes": 0.5727036301637751,
-          "no": 0.4272963698362249
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387811,
@@ -6777,37 +6417,7 @@
       "Golos esperados: 2.25 no total (casa 1.25, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.41974668147399063,
-          "draw": 0.2901266592630047,
-          "away": 0.2901266592630047
-        },
-        "final": {
-          "home": 0.41975156057763907,
-          "draw": 0.28930315255386674,
-          "away": 0.2909452868684942
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.45093514276026975,
-        "calibrated": 0.45093514276026975,
-        "final": {
-          "yes": 0.4508691287719718,
-          "no": 0.5491308712280282
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386742,
@@ -7263,37 +6873,7 @@
       "Golos esperados: 2.15 no total (casa 1.20, fora 0.95).",
       "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4170911338591399,
-          "draw": 0.29145443307043006,
-          "away": 0.29145443307043006
-        },
-        "final": {
-          "home": 0.41704234220230596,
-          "draw": 0.29160635823059333,
-          "away": 0.2913512995671007
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.42848612629483157,
-        "calibrated": 0.42848612629483157,
-        "final": {
-          "yes": 0.42855144264472445,
-          "no": 0.5714485573552756
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482543,
@@ -7640,37 +7220,7 @@
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2982575886762978,
-          "draw": 0.2982575886762978,
-          "away": 0.4034848226474044
-        },
-        "final": {
-          "home": 0.2934002408440114,
-          "draw": 0.3031724775814873,
-          "away": 0.4034272815745014
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.33350767346271676,
-        "calibrated": 0.33350767346271676,
-        "final": {
-          "yes": 0.33348152244330925,
-          "no": 0.6665184775566908
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1389247,
@@ -8235,37 +7785,7 @@
       "Casa ligeiramente favorita (1X), prob. 40% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.39830213180418844,
-          "draw": 0.3008489340979058,
-          "away": 0.3008489340979058
-        },
-        "final": {
-          "home": 0.3983603472831862,
-          "draw": 0.2928767606853391,
-          "away": 0.30876289203147483
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5850210243473306,
-        "calibrated": 0.5850210243473306,
-        "final": {
-          "yes": 0.5850105891418329,
-          "no": 0.4149894108581671
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1389253,
@@ -8829,37 +8349,7 @@
       "Golos esperados: 2.15 no total (casa 1.00, fora 1.15).",
       "Visitante em vantagem (X2), prob. 39% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3045636401648045,
-          "draw": 0.3045636401648045,
-          "away": 0.390872719670391
-        },
-        "final": {
-          "home": 0.3060862909235151,
-          "draw": 0.30303170760223425,
-          "away": 0.3908820014742508
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.43190806340479504,
-        "calibrated": 0.43190806340479504,
-        "final": {
-          "yes": 0.4318277362470169,
-          "no": 0.5681722637529831
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390947,
@@ -9423,37 +8913,7 @@
       "Golos esperados: 2.50 no total (casa 1.30, fora 1.20).",
       "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.38885548723672164,
-          "draw": 0.3055722563816392,
-          "away": 0.3055722563816392
-        },
-        "final": {
-          "home": 0.38889620525004603,
-          "draw": 0.30016995852385425,
-          "away": 0.31093383622609977
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5082270758480325,
-        "calibrated": 0.5082270758480325,
-        "final": {
-          "yes": 0.5081180144708276,
-          "no": 0.4918819855291724
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382544,
@@ -10018,37 +9478,7 @@
       "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.38817757507447376,
-          "draw": 0.3059112124627631,
-          "away": 0.3059112124627631
-        },
-        "final": {
-          "home": 0.3881138836294088,
-          "draw": 0.29689440715982374,
-          "away": 0.3149917092107676
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5943419826337273,
-        "calibrated": 0.5943419826337273,
-        "final": {
-          "yes": 0.5944677936724031,
-          "no": 0.4055322063275969
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435993,
@@ -10451,37 +9881,7 @@
       "Visitante em vantagem (X2), prob. 37% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3132800505621519,
-          "draw": 0.3132800505621519,
-          "away": 0.3734398988756962
-        },
-        "final": {
-          "home": 0.32228993333699735,
-          "draw": 0.3042842622594926,
-          "away": 0.37342580440351
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5673847784232918,
-        "calibrated": 0.5673847784232918,
-        "final": {
-          "yes": 0.5674121967949332,
-          "no": 0.43258780320506685
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482547,
@@ -10828,37 +10228,7 @@
       "Jogo equilibrado, prob. de empate 91%.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.046449537108714856,
-          "draw": 0.9071009257825703,
-          "away": 0.046449537108714856
-        },
-        "final": {
-          "home": 0.04643533030979069,
-          "draw": 0.9071293393804185,
-          "away": 0.04643533030979069
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.002378569034517789,
-        "calibrated": 0.002378569034517789,
-        "final": {
-          "yes": 0.01,
-          "no": 0.99
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482544,
@@ -10987,37 +10357,7 @@
       "Visitante em vantagem (X2), prob. 82% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.08947100097704141,
-          "draw": 0.08947100097704141,
-          "away": 0.8210579980459172
-        },
-        "final": {
-          "home": 0.08676390733271606,
-          "draw": 0.09221871058950314,
-          "away": 0.8210173820777809
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6116692434952209,
-        "calibrated": 0.6116692434952209,
-        "final": {
-          "yes": 0.6118428474697502,
-          "no": 0.38815715253024985
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388399,
@@ -11582,37 +10922,7 @@
       "Casa ligeiramente favorita (1X), prob. 82% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 64%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.8206275901003627,
-          "draw": 0.08968620494981866,
-          "away": 0.08968620494981866
-        },
-        "final": {
-          "home": 0.8205955488357415,
-          "draw": 0.09543222032569988,
-          "away": 0.08397223083855868
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.36373385086877646,
-        "calibrated": 0.36373385086877646,
-        "final": {
-          "yes": 0.36368766212734893,
-          "no": 0.6363123378726511
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482415,
@@ -12123,37 +11433,7 @@
       "Visitante em vantagem (X2), prob. 76% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 96%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.1199908511641295,
-          "draw": 0.1199908511641295,
-          "away": 0.760018297671741
-        },
-        "final": {
-          "home": 0.10497311979100206,
-          "draw": 0.13609858849513934,
-          "away": 0.7589282917138586
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.03787830302125513,
-        "calibrated": 0.03787830302125513,
-        "final": {
-          "yes": 0.03788168876340214,
-          "no": 0.9621183112365979
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482545,
@@ -12282,37 +11562,7 @@
       "Visitante em vantagem (X2), prob. 76% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 96%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.1199908511641295,
-          "draw": 0.1199908511641295,
-          "away": 0.760018297671741
-        },
-        "final": {
-          "home": 0.10497311979100206,
-          "draw": 0.13609858849513934,
-          "away": 0.7589282917138586
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.03787830302125513,
-        "calibrated": 0.03787830302125513,
-        "final": {
-          "yes": 0.03788168876340214,
-          "no": 0.9621183112365979
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382377,
@@ -12876,37 +12126,7 @@
       "Golos esperados: 3.40 no total (casa 2.55, fora 0.85).",
       "Casa ligeiramente favorita (1X), prob. 74% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.7371881824103165,
-          "draw": 0.13140590879484176,
-          "away": 0.13140590879484176
-        },
-        "final": {
-          "home": 0.7371113206359715,
-          "draw": 0.13547379734881096,
-          "away": 0.12741488201521753
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5271549109925565,
-        "calibrated": 0.5271549109925565,
-        "final": {
-          "yes": 0.527009355141678,
-          "no": 0.472990644858322
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390940,
@@ -13254,37 +12474,7 @@
       "Golos esperados: 3.00 no total (casa 2.30, fora 0.70).",
       "Casa ligeiramente favorita (1X), prob. 73% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.7321801612552717,
-          "draw": 0.13390991937236413,
-          "away": 0.13390991937236413
-        },
-        "final": {
-          "home": 0.732099952206551,
-          "draw": 0.13939369281705558,
-          "away": 0.12850635497639337
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.4524619769433851,
-        "calibrated": 0.4524619769433851,
-        "final": {
-          "yes": 0.4525382249563328,
-          "no": 0.5474617750436672
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390948,
@@ -13740,37 +12930,7 @@
       "Golos esperados: 3.20 no total (casa 2.35, fora 0.85).",
       "Casa ligeiramente favorita (1X), prob. 71% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.705359565071209,
-          "draw": 0.1473202174643955,
-          "away": 0.1473202174643955
-        },
-        "final": {
-          "home": 0.7053151806003062,
-          "draw": 0.15147717809849237,
-          "away": 0.1432076413012015
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5173905632952784,
-        "calibrated": 0.5173905632952784,
-        "final": {
-          "yes": 0.5174069788009867,
-          "no": 0.48259302119901326
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382545,
@@ -14335,37 +13495,7 @@
       "Casa ligeiramente favorita (1X), prob. 69% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6902356777064742,
-          "draw": 0.1548821611467629,
-          "away": 0.1548821611467629
-        },
-        "final": {
-          "home": 0.690192402155088,
-          "draw": 0.16371468961398955,
-          "away": 0.14609290823092252
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.32826124094725245,
-        "calibrated": 0.32826124094725245,
-        "final": {
-          "yes": 0.3282511296950324,
-          "no": 0.6717488703049677
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435989,
@@ -14929,37 +14059,7 @@
       "Golos esperados: 3.15 no total (casa 2.25, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 68% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6762714395487539,
-          "draw": 0.16186428022562305,
-          "away": 0.16186428022562305
-        },
-        "final": {
-          "home": 0.6762573282006706,
-          "draw": 0.1655383392689975,
-          "away": 0.1582043325303318
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5303394021468957,
-        "calibrated": 0.5303394021468957,
-        "final": {
-          "yes": 0.5302661037651598,
-          "no": 0.4697338962348402
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386737,
@@ -15307,37 +14407,7 @@
       "Golos esperados: 2.80 no total (casa 2.05, fora 0.75).",
       "Casa ligeiramente favorita (1X), prob. 68% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6752353854162804,
-          "draw": 0.16238230729185982,
-          "away": 0.16238230729185982
-        },
-        "final": {
-          "home": 0.6752570372636102,
-          "draw": 0.16771492165282587,
-          "away": 0.15702804108356402
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.45935021383429336,
-        "calibrated": 0.45935021383429336,
-        "final": {
-          "yes": 0.459306242553194,
-          "no": 0.540693757446806
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380975,
@@ -15465,37 +14535,7 @@
       "Golos esperados: 3.10 no total (casa 2.20, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 67% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6671426789086163,
-          "draw": 0.16642866054569183,
-          "away": 0.16642866054569183
-        },
-        "final": {
-          "home": 0.6671161155813711,
-          "draw": 0.17010315111337448,
-          "away": 0.1627807333052544
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.527166406908516,
-        "calibrated": 0.527166406908516,
-        "final": {
-          "yes": 0.5270191266702435,
-          "no": 0.47298087332975647
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379085,
@@ -15789,37 +14829,7 @@
       "Golos esperados: 2.60 no total (casa 1.90, fora 0.70).",
       "Casa ligeiramente favorita (1X), prob. 66% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.657804500296681,
-          "draw": 0.1710977498516595,
-          "away": 0.1710977498516595
-        },
-        "final": {
-          "home": 0.6578212453938911,
-          "draw": 0.1772137819958179,
-          "away": 0.1649649726102911
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.42785553129773385,
-        "calibrated": 0.42785553129773385,
-        "final": {
-          "yes": 0.42785813069842826,
-          "no": 0.5721418693015717
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382740,
@@ -16383,37 +15393,7 @@
       "Golos esperados: 2.85 no total (casa 2.00, fora 0.85).",
       "Casa ligeiramente favorita (1X), prob. 64% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6404491875205031,
-          "draw": 0.17977540623974847,
-          "away": 0.17977540623974847
-        },
-        "final": {
-          "home": 0.6404711875286754,
-          "draw": 0.18397321794256927,
-          "away": 0.17555559452875533
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.49472995936360026,
-        "calibrated": 0.49472995936360026,
-        "final": {
-          "yes": 0.49477046545906017,
-          "no": 0.5052295345409399
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387812,
@@ -16870,37 +15850,7 @@
       "Casa ligeiramente favorita (1X), prob. 64% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.638483862863686,
-          "draw": 0.18075806856815702,
-          "away": 0.18075806856815702
-        },
-        "final": {
-          "home": 0.638403596506398,
-          "draw": 0.18786689393747924,
-          "away": 0.17372950955612276
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.39471262491952164,
-        "calibrated": 0.39471262491952164,
-        "final": {
-          "yes": 0.39471625749738287,
-          "no": 0.6052837425026172
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380981,
@@ -17249,37 +16199,7 @@
       "Visitante em vantagem (X2), prob. 61% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 64%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.19250539012122053,
-          "draw": 0.19250539012122053,
-          "away": 0.6149892197575589
-        },
-        "final": {
-          "home": 0.19263102729839415,
-          "draw": 0.19246403240955332,
-          "away": 0.6149049402920526
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6446493372593782,
-        "calibrated": 0.6446493372593782,
-        "final": {
-          "yes": 0.644626248597077,
-          "no": 0.35537375140292304
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1394545,
@@ -17681,37 +16601,7 @@
       "Golos esperados: 2.50 no total (casa 1.75, fora 0.75).",
       "Casa ligeiramente favorita (1X), prob. 61% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.611986852211222,
-          "draw": 0.19400657389438902,
-          "away": 0.19400657389438902
-        },
-        "final": {
-          "home": 0.6120555165262147,
-          "draw": 0.19956825174520332,
-          "away": 0.18837623172858206
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4357368509527497,
-        "calibrated": 0.4357368509527497,
-        "final": {
-          "yes": 0.435770411979788,
-          "no": 0.564229588020212
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1389246,
@@ -17840,37 +16730,7 @@
       "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 66%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6040757388803684,
-          "draw": 0.19796213055981582,
-          "away": 0.19796213055981582
-        },
-        "final": {
-          "home": 0.6039797372165551,
-          "draw": 0.19727466352782833,
-          "away": 0.1987455992556166
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6572591730606513,
-        "calibrated": 0.6572591730606513,
-        "final": {
-          "yes": 0.6573189457502022,
-          "no": 0.3426810542497978
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379088,
@@ -18380,37 +17240,7 @@
       "Golos esperados: 3.00 no total (casa 1.00, fora 2.00).",
       "Visitante em vantagem (X2), prob. 60% para não perder.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.19802104769153106,
-          "draw": 0.19802104769153106,
-          "away": 0.6039579046169379
-        },
-        "final": {
-          "home": 0.19587770591082324,
-          "draw": 0.20027554878949694,
-          "away": 0.6038467452996799
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5461562568022145,
-        "calibrated": 0.5461562568022145,
-        "final": {
-          "yes": 0.5461186743612867,
-          "no": 0.4538813256387133
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379081,
@@ -18974,37 +17804,7 @@
       "Golos esperados: 3.00 no total (casa 2.00, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6039579046169379,
-          "draw": 0.19802104769153106,
-          "away": 0.19802104769153106
-        },
-        "final": {
-          "home": 0.6038467452996799,
-          "draw": 0.20027554878949694,
-          "away": 0.19587770591082324
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5461562568022144,
-        "calibrated": 0.5461562568022144,
-        "final": {
-          "yes": 0.5461186743612866,
-          "no": 0.4538813256387134
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391919,
@@ -19133,37 +17933,7 @@
       "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 62%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6031948937959465,
-          "draw": 0.19840255310202676,
-          "away": 0.19840255310202676
-        },
-        "final": {
-          "home": 0.6031303396732086,
-          "draw": 0.20579275645143705,
-          "away": 0.1910769038753544
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.38132556002427936,
-        "calibrated": 0.38132556002427936,
-        "final": {
-          "yes": 0.3814380467753544,
-          "no": 0.6185619532246456
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387808,
@@ -19728,37 +18498,7 @@
       "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 64%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5962745053183249,
-          "draw": 0.20186274734083753,
-          "away": 0.20186274734083753
-        },
-        "final": {
-          "home": 0.5962117037000922,
-          "draw": 0.2014353568344608,
-          "away": 0.20235293946544694
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6375764553680354,
-        "calibrated": 0.6375764553680354,
-        "final": {
-          "yes": 0.6375519963007054,
-          "no": 0.36244800369929464
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388723,
@@ -19887,37 +18627,7 @@
       "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 64%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5962745053183249,
-          "draw": 0.20186274734083753,
-          "away": 0.20186274734083753
-        },
-        "final": {
-          "home": 0.5962117037000922,
-          "draw": 0.2014353568344608,
-          "away": 0.20235293946544694
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6375764553680354,
-        "calibrated": 0.6375764553680354,
-        "final": {
-          "yes": 0.6375519963007054,
-          "no": 0.36244800369929464
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482551,
@@ -20046,37 +18756,7 @@
       "Jogo equilibrado, prob. de empate 59%.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 98%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.20426772613806915,
-          "draw": 0.5914645477238617,
-          "away": 0.20426772613806915
-        },
-        "final": {
-          "home": 0.17811789634310532,
-          "draw": 0.5914620782923099,
-          "away": 0.23042002536458472
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.019189696515814005,
-        "calibrated": 0.019189696515814005,
-        "final": {
-          "yes": 0.019311242038441902,
-          "no": 0.9806887579615581
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379080,
@@ -20368,37 +19048,7 @@
       "Golos esperados: 2.30 no total (casa 1.60, fora 0.70).",
       "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5896388466247464,
-          "draw": 0.2051805766876268,
-          "away": 0.2051805766876268
-        },
-        "final": {
-          "home": 0.5895339862626164,
-          "draw": 0.2117616104018184,
-          "away": 0.19870440333556516
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4016375570244783,
-        "calibrated": 0.4016375570244783,
-        "final": {
-          "yes": 0.4016082696246527,
-          "no": 0.5983917303753473
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1400812,
@@ -20526,37 +19176,7 @@
       "Golos esperados: 2.70 no total (casa 1.80, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5850304457585359,
-          "draw": 0.20748477712073204,
-          "away": 0.20748477712073204
-        },
-        "final": {
-          "home": 0.5850230915679755,
-          "draw": 0.21077667836711908,
-          "away": 0.2042002300649054
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.4950695477140971,
-        "calibrated": 0.4950695477140971,
-        "final": {
-          "yes": 0.4950591155569825,
-          "no": 0.5049408844430174
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1400813,
@@ -20685,37 +19305,7 @@
       "Casa ligeiramente favorita (1X), prob. 57% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5676975275201288,
-          "draw": 0.2161512362399356,
-          "away": 0.2161512362399356
-        },
-        "final": {
-          "home": 0.567708171191791,
-          "draw": 0.2156202274268047,
-          "away": 0.21667160138140446
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6083120793322018,
-        "calibrated": 0.6083120793322018,
-        "final": {
-          "yes": 0.6083540502486006,
-          "no": 0.39164594975139944
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382540,
@@ -21280,37 +19870,7 @@
       "Casa ligeiramente favorita (1X), prob. 57% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5666825469449451,
-          "draw": 0.21665872652752743,
-          "away": 0.21665872652752743
-        },
-        "final": {
-          "home": 0.5667764684129135,
-          "draw": 0.21555813435701254,
-          "away": 0.2176653972300739
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6255274770474609,
-        "calibrated": 0.6255274770474609,
-        "final": {
-          "yes": 0.6254922664973674,
-          "no": 0.37450773350263256
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382739,
@@ -21875,37 +20435,7 @@
       "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5588607487661731,
-          "draw": 0.22056962561691346,
-          "away": 0.22056962561691346
-        },
-        "final": {
-          "home": 0.5588524443646131,
-          "draw": 0.22097508493619009,
-          "away": 0.22017247069919674
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.566960203574603,
-        "calibrated": 0.566960203574603,
-        "final": {
-          "yes": 0.5670513081735477,
-          "no": 0.43294869182645235
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382376,
@@ -22470,37 +21000,7 @@
       "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 60%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5572430713217487,
-          "draw": 0.22137846433912567,
-          "away": 0.22137846433912567
-        },
-        "final": {
-          "home": 0.5573422015748005,
-          "draw": 0.22059533274082224,
-          "away": 0.22206246568437724
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6037366125210897,
-        "calibrated": 0.6037366125210897,
-        "final": {
-          "yes": 0.6036067426524956,
-          "no": 0.3963932573475044
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1394547,
@@ -23065,37 +21565,7 @@
       "Visitante em vantagem (X2), prob. 55% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.22610502103865115,
-          "draw": 0.22610502103865115,
-          "away": 0.5477899579226977
-        },
-        "final": {
-          "home": 0.22593230607374915,
-          "draw": 0.2263934865501623,
-          "away": 0.5476742073760885
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5618758510694152,
-        "calibrated": 0.5618758510694152,
-        "final": {
-          "yes": 0.5618309266109733,
-          "no": 0.43816907338902666
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478018,
@@ -23606,37 +22076,7 @@
       "Casa ligeiramente favorita (1X), prob. 55% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5477899579226977,
-          "draw": 0.22610502103865115,
-          "away": 0.22610502103865115
-        },
-        "final": {
-          "home": 0.5476742073760885,
-          "draw": 0.2263934865501623,
-          "away": 0.22593230607374915
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5618758510694153,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.49906898908713787,
-          "no": 0.5009310109128622
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388400,
@@ -24038,37 +22478,7 @@
       "Golos esperados: 2.60 no total (casa 1.65, fora 0.95).",
       "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5373728854413429,
-          "draw": 0.23131355727932856,
-          "away": 0.23131355727932856
-        },
-        "final": {
-          "home": 0.5373916034881365,
-          "draw": 0.23346218722678327,
-          "away": 0.2291462092850802
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.49527640004542123,
-        "calibrated": 0.49527640004542123,
-        "final": {
-          "yes": 0.495234940038608,
-          "no": 0.504765059961392
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386739,
@@ -24196,37 +22606,7 @@
       "Golos esperados: 2.70 no total (casa 1.70, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5371248097710443,
-          "draw": 0.23143759511447787,
-          "away": 0.23143759511447787
-        },
-        "final": {
-          "home": 0.5371351355956879,
-          "draw": 0.23283690234368173,
-          "away": 0.2300279620606303
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5164005905450924,
-        "calibrated": 0.5164005905450924,
-        "final": {
-          "yes": 0.5163719234097126,
-          "no": 0.4836280765902874
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379083,
@@ -24737,37 +23117,7 @@
       "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5369393452913764,
-          "draw": 0.23153032735431178,
-          "away": 0.23153032735431178
-        },
-        "final": {
-          "home": 0.536962967437876,
-          "draw": 0.24048882913419217,
-          "away": 0.22254820342793188
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.32817423020857106,
-        "calibrated": 0.32817423020857106,
-        "final": {
-          "yes": 0.32817717056715323,
-          "no": 0.6718228294328468
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419719,
@@ -25278,37 +23628,7 @@
       "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5356956852279174,
-          "draw": 0.23215215738604128,
-          "away": 0.23215215738604128
-        },
-        "final": {
-          "home": 0.5356529948833103,
-          "draw": 0.23100260928531346,
-          "away": 0.23334439583137623
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5938606389956261,
-        "calibrated": 0.5938606389956261,
-        "final": {
-          "yes": 0.5939119779288909,
-          "no": 0.40608802207110906
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390945,
@@ -25436,37 +23756,7 @@
       "Golos esperados: 2.45 no total (casa 1.55, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 53% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5250010344374464,
-          "draw": 0.2374994827812768,
-          "away": 0.2374994827812768
-        },
-        "final": {
-          "home": 0.5251281537246806,
-          "draw": 0.24020367071201806,
-          "away": 0.2346681755633013
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4673213088290599,
-        "calibrated": 0.4673213088290599,
-        "final": {
-          "yes": 0.4673723662360442,
-          "no": 0.5326276337639557
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382543,
@@ -26030,37 +24320,7 @@
       "Golos esperados: 2.80 no total (casa 1.70, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5131890549644396,
-          "draw": 0.24340547251778022,
-          "away": 0.24340547251778022
-        },
-        "final": {
-          "home": 0.5131714423164879,
-          "draw": 0.242970001138573,
-          "away": 0.24385855654493901
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.544986023940493,
-        "calibrated": 0.544986023940493,
-        "final": {
-          "yes": 0.5451239764288235,
-          "no": 0.4548760235711765
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435985,
@@ -26625,37 +24885,7 @@
       "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5129262517592726,
-          "draw": 0.24353687412036368,
-          "away": 0.24353687412036368
-        },
-        "final": {
-          "home": 0.5128929167701236,
-          "draw": 0.23967865790661125,
-          "away": 0.24742842532326512
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6508439611712471,
-        "calibrated": 0.6508439611712471,
-        "final": {
-          "yes": 0.65071736699556,
-          "no": 0.34928263300443996
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379082,
@@ -27219,37 +25449,7 @@
       "Golos esperados: 2.60 no total (casa 1.00, fora 1.60).",
       "Visitante em vantagem (X2), prob. 51% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.24358525080682736,
-          "draw": 0.24358525080682736,
-          "away": 0.5128294983863453
-        },
-        "final": {
-          "home": 0.2425777807461507,
-          "draw": 0.2446258942897296,
-          "away": 0.5127963249641198
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5043024833985258,
-        "calibrated": 0.5043024833985258,
-        "final": {
-          "yes": 0.5044071108887469,
-          "no": 0.4955928891112531
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390105,
@@ -27705,37 +25905,7 @@
       "Golos esperados: 2.60 no total (casa 1.00, fora 1.60).",
       "Visitante em vantagem (X2), prob. 51% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.24358525080682736,
-          "draw": 0.24358525080682736,
-          "away": 0.5128294983863453
-        },
-        "final": {
-          "home": 0.2425777807461507,
-          "draw": 0.2446258942897296,
-          "away": 0.5127963249641198
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5043024833985258,
-        "calibrated": 0.5043024833985258,
-        "final": {
-          "yes": 0.5044071108887469,
-          "no": 0.4955928891112531
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419717,
@@ -28138,37 +26308,7 @@
       "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5021172360201671,
-          "draw": 0.24894138198991644,
-          "away": 0.24894138198991644
-        },
-        "final": {
-          "home": 0.5021333488000058,
-          "draw": 0.24574916316156542,
-          "away": 0.2521174880384287
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6126482287682327,
-        "calibrated": 0.6126482287682327,
-        "final": {
-          "yes": 0.6126749849518102,
-          "no": 0.38732501504818984
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382373,
@@ -28733,37 +26873,7 @@
       "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 73%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5016191244200665,
-          "draw": 0.24919043778996675,
-          "away": 0.24919043778996675
-        },
-        "final": {
-          "home": 0.5016655184350093,
-          "draw": 0.24232625760601878,
-          "away": 0.25600822395897205
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.7301379441272259,
-        "calibrated": 0.7301379441272259,
-        "final": {
-          "yes": 0.7301644966026302,
-          "no": 0.26983550339736984
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382742,
@@ -29327,37 +27437,7 @@
       "Golos esperados: 2.65 no total (casa 1.60, fora 1.05).",
       "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
       "Tendência para Under 2.5 golos (67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5007878801246539,
-          "draw": 0.24960605993767304,
-          "away": 0.24960605993767304
-        },
-        "final": {
-          "home": 0.5007164853798174,
-          "draw": 0.24968854458395282,
-          "away": 0.2495949700362298
-        }
-      },
-      "ou25": {
-        "model": 0.3333333333333333,
-        "calibrated": 0.3333333333333333,
-        "final": {
-          "over": 0.3333333333333333,
-          "under": 0.6666666666666667
-        }
-      },
-      "btts": {
-        "model": 0.5186100729244246,
-        "calibrated": 0.5186100729244246,
-        "final": {
-          "yes": 0.5186240482700502,
-          "no": 0.48137595172994985
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386732,
@@ -29813,37 +27893,7 @@
       "Golos esperados: 2.55 no total (casa 1.55, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5002986295078875,
-          "draw": 0.24985068524605625,
-          "away": 0.24985068524605625
-        },
-        "final": {
-          "home": 0.5002837856632448,
-          "draw": 0.250653669490546,
-          "away": 0.24906254484620916
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.497780209307354,
-        "calibrated": 0.497780209307354,
-        "final": {
-          "yes": 0.4977381779112509,
-          "no": 0.5022618220887491
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482546,
@@ -30190,37 +28240,7 @@
       "Casa ligeiramente favorita (1X), prob. 49% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 79%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4908959530984925,
-          "draw": 0.2545520234507538,
-          "away": 0.2545520234507538
-        },
-        "final": {
-          "home": 0.49081289257236893,
-          "draw": 0.24533538174295666,
-          "away": 0.26385172568467447
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.7921022095261876,
-        "calibrated": 0.7921022095261876,
-        "final": {
-          "yes": 0.7921501400412462,
-          "no": 0.20784985995875382
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482541,
@@ -30567,37 +28587,7 @@
       "Visitante em vantagem (X2), prob. 49% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 79%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2545520234507538,
-          "draw": 0.2545520234507538,
-          "away": 0.4908959530984925
-        },
-        "final": {
-          "home": 0.26385172568467447,
-          "draw": 0.24533538174295666,
-          "away": 0.49081289257236893
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.7921022095261875,
-        "calibrated": 0.7921022095261875,
-        "final": {
-          "yes": 0.7921501400412461,
-          "no": 0.20784985995875394
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388401,
@@ -31108,37 +29098,7 @@
       "Casa ligeiramente favorita (1X), prob. 47% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 77%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4727181960772989,
-          "draw": 0.26364090196135054,
-          "away": 0.26364090196135054
-        },
-        "final": {
-          "home": 0.4726039332517113,
-          "draw": 0.25393217206721463,
-          "away": 0.27346389468107407
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.7745514001389611,
-        "calibrated": 0.7745514001389611,
-        "final": {
-          "yes": 0.7745990566102635,
-          "no": 0.22540094338973649
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388406,
@@ -31487,37 +29447,7 @@
       "Visitante em vantagem (X2), prob. 47% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 75%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.26375504584428205,
-          "draw": 0.26375504584428205,
-          "away": 0.4724899083114359
-        },
-        "final": {
-          "home": 0.27291133458071337,
-          "draw": 0.2546910167091574,
-          "away": 0.4723976487101293
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.7527658705599266,
-        "calibrated": 0.7527658705599266,
-        "final": {
-          "yes": 0.7527001519871108,
-          "no": 0.24729984801288918
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482554,
@@ -31864,37 +29794,7 @@
       "Visitante em vantagem (X2), prob. 47% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 75%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2650870117568125,
-          "draw": 0.2650870117568125,
-          "away": 0.4698259764863751
-        },
-        "final": {
-          "home": 0.2524496631681529,
-          "draw": 0.2777733091390909,
-          "away": 0.46977702769275625
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.24870762487017256,
-        "calibrated": 0.24870762487017256,
-        "final": {
-          "yes": 0.2486912007658149,
-          "no": 0.7513087992341851
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387813,
@@ -32023,37 +29923,7 @@
       "Casa ligeiramente favorita (1X), prob. 47% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.46912905621397044,
-          "draw": 0.26543547189301475,
-          "away": 0.26543547189301475
-        },
-        "final": {
-          "home": 0.4691682488044704,
-          "draw": 0.26017549988282485,
-          "away": 0.2706562513127047
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6284174283491406,
-        "calibrated": 0.6284174283491406,
-        "final": {
-          "yes": 0.628430515031349,
-          "no": 0.37156948496865105
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388402,
@@ -32400,37 +30270,7 @@
       "Visitante em vantagem (X2), prob. 47% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.26655698123391325,
-          "draw": 0.26655698123391325,
-          "away": 0.46688603753217345
-        },
-        "final": {
-          "home": 0.27014732898543503,
-          "draw": 0.2629555210832763,
-          "away": 0.4668971499312886
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5761765150433359,
-        "calibrated": 0.5761765150433359,
-        "final": {
-          "yes": 0.5760915012014697,
-          "no": 0.4239084987985303
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386738,
@@ -32832,37 +30672,7 @@
       "Golos esperados: 2.50 no total (casa 1.05, fora 1.45).",
       "Visitante em vantagem (X2), prob. 46% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.26871870842535106,
-          "draw": 0.26871870842535106,
-          "away": 0.4625625831492978
-        },
-        "final": {
-          "home": 0.2694744423686786,
-          "draw": 0.2679575833636659,
-          "away": 0.46256797426765556
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4974305909286216,
-        "calibrated": 0.4974305909286216,
-        "final": {
-          "yes": 0.4974410022893283,
-          "no": 0.5025589977106717
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377976,
@@ -33426,37 +31236,7 @@
       "Golos esperados: 2.40 no total (casa 1.00, fora 1.40).",
       "Visitante em vantagem (X2), prob. 46% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2694150026387369,
-          "draw": 0.2694150026387369,
-          "away": 0.4611699947225262
-        },
-        "final": {
-          "home": 0.2693286812443796,
-          "draw": 0.269546659238982,
-          "away": 0.4611246595166384
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.476121413483753,
-        "calibrated": 0.476121413483753,
-        "final": {
-          "yes": 0.47614958550109027,
-          "no": 0.5238504144989098
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386731,
@@ -33584,37 +31364,7 @@
       "Golos esperados: 2.55 no total (casa 1.45, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.45090052047960083,
-          "draw": 0.2745497397601996,
-          "away": 0.2745497397601996
-        },
-        "final": {
-          "home": 0.45087015245311385,
-          "draw": 0.27275899961005573,
-          "away": 0.27637084793683037
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5104829998544155,
-        "calibrated": 0.5104829998544155,
-        "final": {
-          "yes": 0.5104105498762531,
-          "no": 0.4895894501237469
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386735,
@@ -33742,37 +31492,7 @@
       "Golos esperados: 2.35 no total (casa 1.35, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.44761603347485773,
-          "draw": 0.2761919832625711,
-          "away": 0.2761919832625711
-        },
-        "final": {
-          "home": 0.4476754664526171,
-          "draw": 0.2759335425692688,
-          "away": 0.27639099097811415
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4681442186278976,
-        "calibrated": 0.4681442186278976,
-        "final": {
-          "yes": 0.46807183956505627,
-          "no": 0.5319281604349437
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435991,
@@ -34337,37 +32057,7 @@
       "Visitante em vantagem (X2), prob. 43% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2827738266282603,
-          "draw": 0.2827738266282603,
-          "away": 0.43445234674347943
-        },
-        "final": {
-          "home": 0.2893374692370617,
-          "draw": 0.2762137174199791,
-          "away": 0.4344488133429592
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6083579449571042,
-        "calibrated": 0.6083579449571042,
-        "final": {
-          "yes": 0.6083930360297676,
-          "no": 0.3916069639702324
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377979,
@@ -34715,37 +32405,7 @@
       "Golos esperados: 2.30 no total (casa 1.30, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.43380782615116403,
-          "draw": 0.283096086924418,
-          "away": 0.283096086924418
-        },
-        "final": {
-          "home": 0.4337012481843986,
-          "draw": 0.2826675889160495,
-          "away": 0.2836311628995519
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4597557802426638,
-        "calibrated": 0.4597557802426638,
-        "final": {
-          "yes": 0.45965097400030885,
-          "no": 0.5403490259996911
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377982,
@@ -35147,37 +32807,7 @@
       "Golos esperados: 2.65 no total (casa 1.20, fora 1.45).",
       "Visitante em vantagem (X2), prob. 43% para não perder.",
       "Tendência para Under 2.5 golos (67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.28584936823346224,
-          "draw": 0.28584936823346224,
-          "away": 0.4283012635330755
-        },
-        "final": {
-          "home": 0.28981174384547326,
-          "draw": 0.2818028694001261,
-          "away": 0.4283853867544006
-        }
-      },
-      "ou25": {
-        "model": 0.3333333333333333,
-        "calibrated": 0.3333333333333333,
-        "final": {
-          "over": 0.3333333333333333,
-          "under": 0.6666666666666667
-        }
-      },
-      "btts": {
-        "model": 0.5347037738779432,
-        "calibrated": 0.5347037738779432,
-        "final": {
-          "yes": 0.5347220883932666,
-          "no": 0.4652779116067334
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1394544,
@@ -35741,37 +33371,7 @@
       "Golos esperados: 2.55 no total (casa 1.40, fora 1.15).",
       "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.42642823872654684,
-          "draw": 0.2867858806367266,
-          "away": 0.2867858806367266
-        },
-        "final": {
-          "home": 0.42637533111594916,
-          "draw": 0.28350123168042485,
-          "away": 0.29012343720362604
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.514696575104839,
-        "calibrated": 0.514696575104839,
-        "final": {
-          "yes": 0.5147420888391132,
-          "no": 0.4852579111608868
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382741,
@@ -36335,37 +33935,7 @@
       "Golos esperados: 2.55 no total (casa 1.15, fora 1.40).",
       "Visitante em vantagem (X2), prob. 43% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2867858806367266,
-          "draw": 0.2867858806367266,
-          "away": 0.42642823872654684
-        },
-        "final": {
-          "home": 0.29012343720362604,
-          "draw": 0.28350123168042485,
-          "away": 0.42637533111594916
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.514696575104839,
-        "calibrated": 0.514696575104839,
-        "final": {
-          "yes": 0.5147420888391132,
-          "no": 0.4852579111608868
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386736,
@@ -36822,37 +34392,7 @@
       "Visitante em vantagem (X2), prob. 42% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2883901235624801,
-          "draw": 0.2883901235624801,
-          "away": 0.42321975287503977
-        },
-        "final": {
-          "home": 0.28466750649469585,
-          "draw": 0.2921037262062798,
-          "away": 0.4232287672990243
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.3673350679469006,
-        "calibrated": 0.3673350679469006,
-        "final": {
-          "yes": 0.36735108682463297,
-          "no": 0.632648913175367
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390107,
@@ -37309,37 +34849,7 @@
       "Visitante em vantagem (X2), prob. 42% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2895228124633372,
-          "draw": 0.2895228124633372,
-          "away": 0.4209543750733256
-        },
-        "final": {
-          "home": 0.2959628084696907,
-          "draw": 0.28315709128675537,
-          "away": 0.42088010024355393
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5832564396178509,
-        "calibrated": 0.5832564396178509,
-        "final": {
-          "yes": 0.5833592145510856,
-          "no": 0.41664078544891436
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419714,
@@ -37685,37 +35195,7 @@
       "Golos esperados: 2.05 no total (casa 1.15, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.41417500601667356,
-          "draw": 0.2929124969916632,
-          "away": 0.2929124969916632
-        },
-        "final": {
-          "home": 0.414224578117356,
-          "draw": 0.29410927709281504,
-          "away": 0.29166614478982894
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4054798437346621,
-        "calibrated": 0.4054798437346621,
-        "final": {
-          "yes": 0.4053807587407278,
-          "no": 0.5946192412592721
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1396963,
@@ -38280,37 +35760,7 @@
       "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 62%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.410963479841442,
-          "draw": 0.294518260079279,
-          "away": 0.294518260079279
-        },
-        "final": {
-          "home": 0.41101960208097926,
-          "draw": 0.2967592719789293,
-          "away": 0.29222112594009136
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.3819510252592466,
-        "calibrated": 0.3819510252592466,
-        "final": {
-          "yes": 0.3819696922250766,
-          "no": 0.6180303077749234
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1389251,
@@ -38874,37 +36324,7 @@
       "Golos esperados: 2.40 no total (casa 1.30, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4108030509524705,
-          "draw": 0.29459847452376475,
-          "away": 0.29459847452376475
-        },
-        "final": {
-          "home": 0.410866987827111,
-          "draw": 0.2915881205643078,
-          "away": 0.2975448916085812
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4852056315304105,
-        "calibrated": 0.4852056315304105,
-        "final": {
-          "yes": 0.4851747868008489,
-          "no": 0.5148252131991511
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380980,
@@ -39415,37 +36835,7 @@
       "Visitante em vantagem (X2), prob. 41% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 79%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2951737853655022,
-          "draw": 0.2951737853655022,
-          "away": 0.40965242926899564
-        },
-        "final": {
-          "home": 0.30969739625095727,
-          "draw": 0.2806475549932592,
-          "away": 0.40965504875578357
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.793940501977411,
-        "calibrated": 0.793940501977411,
-        "final": {
-          "yes": 0.7939165297904556,
-          "no": 0.20608347020954443
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1389248,
@@ -40010,37 +37400,7 @@
       "Visitante em vantagem (X2), prob. 41% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2956747225750668,
-          "draw": 0.2956747225750668,
-          "away": 0.4086505548498664
-        },
-        "final": {
-          "home": 0.30254570350183707,
-          "draw": 0.28884376786060145,
-          "away": 0.4086105286375614
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.575219266699331,
-        "calibrated": 0.575219266699331,
-        "final": {
-          "yes": 0.575122195765336,
-          "no": 0.42487780423466404
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390939,
@@ -40605,37 +37965,7 @@
       "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.40665495281089303,
-          "draw": 0.2966725235945535,
-          "away": 0.2966725235945535
-        },
-        "final": {
-          "home": 0.4065964166085767,
-          "draw": 0.29041442019045244,
-          "away": 0.3029891632009709
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5566114028247574,
-        "calibrated": 0.5566114028247574,
-        "final": {
-          "yes": 0.5566172293468565,
-          "no": 0.44338277065314347
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388729,
@@ -40928,37 +38258,7 @@
       "Visitante em vantagem (X2), prob. 41% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.29724604938419397,
-          "draw": 0.29724604938419397,
-          "away": 0.405507901231612
-        },
-        "final": {
-          "home": 0.307235074700046,
-          "draw": 0.2873205311196534,
-          "away": 0.4054443941803007
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6518086042675186,
-        "calibrated": 0.6518086042675186,
-        "final": {
-          "yes": 0.6518782227183,
-          "no": 0.3481217772817
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388730,
@@ -41252,37 +38552,7 @@
       "Golos esperados: 2.65 no total (casa 1.25, fora 1.40).",
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Under 2.5 golos (67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.29774562244640956,
-          "draw": 0.29774562244640956,
-          "away": 0.4045087551071808
-        },
-        "final": {
-          "home": 0.3033768299904158,
-          "draw": 0.292113282130147,
-          "away": 0.40450988787943715
-        }
-      },
-      "ou25": {
-        "model": 0.3333333333333333,
-        "calibrated": 0.3333333333333333,
-        "final": {
-          "over": 0.3333333333333333,
-          "under": 0.6666666666666667
-        }
-      },
-      "btts": {
-        "model": 0.5373707815118924,
-        "calibrated": 0.5373707815118924,
-        "final": {
-          "yes": 0.5373621792104817,
-          "no": 0.4626378207895183
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419715,
@@ -41466,37 +38736,7 @@
       "Golos esperados: 2.55 no total (casa 1.35, fora 1.20).",
       "Casa ligeiramente favorita (1X), prob. 40% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.40219613700084184,
-          "draw": 0.2989019314995791,
-          "away": 0.2989019314995791
-        },
-        "final": {
-          "home": 0.40218671758396435,
-          "draw": 0.2940125999719267,
-          "away": 0.30380068244410896
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5174998934931061,
-        "calibrated": 0.5174998934931061,
-        "final": {
-          "yes": 0.5174999094691402,
-          "no": 0.48250009053085985
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390106,
@@ -42061,37 +39301,7 @@
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 62%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2989314666195614,
-          "draw": 0.2989314666195614,
-          "away": 0.40213706676087724
-        },
-        "final": {
-          "home": 0.3080495448233965,
-          "draw": 0.289891908676035,
-          "away": 0.40205854650056844
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.619647734933845,
-        "calibrated": 0.619647734933845,
-        "final": {
-          "yes": 0.6197430275239568,
-          "no": 0.3802569724760432
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380982,
@@ -42494,37 +39704,7 @@
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 69%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3004847600868128,
-          "draw": 0.3004847600868128,
-          "away": 0.3990304798263744
-        },
-        "final": {
-          "home": 0.31226340205035574,
-          "draw": 0.28876484158004223,
-          "away": 0.398971756369602
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6889801575632137,
-        "calibrated": 0.6889801575632137,
-        "final": {
-          "yes": 0.6890592581257338,
-          "no": 0.31094074187426624
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386734,
@@ -42871,37 +40051,7 @@
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.30084893409790575,
-          "draw": 0.30084893409790575,
-          "away": 0.3983021318041885
-        },
-        "final": {
-          "home": 0.3087628920314748,
-          "draw": 0.292876760685339,
-          "away": 0.39836034728318626
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5850210243473307,
-        "calibrated": 0.5850210243473307,
-        "final": {
-          "yes": 0.585010589141833,
-          "no": 0.414989410858167
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380976,
@@ -43030,37 +40180,7 @@
       "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3902726058793836,
-          "draw": 0.3048636970603082,
-          "away": 0.3048636970603082
-        },
-        "final": {
-          "home": 0.3902907660976875,
-          "draw": 0.2952573161919948,
-          "away": 0.3144519177103178
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6116336709538776,
-        "calibrated": 0.6116336709538776,
-        "final": {
-          "yes": 0.6116743345965101,
-          "no": 0.3883256654034899
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377974,
@@ -43570,37 +40690,7 @@
       "Golos esperados: 2.50 no total (casa 1.20, fora 1.30).",
       "Visitante em vantagem (X2), prob. 39% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3055722563816392,
-          "draw": 0.3055722563816392,
-          "away": 0.38885548723672153
-        },
-        "final": {
-          "home": 0.31093383622609977,
-          "draw": 0.30016995852385425,
-          "away": 0.388896205250046
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5082270758480325,
-        "calibrated": 0.5082270758480325,
-        "final": {
-          "yes": 0.5081180144708276,
-          "no": 0.4918819855291724
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379087,
@@ -44002,37 +41092,7 @@
       "Golos esperados: 2.50 no total (casa 1.20, fora 1.30).",
       "Visitante em vantagem (X2), prob. 39% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3055722563816392,
-          "draw": 0.3055722563816392,
-          "away": 0.38885548723672153
-        },
-        "final": {
-          "home": 0.31093383622609977,
-          "draw": 0.30016995852385425,
-          "away": 0.388896205250046
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5082270758480325,
-        "calibrated": 0.5082270758480325,
-        "final": {
-          "yes": 0.5081180144708276,
-          "no": 0.4918819855291724
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382743,
@@ -44596,37 +41656,7 @@
       "Golos esperados: 2.05 no total (casa 0.95, fora 1.10).",
       "Visitante em vantagem (X2), prob. 39% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3063041289679273,
-          "draw": 0.3063041289679273,
-          "away": 0.3873917420641454
-        },
-        "final": {
-          "home": 0.30678770428289004,
-          "draw": 0.30580284257797774,
-          "away": 0.3874094531391322
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.40907675208762273,
-        "calibrated": 0.40907675208762273,
-        "final": {
-          "yes": 0.4090953845529297,
-          "no": 0.5909046154470703
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388398,
@@ -44975,37 +42005,7 @@
       "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.38635968810604593,
-          "draw": 0.30682015594697704,
-          "away": 0.30682015594697704
-        },
-        "final": {
-          "home": 0.386351301176355,
-          "draw": 0.29490599998249856,
-          "away": 0.31874269884114653
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.667445351245921,
-        "calibrated": 0.667445351245921,
-        "final": {
-          "yes": 0.6674394133040439,
-          "no": 0.3325605866959561
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386741,
@@ -45407,37 +42407,7 @@
       "Golos esperados: 2.30 no total (casa 1.10, fora 1.20).",
       "Visitante em vantagem (X2), prob. 38% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.30851319863851145,
-          "draw": 0.30851319863851145,
-          "away": 0.3829736027229771
-        },
-        "final": {
-          "home": 0.31224816095605457,
-          "draw": 0.3047392857945646,
-          "away": 0.3830125532493809
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4661084572998287,
-        "calibrated": 0.4661084572998287,
-        "final": {
-          "yes": 0.46596830810783946,
-          "no": 0.5340316918921606
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391928,
@@ -46001,37 +42971,7 @@
       "Golos esperados: 2.30 no total (casa 1.10, fora 1.20).",
       "Visitante em vantagem (X2), prob. 38% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.30851319863851145,
-          "draw": 0.30851319863851145,
-          "away": 0.3829736027229771
-        },
-        "final": {
-          "home": 0.31224816095605457,
-          "draw": 0.3047392857945646,
-          "away": 0.3830125532493809
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.46610845729982875,
-        "calibrated": 0.46610845729982875,
-        "final": {
-          "yes": 0.4659683081078395,
-          "no": 0.5340316918921605
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391923,
@@ -46595,37 +43535,7 @@
       "Golos esperados: 2.70 no total (casa 1.35, fora 1.35).",
       "Visitante em vantagem (X2), prob. 37% para não perder.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.31461003858689784,
-          "draw": 0.31461003858689784,
-          "away": 0.37077992282620437
-        },
-        "final": {
-          "home": 0.32302198107472524,
-          "draw": 0.30621163624713904,
-          "away": 0.3707663826781358
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5485315106531187,
-        "calibrated": 0.5485315106531187,
-        "final": {
-          "yes": 0.5485098485712798,
-          "no": 0.4514901514287202
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386740,
@@ -47027,37 +43937,7 @@
       "Golos esperados: 2.25 no total (casa 1.15, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 37% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3687395183577192,
-          "draw": 0.31563024082114044,
-          "away": 0.31563024082114044
-        },
-        "final": {
-          "home": 0.3687789988944886,
-          "draw": 0.3113890398896527,
-          "away": 0.3198319612158587
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.455816400082648,
-        "calibrated": 0.455816400082648,
-        "final": {
-          "yes": 0.4559302924275709,
-          "no": 0.5440697075724291
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388724,
@@ -47621,37 +44501,7 @@
       "Golos esperados: 2.25 no total (casa 1.10, fora 1.15).",
       "Visitante em vantagem (X2), prob. 37% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.31563024082114044,
-          "draw": 0.31563024082114044,
-          "away": 0.3687395183577191
-        },
-        "final": {
-          "home": 0.3198319612158587,
-          "draw": 0.3113890398896527,
-          "away": 0.36877899889448856
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.45581640008264784,
-        "calibrated": 0.45581640008264784,
-        "final": {
-          "yes": 0.45593029242757077,
-          "no": 0.5440697075724292
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419720,
@@ -47779,37 +44629,7 @@
       "Golos esperados: 2.05 no total (casa 1.00, fora 1.05).",
       "Visitante em vantagem (X2), prob. 36% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.319493751862477,
-          "draw": 0.319493751862477,
-          "away": 0.36101249627504595
-        },
-        "final": {
-          "home": 0.3218784616844134,
-          "draw": 0.31713812140891023,
-          "away": 0.3609834169066763
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4108729865905392,
-        "calibrated": 0.4108729865905392,
-        "final": {
-          "yes": 0.4109853800063167,
-          "no": 0.5890146199936833
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482550,
@@ -48048,37 +44868,7 @@
       "Jogo equilibrado, prob. de empate 91%.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.046449537108714856,
-          "draw": 0.9071009257825703,
-          "away": 0.046449537108714856
-        },
-        "final": {
-          "home": 0.04643533030979069,
-          "draw": 0.9071293393804185,
-          "away": 0.04643533030979069
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.002378569034517789,
-        "calibrated": 0.002378569034517789,
-        "final": {
-          "yes": 0.01,
-          "no": 0.99
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482549,
@@ -48425,37 +45215,7 @@
       "Jogo equilibrado, prob. de empate 91%.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.046449537108714856,
-          "draw": 0.9071009257825703,
-          "away": 0.046449537108714856
-        },
-        "final": {
-          "home": 0.04643533030979069,
-          "draw": 0.9071293393804185,
-          "away": 0.04643533030979069
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.002378569034517789,
-        "calibrated": 0.002378569034517789,
-        "final": {
-          "yes": 0.01,
-          "no": 0.99
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482552,
@@ -48584,37 +45344,7 @@
       "Jogo equilibrado, prob. de empate 91%.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.046449537108714856,
-          "draw": 0.9071009257825703,
-          "away": 0.046449537108714856
-        },
-        "final": {
-          "home": 0.04643533030979069,
-          "draw": 0.9071293393804185,
-          "away": 0.04643533030979069
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.002378569034517789,
-        "calibrated": 0.002378569034517789,
-        "final": {
-          "yes": 0.01,
-          "no": 0.99
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478020,
@@ -49016,37 +45746,7 @@
       "Golos esperados: 2.80 no total (casa 2.05, fora 0.75).",
       "Casa ligeiramente favorita (1X), prob. 68% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6752353854162804,
-          "draw": 0.16238230729185982,
-          "away": 0.16238230729185982
-        },
-        "final": {
-          "home": 0.6752570372636102,
-          "draw": 0.16771492165282587,
-          "away": 0.15702804108356402
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.45935021383429336,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.4836910966792121,
-          "no": 0.5163089033207879
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391925,
@@ -49175,37 +45875,7 @@
       "Casa ligeiramente favorita (1X), prob. 67% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 68%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6684195570149171,
-          "draw": 0.16579022149254147,
-          "away": 0.16579022149254147
-        },
-        "final": {
-          "home": 0.6683463767833626,
-          "draw": 0.1750772859916204,
-          "away": 0.156576337225017
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.32145344346680393,
-        "calibrated": 0.32145344346680393,
-        "final": {
-          "yes": 0.3213795317502768,
-          "no": 0.6786204682497232
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390103,
@@ -49333,37 +46003,7 @@
       "Golos esperados: 2.95 no total (casa 2.10, fora 0.85).",
       "Casa ligeiramente favorita (1X), prob. 66% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.660259688146107,
-          "draw": 0.1698701559269465,
-          "away": 0.1698701559269465
-        },
-        "final": {
-          "home": 0.6603487848930997,
-          "draw": 0.17402990094444948,
-          "away": 0.1656213141624509
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5020435064467321,
-        "calibrated": 0.5020435064467321,
-        "final": {
-          "yes": 0.5021119804797223,
-          "no": 0.4978880195202777
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1394546,
@@ -49928,37 +46568,7 @@
       "Casa ligeiramente favorita (1X), prob. 65% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 69%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6451320672174337,
-          "draw": 0.17743396639128317,
-          "away": 0.17743396639128317
-        },
-        "final": {
-          "home": 0.6451333915040236,
-          "draw": 0.18713733590529472,
-          "away": 0.16772927259068177
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.3139225105575499,
-        "calibrated": 0.3139225105575499,
-        "final": {
-          "yes": 0.3139309081674658,
-          "no": 0.6860690918325342
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390941,
@@ -50522,37 +47132,7 @@
       "Golos esperados: 2.75 no total (casa 1.95, fora 0.80).",
       "Casa ligeiramente favorita (1X), prob. 64% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6426614636155399,
-          "draw": 0.17866926819223006,
-          "away": 0.17866926819223006
-        },
-        "final": {
-          "home": 0.6425693157899118,
-          "draw": 0.18356487624990536,
-          "away": 0.17386580796018275
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.47200521090297853,
-        "calibrated": 0.47200521090297853,
-        "final": {
-          "yes": 0.4719026836316215,
-          "no": 0.5280973163683784
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419711,
@@ -50792,37 +47372,7 @@
       "Golos esperados: 2.60 no total (casa 1.85, fora 0.75).",
       "Casa ligeiramente favorita (1X), prob. 63% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6342398547781148,
-          "draw": 0.18288007261094258,
-          "away": 0.18288007261094258
-        },
-        "final": {
-          "home": 0.6341663517797305,
-          "draw": 0.18845876739951348,
-          "away": 0.1773748808207561
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4444161317987213,
-        "calibrated": 0.4444161317987213,
-        "final": {
-          "yes": 0.44442037869557977,
-          "no": 0.5555796213044202
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388404,
@@ -51279,37 +47829,7 @@
       "Casa ligeiramente favorita (1X), prob. 63% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6259993658847879,
-          "draw": 0.18700031705760606,
-          "away": 0.18700031705760606
-        },
-        "final": {
-          "home": 0.6259151582690634,
-          "draw": 0.18754172009462036,
-          "away": 0.18654312163631623
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6313901556236589,
-        "calibrated": 0.6313901556236589,
-        "final": {
-          "yes": 0.6314368770353548,
-          "no": 0.3685631229646452
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478025,
@@ -51655,37 +48175,7 @@
       "Golos esperados: 2.65 no total (casa 1.85, fora 0.80).",
       "Casa ligeiramente favorita (1X), prob. 62% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6214063186228289,
-          "draw": 0.18929684068858554,
-          "away": 0.18929684068858554
-        },
-        "final": {
-          "home": 0.6213785994678667,
-          "draw": 0.19416728090634516,
-          "away": 0.18445411962578814
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4638181507339369,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.48443551355266123,
-          "no": 0.5155644864473388
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482416,
@@ -51814,37 +48304,7 @@
       "Visitante em vantagem (X2), prob. 62% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 69%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.18985366536906495,
-          "draw": 0.18985366536906495,
-          "away": 0.6202926692618701
-        },
-        "final": {
-          "home": 0.17965365429593474,
-          "draw": 0.2000044603070769,
-          "away": 0.6203418853969884
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.30559261848764746,
-        "calibrated": 0.30559261848764746,
-        "final": {
-          "yes": 0.3056135983259653,
-          "no": 0.6943864016740346
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387807,
@@ -52409,37 +48869,7 @@
       "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.6024286612658318,
-          "draw": 0.19878566936708408,
-          "away": 0.19878566936708408
-        },
-        "final": {
-          "home": 0.6024054090573558,
-          "draw": 0.1976420327266719,
-          "away": 0.19995255821597227
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6726526479430786,
-        "calibrated": 0.6726526479430786,
-        "final": {
-          "yes": 0.6725256758617489,
-          "no": 0.32747432413825106
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478024,
@@ -52841,37 +49271,7 @@
       "Golos esperados: 2.55 no total (casa 1.75, fora 0.80).",
       "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5990031751597202,
-          "draw": 0.20049841242013988,
-          "away": 0.20049841242013988
-        },
-        "final": {
-          "home": 0.5989990504386622,
-          "draw": 0.2053174661602219,
-          "away": 0.19568348340111602
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.45475995571435956,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.482946679805763,
-          "no": 0.517053320194237
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390104,
@@ -53435,37 +49835,7 @@
       "Golos esperados: 2.40 no total (casa 1.65, fora 0.75).",
       "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5885082477128951,
-          "draw": 0.20574587614355244,
-          "away": 0.20574587614355244
-        },
-        "final": {
-          "home": 0.5884766175769545,
-          "draw": 0.2113841971394622,
-          "away": 0.2001391852835834
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4261350930861393,
-        "calibrated": 0.4261350930861393,
-        "final": {
-          "yes": 0.42602901005231375,
-          "no": 0.5739709899476862
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382539,
@@ -54029,37 +50399,7 @@
       "Golos esperados: 2.70 no total (casa 1.80, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5850304457585359,
-          "draw": 0.20748477712073204,
-          "away": 0.20748477712073204
-        },
-        "final": {
-          "home": 0.5850230915679755,
-          "draw": 0.21077667836711908,
-          "away": 0.2042002300649054
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.4950695477140973,
-        "calibrated": 0.4950695477140973,
-        "final": {
-          "yes": 0.4950591155569827,
-          "no": 0.5049408844430173
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387814,
@@ -54624,37 +50964,7 @@
       "Casa ligeiramente favorita (1X), prob. 58% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5803119252872349,
-          "draw": 0.20984403735638257,
-          "away": 0.20984403735638257
-        },
-        "final": {
-          "home": 0.5803918348871422,
-          "draw": 0.21059494169613965,
-          "away": 0.2090132234167181
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.576388819638406,
-        "calibrated": 0.576388819638406,
-        "final": {
-          "yes": 0.5764830639298089,
-          "no": 0.42351693607019114
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380978,
@@ -55057,37 +51367,7 @@
       "Casa ligeiramente favorita (1X), prob. 58% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5767504303626961,
-          "draw": 0.21162478481865193,
-          "away": 0.21162478481865193
-        },
-        "final": {
-          "home": 0.5768443377135295,
-          "draw": 0.21077368490947504,
-          "away": 0.21238197737699543
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6297489631676171,
-        "calibrated": 0.6297489631676171,
-        "final": {
-          "yes": 0.6296922130980689,
-          "no": 0.3703077869019311
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478019,
@@ -55651,37 +51931,7 @@
       "Golos esperados: 2.35 no total (casa 1.60, fora 0.75).",
       "Casa ligeiramente favorita (1X), prob. 58% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5762968549473462,
-          "draw": 0.21185157252632691,
-          "away": 0.21185157252632691
-        },
-        "final": {
-          "home": 0.5762055721332325,
-          "draw": 0.2175438234415673,
-          "away": 0.2062506044252001
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.42095840928992656,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.4779712220165543,
-          "no": 0.5220287779834457
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1394549,
@@ -55810,37 +52060,7 @@
       "Visitante em vantagem (X2), prob. 56% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2178484176656007,
-          "draw": 0.2178484176656007,
-          "away": 0.5643031646687986
-        },
-        "final": {
-          "home": 0.2112407778556301,
-          "draw": 0.22441207944750136,
-          "away": 0.5643471426968685
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.3909801578615731,
-        "calibrated": 0.3909801578615731,
-        "final": {
-          "yes": 0.39090456275376567,
-          "no": 0.6090954372462343
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377978,
@@ -55968,37 +52188,7 @@
       "Golos esperados: 2.60 no total (casa 1.70, fora 0.90).",
       "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5618517533459271,
-          "draw": 0.21907412332703646,
-          "away": 0.21907412332703646
-        },
-        "final": {
-          "home": 0.5618752065137307,
-          "draw": 0.22219769662223826,
-          "away": 0.21592709686403105
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4848023190585025,
-        "calibrated": 0.4848023190585025,
-        "final": {
-          "yes": 0.4848319711997271,
-          "no": 0.5151680288002729
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387809,
@@ -56562,37 +52752,7 @@
       "Golos esperados: 2.70 no total (casa 1.75, fora 0.95).",
       "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5611414208095141,
-          "draw": 0.21942928959524294,
-          "away": 0.21942928959524294
-        },
-        "final": {
-          "home": 0.5612108999846229,
-          "draw": 0.2217968802236821,
-          "away": 0.21699221979169508
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5064360631368657,
-        "calibrated": 0.5064360631368657,
-        "final": {
-          "yes": 0.5065956536663359,
-          "no": 0.49340434633366415
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435992,
@@ -56721,37 +52881,7 @@
       "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 73%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5400569315685234,
-          "draw": 0.2299715342157383,
-          "away": 0.2299715342157383
-        },
-        "final": {
-          "home": 0.5400912843155302,
-          "draw": 0.2248737160622458,
-          "away": 0.235034999622224
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.733517381907931,
-        "calibrated": 0.733517381907931,
-        "final": {
-          "yes": 0.7335680525082384,
-          "no": 0.2664319474917616
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382738,
@@ -57315,37 +53445,7 @@
       "Golos esperados: 2.70 no total (casa 1.00, fora 1.70).",
       "Visitante em vantagem (X2), prob. 54% para não perder.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2314375951144777,
-          "draw": 0.2314375951144777,
-          "away": 0.5371248097710446
-        },
-        "final": {
-          "home": 0.2300279620606302,
-          "draw": 0.23283690234368162,
-          "away": 0.5371351355956883
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5164005905450926,
-        "calibrated": 0.5164005905450926,
-        "final": {
-          "yes": 0.5163719234097127,
-          "no": 0.4836280765902873
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382375,
@@ -57910,37 +54010,7 @@
       "Casa ligeiramente favorita (1X), prob. 52% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5248011579529483,
-          "draw": 0.23759942102352583,
-          "away": 0.23759942102352583
-        },
-        "final": {
-          "home": 0.5247024605754608,
-          "draw": 0.23680104377777383,
-          "away": 0.2384964956467654
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5700616414249148,
-        "calibrated": 0.5700616414249148,
-        "final": {
-          "yes": 0.5702141599170599,
-          "no": 0.4297858400829401
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419712,
@@ -58232,37 +54302,7 @@
       "Golos esperados: 2.80 no total (casa 1.10, fora 1.70).",
       "Visitante em vantagem (X2), prob. 51% para não perder.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.24340547251778016,
-          "draw": 0.24340547251778016,
-          "away": 0.5131890549644397
-        },
-        "final": {
-          "home": 0.243858556544939,
-          "draw": 0.24297000113857298,
-          "away": 0.513171442316488
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5449860239404931,
-        "calibrated": 0.5449860239404931,
-        "final": {
-          "yes": 0.5451239764288236,
-          "no": 0.4548760235711764
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478017,
@@ -58772,37 +54812,7 @@
       "Golos esperados: 2.80 no total (casa 1.70, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5131890549644397,
-          "draw": 0.24340547251778016,
-          "away": 0.24340547251778016
-        },
-        "final": {
-          "home": 0.513171442316488,
-          "draw": 0.24297000113857298,
-          "away": 0.243858556544939
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5449860239404931,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.4967183919645719,
-          "no": 0.5032816080354281
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1400814,
@@ -59258,37 +55268,7 @@
       "Golos esperados: 2.70 no total (casa 1.05, fora 1.65).",
       "Visitante em vantagem (X2), prob. 51% para não perder.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2434778725272405,
-          "draw": 0.2434778725272405,
-          "away": 0.513044254945519
-        },
-        "final": {
-          "home": 0.2432074902429382,
-          "draw": 0.2437405975752144,
-          "away": 0.5130519121818474
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5249876159353579,
-        "calibrated": 0.5249876159353579,
-        "final": {
-          "yes": 0.5251671543430592,
-          "no": 0.47483284565694084
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380977,
@@ -59417,37 +55397,7 @@
       "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5129262517592726,
-          "draw": 0.24353687412036368,
-          "away": 0.24353687412036368
-        },
-        "final": {
-          "home": 0.5128929167701236,
-          "draw": 0.23967865790661125,
-          "away": 0.24742842532326512
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6508439611712471,
-        "calibrated": 0.6508439611712471,
-        "final": {
-          "yes": 0.65071736699556,
-          "no": 0.34928263300443996
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379444,
@@ -59576,37 +55526,7 @@
       "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5021172360201672,
-          "draw": 0.2489413819899164,
-          "away": 0.2489413819899164
-        },
-        "final": {
-          "home": 0.5021333488000059,
-          "draw": 0.24574916316156536,
-          "away": 0.25211748803842865
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6126482287682327,
-        "calibrated": 0.6126482287682327,
-        "final": {
-          "yes": 0.6126749849518102,
-          "no": 0.38732501504818984
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377977,
@@ -60063,37 +55983,7 @@
       "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.5015200405602996,
-          "draw": 0.24923997971985018,
-          "away": 0.24923997971985018
-        },
-        "final": {
-          "home": 0.5015714237321207,
-          "draw": 0.24786503675686625,
-          "away": 0.25056353951101307
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5582391545696467,
-        "calibrated": 0.5582391545696467,
-        "final": {
-          "yes": 0.5582069850879033,
-          "no": 0.44179301491209666
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390946,
@@ -60221,37 +56111,7 @@
       "Golos esperados: 2.45 no total (casa 0.95, fora 1.50).",
       "Visitante em vantagem (X2), prob. 50% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.25014318722416073,
-          "draw": 0.25014318722416073,
-          "away": 0.4997136255516785
-        },
-        "final": {
-          "home": 0.24849500055405047,
-          "draw": 0.2517732386727789,
-          "away": 0.4997317607731706
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.47627734509173075,
-        "calibrated": 0.47627734509173075,
-        "final": {
-          "yes": 0.47628212736787134,
-          "no": 0.5237178726321287
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387810,
@@ -60815,37 +56675,7 @@
       "Golos esperados: 2.70 no total (casa 1.60, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 49% para vitória.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.48896375376497675,
-          "draw": 0.25551812311751165,
-          "away": 0.25551812311751165
-        },
-        "final": {
-          "home": 0.4888659861748443,
-          "draw": 0.2546357739074806,
-          "away": 0.2564982399176752
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5322182242289282,
-        "calibrated": 0.5322182242289282,
-        "final": {
-          "yes": 0.5322362368632456,
-          "no": 0.4677637631367544
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388726,
@@ -61247,37 +57077,7 @@
       "Golos esperados: 2.50 no total (casa 1.50, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 49% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4875117312290584,
-          "draw": 0.2562441343854708,
-          "away": 0.2562441343854708
-        },
-        "final": {
-          "home": 0.48750110032879007,
-          "draw": 0.2568408642295735,
-          "away": 0.2556580354416364
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4909208840674279,
-        "calibrated": 0.4909208840674279,
-        "final": {
-          "yes": 0.4907827514573137,
-          "no": 0.5092172485426862
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1398042,
@@ -61462,37 +57262,7 @@
       "Visitante em vantagem (X2), prob. 48% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2600877219645406,
-          "draw": 0.2600877219645406,
-          "away": 0.4798245560709188
-        },
-        "final": {
-          "home": 0.25344920214864763,
-          "draw": 0.26663522511569204,
-          "away": 0.4799155727356603
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.35174793642133273,
-        "calibrated": 0.35174793642133273,
-        "final": {
-          "yes": 0.35172547198553006,
-          "no": 0.6482745280144699
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1400810,
@@ -62057,37 +57827,7 @@
       "Casa ligeiramente favorita (1X), prob. 48% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4798245560709188,
-          "draw": 0.2600877219645406,
-          "away": 0.2600877219645406
-        },
-        "final": {
-          "home": 0.4799155727356603,
-          "draw": 0.26663522511569204,
-          "away": 0.25344920214864763
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.3517479364213326,
-        "calibrated": 0.3517479364213326,
-        "final": {
-          "yes": 0.35172547198552995,
-          "no": 0.64827452801447
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391929,
@@ -62652,37 +58392,7 @@
       "Casa ligeiramente favorita (1X), prob. 48% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4781129350203926,
-          "draw": 0.26094353248980373,
-          "away": 0.26094353248980373
-        },
-        "final": {
-          "home": 0.4781001560347129,
-          "draw": 0.25835363604287526,
-          "away": 0.2635462079224119
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5643256860334525,
-        "calibrated": 0.5643256860334525,
-        "final": {
-          "yes": 0.5644434178950193,
-          "no": 0.4355565821049807
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1386733,
@@ -63084,37 +58794,7 @@
       "Golos esperados: 2.75 no total (casa 1.15, fora 1.60).",
       "Visitante em vantagem (X2), prob. 48% para não perder.",
       "Tendência para Over 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2613215709801088,
-          "draw": 0.2613215709801088,
-          "away": 0.4773568580397825
-        },
-        "final": {
-          "home": 0.26317006320924907,
-          "draw": 0.2593921305440307,
-          "away": 0.4774378062467203
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5451608637445652,
-        "calibrated": 0.5451608637445652,
-        "final": {
-          "yes": 0.5452725902622848,
-          "no": 0.4547274097377152
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391927,
@@ -63678,37 +59358,7 @@
       "Golos esperados: 2.60 no total (casa 1.50, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4638167652273242,
-          "draw": 0.2680916173863379,
-          "away": 0.2680916173863379
-        },
-        "final": {
-          "home": 0.4637410639502305,
-          "draw": 0.26656682250393643,
-          "away": 0.26969211354583317
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5180958844273381,
-        "calibrated": 0.5180958844273381,
-        "final": {
-          "yes": 0.5181869880475266,
-          "no": 0.4818130119524734
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1400811,
@@ -63836,37 +59486,7 @@
       "Golos esperados: 2.60 no total (casa 1.50, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4638167652273242,
-          "draw": 0.2680916173863379,
-          "away": 0.2680916173863379
-        },
-        "final": {
-          "home": 0.4637410639502305,
-          "draw": 0.26656682250393643,
-          "away": 0.26969211354583317
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5180958844273381,
-        "calibrated": 0.5180958844273381,
-        "final": {
-          "yes": 0.5181869880475266,
-          "no": 0.4818130119524734
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435986,
@@ -63995,37 +59615,7 @@
       "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 76%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4630684580052297,
-          "draw": 0.2684657709973851,
-          "away": 0.2684657709973851
-        },
-        "final": {
-          "home": 0.4630352158901856,
-          "draw": 0.2586142374827062,
-          "away": 0.2783505466271082
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.7595775657636206,
-        "calibrated": 0.7595775657636206,
-        "final": {
-          "yes": 0.7595095440377636,
-          "no": 0.2404904559622364
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382372,
@@ -64590,37 +60180,7 @@
       "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.45996383817788905,
-          "draw": 0.2700180809110555,
-          "away": 0.2700180809110555
-        },
-        "final": {
-          "home": 0.46005831055765395,
-          "draw": 0.2628316430835067,
-          "away": 0.27711004635883935
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6693200255400339,
-        "calibrated": 0.6693200255400339,
-        "final": {
-          "yes": 0.6693654806890732,
-          "no": 0.3306345193109268
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379439,
@@ -65184,37 +60744,7 @@
       "Golos esperados: 2.65 no total (casa 1.15, fora 1.50).",
       "Visitante em vantagem (X2), prob. 45% para não perder.",
       "Tendência para Under 2.5 golos (67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.27383938773547495,
-          "draw": 0.27383938773547495,
-          "away": 0.4523212245290501
-        },
-        "final": {
-          "home": 0.2763857271407296,
-          "draw": 0.2712405389663284,
-          "away": 0.452373733892942
-        }
-      },
-      "ou25": {
-        "model": 0.3333333333333333,
-        "calibrated": 0.3333333333333333,
-        "final": {
-          "over": 0.3333333333333333,
-          "under": 0.6666666666666667
-        }
-      },
-      "btts": {
-        "model": 0.5306950927246356,
-        "calibrated": 0.5306950927246356,
-        "final": {
-          "yes": 0.5307666392897556,
-          "no": 0.46923336071024435
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1394543,
@@ -65779,37 +61309,7 @@
       "Visitante em vantagem (X2), prob. 45% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.27591779165415203,
-          "draw": 0.27591779165415203,
-          "away": 0.44816441669169593
-        },
-        "final": {
-          "home": 0.28305607157506074,
-          "draw": 0.26876418258349666,
-          "away": 0.4481797458414426
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6479507763182486,
-        "calibrated": 0.6479507763182486,
-        "final": {
-          "yes": 0.648018433843114,
-          "no": 0.351981566156886
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379440,
@@ -66374,37 +61874,7 @@
       "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.44816441669169593,
-          "draw": 0.27591779165415203,
-          "away": 0.27591779165415203
-        },
-        "final": {
-          "home": 0.4481797458414426,
-          "draw": 0.26876418258349666,
-          "away": 0.28305607157506074
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6479507763182489,
-        "calibrated": 0.6479507763182489,
-        "final": {
-          "yes": 0.6480184338431143,
-          "no": 0.3519815661568857
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382374,
@@ -66532,37 +62002,7 @@
       "Golos esperados: 2.35 no total (casa 1.35, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.44761603347485773,
-          "draw": 0.2761919832625711,
-          "away": 0.2761919832625711
-        },
-        "final": {
-          "home": 0.4476754664526171,
-          "draw": 0.2759335425692688,
-          "away": 0.27639099097811415
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4681442186278976,
-        "calibrated": 0.4681442186278976,
-        "final": {
-          "yes": 0.46807183956505627,
-          "no": 0.5319281604349437
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1435987,
@@ -67127,37 +62567,7 @@
       "Visitante em vantagem (X2), prob. 44% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.27874721161480337,
-          "draw": 0.27874721161480337,
-          "away": 0.44250557677039326
-        },
-        "final": {
-          "home": 0.28308112272607955,
-          "draw": 0.2744287490660489,
-          "away": 0.44249012820787154
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.561815815296814,
-        "calibrated": 0.561815815296814,
-        "final": {
-          "yes": 0.5617798962042624,
-          "no": 0.4382201037957376
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379443,
@@ -67285,37 +62695,7 @@
       "Golos esperados: 2.40 no total (casa 1.05, fora 1.35).",
       "Visitante em vantagem (X2), prob. 44% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2820632394896725,
-          "draw": 0.2820632394896725,
-          "away": 0.435873521020655
-        },
-        "final": {
-          "home": 0.28342219284527437,
-          "draw": 0.28067800130588033,
-          "away": 0.4358998058488454
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4814259603197338,
-        "calibrated": 0.4814259603197338,
-        "final": {
-          "yes": 0.48140657998748443,
-          "no": 0.5185934200125155
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380979,
@@ -67772,37 +63152,7 @@
       "Visitante em vantagem (X2), prob. 43% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2827738266282603,
-          "draw": 0.2827738266282603,
-          "away": 0.43445234674347943
-        },
-        "final": {
-          "home": 0.2893374692370617,
-          "draw": 0.2762137174199791,
-          "away": 0.4344488133429592
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6083579449571042,
-        "calibrated": 0.6083579449571042,
-        "final": {
-          "yes": 0.6083930360297676,
-          "no": 0.3916069639702324
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391924,
@@ -68367,37 +63717,7 @@
       "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4344523467434793,
-          "draw": 0.28277382662826034,
-          "away": 0.28277382662826034
-        },
-        "final": {
-          "home": 0.4344488133429591,
-          "draw": 0.27621371741997913,
-          "away": 0.2893374692370618
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6083579449571042,
-        "calibrated": 0.6083579449571042,
-        "final": {
-          "yes": 0.6083930360297676,
-          "no": 0.3916069639702324
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1398051,
@@ -68638,37 +63958,7 @@
       "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4279494886685598,
-          "draw": 0.2860252556657201,
-          "away": 0.2860252556657201
-        },
-        "final": {
-          "home": 0.4278842843031871,
-          "draw": 0.2770711714578739,
-          "away": 0.295044544238939
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6656127213614613,
-        "calibrated": 0.6656127213614613,
-        "final": {
-          "yes": 0.6656594545826319,
-          "no": 0.33434054541736813
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1394541,
@@ -69233,37 +64523,7 @@
       "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 72%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4248607126674298,
-          "draw": 0.2875696436662851,
-          "away": 0.2875696436662851
-        },
-        "final": {
-          "home": 0.4248748145858925,
-          "draw": 0.29717945793453115,
-          "away": 0.2779457274795764
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.27668361512857653,
-        "calibrated": 0.27668361512857653,
-        "final": {
-          "yes": 0.27666403879115375,
-          "no": 0.7233359612088462
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377975,
@@ -69666,37 +64926,7 @@
       "Visitante em vantagem (X2), prob. 42% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2883901235624801,
-          "draw": 0.2883901235624801,
-          "away": 0.42321975287503977
-        },
-        "final": {
-          "home": 0.28466750649469585,
-          "draw": 0.2921037262062798,
-          "away": 0.4232287672990243
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.3673350679469006,
-        "calibrated": 0.3673350679469006,
-        "final": {
-          "yes": 0.36735108682463297,
-          "no": 0.632648913175367
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379084,
@@ -69825,37 +65055,7 @@
       "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 63%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4232197528750397,
-          "draw": 0.28839012356248017,
-          "away": 0.28839012356248017
-        },
-        "final": {
-          "home": 0.42322876729902426,
-          "draw": 0.29210372620627983,
-          "away": 0.2846675064946959
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.36733506794690046,
-        "calibrated": 0.36733506794690046,
-        "final": {
-          "yes": 0.36735108682463286,
-          "no": 0.6326489131753672
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1380983,
@@ -69984,37 +65184,7 @@
       "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 70%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.42053315731603336,
-          "draw": 0.2897334213419833,
-          "away": 0.2897334213419833
-        },
-        "final": {
-          "home": 0.4205086914125673,
-          "draw": 0.2790402440165755,
-          "away": 0.3004510645708572
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.7018954071291151,
-        "calibrated": 0.7018954071291151,
-        "final": {
-          "yes": 0.7019570080094334,
-          "no": 0.2980429919905666
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1379079,
@@ -70309,37 +65479,7 @@
       "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.41922483868957006,
-          "draw": 0.29038758065521497,
-          "away": 0.29038758065521497
-        },
-        "final": {
-          "home": 0.41914994065036204,
-          "draw": 0.28464130712280267,
-          "away": 0.2962087522268353
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5649122049335166,
-        "calibrated": 0.5649122049335166,
-        "final": {
-          "yes": 0.5649419589600738,
-          "no": 0.4350580410399262
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1377983,
@@ -70634,37 +65774,7 @@
       "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 68%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.41603702631275424,
-          "draw": 0.2919814868436229,
-          "away": 0.2919814868436229
-        },
-        "final": {
-          "home": 0.41610077583685,
-          "draw": 0.2983268485429729,
-          "away": 0.28557237562017707
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.31820057341158436,
-        "calibrated": 0.31820057341158436,
-        "final": {
-          "yes": 0.31830129000288354,
-          "no": 0.6816987099971165
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1391920,
@@ -71228,37 +66338,7 @@
       "Golos esperados: 2.40 no total (casa 1.30, fora 1.10).",
       "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.4108030509524705,
-          "draw": 0.29459847452376475,
-          "away": 0.29459847452376475
-        },
-        "final": {
-          "home": 0.410866987827111,
-          "draw": 0.2915881205643078,
-          "away": 0.2975448916085812
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.48520563153041046,
-        "calibrated": 0.48520563153041046,
-        "final": {
-          "yes": 0.48517478680084886,
-          "no": 0.5148252131991511
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1478026,
@@ -71822,37 +66902,7 @@
       "Golos esperados: 2.65 no total (casa 1.40, fora 1.25).",
       "Casa ligeiramente favorita (1X), prob. 40% para vitória.",
       "Tendência para Under 2.5 golos (67%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.40450875510718076,
-          "draw": 0.2977456224464096,
-          "away": 0.2977456224464096
-        },
-        "final": {
-          "home": 0.4045098878794371,
-          "draw": 0.29211328213014703,
-          "away": 0.3033768299904158
-        }
-      },
-      "ou25": {
-        "model": 0.3333333333333333,
-        "calibrated": 0.3333333333333333,
-        "final": {
-          "over": 0.3333333333333333,
-          "under": 0.6666666666666667
-        }
-      },
-      "btts": {
-        "model": 0.5373707815118922,
-        "calibrated": 0.4880382775119617,
-        "final": {
-          "yes": 0.4954295508105406,
-          "no": 0.5045704491894594
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382538,
@@ -72416,37 +67466,7 @@
       "Golos esperados: 2.55 no total (casa 1.20, fora 1.35).",
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.2989019314995791,
-          "draw": 0.2989019314995791,
-          "away": 0.40219613700084184
-        },
-        "final": {
-          "home": 0.30380068244410896,
-          "draw": 0.2940125999719267,
-          "away": 0.40218671758396435
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.5174998934931061,
-        "calibrated": 0.5174998934931061,
-        "final": {
-          "yes": 0.5174999094691402,
-          "no": 0.48250009053085985
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382542,
@@ -73010,37 +68030,7 @@
       "Golos esperados: 2.45 no total (casa 1.30, fora 1.15).",
       "Casa ligeiramente favorita (1X), prob. 40% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3996988911764021,
-          "draw": 0.30015055441179894,
-          "away": 0.30015055441179894
-        },
-        "final": {
-          "home": 0.3997231597915452,
-          "draw": 0.2959856703587508,
-          "away": 0.30429116984970406
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4970050049715458,
-        "calibrated": 0.4970050049715458,
-        "final": {
-          "yes": 0.49707925422581395,
-          "no": 0.502920745774186
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388405,
@@ -73169,37 +68159,7 @@
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 69%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3004847600868128,
-          "draw": 0.3004847600868128,
-          "away": 0.39903047982637435
-        },
-        "final": {
-          "home": 0.3122634020503558,
-          "draw": 0.2887648415800423,
-          "away": 0.39897175636960197
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6889801575632137,
-        "calibrated": 0.6889801575632137,
-        "final": {
-          "yes": 0.6890592581257338,
-          "no": 0.31094074187426624
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388728,
@@ -73656,37 +68616,7 @@
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.30084893409790575,
-          "draw": 0.30084893409790575,
-          "away": 0.3983021318041885
-        },
-        "final": {
-          "home": 0.3087628920314748,
-          "draw": 0.292876760685339,
-          "away": 0.39836034728318626
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5850210243473307,
-        "calibrated": 0.5850210243473307,
-        "final": {
-          "yes": 0.585010589141833,
-          "no": 0.414989410858167
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1398108,
@@ -73814,37 +68744,7 @@
       "Golos esperados: 2.35 no total (casa 1.10, fora 1.25).",
       "Visitante em vantagem (X2), prob. 40% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.30150198483796903,
-          "draw": 0.30150198483796903,
-          "away": 0.39699603032406194
-        },
-        "final": {
-          "home": 0.3048310777604836,
-          "draw": 0.2981853650739968,
-          "away": 0.3969835571655196
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.47589672631580504,
-        "calibrated": 0.47589672631580504,
-        "final": {
-          "yes": 0.4759586014083345,
-          "no": 0.5240413985916654
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1419713,
@@ -74246,37 +69146,7 @@
       "Golos esperados: 2.25 no total (casa 1.20, fora 1.05).",
       "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.39406331875588635,
-          "draw": 0.3029683406220568,
-          "away": 0.3029683406220568
-        },
-        "final": {
-          "home": 0.39402532805355844,
-          "draw": 0.30051496003364225,
-          "away": 0.30545971191279936
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4541906496741422,
-        "calibrated": 0.4541906496741422,
-        "final": {
-          "yes": 0.4541761961436164,
-          "no": 0.5458238038563836
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1388727,
@@ -74515,37 +69385,7 @@
       "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3881775750744738,
-          "draw": 0.3059112124627631,
-          "away": 0.3059112124627631
-        },
-        "final": {
-          "home": 0.3881138836294088,
-          "draw": 0.2968944071598237,
-          "away": 0.3149917092107675
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.5943419826337272,
-        "calibrated": 0.5943419826337272,
-        "final": {
-          "yes": 0.594467793672403,
-          "no": 0.405532206327597
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482548,
@@ -74892,37 +69732,7 @@
       "Casa ligeiramente favorita (1X), prob. 38% para vitória.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 60%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.37827479060851077,
-          "draw": 0.3108626046957446,
-          "away": 0.3108626046957446
-        },
-        "final": {
-          "home": 0.37830152781833914,
-          "draw": 0.30069730238917297,
-          "away": 0.32100116979248794
-        }
-      },
-      "ou25": {
-        "model": 0.999,
-        "calibrated": 0.999,
-        "final": {
-          "over": 0.99,
-          "under": 0.010000000000000009
-        }
-      },
-      "btts": {
-        "model": 0.6032054646927241,
-        "calibrated": 0.6032054646927241,
-        "final": {
-          "yes": 0.6031552669983848,
-          "no": 0.39684473300161516
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390944,
@@ -75050,37 +69860,7 @@
       "Golos esperados: 2.10 no total (casa 1.10, fora 1.00).",
       "Casa ligeiramente favorita (1X), prob. 38% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.37606447965050294,
-          "draw": 0.31196776017474853,
-          "away": 0.31196776017474853
-        },
-        "final": {
-          "home": 0.37604486193397224,
-          "draw": 0.31008204053613475,
-          "away": 0.31387309752989306
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.4216541535218499,
-        "calibrated": 0.4216541535218499,
-        "final": {
-          "yes": 0.42169871342040166,
-          "no": 0.5783012865795983
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390942,
@@ -75644,37 +70424,7 @@
       "Golos esperados: 2.45 no total (casa 1.20, fora 1.25).",
       "Visitante em vantagem (X2), prob. 38% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.31233583415756716,
-          "draw": 0.31233583415756716,
-          "away": 0.37532833168486573
-        },
-        "final": {
-          "home": 0.31811487563212437,
-          "draw": 0.3064673817948195,
-          "away": 0.3754177425730562
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.49847649306595937,
-        "calibrated": 0.49847649306595937,
-        "final": {
-          "yes": 0.49833001910606545,
-          "no": 0.5016699808939346
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1387806,
@@ -75802,37 +70552,7 @@
       "Golos esperados: 2.25 no total (casa 1.10, fora 1.15).",
       "Visitante em vantagem (X2), prob. 37% para não perder.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.31563024082114044,
-          "draw": 0.31563024082114044,
-          "away": 0.3687395183577191
-        },
-        "final": {
-          "home": 0.3198319612158587,
-          "draw": 0.3113890398896527,
-          "away": 0.36877899889448856
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.45581640008264784,
-        "calibrated": 0.45581640008264784,
-        "final": {
-          "yes": 0.45593029242757077,
-          "no": 0.5440697075724292
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482553,
@@ -75961,37 +70681,7 @@
       "Jogo equilibrado, prob. de empate 37%.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 72%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3162781288869675,
-          "draw": 0.367443742226065,
-          "away": 0.3162781288869675
-        },
-        "final": {
-          "home": 0.31627827001903863,
-          "draw": 0.36744345996192274,
-          "away": 0.31627827001903863
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.27839018114829284,
-        "calibrated": 0.27839018114829284,
-        "final": {
-          "yes": 0.27849912385556697,
-          "no": 0.721500876144433
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1382541,
@@ -76448,37 +71138,7 @@
       "Jogo equilibrado, prob. de empate 35%.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 70%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.32333517091876574,
-          "draw": 0.35332965816246853,
-          "away": 0.32333517091876574
-        },
-        "final": {
-          "home": 0.32334918099523663,
-          "draw": 0.35330163800952685,
-          "away": 0.32334918099523663
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.30322832275240064,
-        "calibrated": 0.30322832275240064,
-        "final": {
-          "yes": 0.30331369459270513,
-          "no": 0.6966863054072949
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1390102,
@@ -76606,37 +71266,7 @@
       "Golos esperados: 2.10 no total (casa 1.05, fora 1.05).",
       "Casa ligeiramente favorita (1X), prob. 35% para vitória.",
       "Tendência para Under 2.5 golos (100%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.3501848438695556,
-          "draw": 0.3249075780652222,
-          "away": 0.3249075780652222
-        },
-        "final": {
-          "home": 0.3501728405595625,
-          "draw": 0.32113999481455835,
-          "away": 0.3286871646258791
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.42252988345886566,
-        "calibrated": 0.42252988345886566,
-        "final": {
-          "yes": 0.4224430838668651,
-          "no": 0.5775569161331349
-        }
-      }
-    }
+    ]
   },
   {
     "match_id": 1482542,
@@ -76983,36 +71613,6 @@
       "Visitante em vantagem (X2), prob. 35% para não perder.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 60%)."
-    ],
-    "v2": {
-      "p1x2": {
-        "model": {
-          "home": 0.32713992118227114,
-          "draw": 0.32713992118227114,
-          "away": 0.3457201576354577
-        },
-        "final": {
-          "home": 0.32993659575839895,
-          "draw": 0.32433360749799345,
-          "away": 0.34572979674360754
-        }
-      },
-      "ou25": {
-        "model": 0.001,
-        "calibrated": 0.001,
-        "final": {
-          "over": 0.01,
-          "under": 0.99
-        }
-      },
-      "btts": {
-        "model": 0.3995376841227944,
-        "calibrated": 0.3995376841227944,
-        "final": {
-          "yes": 0.3996789739504184,
-          "no": 0.6003210260495816
-        }
-      }
-    }
+    ]
   }
 ]

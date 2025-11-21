@@ -130,12 +130,13 @@ def _train_binary_if_present(
 # ------------------------------
 def main():
     ap = argparse.ArgumentParser(description="Treina calibradores isotónicos por liga.")
+    # declare global before referencing MIN_SAMPLES in the argument default
+    global MIN_SAMPLES
     ap.add_argument("--csv", default="data/train/historico_com_probs.csv")
     ap.add_argument("--outdir", default="models/calibrators")
     ap.add_argument("--min-samples", type=int, default=MIN_SAMPLES)
     args = ap.parse_args()
 
-    global MIN_SAMPLES
     MIN_SAMPLES = int(args.min_samples)
 
     csv = Path(args.csv)
