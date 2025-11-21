@@ -6,6 +6,7 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
+from datetime import date, timedelta
 
 import requests
 
@@ -22,23 +23,17 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # ENV
 # ===========================================================
 API_KEY = os.getenv("API_FOOTBALL_KEY")
-BASE_URL = os.getenv(
-    "API_FOOTBALL_BASE",
-    "https://v3.football.api-sports.io/",
-).rstrip("/") + "/"
+BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
 
-# Season “normal” de clubes
+# Season de clubes
 SEASON_CLUBS = os.getenv("API_FOOTBALL_SEASON", "2025")
 
-# World Cup – Qualification Europe (seleções A masculinas)
+# World Cup – Qualification Europe (seleções)
 WCQ_EUROPE_LEAGUE_ID = int(os.getenv("API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID", "32"))
 WCQ_EUROPE_SEASON = os.getenv("API_FOOTBALL_WCQ_EUROPE_SEASON", "2024")
 
 # Proxy seguro (Render)
-PROXY_BASE = os.getenv(
-    "API_PROXY_URL",
-    "https://football-proxy-4ymo.onrender.com",
-).rstrip("/") + "/"
+PROXY_BASE = os.getenv("API_PROXY_URL", "https://football-proxy-4ymo.onrender.com").rstrip("/") + "/"
 PROXY_TOKEN = os.getenv("API_PROXY_TOKEN", "CF_Proxy_2025_Secret_!@#839")
 
 # ficheiro de saída
@@ -68,7 +63,7 @@ except Exception as e:
     ALLOWED_LEAGUES = set()
 
 # ===========================================================
-# HEADERS API-FOOTBALL
+# HEADERS API-FOOTBALL (para stats/topscorers, direto)
 # ===========================================================
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
@@ -103,12 +98,18 @@ def proxy_get(
     timeout: int = 8,
 ) -> Optional[Dict[str, Any]]:
     """
-    Chama o proxy (Render) com URL join correto + x-proxy-token.
-    Retorna JSON (dict) ou None.
+    Chama o teu proxy (Render) com URL join correto + x-proxy-token.
 
-    Proteções:
-      - cache leve em Redis por (path+params)
-      - se der erro, tenta usar cache antiga
+    IMPORTANTE: o proxy devolve o JSON completo da API-Football, ex:
+      {
+        "get": "fixtures",
+        "parameters": {...},
+        "results": 2,
+        "response": [ ... ]
+      }
+
+    Aqui devolvemos esse dict inteiro. O helper _extract_fixtures() trata de
+    ir buscar payload["response"].
     """
     url = urljoin(PROXY_BASE, path.lstrip("/"))
     params = params or {}
@@ -123,7 +124,7 @@ def proxy_get(
         )
         if r.status_code == 200:
             data = r.json()
-            # cache suave: 10 minutos
+            # cache leve: 10m
             redis_cache_set(cache_key, data, ex=600)
             return data
 
@@ -151,9 +152,8 @@ def proxy_get(
 
 def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int = 8) -> Any:
     """
-    GET à API-Football com cache em Redis (leve).
+    GET direto à API-Football para stats/topscorers (poucos calls).
     Retorna já o campo 'response' normalizado (list/dict).
-    (continua a ser usada para stats, topscorers, etc.)
     """
     if not API_KEY:
         logger.warning("⚠️ API_FOOTBALL_KEY não definida. api_get() sem chave.")
@@ -189,20 +189,15 @@ try:
         top_k_scores_from_matrix,
     )
 except Exception:
-
     def _poisson_pmf(lmbda: float, k: int) -> float:
         if lmbda <= 0:
             return 1.0 if k == 0 else 0.0
         try:
-            return math.exp(-lmbda) * (lmbda**k) / math.factorial(k)
+            return math.exp(-lmbda) * (lmbda ** k) / math.factorial(k)
         except OverflowError:
             return 0.0
 
-    def poisson_score_probs(
-        lambda_home: float,
-        lambda_away: float,
-        max_goals: int = 6,
-    ) -> List[List[float]]:
+    def poisson_score_probs(lambda_home: float, lambda_away: float, max_goals: int = 6) -> List[List[float]]:
         mat: List[List[float]] = []
         for h in range(max_goals + 1):
             row = []
@@ -238,10 +233,7 @@ except Exception:
                 p += mat[h][a]
         return p
 
-    def over_under_prob_from_matrix(
-        mat: List[List[float]],
-        line: float,
-    ) -> Tuple[float, float]:
+    def over_under_prob_from_matrix(mat: List[List[float]], line: float) -> Tuple[float, float]:
         n = len(mat)
         p_over = 0.0
         for h in range(n):
@@ -251,10 +243,7 @@ except Exception:
         p_under = 1.0 - p_over
         return p_over, p_under
 
-    def top_k_scores_from_matrix(
-        mat: List[List[float]],
-        k: int = 3,
-    ) -> List[Tuple[str, float]]:
+    def top_k_scores_from_matrix(mat: List[List[float]], k: int = 3) -> List[Tuple[str, float]]:
         pairs: List[Tuple[str, float]] = []
         n = len(mat)
         for h in range(n):
@@ -281,16 +270,10 @@ def apply_ml_over25(
     ph: float,
     p_over25_poisson: float,
 ) -> float:
-    """
-    Aplica modelo ML para recalibrar probabilidade de Over 2.5.
-    Se não houver modelo ou flag desativada, devolve o valor original.
-    """
     if not USE_ML_LAYER or _ml_over25 is None:
         return p_over25_poisson
     try:
-        return float(
-            _ml_over25(lambda_home, lambda_away, match_conf, ph, p_over25_poisson)
-        )
+        return float(_ml_over25(lambda_home, lambda_away, match_conf, ph, p_over25_poisson))
     except Exception:
         return p_over25_poisson
 
@@ -299,40 +282,18 @@ def apply_ml_over25(
 # Modelagem prob/odds
 # ===========================================================
 def clamp_prob(p: float, eps: float = 1e-3) -> float:
-    """
-    Garante probabilidade dentro de [eps, 1-eps].
-    eps maior para evitar odds ridículas (1e8, etc.).
-    """
     return max(eps, min(1.0 - eps, p))
 
 
-def implied_odds(
-    p: float,
-    min_odds: float = 1.01,
-    max_odds: float = 50.0,
-) -> float:
-    """
-    Converte probabilidade em odd decimal, limitada a um intervalo razoável.
-    """
+def implied_odds(p: float, min_odds: float = 1.01, max_odds: float = 50.0) -> float:
     p = clamp_prob(p, 1e-3)
     odds = 1.0 / p
     odds = max(min_odds, min(max_odds, odds))
     return round(odds, 2)
 
 
-def pick_dc_class(
-    ph: float,
-    pd: float,
-    pa: float,
-) -> Tuple[int, float, Dict[str, float]]:
-    """
-    0 = 1X, 1 = 12, 2 = X2
-
-    Devolve:
-      - class (0/1/2)
-      - probabilidade da melhor opção
-      - dict com as três probabilidades
-    """
+def pick_dc_class(ph: float, pd: float, pa: float) -> Tuple[int, float, Dict[str, float]]:
+    # 0=1X (home/draw), 1=12 (home/away), 2=X2 (draw/away)
     p_1x = ph + pd
     p_12 = ph + pa
     p_x2 = pd + pa
@@ -351,7 +312,7 @@ def pick_dc_class(
 # Estatísticas & features
 # ===========================================================
 def _season_for_league(league_id: int) -> str:
-    """Escolhe a season correcta consoante a liga."""
+    """Escolhe a season correcta consoante a liga (clubes vs WCQ Europe)."""
     if league_id == WCQ_EUROPE_LEAGUE_ID:
         return WCQ_EUROPE_SEASON
     return SEASON_CLUBS
@@ -359,10 +320,7 @@ def _season_for_league(league_id: int) -> str:
 
 def team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
     season = _season_for_league(league_id)
-    data = api_get(
-        "teams/statistics",
-        {"team": team_id, "league": league_id, "season": season},
-    )
+    data = api_get("teams/statistics", {"team": team_id, "league": league_id, "season": season})
     if isinstance(data, dict):
         return data
     if isinstance(data, list) and data:
@@ -370,10 +328,7 @@ def team_stats(team_id: int, league_id: int) -> Dict[str, Any]:
     return {}
 
 
-def compute_lambdas(
-    stats_home: Dict[str, Any],
-    stats_away: Dict[str, Any],
-) -> Tuple[float, float]:
+def compute_lambdas(stats_home: Dict[str, Any], stats_away: Dict[str, Any]) -> Tuple[float, float]:
     def _get_float(v, default=1.0):
         try:
             if isinstance(v, str):
@@ -382,24 +337,10 @@ def compute_lambdas(
         except Exception:
             return float(default)
 
-    avg_goals_home = _get_float(
-        stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2)
-    )
-    avg_goals_away = _get_float(
-        stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1)
-    )
-    avg_conc_home = _get_float(
-        stats_home.get("goals", {})
-        .get("against", {})
-        .get("average", {})
-        .get("home", 1.0)
-    )
-    avg_conc_away = _get_float(
-        stats_away.get("goals", {})
-        .get("against", {})
-        .get("average", {})
-        .get("away", 1.0)
-    )
+    avg_goals_home = _get_float(stats_home.get("goals", {}).get("for", {}).get("average", {}).get("home", 1.2))
+    avg_goals_away = _get_float(stats_away.get("goals", {}).get("for", {}).get("average", {}).get("away", 1.1))
+    avg_conc_home  = _get_float(stats_home.get("goals", {}).get("against", {}).get("average", {}).get("home", 1.0))
+    avg_conc_away  = _get_float(stats_away.get("goals", {}).get("against", {}).get("average", {}).get("away", 1.0))
 
     lam_home = max(0.05, (avg_goals_home + avg_conc_away) / 2.0)
     lam_away = max(0.05, (avg_goals_away + avg_conc_home) / 2.0)
@@ -407,7 +348,7 @@ def compute_lambdas(
 
 
 # ===========================================================
-# Core de previsão por fixture
+# Construção de uma previsão a partir de um fixture
 # ===========================================================
 def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
@@ -419,9 +360,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         league_name = league.get("name")
         country = league.get("country")
 
-        # -------------------------
-        # Filtro de ligas (allowlist)
-        # -------------------------
+        # filtro por allowlist (deixa passar WCQ Europe mesmo que não esteja em leagues.json)
         if ALLOWED_LEAGUES:
             if league_id not in ALLOWED_LEAGUES and league_id != WCQ_EUROPE_LEAGUE_ID:
                 return None
@@ -447,21 +386,10 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
 
         dc_class, p_dc, dc_probs = pick_dc_class(ph, pd, pa)
 
-        winner_class = int(
-            max(
-                [
-                    (0, ph),
-                    (1, pd),
-                    (2, pa),
-                ],
-                key=lambda t: t[1],
-            )[0]
-        )
-        winner_conf = max(ph, pd, pa)
+        winner_class = int(max([(0, ph), (1, pd), (2, pa)], key=lambda t: t[1])[0])
+        winner_conf  = max(ph, pd, pa)
 
-        # ============================
-        # Camada ML para Over 2.5 (opcional)
-        # ============================
+        # ===== ML Over 2.5 opcional =====
         if USE_ML_LAYER:
             ml_p_over25 = apply_ml_over25(
                 lambda_home=lam_h,
@@ -479,36 +407,28 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             for (s, p) in top_k_scores_from_matrix(mat, k=3)
         ]
 
-        # season correcta para topscorers (ranking geral da liga)
+        # Top scorers (ranking geral da liga)
         season = _season_for_league(league_id)
         scorers_cache_key = f"topscorers:{league_id}:{season}"
         top_scorers = redis_cache_get(scorers_cache_key)
         if top_scorers is None:
-            tops = api_get(
-                "players/topscorers",
-                {"league": league_id, "season": season},
-            )
+            tops = api_get("players/topscorers", {"league": league_id, "season": season})
             res = []
             for s in (tops or [])[:5]:
                 player = (s.get("player") or {}).get("name")
                 stat0 = (s.get("statistics") or [{}])[0]
                 team = (stat0.get("team") or {}).get("name")
                 goals = (stat0.get("goals") or {}).get("total", 0)
-                res.append(
-                    {"player": player, "team": team, "goals": int(goals or 0)}
-                )
+                res.append({"player": player, "team": team, "goals": int(goals or 0)})
             top_scorers = res
             redis_cache_set(scorers_cache_key, top_scorers, ex=12 * 3600)
 
-        # ============================
         # Marcadores prováveis por jogo (plantel atual + lesões)
-        # ============================
         try:
             probable_scorers = probable_scorers_for_match(fix, limit=4)
         except Exception as e_ps:
             logger.warning(
-                f"⚠️ Erro a calcular marcadores prováveis para fixture "
-                f"{fixture.get('id')}: {e_ps}"
+                f"⚠️ Erro a calcular marcadores prováveis para fixture {fixture.get('id')}: {e_ps}"
             )
             probable_scorers = {"home": [], "away": []}
 
@@ -524,7 +444,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             },
             "over_1_5": {
                 "over": implied_odds(p_over15),
-                "under": implied_odds(p_over15 and p_over15 < 1.0 and 1.0 - p_over15 or 0.5),
+                "under": implied_odds(p_under15),
             },
             "btts": {
                 "yes": implied_odds(p_btts),
@@ -539,9 +459,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         except Exception:
             ps_obj = {"home": None, "away": None}
 
-        # ============================
-        # Explicação "tipo tips" para o frontend
-        # ============================
+        # ===== Explicação "tipo tips" =====
         explanation: List[str] = []
 
         exp_gols = lam_h + lam_a
@@ -551,35 +469,21 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         )
 
         if winner_class == 0:
-            explanation.append(
-                f"Casa ligeiramente favorita (1X), "
-                f"prob. {ph*100:.0f}% para vitória."
-            )
+            explanation.append(f"Casa ligeiramente favorita (1X), prob. {ph*100:.0f}% para vitória.")
         elif winner_class == 1:
             explanation.append(f"Jogo equilibrado, prob. de empate {pd*100:.0f}%.")
         else:
-            explanation.append(
-                f"Visitante em vantagem (X2), prob. {pa*100:.0f}% para não perder."
-            )
+            explanation.append(f"Visitante em vantagem (X2), prob. {pa*100:.0f}% para não perder.")
 
         if p_over25 >= 0.6:
-            explanation.append(
-                f"Tendência para Over 2.5 golos ({p_over25*100:.0f}%)."
-            )
+            explanation.append(f"Tendência para Over 2.5 golos ({p_over25*100:.0f}%).")
         elif p_over25 <= 0.4:
-            explanation.append(
-                f"Tendência para Under 2.5 golos ({(1-p_over25)*100:.0f}%)."
-            )
+            explanation.append(f"Tendência para Under 2.5 golos ({(1-p_over25)*100:.0f}%).")
 
         if p_btts >= 0.55:
-            explanation.append(
-                f"Boa probabilidade de ambas marcarem (BTTS Sim {p_btts*100:.0f}%)."
-            )
+            explanation.append(f"Boa probabilidade de ambas marcarem (BTTS Sim {p_btts*100:.0f}%).")
         elif p_btts <= 0.40:
-            explanation.append(
-                f"Pouca probabilidade de ambas marcarem "
-                f"(BTTS Não {(1-p_btts)*100:.0f}%)."
-            )
+            explanation.append(f"Pouca probabilidade de ambas marcarem (BTTS Não {(1-p_btts)*100:.0f}%).")
 
         winner_label_map = {0: "home", 1: "draw", 2: "away"}
         dc_label_map = {0: "1X", 1: "12", 2: "X2"}
@@ -641,16 +545,8 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             "correct_score_top3": top3,
             "top_scorers": top_scorers,
             "probable_scorers": probable_scorers,
-            "probable_scorers_home": (
-                probable_scorers.get("home")
-                if isinstance(probable_scorers, dict)
-                else []
-            ),
-            "probable_scorers_away": (
-                probable_scorers.get("away")
-                if isinstance(probable_scorers, dict)
-                else []
-            ),
+            "probable_scorers_home": probable_scorers.get("home") if isinstance(probable_scorers, dict) else [],
+            "probable_scorers_away": probable_scorers.get("away") if isinstance(probable_scorers, dict) else [],
             "predicted_score": ps_obj,
             "confidence": float(winner_conf),
 
@@ -663,7 +559,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
 
 
 # ===========================================================
-# PIPELINE
+# PIPELINE FIXTURES (via PROXY, por data)
 # ===========================================================
 def _dedupe_fixtures(fixtures: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """Remove duplicados com base no fixture.id."""
@@ -682,10 +578,9 @@ def _dedupe_fixtures(fixtures: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 def _extract_fixtures(payload: Any) -> List[Dict[str, Any]]:
     """
-    Extrai lista de fixtures de vários formatos possíveis:
-      - dict com 'response': [...]
-      - lista direta
-    (é o formato que o teu proxy está a devolver)
+    Normaliza o payload vindo do proxy:
+      - se for list -> devolve só dicts
+      - se for dict com 'response' list -> devolve essa lista
     """
     if not payload:
         return []
@@ -703,26 +598,48 @@ def _extract_fixtures(payload: Any) -> List[Dict[str, Any]]:
 
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    Usa apenas o proxy:
-      - tenta /fixtures?next=50
-      - se vier vazio, tenta 20, 10, 5, 2
-    Garante que, no pior caso, usa o mesmo padrão que testaste à mão (next=2).
+    Usa apenas o proxy com queries por data:
+      - para cada dia: /fixtures?date=YYYY-MM-DD&season=SEASON_CLUBS
+      - WCQ Europe:    /fixtures?date=YYYY-MM-DD&league=32&season=2024
     """
-    sizes = [50, 20, 10, 5, 2]
-    fixtures_raw: List[Dict[str, Any]] = []
+    try:
+        days = int(days)
+    except Exception:
+        days = 3
+    if days < 1:
+        days = 1
+    if days > 7:
+        days = 7
 
-    for n in sizes:
-        payload = proxy_get("/fixtures", {"next": n})
-        arr = _extract_fixtures(payload)
-        logger.info(f"📊 tentativa proxy /fixtures?next={n} -> {len(arr)} fixtures brutas")
-        if arr:
-            fixtures_raw.extend(arr)
-            break
+    fixtures_raw: List[Dict[str, Any]] = []
+    today = date.today()
+    for d in range(days):
+        iso = (today + timedelta(days=d)).strftime("%Y-%m-%d")
+
+        # 1) Clubes
+        payload_clubs = proxy_get("/fixtures", {"date": iso, "season": SEASON_CLUBS})
+        arr_clubs = _extract_fixtures(payload_clubs)
+        logger.info(
+            f"📊 proxy /fixtures?date={iso}&season={SEASON_CLUBS} -> {len(arr_clubs)} fixtures clubes"
+        )
+        fixtures_raw.extend(arr_clubs)
+
+        # 2) WCQ Europe
+        if WCQ_EUROPE_LEAGUE_ID:
+            payload_wcq = proxy_get(
+                "/fixtures",
+                {"date": iso, "league": WCQ_EUROPE_LEAGUE_ID, "season": WCQ_EUROPE_SEASON},
+            )
+            arr_wcq = _extract_fixtures(payload_wcq)
+            logger.info(
+                f"📊 proxy /fixtures?date={iso}&league={WCQ_EUROPE_LEAGUE_ID}&season={WCQ_EUROPE_SEASON} "
+                f"-> {len(arr_wcq)} fixtures WCQ"
+            )
+            fixtures_raw.extend(arr_wcq)
 
     fixtures = _dedupe_fixtures(fixtures_raw)
     logger.info(
-        f"📊 collect_fixtures via proxy (multi-next) | bruto={len(fixtures_raw)} "
-        f"após dedupe={len(fixtures)}"
+        f"📊 collect_fixtures via datas (days={days}) | bruto={len(fixtures_raw)} após dedupe={len(fixtures)}"
     )
     return fixtures
 
@@ -730,7 +647,7 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
 def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     """
     Corre o pipeline completo:
-      - busca fixtures via proxy (multi-next)
+      - busca fixtures (clubes + WCQ Europe) via proxy por data
       - calcula previsões
       - grava em data/predict/predictions.json
 
@@ -749,7 +666,7 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
 
     if not fixtures:
         logger.warning(
-            "⚠️ Nenhuma fixture obtida via proxy (multi-next). "
+            "⚠️ Nenhuma fixture obtida via proxy (por datas). "
             "A NÃO sobrescrever data/predict/predictions.json."
         )
         return {"status": "no-fixtures", "total": 0}
@@ -783,16 +700,13 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
 
 
 # ===========================================================
-# ENTRYPOINTS PÚBLICOS
+# ENTRYPOINT PÚBLICO
 # ===========================================================
 def update_predictions(days: int = 3, force: bool = False) -> Dict[str, Any]:
     """
     Função pública usada por:
       - src.fetch_matches.fetch_today_matches() (via /meta/update)
-      - GitHub Actions ou scripts externos.
-
-    'days' = quantos dias a partir de hoje (ex: 3 -> hoje + 2).
-    (Aqui é ignorado na prática, mas mantemos por compat.)
+      - GitHub Actions ou scripts externos, se quiseres.
     """
     try:
         d = int(days) if days is not None else 3
@@ -804,6 +718,10 @@ def update_predictions(days: int = 3, force: bool = False) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
+    # Permite correr localmente:
+    #   python -m src.api_fetch_pro
+    # ou
+    #   python src.api_fetch_pro.py
     try:
         default_days = int(os.getenv("API_FETCH_DAYS", "3"))
     except Exception:
