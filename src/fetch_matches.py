@@ -30,18 +30,16 @@ PRED_PATH = "data/predict/predictions.json"
 
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-# Preferência de bookies ao ler odds reais
 PREFERRED_BOOKMAKERS = {"Pinnacle", "bet365", "Bet365", "1xBet", "1XBET"}
 
-# Limites
 REQUEST_TIMEOUT = 6
-MAX_GOALS = 6  # Poisson 0..6
+MAX_GOALS = 6
 DAYS_AHEAD = 5  # hoje + 4 dias
 
 
 def _get_api(endpoint: str, params: dict) -> Any:
     """
-    Pequeno helper para chamar a API-FOOTBALL (ou proxy)
+    Pequeno helper para chamar a API-FOOTBALL
     e devolver só o campo "response".
     """
     url = BASE_URL + endpoint.lstrip("/")
@@ -65,7 +63,7 @@ def _get_api(endpoint: str, params: dict) -> Any:
 # =========================
 def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
     """
-    Recolhe jogadores de uma equipa (com paginação leve) e calcula:
+    Recolhe jogadores de uma equipa e calcula:
       - g90 suavizado
       - peso = g90 * fator_minutos * fator_posição
 
@@ -74,7 +72,6 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
       - filtro por plantel atual via probable_scorers.get_current_squad_ids
     Guarda em cache 24h em Redis.
     """
-    # v2 do cache key para forçar refetch após introduzir filtro por plantel atual
     ck = f"cache:players:{team_id}:{SEASON}:v2"
     cached = _rget(ck)
     if cached:
@@ -85,16 +82,14 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
 
     squad_ids: Optional[Set[int]] = None
     try:
-        # Evita import circular ao só importar aqui
         from src import probable_scorers
 
         squad_ids = probable_scorers.get_current_squad_ids(team_id)
-    except Exception as e:  # pragma: no cover - apenas informativo
+    except Exception as e:
         logger.warning(f"⚠️ Falha ao obter plantel atual para equipa {team_id}: {e}")
     has_squad_filter = bool(squad_ids)
 
     out: List[Dict[str, Any]] = []
-    # até 3 páginas por segurança (geralmente 1-2)
     for page in range(1, 4):
         arr = _get_api(
             "players",
@@ -107,7 +102,6 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
             player = row.get("player") or {}
             player_id = player.get("id")
 
-            # se temos plantel atual, só usamos quem lá está
             if has_squad_filter and (
                 not isinstance(player_id, int) or player_id not in squad_ids
             ):
@@ -121,7 +115,6 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
             team_info = st.get("team") or {}
             team_from_stats = team_info.get("id")
 
-            # Se o endpoint devolver estatísticas por equipa anterior, ignoramos.
             if isinstance(team_from_stats, int) and team_from_stats != team_id:
                 continue
 
@@ -134,26 +127,23 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
             apps = (
                 games.get("appearences")
                 or games.get("appearances")
-                or 0  # API tem variações
+                or 0
             )
             goals = goals_d.get("total") or 0
 
-            # g/90 com suavização (evita amostras pequenas)
             if minutes and minutes > 0:
                 g90 = (goals + 0.2) / ((minutes / 90.0) + 0.2)
             else:
                 g90 = 0.0
 
-            # fator minutos: saturação a 900' (10 jogos)
             min_factor = min(1.0, (minutes or 0) / 900.0)
 
-            # fator por posição
             pos = (position or "").lower()
-            if pos.startswith("f"):  # Forward
+            if pos.startswith("f"):
                 pos_w = 1.00
-            elif pos.startswith("m"):  # Midfielder
+            elif pos.startswith("m"):
                 pos_w = 0.60
-            elif pos.startswith("d"):  # Defender
+            elif pos.startswith("d"):
                 pos_w = 0.25
             else:
                 pos_w = 0.10
@@ -173,7 +163,6 @@ def _team_players_rates(team_id: int) -> List[Dict[str, Any]]:
                 }
             )
 
-    # Salva em cache por 24h
     _rset(ck, json.dumps(out), ex=86400)
     return out
 
@@ -187,14 +176,6 @@ def fetch_today_matches(days: int = 3) -> Optional[Dict[str, Any]]:
 
     /meta/update chama fetch_today_matches() mas hoje a lógica
     principal de atualização está em src/api_fetch_pro.
-
-    Aqui tentamos encontrar um entrypoint razoável em api_fetch_pro:
-      - update_predictions(days=?, force=?)
-      - fetch_and_save_predictions(days=?)
-      - main(days=?)
-      - run(days=?)
-
-    Se nenhuma destas funções existir, apenas registamos em log e saímos.
     """
     logger.info("fetch_today_matches() chamado com days=%s", days)
 
@@ -211,7 +192,6 @@ def fetch_today_matches(days: int = 3) -> Optional[Dict[str, Any]]:
         try:
             return fn(days=days, force=False)  # type: ignore[call-arg]
         except TypeError:
-            # versão antiga sem 'force' ou 'days'
             try:
                 return fn(days=days)  # type: ignore[call-arg]
             except TypeError:
@@ -239,7 +219,8 @@ def fetch_today_matches(days: int = 3) -> Optional[Dict[str, Any]]:
             return fn()  # type: ignore[call-arg]
 
     logger.info(
-        "api_fetch_pro não expõe nenhuma função pública (update_predictions/"
-        "fetch_and_save_predictions/main/run); fetch_today_matches terminou sem executar atualização."
+        "api_fetch_pro não expõe nenhuma função pública "
+        "(update_predictions/fetch_and_save_predictions/main/run); "
+        "fetch_today_matches terminou sem executar atualização."
     )
     return None
