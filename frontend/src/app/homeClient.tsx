@@ -41,7 +41,6 @@ function ymd(d: Date) {
   return local.toISOString().split("T")[0];
 }
 
-// Evita crash se a API der date inválida
 function fixtureDateSafe(d?: string) {
   const t = d ? Date.parse(d) : NaN;
   return Number.isFinite(t) ? new Date(d as string) : new Date();
@@ -63,8 +62,7 @@ const dateTabs = [
 
 function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
-  // Aceita 0..1 ou 0..100
-  const x = v > 1 ? v / 100 : v;
+  const x = v > 1 ? v / 100 : v; // aceita 0–1 ou 0–100
   if (!isFinite(x)) return 0;
   return Math.min(1, Math.max(0, x));
 }
@@ -116,24 +114,17 @@ function buildAdvancedExplanation(p: any): string[] {
   const over25 = preds.over_2_5 as any | undefined;
   const btts = preds.btts as any | undefined;
 
-  // 2) Vantagem (1X / X2 / 12) alinhada com double_chance.prob
+  // Double Chance (principal leitura de vantagem)
   if (dc && typeof dc.class === "number") {
     const dcProb = prob01(dc.prob ?? dc.confidence);
     const dcPct = Math.round(dcProb * 100);
-    let msg = "";
-
     if (dc.class === 0) {
-      // 1X
-      msg = `Casa em vantagem (1X), prob. ${dcPct}% para não perder.`;
+      lines.push(`Casa em vantagem (1X), prob. ${dcPct}% para não perder.`);
     } else if (dc.class === 2) {
-      // X2
-      msg = `Visitante em vantagem (X2), prob. ${dcPct}% para não perder.`;
+      lines.push(`Visitante em vantagem (X2), prob. ${dcPct}% para não perder.`);
     } else {
-      // 12
-      msg = `Jogo aberto (12), prob. ${dcPct}% para não terminar empatado.`;
+      lines.push(`Jogo aberto (12), prob. ${dcPct}% para não terminar empatado.`);
     }
-
-    lines.push(msg);
   } else if (winner && typeof winner.class === "number") {
     const wProb = prob01(winner.prob ?? winner.confidence);
     const wPct = Math.round(wProb * 100);
@@ -146,7 +137,7 @@ function buildAdvancedExplanation(p: any): string[] {
     }
   }
 
-  // 3) Tendência Over/Under 2.5
+  // Over / Under 2.5
   if (over25 && typeof over25.class === "number") {
     const pOver = prob01(over25.prob ?? over25.confidence);
     const pctOver = Math.round(pOver * 100);
@@ -158,7 +149,7 @@ function buildAdvancedExplanation(p: any): string[] {
     }
   }
 
-  // 4) BTTS
+  // BTTS
   if (btts && typeof btts.class === "number") {
     const pBtts = prob01(btts.prob ?? btts.confidence);
     const pctYes = Math.round(pBtts * 100);
@@ -212,9 +203,8 @@ export default function HomeClient() {
       try {
         const ls = await getLeagues({ date: selectedDateISO });
         setBackendLeagues(ls ?? []);
-      } catch (e) {
-        console.error("Erro a carregar ligas:", e);
-        setBackendLeagues([]);
+      } catch {
+        // em produção ignoramos o erro, só não aparecem ligas
       }
     })();
   }, [selectedDateISO]);
@@ -235,7 +225,6 @@ export default function HomeClient() {
     [backendLeagues]
   );
 
-  // dropdown de ligas (apenas curadas) — mostra País — Liga
   const allLeagues: { id: string; name: string }[] = useMemo(() => {
     const arr = backendLeagues.map((x) => ({
       id: String(x.id),
@@ -286,7 +275,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*   Carregar previsões + stats  */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   async function loadMainData() {
     setLoading(true);
@@ -310,7 +299,6 @@ export default function HomeClient() {
         ? ((predsRaw as any).predictions as Prediction[])
         : [];
 
-      // Garante que só mostramos jogos do dia escolhido
       const byDate = predsArray.filter((p: any) => {
         const dy =
           (p.date_ymd as string | undefined) ??
@@ -318,7 +306,6 @@ export default function HomeClient() {
         return dy === selectedDateISO;
       });
 
-      // Filtro extra pelas ligas curadas
       const filteredPreds =
         allowedLeagueIds.size > 0
           ? byDate.filter((p: any) =>
@@ -326,7 +313,6 @@ export default function HomeClient() {
             )
           : byDate;
 
-      // Ordena por hora
       filteredPreds.sort((a: any, b: any) => {
         const ta = Date.parse(a.date ?? a.fixture_date ?? 0);
         const tb = Date.parse(b.date ?? b.fixture_date ?? 0);
@@ -349,6 +335,7 @@ export default function HomeClient() {
       } else {
         setLastUpdate("");
       }
+      // eslint-disable-next-line no-console
     } catch (e) {
       console.error(e);
       setError("Falha ao carregar dados. Tenta novamente mais tarde.");
@@ -364,7 +351,7 @@ export default function HomeClient() {
 
   /* ----------------------------- */
   /*      Fixtures reais (proxy)   */
-  /* ----------------------------- */
+/* ----------------------------- */
 
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
@@ -381,6 +368,7 @@ export default function HomeClient() {
       );
       setLiveFixtures(data?.response || []);
       setLastFixturesUpdate(Date.now());
+      // eslint-disable-next-line no-console
     } catch (err) {
       console.error("Erro ao carregar fixtures:", err);
     } finally {
@@ -502,9 +490,12 @@ export default function HomeClient() {
           <button
             onClick={() => {
               try {
-                ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach(
-                  (k) => localStorage.removeItem(k)
-                );
+                [
+                  "leagues",
+                  "all_leagues",
+                  "api_football_leagues",
+                  "api_football|leagues",
+                ].forEach((k) => localStorage.removeItem(k));
               } catch {
                 // ignore
               }
@@ -631,7 +622,6 @@ export default function HomeClient() {
                 ? (p.explanation as string[])
                 : [];
 
-              // Marcadores prováveis por jogo com fallback
               const homeScorers =
                 p.probable_scorers?.home && p.probable_scorers.home.length
                   ? p.probable_scorers.home
