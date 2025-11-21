@@ -14,13 +14,17 @@ import {
   getPredictions,
   getStats,
   getLastUpdate,
-  type Prediction,
   getLeagues,
+  type Prediction,
   type LeagueItem,
 } from "@/services/api";
 import { getFixturesByLeague } from "@/services/proxy";
 
 type DCClass = 0 | 1 | 2; // 0=1X, 1=12, 2=X2
+
+/* ----------------------------- */
+/*   Helpers de datas / tempo    */
+/* ----------------------------- */
 
 function timeSince(ts: number) {
   const sec = Math.floor((Date.now() - ts) / 1000);
@@ -43,6 +47,10 @@ function fixtureDateSafe(d?: string) {
   return Number.isFinite(t) ? new Date(d as string) : new Date();
 }
 
+/* ----------------------------- */
+/*          Tabs de datas        */
+/* ----------------------------- */
+
 const dateTabs = [
   { key: "today", label: "Hoje", calc: () => new Date() },
   { key: "tomorrow", label: "Amanhã", calc: () => new Date(Date.now() + 86400000) },
@@ -50,10 +58,12 @@ const dateTabs = [
 ];
 
 /* ----------------------------- */
-/*   ✨ Helpers de destaque      */
+/*   Helpers de probabilidade    */
 /* ----------------------------- */
+
 function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
+  // Aceita 0..1 ou 0..100
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
 }
 
@@ -79,6 +89,10 @@ function badgeClass(prob: number, isMax: boolean): string {
   return "bg-gray-100 text-gray-700";
 }
 
+/* ----------------------------- */
+/*       Component principal     */
+/* ----------------------------- */
+
 export default function HomeClient() {
   const router = useRouter();
   const search = useSearchParams();
@@ -100,12 +114,13 @@ export default function HomeClient() {
   /* ----------------------------- */
   /* 1) Ligas só do backend curado */
   /* ----------------------------- */
+
   const [backendLeagues, setBackendLeagues] = useState<LeagueItem[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues(); // <- só as ligas curadas
+        const ls = await getLeagues(); // <- backend curado
         setBackendLeagues(ls ?? []);
       } catch {
         setBackendLeagues([]);
@@ -119,7 +134,9 @@ export default function HomeClient() {
       ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
         localStorage.removeItem(k)
       );
-    } catch {}
+    } catch {
+      // ignore
+    }
   }, []);
 
   // conjunto de IDs permitidos (filtro extra em previsões)
@@ -137,7 +154,10 @@ export default function HomeClient() {
     return [{ id: "all", name: "🌍 Todos os países / ligas" }, ...arr];
   }, [backendLeagues]);
 
-  // estado inicial via query params
+  /* ----------------------------- */
+  /*   Estado inicial via query    */
+  /* ----------------------------- */
+
   useEffect(() => {
     const qpLeague = search.get("league_id");
     const qpDate = search.get("date");
@@ -148,7 +168,13 @@ export default function HomeClient() {
       const tomorrow = ymd(new Date(Date.now() + 86400000));
       const after = ymd(new Date(Date.now() + 2 * 86400000));
       const key =
-        qpDate === today ? "today" : qpDate === tomorrow ? "tomorrow" : qpDate === after ? "after" : "today";
+        qpDate === today
+          ? "today"
+          : qpDate === tomorrow
+          ? "tomorrow"
+          : qpDate === after
+          ? "after"
+          : "today";
       setSelectedDateKey(key);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,7 +195,10 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDateISO, selectedLeague]);
 
-  // carregar previsões + stats + lastUpdate
+  /* ----------------------------- */
+  /*   Carregar previsões + stats  */
+/* ----------------------------- */
+
   async function loadMainData() {
     setLoading(true);
     setError("");
@@ -180,25 +209,51 @@ export default function HomeClient() {
           ? { date: selectedDateISO }
           : { date: selectedDateISO, league_id: selectedLeague };
 
-      const [preds, statsData, lastU] = await Promise.all([getPredictions(params), getStats(), getLastUpdate()]);
-      const predsArray = Array.isArray(preds) ? (preds as Prediction[]) : [];
+      const [predsRaw, statsData, lastU] = await Promise.all([
+        getPredictions(params),
+        getStats(),
+        getLastUpdate(),
+      ]);
 
+      const predsArray = Array.isArray(predsRaw)
+        ? (predsRaw as Prediction[])
+        : Array.isArray((predsRaw as any)?.predictions)
+        ? ((predsRaw as any).predictions as Prediction[])
+        : [];
+
+      // Garante que só mostramos jogos do dia escolhido
+      const byDate = predsArray.filter((p: any) => {
+        const dy = (p.date_ymd as string | undefined) ?? (typeof p.date === "string" ? p.date.slice(0, 10) : "");
+        return dy === selectedDateISO;
+      });
+
+      // Filtro extra pelas ligas curadas
       const filteredPreds =
         allowedLeagueIds.size > 0
-          ? predsArray.filter((p: any) => allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id)))
-          : predsArray;
+          ? byDate.filter((p: any) =>
+              allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
+            )
+          : byDate;
 
-      setPredictions(filteredPreds);
+      // Ordena por hora
+      filteredPreds.sort((a: any, b: any) => {
+        const ta = Date.parse(a.date ?? a.fixture_date ?? 0);
+        const tb = Date.parse(b.date ?? b.fixture_date ?? 0);
+        return ta - tb;
+      });
+
+      setPredictions(filteredPreds as Prediction[]);
       setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
       if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
         const d = new Date(lastUpdateRaw.replace(" ", "T"));
         setLastUpdate(
-          `${d.toLocaleDateString("pt-PT", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.toLocaleTimeString(
-            "pt-PT",
-            { hour: "2-digit", minute: "2-digit" }
-          )}`
+          `${d.toLocaleDateString("pt-PT", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })} ${d.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}`
         );
       } else {
         setLastUpdate("");
@@ -216,7 +271,10 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO, allowedLeagueIds]);
 
-  // fixtures reais por liga (proxy) — por data (evita jogos “de outro dia”)
+  /* ----------------------------- */
+  /*      Fixtures reais (proxy)   */
+/* ----------------------------- */
+
   async function loadFixtures(ignoreCache = false) {
     if (selectedLeague === "all") {
       setLiveFixtures([]);
@@ -244,14 +302,28 @@ export default function HomeClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLeague, selectedDateISO]);
 
-  // Helpers UI
-  const dcLabel = (dc: DCClass | undefined) => (dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—");
-  const toPct = (v?: number | null) => (typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—");
-  const oddFmt = (v?: number | null) => (typeof v === "number" ? v.toFixed(2) : "—");
-  const bestCorrectScore = (p: any) =>
-    p?.correct_score_top3?.[0]?.score ?? p?.predictions?.correct_score?.best ?? "—";
+  /* ----------------------------- */
+  /*          Helpers UI           */
+/* ----------------------------- */
 
-  // Loading
+  const dcLabel = (dc: DCClass | undefined) =>
+    dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+
+  const toPct = (v?: number | null) =>
+    typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
+
+  const oddFmt = (v?: number | null) =>
+    typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
+
+  const bestCorrectScore = (p: any) =>
+    p?.correct_score_top3?.[0]?.score ??
+    p?.predictions?.correct_score?.best ??
+    "—";
+
+  /* ----------------------------- */
+  /*         Estados base          */
+/* ----------------------------- */
+
   if (loading) {
     return (
       <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
@@ -271,7 +343,6 @@ export default function HomeClient() {
     );
   }
 
-  // Erro
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -281,19 +352,21 @@ export default function HomeClient() {
     );
   }
 
-  // UI principal
+  /* ----------------------------- */
+  /*           UI principal        */
+/* ----------------------------- */
+
   return (
     <div className="min-h-screen container mx-auto px-4 py-8 md:py-16">
       <Header />
       <main className="space-y-12 md:space-y-16">
         <InfoCard />
 
-        {/* Usa StatsAverage se existir */}
         {stats ? <StatsAverage stats={stats} /> : null}
 
         {/* Filtros */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-8">
-          {/* Ligas dinâmicas (APENAS do backend curado) */}
+          {/* Ligas (backend curado) */}
           <select
             value={selectedLeague}
             onChange={(e) => setSelectedLeague(e.target.value)}
@@ -319,7 +392,7 @@ export default function HomeClient() {
             ))}
           </div>
 
-          {/* Atualizar (refresca dados locais + fixtures da liga) */}
+          {/* Atualizar */}
           <button
             onClick={async () => {
               await loadMainData();
@@ -334,14 +407,16 @@ export default function HomeClient() {
             {loading || loadingFixtures ? "⏳ A atualizar…" : "🔁 Atualizar"}
           </button>
 
-          {/* 🧹 Limpar */}
+          {/* Limpar */}
           <button
             onClick={() => {
               try {
                 ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
                   localStorage.removeItem(k)
                 );
-              } catch {}
+              } catch {
+                // ignore
+              }
               setSelectedLeague("all");
               setSelectedDateKey("today");
               setPredictions([]);
@@ -360,7 +435,7 @@ export default function HomeClient() {
           </button>
         </div>
 
-        {/* Jogos do dia (liga específica) */}
+        {/* Jogos reais do dia (proxy) */}
         {selectedLeague !== "all" && (
           <div className="card p-6 mb-10">
             <div className="flex justify-between items-center mb-4">
@@ -369,11 +444,12 @@ export default function HomeClient() {
             </div>
 
             {loadingFixtures && (
-              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">A carregar jogos…</div>
+              <div className="text-center text-sm text-gray-400 animate-pulse mb-4">
+                A carregar jogos…
+              </div>
             )}
 
             {(() => {
-              // compara pelos Y-M-D em horário local
               const fixturesDay = (liveFixtures || []).filter(
                 (f: any) => ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
               );
@@ -399,7 +475,9 @@ export default function HomeClient() {
                   ))}
                 </div>
               ) : (
-                !loadingFixtures && <p className="text-center text-gray-400 mt-4">Sem jogos para esta data.</p>
+                !loadingFixtures && (
+                  <p className="text-center text-gray-400 mt-4">Sem jogos para esta data.</p>
+                )
               );
             })()}
 
@@ -411,7 +489,7 @@ export default function HomeClient() {
           </div>
         )}
 
-        {/* Previsões (já filtradas pelas ligas curadas) */}
+        {/* Previsões (já filtradas por data + ligas curadas) */}
         {Array.isArray(predictions) && predictions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {predictions.map((p: any) => {
@@ -421,10 +499,15 @@ export default function HomeClient() {
               const over15 = p?.predictions?.over_1_5;
               const btts = p?.predictions?.btts;
 
+              // Winner: 0=home, 1=draw, 2=away — alinhado com backend
               const winnerLabel =
-                winner?.class === 0 ? p.home_team :
-                winner?.class === 1 ? "Empate" :
-                winner?.class === 2 ? p.away_team : "—";
+                winner?.class === 0
+                  ? p.home_team
+                  : winner?.class === 1
+                  ? "Empate"
+                  : winner?.class === 2
+                  ? p.away_team
+                  : "—";
 
               const odds1x2 = p?.odds?.winner ?? p?.odds?.["1x2"] ?? {};
               const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
@@ -446,7 +529,7 @@ export default function HomeClient() {
 
               const explanation: string[] = Array.isArray(p.explanation) ? p.explanation : [];
 
-              // Marcadores prováveis por jogo (novo) com fallback para predicted_scorers
+              // Marcadores prováveis por jogo com fallback
               const homeScorers =
                 p.probable_scorers?.home && p.probable_scorers.home.length
                   ? p.probable_scorers.home
@@ -465,7 +548,8 @@ export default function HomeClient() {
                   {/* Header */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-400">
-                      {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
+                      {(p.league_name ?? p.league) || "Liga"}{" "}
+                      {p.country ? `(${p.country})` : ""}
                     </div>
                     <div className="text-xs text-gray-500">
                       {new Date(p.date).toLocaleString("pt-PT", {
@@ -486,7 +570,7 @@ export default function HomeClient() {
                     {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
                   </div>
 
-                  {/* Correct score (best) */}
+                  {/* Correct score (melhor) */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
                     <span className="text-sm text-white">{bestCorrectScore(p)}</span>
@@ -586,7 +670,7 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    {/* BTTS (fora do ranking TOP) */}
+                    {/* BTTS */}
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
@@ -598,7 +682,7 @@ export default function HomeClient() {
                     </div>
                   </div>
 
-                  {/* 🧠 Explicação da IA */}
+                  {/* Explicação da IA */}
                   {explanation.length > 0 && (
                     <div className="rounded-xl bg-emerald-500/5 border border-emerald-500/40 p-3 text-xs text-gray-100 space-y-1">
                       <div className="flex items-center justify-between mb-1">
@@ -648,10 +732,10 @@ export default function HomeClient() {
                     </div>
                   )}
 
-                  {/* Detalhes */}
+                  {/* Detalhes: Correct Score + Marcadores */}
                   <details className="rounded-xl bg-white/5 border border-white/10 p-3">
                     <summary className="cursor-pointer text-sm text-gray-200 select-none">
-                      Detalhes (Correct Score & Marcadores)
+                      Detalhes (Correct Score &amp; Marcadores)
                     </summary>
 
                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -748,7 +832,9 @@ export default function HomeClient() {
             })}
           </div>
         ) : (
-          <p className="text-center text-gray-400 mt-10">Nenhum jogo encontrado para os filtros.</p>
+          <p className="text-center text-gray-400 mt-10">
+            Nenhum jogo encontrado para os filtros.
+          </p>
         )}
 
         {lastUpdate && (
