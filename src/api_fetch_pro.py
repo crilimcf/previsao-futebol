@@ -2,12 +2,10 @@
 import os
 import json
 import math
-import time
 import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
-from datetime import date, timedelta  # ainda usado em alguns contextos
 
 import requests
 
@@ -155,6 +153,7 @@ def api_get(endpoint: str, params: Optional[Dict[str, Any]] = None, timeout: int
     """
     GET à API-Football com cache em Redis (leve).
     Retorna já o campo 'response' normalizado (list/dict).
+    (continua a ser usada para stats, topscorers, etc.)
     """
     if not API_KEY:
         logger.warning("⚠️ API_FOOTBALL_KEY não definida. api_get() sem chave.")
@@ -425,7 +424,6 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         # -------------------------
         if ALLOWED_LEAGUES:
             if league_id not in ALLOWED_LEAGUES and league_id != WCQ_EUROPE_LEAGUE_ID:
-                # ignora ligas não desejadas
                 return None
 
         home = teams.get("home", {})
@@ -526,7 +524,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             },
             "over_1_5": {
                 "over": implied_odds(p_over15),
-                "under": implied_odds(p_under15),
+                "under": implied_odds(p_over15 and p_over15 < 1.0 and 1.0 - p_over15 or 0.5),
             },
             "btts": {
                 "yes": implied_odds(p_btts),
@@ -705,22 +703,25 @@ def _extract_fixtures(payload: Any) -> List[Dict[str, Any]]:
 
 def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
     """
-    VERSÃO SIMPLIFICADA:
-    - Ignora 'days'
-    - Usa apenas o proxy:
-        GET /fixtures?next=150
-    - Depois faz dedupe por fixture.id
-
-    Isto garante que:
-      - O comportamento é semelhante ao que tinhas antes (next=50)
-      - Evita problemas de datas que estavam a dar 'no-fixtures'
+    Usa apenas o proxy:
+      - tenta /fixtures?next=50
+      - se vier vazio, tenta 20, 10, 5, 2
+    Garante que, no pior caso, usa o mesmo padrão que testaste à mão (next=2).
     """
-    payload = proxy_get("/fixtures", {"next": 150})
-    fixtures_raw = _extract_fixtures(payload)
-    fixtures = _dedupe_fixtures(fixtures_raw)
+    sizes = [50, 20, 10, 5, 2]
+    fixtures_raw: List[Dict[str, Any]] = []
 
+    for n in sizes:
+        payload = proxy_get("/fixtures", {"next": n})
+        arr = _extract_fixtures(payload)
+        logger.info(f"📊 tentativa proxy /fixtures?next={n} -> {len(arr)} fixtures brutas")
+        if arr:
+            fixtures_raw.extend(arr)
+            break
+
+    fixtures = _dedupe_fixtures(fixtures_raw)
     logger.info(
-        f"📊 collect_fixtures via next=150 | bruto={len(fixtures_raw)} "
+        f"📊 collect_fixtures via proxy (multi-next) | bruto={len(fixtures_raw)} "
         f"após dedupe={len(fixtures)}"
     )
     return fixtures
@@ -729,7 +730,7 @@ def collect_fixtures(days: int = 3) -> List[Dict[str, Any]]:
 def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
     """
     Corre o pipeline completo:
-      - busca fixtures via proxy (next=150)
+      - busca fixtures via proxy (multi-next)
       - calcula previsões
       - grava em data/predict/predictions.json
 
@@ -748,7 +749,7 @@ def fetch_and_save_predictions(days: int = 3) -> Dict[str, Any]:
 
     if not fixtures:
         logger.warning(
-            "⚠️ Nenhuma fixture obtida via proxy (/fixtures?next=150). "
+            "⚠️ Nenhuma fixture obtida via proxy (multi-next). "
             "A NÃO sobrescrever data/predict/predictions.json."
         )
         return {"status": "no-fixtures", "total": 0}
