@@ -67,8 +67,8 @@ function prob01(v?: number | null): number {
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
 }
 
-function pctFrom01(p: number): string {
-  return `${Math.round(p * 100)}%`;
+function pctStr01(v?: number | null): string {
+  return `${Math.round(prob01(v) * 100)}%`;
 }
 
 function tileClass(prob: number, isMax: boolean): string {
@@ -89,79 +89,85 @@ function badgeClass(prob: number, isMax: boolean): string {
   return "bg-gray-100 text-gray-700";
 }
 
-/* ----------------------------- */
-/*     Helpers p/ mercados V2    */
-/* ----------------------------- */
-
-// Winner: usa probs.home/draw/away se existirem,
-// senão cai para confidence/prob.
-function winnerProb(winner: any): number {
-  if (!winner) return 0;
-  const probs = winner.probs as
-    | { home?: number; draw?: number; away?: number }
-    | undefined;
-
-  if (probs) {
-    if (winner.label === "home" || winner.class === 0) {
-      return prob01(probs.home ?? 0);
-    }
-    if (winner.label === "draw" || winner.class === 1) {
-      return prob01(probs.draw ?? 0);
-    }
-    if (winner.label === "away" || winner.class === 2) {
-      return prob01(probs.away ?? 0);
-    }
-  }
-  return prob01(winner.confidence ?? winner.prob);
+function dcLabel(dc: DCClass | undefined) {
+  return dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
 }
 
-// Double Chance: usa label + probs["1X"/"12"/"X2"] se existirem.
-function dcLabelAndProb(dc: any): { label: string; p: number } {
-  if (!dc) return { label: "—", p: 0 };
+/* ----------------------------- */
+/*   Explicação da IA gerada     */
+/*      a partir do modelo       */
+/* ----------------------------- */
 
-  const rawLabel: string =
-    typeof dc.label === "string"
-      ? dc.label
-      : dc.class === 0
-      ? "1X"
-      : dc.class === 1
-      ? "12"
-      : dc.class === 2
-      ? "X2"
-      : "—";
+function buildExplanationFromModel(
+  p: any,
+  prWinner: number,
+  prDC: number,
+  prO25: number,
+  prBTTS: number
+): string[] {
+  const lines: string[] = [];
 
-  let p = 0;
-  const probs = dc.probs as Record<string, number> | undefined;
-  if (probs && (rawLabel === "1X" || rawLabel === "12" || rawLabel === "X2")) {
-    p = prob01(probs[rawLabel] ?? 0);
-  } else {
-    p = prob01(dc.confidence ?? dc.prob);
+  // xG total
+  if (typeof p.lambda_home === "number" && typeof p.lambda_away === "number") {
+    const total = p.lambda_home + p.lambda_away;
+    lines.push(
+      `Golos esperados: ${total.toFixed(2)} no total (casa ${p.lambda_home.toFixed(
+        2
+      )}, fora ${p.lambda_away.toFixed(2)}).`
+    );
   }
 
-  return { label: rawLabel, p };
-}
+  // Dupla hipótese (usa a classe escolhida em double_chance)
+  const dc = p?.predictions?.double_chance;
+  if (dc && prDC > 0) {
+    const label = dcLabel(dc.class as DCClass);
+    const pct = Math.round(prDC * 100);
+    let sideText = "";
+    if (label === "1X") {
+      sideText = "Equipa da casa com boa margem para não perder";
+    } else if (label === "X2") {
+      sideText = "Visitante com boa margem para não perder";
+    } else if (label === "12") {
+      sideText = "Jogo com grande probabilidade de não terminar empatado";
+    }
 
-// Binário (Over/Under, BTTS):
-// - prob = probabilidade de "Sim/Over" (normalmente)
-// - class = 1 → Sim, 0 → Não
-// Queremos mostrar prob do evento mostrado (Sim OU Não).
-function binaryLabelAndProb(
-  obj: any,
-  labelYes: string,
-  labelNo: string
-): { label: string; p: number } {
-  if (!obj) return { label: "—", p: 0 };
+    lines.push(
+      sideText
+        ? `${sideText} (${label}, prob. ${pct}%).`
+        : `Melhor cenário de dupla hipótese é ${label} (prob. ${pct}%).`
+    );
+  }
 
-  const raw = prob01(obj.confidence ?? obj.prob);
-  if (obj.class === 1) {
-    // Evento "Sim/Over"
-    return { label: labelYes, p: raw };
+  // Over 2.5
+  const over25 = p?.predictions?.over_2_5;
+  if (over25 && prO25 >= 0) {
+    const pct = Math.round(prO25 * 100);
+    if (over25.class === 1) {
+      lines.push(`Tendência para Over 2.5 golos (${pct}%).`);
+    } else {
+      lines.push(
+        `Baixa probabilidade de Over 2.5 golos (${pct}%) — tendência para poucos golos.`
+      );
+    }
   }
-  if (obj.class === 0) {
-    // Evento "Não/Under" → probabilidade = 1 - P(Sim)
-    return { label: labelNo, p: 1 - raw };
+
+  // BTTS
+  const btts = p?.predictions?.btts;
+  if (btts && prBTTS >= 0) {
+    const pct = Math.round(prBTTS * 100);
+    if (btts.class === 1) {
+      lines.push(`Boa probabilidade de ambas marcarem (BTTS Sim ${pct}%).`);
+    } else {
+      lines.push(`Pouca probabilidade de ambas marcarem (BTTS Não ${pct}%).`);
+    }
   }
-  return { label: labelYes, p: raw };
+
+  // Se por algum motivo não conseguimos gerar nada, cai para o backend
+  if (!lines.length && Array.isArray(p.explanation)) {
+    return p.explanation;
+  }
+
+  return lines;
 }
 
 /* ----------------------------- */
@@ -184,9 +190,7 @@ export default function HomeClient() {
   const [selectedDateKey, setSelectedDateKey] = useState<string>("today");
 
   const [liveFixtures, setLiveFixtures] = useState<any[]>([]);
-  const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(
-    null
-  );
+  const [lastFixturesUpdate, setLastFixturesUpdate] = useState<number | null>(null);
 
   /* ----------------------------- */
   /* 1) Ligas só do backend curado */
@@ -199,24 +203,25 @@ export default function HomeClient() {
     return ymd(tab.calc());
   }, [selectedDateKey]);
 
-  // Carrega ligas do backend curado (podes filtrar por data no backend; aqui usamos sem args)
+  // Carrega ligas do backend curado, filtradas pela data selecionada
   useEffect(() => {
     (async () => {
       try {
-        const ls = await getLeagues();
+        // @ts-expect-error pass extra filter object se o teu getLeagues aceitar
+        const ls = await getLeagues({ date: selectedDateISO });
         setBackendLeagues(ls ?? []);
       } catch (e) {
         console.error("Erro a carregar ligas:", e);
         setBackendLeagues([]);
       }
     })();
-  }, []);
+  }, [selectedDateISO]);
 
   // limpar possíveis caches antigas do browser (uma vez)
   useEffect(() => {
     try {
-      ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach(
-        (k) => localStorage.removeItem(k)
+      ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
+        localStorage.removeItem(k)
       );
     } catch {
       // ignore
@@ -268,8 +273,7 @@ export default function HomeClient() {
   useEffect(() => {
     const params = new URLSearchParams(search.toString());
     params.set("date", selectedDateISO);
-    if (selectedLeague && selectedLeague !== "all")
-      params.set("league_id", String(selectedLeague));
+    if (selectedLeague && selectedLeague !== "all") params.set("league_id", String(selectedLeague));
     else params.delete("league_id");
     router.replace(`?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -313,9 +317,7 @@ export default function HomeClient() {
       const filteredPreds =
         allowedLeagueIds.size > 0
           ? byDate.filter((p: any) =>
-              allowedLeagueIds.has(
-                String(p.league_id ?? p.leagueId ?? p.league?.id)
-              )
+              allowedLeagueIds.has(String(p.league_id ?? p.leagueId ?? p.league?.id))
             )
           : byDate;
 
@@ -327,11 +329,7 @@ export default function HomeClient() {
       });
 
       setPredictions(filteredPreds as Prediction[]);
-      setStats(
-        statsData && Object.keys(statsData).length > 0
-          ? (statsData as StatsType)
-          : null
-      );
+      setStats(statsData && Object.keys(statsData).length > 0 ? (statsData as StatsType) : null);
 
       const lastUpdateRaw = (lastU as { last_update?: string })?.last_update;
       if (lastUpdateRaw && typeof lastUpdateRaw === "string") {
@@ -341,10 +339,7 @@ export default function HomeClient() {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
-          })} ${d.toLocaleTimeString("pt-PT", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}`
+          })} ${d.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}`
         );
       } else {
         setLastUpdate("");
@@ -396,6 +391,9 @@ export default function HomeClient() {
   /* ----------------------------- */
   /*          Helpers UI           */
   /* ----------------------------- */
+
+  const toPct = (v?: number | null) =>
+    typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
 
   const oddFmt = (v?: number | null) =>
     typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
@@ -470,9 +468,7 @@ export default function HomeClient() {
               <button
                 key={d.key}
                 onClick={() => setSelectedDateKey(d.key)}
-                className={`btn ${
-                  selectedDateKey === d.key ? "btn-primary" : "btn-ghost"
-                }`}
+                className={`btn ${selectedDateKey === d.key ? "btn-primary" : "btn-ghost"}`}
               >
                 {d.label}
               </button>
@@ -498,8 +494,8 @@ export default function HomeClient() {
           <button
             onClick={() => {
               try {
-                ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach(
-                  (k) => localStorage.removeItem(k)
+                ["leagues", "all_leagues", "api_football_leagues", "api_football|leagues"].forEach((k) =>
+                  localStorage.removeItem(k)
                 );
               } catch {
                 // ignore
@@ -526,12 +522,8 @@ export default function HomeClient() {
         {selectedLeague !== "all" && (
           <div className="card p-6 mb-10">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-emerald-400">
-                Jogos do dia
-              </h2>
-              <span className="text-xs text-gray-500">
-                Use o botão “Atualizar” no topo
-              </span>
+              <h2 className="text-lg font-semibold text-emerald-400">Jogos do dia</h2>
+              <span className="text-xs text-gray-500">Use o botão “Atualizar” no topo</span>
             </div>
 
             {loadingFixtures && (
@@ -542,42 +534,22 @@ export default function HomeClient() {
 
             {(() => {
               const fixturesDay = (liveFixtures || []).filter(
-                (f: any) =>
-                  ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
+                (f: any) => ymd(fixtureDateSafe(f.fixture?.date)) === selectedDateISO
               );
 
               return fixturesDay.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {fixturesDay.map((f: any) => (
-                    <div
-                      key={f.fixture.id}
-                      className="card p-4 hover:border-emerald-400 transition"
-                    >
-                      <div className="flex items-center justify-center gap-3 mb-2">
-                        <Image
-                          src={f.teams.home.logo}
-                          alt=""
-                          width={24}
-                          height={24}
-                        />
-                        <span className="text-white font-medium">
-                          {f.teams.home.name}
-                        </span>
+                    <div key={f.fixture.id} className="card p-4 hover:border-emerald-400 transition">
+                      <div className="flex items-center justifycenter gap-3 mb-2">
+                        <Image src={f.teams.home.logo} alt="" width={24} height={24} />
+                        <span className="text-white font-medium">{f.teams.home.name}</span>
                         <span className="text-gray-400">vs</span>
-                        <span className="text-white font-medium">
-                          {f.teams.away.name}
-                        </span>
-                        <Image
-                          src={f.teams.away.logo}
-                          alt=""
-                          width={24}
-                          height={24}
-                        />
+                        <span className="text-white font-medium">{f.teams.away.name}</span>
+                        <Image src={f.teams.away.logo} alt="" width={24} height={24} />
                       </div>
                       <p className="text-sm text-center text-gray-400">
-                        {new Date(
-                          fixtureDateSafe(f.fixture?.date)
-                        ).toLocaleString("pt-PT")}
+                        {new Date(fixtureDateSafe(f.fixture?.date)).toLocaleString("pt-PT")}
                       </p>
                       <p className="text-xs text-center text-gray-500 mt-1">
                         {f.league.name} ({f.league.country})
@@ -587,9 +559,7 @@ export default function HomeClient() {
                 </div>
               ) : (
                 !loadingFixtures && (
-                  <p className="text-center text-gray-400 mt-4">
-                    Sem jogos para esta data.
-                  </p>
+                  <p className="text-center text-gray-400 mt-4">Sem jogos para esta data.</p>
                 )
               );
             })()}
@@ -612,45 +582,25 @@ export default function HomeClient() {
               const over15 = p?.predictions?.over_1_5;
               const btts = p?.predictions?.btts;
 
-              // Winner label (usa label da V2 se existir)
-              let winnerLabel = "—";
-              if (winner?.label === "home") {
-                winnerLabel = p.home_team;
-              } else if (winner?.label === "away") {
-                winnerLabel = p.away_team;
-              } else if (winner?.label === "draw") {
-                winnerLabel = "Empate";
-              } else if (winner?.class === 0) {
-                winnerLabel = p.home_team;
-              } else if (winner?.class === 1) {
-                winnerLabel = "Empate";
-              } else if (winner?.class === 2) {
-                winnerLabel = p.away_team;
-              }
+              // Winner: 0=home, 1=draw, 2=away — alinhado com backend
+              const winnerLabel =
+                winner?.class === 0
+                  ? p.home_team
+                  : winner?.class === 1
+                  ? "Empate"
+                  : winner?.class === 2
+                  ? p.away_team
+                  : "—";
 
-              const prWinner = winnerProb(winner);
-              const { label: dcLabelStr, p: prDC } = dcLabelAndProb(dc);
-              const { label: over25Label, p: prO25 } = binaryLabelAndProb(
-                over25,
-                "Sim",
-                "Não"
-              );
-              const { label: over15Label, p: prO15 } = binaryLabelAndProb(
-                over15,
-                "Sim",
-                "Não"
-              );
-              const { label: bttsLabel, p: prBTTS } = binaryLabelAndProb(
-                btts,
-                "Sim",
-                "Não"
-              );
-
-              const odds1x2 =
-                p?.odds?.winner ?? p?.odds?.["1x2"] ?? ({} as any);
-              const oddsOU25 =
-                p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
+              const odds1x2 = p?.odds?.winner ?? p?.odds?.["1x2"] ?? {};
+              const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
               const oddsBTTS = p?.odds?.btts ?? {};
+
+              const prWinner = prob01(winner?.confidence ?? winner?.prob);
+              const prDC = prob01(dc?.confidence ?? dc?.prob);
+              const prO25 = prob01(over25?.confidence ?? over25?.prob);
+              const prO15 = prob01(over15?.confidence ?? over15?.prob);
+              const prBTTS = prob01(btts?.confidence ?? btts?.prob);
 
               const marketEntries: [string, number][] = [
                 ["winner", prWinner],
@@ -664,9 +614,8 @@ export default function HomeClient() {
               );
               const isTop = (k: string) => topEntry[0] === k;
 
-              const explanation: string[] = Array.isArray(p.explanation)
-                ? p.explanation
-                : [];
+              // Explicação sempre calculada a partir do modelo (coerente com os números)
+              const explanation = buildExplanationFromModel(p, prWinner, prDC, prO25, prBTTS);
 
               // Marcadores prováveis por jogo com fallback
               const homeScorers =
@@ -702,38 +651,23 @@ export default function HomeClient() {
 
                   {/* Teams */}
                   <div className="flex items-center justify-center gap-3">
-                    {!!p.home_logo && (
-                      <Image src={p.home_logo} alt="" width={28} height={28} />
-                    )}
-                    <div className="text-white font-semibold text-center">
-                      {p.home_team}
-                    </div>
+                    {!!p.home_logo && <Image src={p.home_logo} alt="" width={28} height={28} />}
+                    <div className="text-white font-semibold text-center">{p.home_team}</div>
                     <div className="text-gray-500">vs</div>
-                    <div className="text-white font-semibold text-center">
-                      {p.away_team}
-                    </div>
-                    {!!p.away_logo && (
-                      <Image src={p.away_logo} alt="" width={28} height={28} />
-                    )}
+                    <div className="text-white font-semibold text-center">{p.away_team}</div>
+                    {!!p.away_logo && <Image src={p.away_logo} alt="" width={28} height={28} />}
                   </div>
 
                   {/* Correct score (melhor) */}
                   <div className="flex items-center justify-center gap-2">
                     <span className="badge">Correct Score</span>
-                    <span className="text-sm text-white">
-                      {bestCorrectScore(p)}
-                    </span>
+                    <span className="text-sm text-white">{bestCorrectScore(p)}</span>
                   </div>
 
                   {/* Tips com destaque */}
                   <div className="grid grid-cols-2 gap-2">
                     {/* Winner */}
-                    <div
-                      className={`rounded-xl border p-3 ${tileClass(
-                        prWinner,
-                        isTop("winner")
-                      )}`}
-                    >
+                    <div className={`rounded-xl border p-3 ${tileClass(prWinner, isTop("winner"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Winner</span>
                         {isTop("winner") && (
@@ -750,18 +684,13 @@ export default function HomeClient() {
                             isTop("winner")
                           )}`}
                         >
-                          {pctFrom01(prWinner)}
+                          {pctStr01(winner?.confidence ?? winner?.prob)}
                         </span>
                       </div>
                     </div>
 
                     {/* Double Chance */}
-                    <div
-                      className={`rounded-xl border p-3 ${tileClass(
-                        prDC,
-                        isTop("double")
-                      )}`}
-                    >
+                    <div className={`rounded-xl border p-3 ${tileClass(prDC, isTop("double"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Double Chance</span>
                         {isTop("double") && (
@@ -771,25 +700,20 @@ export default function HomeClient() {
                         )}
                       </div>
                       <div className="text-sm text-white mt-0.5">
-                        {dcLabelStr}{" "}
+                        {dcLabel(dc?.class)}{" "}
                         <span
                           className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
                             prDC,
                             isTop("double")
                           )}`}
                         >
-                          {pctFrom01(prDC)}
+                          {pctStr01(dc?.confidence ?? dc?.prob)}
                         </span>
                       </div>
                     </div>
 
                     {/* Over 2.5 */}
-                    <div
-                      className={`rounded-xl border p-3 ${tileClass(
-                        prO25,
-                        isTop("over25")
-                      )}`}
-                    >
+                    <div className={`rounded-xl border p-3 ${tileClass(prO25, isTop("over25"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 2.5</span>
                         {isTop("over25") && (
@@ -799,25 +723,20 @@ export default function HomeClient() {
                         )}
                       </div>
                       <div className="text-sm text-white mt-0.5">
-                        {over25Label}{" "}
+                        {over25?.class ? "Sim" : "Não"}{" "}
                         <span
                           className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
                             prO25,
                             isTop("over25")
                           )}`}
                         >
-                          {pctFrom01(prO25)}
+                          {pctStr01(over25?.confidence ?? over25?.prob)}
                         </span>
                       </div>
                     </div>
 
                     {/* Over 1.5 */}
-                    <div
-                      className={`rounded-xl border p-3 ${tileClass(
-                        prO15,
-                        isTop("over15")
-                      )}`}
-                    >
+                    <div className={`rounded-xl border p-3 ${tileClass(prO15, isTop("over15"))}`}>
                       <div className="text-xs text-gray-400 flex items-center justify-between">
                         <span>Over 1.5</span>
                         {isTop("over15") && (
@@ -827,14 +746,14 @@ export default function HomeClient() {
                         )}
                       </div>
                       <div className="text-sm text-white mt-0.5">
-                        {over15Label}{" "}
+                        {over15?.class ? "Sim" : "Não"}{" "}
                         <span
                           className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
                             prO15,
                             isTop("over15")
                           )}`}
                         >
-                          {pctFrom01(prO15)}
+                          {pctStr01(over15?.confidence ?? over15?.prob)}
                         </span>
                       </div>
                     </div>
@@ -843,15 +762,15 @@ export default function HomeClient() {
                     <div className="rounded-xl bg-white/5 border border-white/10 p-3 col-span-2">
                       <div className="text-xs text-gray-400">BTTS</div>
                       <div className="text-sm text-white">
-                        {bttsLabel}{" "}
+                        {btts?.class ? "Sim" : "Não"}{" "}
                         <span className="text-gray-400 ml-1">
-                          ({pctFrom01(prBTTS)})
+                          ({toPct(btts?.confidence ?? btts?.prob)})
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Explicação da IA */}
+                  {/* Explicação da IA (agora coerente com os números) */}
                   {explanation.length > 0 && (
                     <div className="rounded-xl bg-emerald-500/5 border border-emerald-500/40 p-3 text-xs text-gray-100 space-y-1">
                       <div className="flex items-center justify-between mb-1">
@@ -882,26 +801,19 @@ export default function HomeClient() {
                         <div>
                           <div className="text-gray-400 text-xs mb-1">1X2</div>
                           <div className="text-white">
-                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} /{" "}
-                            {oddFmt(odds1x2?.away)}
+                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} / {oddFmt(odds1x2?.away)}
                           </div>
                         </div>
                         <div>
-                          <div className="text-gray-400 text-xs mb-1">
-                            O/U 2.5
-                          </div>
+                          <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
                           <div className="text-white">
-                            O {oddFmt(oddsOU25?.over)} · U{" "}
-                            {oddFmt(oddsOU25?.under)}
+                            O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
                           </div>
                         </div>
                         <div>
-                          <div className="text-gray-400 text-xs mb-1">
-                            BTTS
-                          </div>
+                          <div className="text-gray-400 text-xs mb-1">BTTS</div>
                           <div className="text-white">
-                            Sim {oddFmt(oddsBTTS?.yes)} · Não{" "}
-                            {oddFmt(oddsBTTS?.no)}
+                            Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
                           </div>
                         </div>
                       </div>
@@ -917,70 +829,53 @@ export default function HomeClient() {
                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
                       {/* Correct Score */}
                       <div>
-                        <div className="text-xs text-gray-400 mb-1">
-                          Top-3 Correct Score
-                        </div>
+                        <div className="text-xs text-gray-400 mb-1">Top-3 Correct Score</div>
                         <ul className="text-sm text-white space-y-1">
-                          {(p.correct_score_top3 ??
-                            p?.predictions?.correct_score?.top3 ??
-                            []
-                          )
+                          {(p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
                             .slice(0, 3)
                             .map((cs: any, idx: number) => (
                               <li key={idx} className="flex justify-between">
                                 <span>{cs.score}</span>
                                 <span className="text-gray-400">
-                                  {Math.round(
-                                    prob01(cs.prob) * 1000
-                                  ) / 10}
-                                  %
+                                  {Math.round(prob01(cs.prob) * 1000) / 10}%
                                 </span>
                               </li>
                             ))}
-                          {(
-                            p.correct_score_top3 ??
-                            p?.predictions?.correct_score?.top3 ??
-                            []
-                          ).length === 0 && (
-                            <li className="text-gray-500">—</li>
-                          )}
+                          {((p.correct_score_top3 ?? p?.predictions?.correct_score?.top3 ?? [])
+                            .length === 0) && <li className="text-gray-500">—</li>}
                         </ul>
                       </div>
 
                       {/* Marcadores Prováveis */}
                       <div>
-                        <div className="text-xs text-gray-400 mb-1">
-                          Marcadores Prováveis
-                        </div>
+                        <div className="text-xs text-gray-400 mb-1">Marcadores Prováveis</div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {/* Casa */}
                           <ul className="text-sm text-white space-y-1">
                             <li className="text-emerald-400">{p.home_team}</li>
-                            {homeScorers.slice(0, 3).map(
-                              (sc: any, idx: number) => {
-                                const name =
-                                  sc.name ??
-                                  sc.player ??
-                                  sc.full_name ??
-                                  `Jogador ${idx + 1}`;
-                                const rawProb =
-                                  sc.probability_pct ??
-                                  sc.probability ??
-                                  sc.prob ??
-                                  sc.confidence;
-                                return (
-                                  <li
-                                    key={sc.player_id ?? name ?? idx}
-                                    className="flex justify-between"
-                                  >
-                                    <span>{name}</span>
-                                    <span className="text-gray-400">
-                                      {Math.round(prob01(rawProb) * 100)}%
-                                    </span>
-                                  </li>
-                                );
-                              }
-                            )}
+                            {homeScorers.slice(0, 3).map((sc: any, idx: number) => {
+                              const name =
+                                sc.name ??
+                                sc.player ??
+                                sc.full_name ??
+                                `Jogador ${idx + 1}`;
+                              const rawProb =
+                                sc.probability_pct ??
+                                sc.probability ??
+                                sc.prob ??
+                                sc.confidence;
+                              return (
+                                <li
+                                  key={sc.player_id ?? name ?? idx}
+                                  className="flex justify-between"
+                                >
+                                  <span>{name}</span>
+                                  <span className="text-gray-400">
+                                    {Math.round(prob01(rawProb) * 100)}%
+                                  </span>
+                                </li>
+                              );
+                            })}
                             {!homeScorers.length && (
                               <li className="text-gray-500">—</li>
                             )}
@@ -989,31 +884,29 @@ export default function HomeClient() {
                           {/* Fora */}
                           <ul className="text-sm text-white space-y-1">
                             <li className="text-emerald-400">{p.away_team}</li>
-                            {awayScorers.slice(0, 3).map(
-                              (sc: any, idx: number) => {
-                                const name =
-                                  sc.name ??
-                                  sc.player ??
-                                  sc.full_name ??
-                                  `Jogador ${idx + 1}`;
-                                const rawProb =
-                                  sc.probability_pct ??
-                                  sc.probability ??
-                                  sc.prob ??
-                                  sc.confidence;
-                                return (
-                                  <li
-                                    key={sc.player_id ?? name ?? idx}
-                                    className="flex justify-between"
-                                  >
-                                    <span>{name}</span>
-                                    <span className="text-gray-400">
-                                      {Math.round(prob01(rawProb) * 100)}%
-                                    </span>
-                                  </li>
-                                );
-                              }
-                            )}
+                            {awayScorers.slice(0, 3).map((sc: any, idx: number) => {
+                              const name =
+                                sc.name ??
+                                sc.player ??
+                                sc.full_name ??
+                                `Jogador ${idx + 1}`;
+                              const rawProb =
+                                sc.probability_pct ??
+                                sc.probability ??
+                                sc.prob ??
+                                sc.confidence;
+                              return (
+                                <li
+                                  key={sc.player_id ?? name ?? idx}
+                                  className="flex justify-between"
+                                >
+                                  <span>{name}</span>
+                                  <span className="text-gray-400">
+                                    {Math.round(prob01(rawProb) * 100)}%
+                                  </span>
+                                </li>
+                              );
+                            })}
                             {!awayScorers.length && (
                               <li className="text-gray-500">—</li>
                             )}
