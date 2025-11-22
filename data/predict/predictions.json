@@ -357,6 +357,7 @@
     "explanation": [
       "Golos esperados: 0.10 no total (casa 0.05, fora 0.05).",
       "Jogo equilibrado, prob. de empate 91%.",
+      "Melhor dupla hipótese: 1X com 95% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
     ],
@@ -506,7 +507,8 @@
     "confidence": 0.8210579980459172,
     "explanation": [
       "Golos esperados: 4.50 no total (casa 1.00, fora 3.50).",
-      "Visitante em vantagem (X2), prob. 82% para não perder.",
+      "Visitante favorito (X2), prob. 82% para não perder.",
+      "Melhor dupla hipótese: X2 com 93% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -1092,7 +1094,8 @@
     "confidence": 0.8206275901003627,
     "explanation": [
       "Golos esperados: 3.10 no total (casa 2.60, fora 0.50).",
-      "Casa ligeiramente favorita (1X), prob. 82% para vitória.",
+      "Casa favorita (1X), prob. 82% para vitória.",
+      "Melhor dupla hipótese: 1X com 95% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 64%)."
     ],
@@ -1624,7 +1627,8 @@
     "confidence": 0.760018297671741,
     "explanation": [
       "Golos esperados: 1.55 no total (casa 0.05, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 76% para não perder.",
+      "Visitante favorito (X2), prob. 76% para não perder.",
+      "Melhor dupla hipótese: X2 com 99% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 96%)."
     ],
@@ -2210,7 +2214,8 @@
     "confidence": 0.760018297671741,
     "explanation": [
       "Golos esperados: 1.55 no total (casa 0.05, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 76% para não perder.",
+      "Visitante favorito (X2), prob. 76% para não perder.",
+      "Melhor dupla hipótese: X2 com 99% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 96%)."
     ],
@@ -2796,7 +2801,8 @@
     "confidence": 0.7371881824103165,
     "explanation": [
       "Golos esperados: 3.40 no total (casa 2.55, fora 0.85).",
-      "Casa ligeiramente favorita (1X), prob. 74% para vitória.",
+      "Casa favorita (1X), prob. 74% para vitória.",
+      "Melhor dupla hipótese: 1X com 90% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -3165,7 +3171,8 @@
     "confidence": 0.7321801612552717,
     "explanation": [
       "Golos esperados: 3.00 no total (casa 2.30, fora 0.70).",
-      "Casa ligeiramente favorita (1X), prob. 73% para vitória.",
+      "Casa favorita (1X), prob. 73% para vitória.",
+      "Melhor dupla hipótese: 1X com 90% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -3642,7 +3649,8 @@
     "confidence": 0.705359565071209,
     "explanation": [
       "Golos esperados: 3.20 no total (casa 2.35, fora 0.85).",
-      "Casa ligeiramente favorita (1X), prob. 71% para vitória.",
+      "Casa favorita (1X), prob. 71% para vitória.",
+      "Melhor dupla hipótese: 1X com 88% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -4227,7 +4235,8 @@
     "confidence": 0.6902356777064742,
     "explanation": [
       "Golos esperados: 2.30 no total (casa 1.80, fora 0.50).",
-      "Casa ligeiramente favorita (1X), prob. 69% para vitória.",
+      "Casa favorita (1X), prob. 69% para vitória.",
+      "Melhor dupla hipótese: 1X com 90% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 67%)."
     ],
@@ -4813,7 +4822,8 @@
     "confidence": 0.6762714395487539,
     "explanation": [
       "Golos esperados: 3.15 no total (casa 2.25, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 68% para vitória.",
+      "Casa favorita (1X), prob. 68% para vitória.",
+      "Melhor dupla hipótese: 1X com 86% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -5236,7 +5246,8 @@
     "confidence": 0.6752353854162804,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 2.05, fora 0.75).",
-      "Casa ligeiramente favorita (1X), prob. 68% para vitória.",
+      "Casa favorita (1X), prob. 68% para vitória.",
+      "Melhor dupla hipótese: 1X com 87% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -5551,7 +5562,8 @@
     "confidence": 0.6671426789086163,
     "explanation": [
       "Golos esperados: 3.10 no total (casa 2.20, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 67% para vitória.",
+      "Casa favorita (1X), prob. 67% para vitória.",
+      "Melhor dupla hipótese: 1X com 86% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -5866,7 +5878,8 @@
     "confidence": 0.657804500296681,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.90, fora 0.70).",
-      "Casa ligeiramente favorita (1X), prob. 66% para vitória.",
+      "Casa favorita (1X), prob. 66% para vitória.",
+      "Melhor dupla hipótese: 1X com 87% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -6451,7 +6464,8 @@
     "confidence": 0.6404491875205031,
     "explanation": [
       "Golos esperados: 2.85 no total (casa 2.00, fora 0.85).",
-      "Casa ligeiramente favorita (1X), prob. 64% para vitória.",
+      "Casa favorita (1X), prob. 64% para vitória.",
+      "Melhor dupla hipótese: 1X com 85% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -6928,7 +6942,8 @@
     "confidence": 0.638483862863686,
     "explanation": [
       "Golos esperados: 2.40 no total (casa 1.75, fora 0.65).",
-      "Casa ligeiramente favorita (1X), prob. 64% para vitória.",
+      "Casa favorita (1X), prob. 64% para vitória.",
+      "Melhor dupla hipótese: 1X com 87% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 61%)."
     ],
@@ -7244,7 +7259,8 @@
     "confidence": 0.6149892197575589,
     "explanation": [
       "Golos esperados: 3.60 no total (casa 1.25, fora 2.35).",
-      "Visitante em vantagem (X2), prob. 61% para não perder.",
+      "Visitante favorito (X2), prob. 61% para não perder.",
+      "Melhor dupla hipótese: 12 com 81% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 64%)."
     ],
@@ -7646,7 +7662,8 @@
     "confidence": 0.611986852211222,
     "explanation": [
       "Golos esperados: 2.50 no total (casa 1.75, fora 0.75).",
-      "Casa ligeiramente favorita (1X), prob. 61% para vitória.",
+      "Casa favorita (1X), prob. 61% para vitória.",
+      "Melhor dupla hipótese: 1X com 84% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -8231,7 +8248,8 @@
     "confidence": 0.6040757388803684,
     "explanation": [
       "Golos esperados: 3.65 no total (casa 2.35, fora 1.30).",
-      "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
+      "Casa favorita (1X), prob. 60% para vitória.",
+      "Melhor dupla hipótese: 12 com 81% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 66%)."
     ],
@@ -8763,7 +8781,8 @@
     "confidence": 0.6039579046169379,
     "explanation": [
       "Golos esperados: 3.00 no total (casa 1.00, fora 2.00).",
-      "Visitante em vantagem (X2), prob. 60% para não perder.",
+      "Visitante favorito (X2), prob. 60% para não perder.",
+      "Melhor dupla hipótese: X2 com 82% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -9348,7 +9367,8 @@
     "confidence": 0.6039579046169379,
     "explanation": [
       "Golos esperados: 3.00 no total (casa 2.00, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
+      "Casa favorita (1X), prob. 60% para vitória.",
+      "Melhor dupla hipótese: 1X com 82% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -9933,7 +9953,8 @@
     "confidence": 0.6031948937959465,
     "explanation": [
       "Golos esperados: 2.25 no total (casa 1.60, fora 0.65).",
-      "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
+      "Casa favorita (1X), prob. 60% para vitória.",
+      "Melhor dupla hipótese: 1X com 85% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 62%)."
     ],
@@ -10519,7 +10540,8 @@
     "confidence": 0.5962745053183249,
     "explanation": [
       "Golos esperados: 3.50 no total (casa 2.25, fora 1.25).",
-      "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
+      "Casa favorita (1X), prob. 60% para vitória.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 64%)."
     ],
@@ -10997,7 +11019,8 @@
     "confidence": 0.5962745053183249,
     "explanation": [
       "Golos esperados: 3.50 no total (casa 2.25, fora 1.25).",
-      "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
+      "Casa favorita (1X), prob. 60% para vitória.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 64%)."
     ],
@@ -11366,6 +11389,7 @@
     "explanation": [
       "Golos esperados: 0.55 no total (casa 0.05, fora 0.50).",
       "Jogo equilibrado, prob. de empate 59%.",
+      "Melhor dupla hipótese: X2 com 97% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 98%)."
     ],
@@ -11713,7 +11737,8 @@
     "confidence": 0.5896388466247464,
     "explanation": [
       "Golos esperados: 2.30 no total (casa 1.60, fora 0.70).",
-      "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
+      "Casa favorita (1X), prob. 59% para vitória.",
+      "Melhor dupla hipótese: 1X com 84% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -12136,7 +12161,8 @@
     "confidence": 0.5850304457585359,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.80, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
+      "Casa favorita (1X), prob. 59% para vitória.",
+      "Melhor dupla hipótese: 1X com 81% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -12613,7 +12639,8 @@
     "confidence": 0.5676975275201288,
     "explanation": [
       "Golos esperados: 3.25 no total (casa 2.05, fora 1.20).",
-      "Casa ligeiramente favorita (1X), prob. 57% para vitória.",
+      "Casa favorita (1X), prob. 57% para vitória.",
+      "Melhor dupla hipótese: 12 com 79% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -13199,7 +13226,8 @@
     "confidence": 0.5666825469449451,
     "explanation": [
       "Golos esperados: 3.35 no total (casa 2.10, fora 1.25).",
-      "Casa ligeiramente favorita (1X), prob. 57% para vitória.",
+      "Casa favorita (1X), prob. 57% para vitória.",
+      "Melhor dupla hipótese: 12 com 79% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
     ],
@@ -13785,7 +13813,8 @@
     "confidence": 0.5588607487661731,
     "explanation": [
       "Golos esperados: 3.00 no total (casa 1.90, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
+      "Casa favorita (1X), prob. 56% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
@@ -14371,7 +14400,8 @@
     "confidence": 0.5572430713217487,
     "explanation": [
       "Golos esperados: 3.20 no total (casa 2.00, fora 1.20).",
-      "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
+      "Casa favorita (1X), prob. 56% para vitória.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 60%)."
     ],
@@ -14957,7 +14987,8 @@
     "confidence": 0.5477899579226977,
     "explanation": [
       "Golos esperados: 2.95 no total (casa 1.10, fora 1.85).",
-      "Visitante em vantagem (X2), prob. 55% para não perder.",
+      "Visitante favorito (X2), prob. 55% para não perder.",
+      "Melhor dupla hipótese: X2 com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -15489,7 +15520,8 @@
     "confidence": 0.5477899579226977,
     "explanation": [
       "Golos esperados: 2.95 no total (casa 1.85, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 55% para vitória.",
+      "Casa favorita (1X), prob. 55% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -15913,7 +15945,8 @@
     "confidence": 0.5373728854413429,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.65, fora 0.95).",
-      "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
+      "Casa favorita (1X), prob. 54% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -16336,7 +16369,8 @@
     "confidence": 0.5371248097710443,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.70, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
+      "Casa favorita (1X), prob. 54% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -16867,7 +16901,8 @@
     "confidence": 0.5369393452913764,
     "explanation": [
       "Golos esperados: 1.90 no total (casa 1.30, fora 0.60).",
-      "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
+      "Casa favorita (1X), prob. 54% para vitória.",
+      "Melhor dupla hipótese: 1X com 83% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 67%)."
     ],
@@ -17399,7 +17434,8 @@
     "confidence": 0.5356956852279174,
     "explanation": [
       "Golos esperados: 3.10 no total (casa 1.90, fora 1.20).",
-      "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
+      "Casa favorita (1X), prob. 54% para vitória.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
@@ -17985,7 +18021,8 @@
     "confidence": 0.5250010344374464,
     "explanation": [
       "Golos esperados: 2.45 no total (casa 1.55, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 53% para vitória.",
+      "Casa favorita (1X), prob. 53% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -18570,7 +18607,8 @@
     "confidence": 0.5131890549644396,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 1.70, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
+      "Casa favorita (1X), prob. 51% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -19155,7 +19193,8 @@
     "confidence": 0.5129262517592726,
     "explanation": [
       "Golos esperados: 3.40 no total (casa 2.00, fora 1.40).",
-      "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
+      "Casa favorita (1X), prob. 51% para vitória.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
@@ -19741,7 +19780,8 @@
     "confidence": 0.5128294983863453,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.00, fora 1.60).",
-      "Visitante em vantagem (X2), prob. 51% para não perder.",
+      "Visitante favorito (X2), prob. 51% para não perder.",
+      "Melhor dupla hipótese: X2 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -20218,7 +20258,8 @@
     "confidence": 0.5128294983863453,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.00, fora 1.60).",
-      "Visitante em vantagem (X2), prob. 51% para não perder.",
+      "Visitante favorito (X2), prob. 51% para não perder.",
+      "Melhor dupla hipótese: X2 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -20641,7 +20682,8 @@
     "confidence": 0.5021172360201671,
     "explanation": [
       "Golos esperados: 3.15 no total (casa 1.85, fora 1.30).",
-      "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
+      "Casa favorita (1X), prob. 50% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -21227,7 +21269,8 @@
     "confidence": 0.5016191244200665,
     "explanation": [
       "Golos esperados: 3.95 no total (casa 2.25, fora 1.70).",
-      "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
+      "Casa favorita (1X), prob. 50% para vitória.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 73%)."
     ],
@@ -21813,7 +21856,8 @@
     "confidence": 0.5007878801246539,
     "explanation": [
       "Golos esperados: 2.65 no total (casa 1.60, fora 1.05).",
-      "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
+      "Casa favorita (1X), prob. 50% para vitória.",
+      "Melhor dupla hipótese: 1X com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -22344,7 +22388,8 @@
     "confidence": 0.5002986295078875,
     "explanation": [
       "Golos esperados: 2.55 no total (casa 1.55, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
+      "Casa favorita (1X), prob. 50% para vitória.",
+      "Melhor dupla hipótese: 1X com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -22711,7 +22756,8 @@
     "confidence": 0.4908959530984925,
     "explanation": [
       "Golos esperados: 4.50 no total (casa 2.50, fora 2.00).",
-      "Casa ligeiramente favorita (1X), prob. 49% para vitória.",
+      "Casa favorita (1X), prob. 49% para vitória.",
+      "Melhor dupla hipótese: 12 com 81% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 79%)."
     ],
@@ -23079,7 +23125,8 @@
     "confidence": 0.4908959530984925,
     "explanation": [
       "Golos esperados: 4.50 no total (casa 2.00, fora 2.50).",
-      "Visitante em vantagem (X2), prob. 49% para não perder.",
+      "Visitante favorito (X2), prob. 49% para não perder.",
+      "Melhor dupla hipótese: 12 com 81% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 79%)."
     ],
@@ -23611,7 +23658,8 @@
     "confidence": 0.4727181960772989,
     "explanation": [
       "Golos esperados: 4.30 no total (casa 2.35, fora 1.95).",
-      "Casa ligeiramente favorita (1X), prob. 47% para vitória.",
+      "Casa favorita (1X), prob. 47% para vitória.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 77%)."
     ],
@@ -23981,7 +24029,8 @@
     "confidence": 0.4724899083114359,
     "explanation": [
       "Golos esperados: 4.10 no total (casa 1.85, fora 2.25).",
-      "Visitante em vantagem (X2), prob. 47% para não perder.",
+      "Visitante favorito (X2), prob. 47% para não perder.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 75%)."
     ],
@@ -24349,7 +24398,8 @@
     "confidence": 0.4698259764863751,
     "explanation": [
       "Golos esperados: 1.50 no total (casa 0.50, fora 1.00).",
-      "Visitante em vantagem (X2), prob. 47% para não perder.",
+      "Visitante favorito (X2), prob. 47% para não perder.",
+      "Melhor dupla hipótese: X2 com 82% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 75%)."
     ],
@@ -24827,7 +24877,8 @@
     "confidence": 0.46912905621397044,
     "explanation": [
       "Golos esperados: 3.20 no total (casa 1.80, fora 1.40).",
-      "Casa ligeiramente favorita (1X), prob. 47% para vitória.",
+      "Casa favorita (1X), prob. 47% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
     ],
@@ -25195,7 +25246,8 @@
     "confidence": 0.46688603753217345,
     "explanation": [
       "Golos esperados: 2.90 no total (casa 1.25, fora 1.65).",
-      "Visitante em vantagem (X2), prob. 47% para não perder.",
+      "Visitante favorito (X2), prob. 47% para não perder.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
     ],
@@ -25673,7 +25725,8 @@
     "confidence": 0.4625625831492978,
     "explanation": [
       "Golos esperados: 2.50 no total (casa 1.05, fora 1.45).",
-      "Visitante em vantagem (X2), prob. 46% para não perder.",
+      "Visitante favorito (X2), prob. 46% para não perder.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -26258,7 +26311,8 @@
     "confidence": 0.4611699947225262,
     "explanation": [
       "Golos esperados: 2.40 no total (casa 1.00, fora 1.40).",
-      "Visitante em vantagem (X2), prob. 46% para não perder.",
+      "Visitante favorito (X2), prob. 46% para não perder.",
+      "Melhor dupla hipótese: X2 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -26789,7 +26843,8 @@
     "confidence": 0.45090052047960083,
     "explanation": [
       "Golos esperados: 2.55 no total (casa 1.45, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
+      "Casa favorita (1X), prob. 45% para vitória.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -27266,7 +27321,8 @@
     "confidence": 0.44761603347485773,
     "explanation": [
       "Golos esperados: 2.35 no total (casa 1.35, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
+      "Casa favorita (1X), prob. 45% para vitória.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -27851,7 +27907,8 @@
     "confidence": 0.43445234674347943,
     "explanation": [
       "Golos esperados: 3.05 no total (casa 1.40, fora 1.65).",
-      "Visitante em vantagem (X2), prob. 43% para não perder.",
+      "Visitante favorito (X2), prob. 43% para não perder.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -28221,7 +28278,8 @@
     "confidence": 0.43380782615116403,
     "explanation": [
       "Golos esperados: 2.30 no total (casa 1.30, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
+      "Casa favorita (1X), prob. 43% para vitória.",
+      "Melhor dupla hipótese: 12 com 72% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -28698,7 +28756,8 @@
     "confidence": 0.4283012635330755,
     "explanation": [
       "Golos esperados: 2.65 no total (casa 1.20, fora 1.45).",
-      "Visitante em vantagem (X2), prob. 43% para não perder.",
+      "Visitante favorito (X2), prob. 43% para não perder.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -29283,7 +29342,8 @@
     "confidence": 0.42642823872654684,
     "explanation": [
       "Golos esperados: 2.55 no total (casa 1.40, fora 1.15).",
-      "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
+      "Casa favorita (1X), prob. 43% para vitória.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -29868,7 +29928,8 @@
     "confidence": 0.42642823872654684,
     "explanation": [
       "Golos esperados: 2.55 no total (casa 1.15, fora 1.40).",
-      "Visitante em vantagem (X2), prob. 43% para não perder.",
+      "Visitante favorito (X2), prob. 43% para não perder.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -30345,7 +30406,8 @@
     "confidence": 0.42321975287503977,
     "explanation": [
       "Golos esperados: 1.90 no total (casa 0.80, fora 1.10).",
-      "Visitante em vantagem (X2), prob. 42% para não perder.",
+      "Visitante favorito (X2), prob. 42% para não perder.",
+      "Melhor dupla hipótese: X2 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 63%)."
     ],
@@ -30823,7 +30885,8 @@
     "confidence": 0.4209543750733256,
     "explanation": [
       "Golos esperados: 2.90 no total (casa 1.35, fora 1.55).",
-      "Visitante em vantagem (X2), prob. 42% para não perder.",
+      "Visitante favorito (X2), prob. 42% para não perder.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
     ],
@@ -31225,7 +31288,8 @@
     "confidence": 0.41417500601667356,
     "explanation": [
       "Golos esperados: 2.05 no total (casa 1.15, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
+      "Casa favorita (1X), prob. 41% para vitória.",
+      "Melhor dupla hipótese: 1X com 71% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -31810,7 +31874,8 @@
     "confidence": 0.410963479841442,
     "explanation": [
       "Golos esperados: 1.95 no total (casa 1.10, fora 0.85).",
-      "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
+      "Casa favorita (1X), prob. 41% para vitória.",
+      "Melhor dupla hipótese: 1X com 72% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 62%)."
     ],
@@ -32396,7 +32461,8 @@
     "confidence": 0.4108030509524705,
     "explanation": [
       "Golos esperados: 2.40 no total (casa 1.30, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
+      "Casa favorita (1X), prob. 41% para vitória.",
+      "Melhor dupla hipótese: 12 com 72% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -32927,7 +32993,8 @@
     "confidence": 0.40965242926899564,
     "explanation": [
       "Golos esperados: 4.45 no total (casa 2.20, fora 2.25).",
-      "Visitante em vantagem (X2), prob. 41% para não perder.",
+      "Visitante favorito (X2), prob. 41% para não perder.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 79%)."
     ],
@@ -33513,7 +33580,8 @@
     "confidence": 0.4086505548498664,
     "explanation": [
       "Golos esperados: 2.85 no total (casa 1.35, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 41% para não perder.",
+      "Visitante favorito (X2), prob. 41% para não perder.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
     ],
@@ -34045,7 +34113,8 @@
     "confidence": 0.40665495281089303,
     "explanation": [
       "Golos esperados: 2.75 no total (casa 1.45, fora 1.30).",
-      "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
+      "Casa favorita (1X), prob. 41% para vitória.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -34359,7 +34428,8 @@
     "confidence": 0.405507901231612,
     "explanation": [
       "Golos esperados: 3.30 no total (casa 1.60, fora 1.70).",
-      "Visitante em vantagem (X2), prob. 41% para não perder.",
+      "Visitante favorito (X2), prob. 41% para não perder.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
@@ -34675,7 +34745,8 @@
     "confidence": 0.4045087551071808,
     "explanation": [
       "Golos esperados: 2.65 no total (casa 1.25, fora 1.40).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -34914,7 +34985,8 @@
     "confidence": 0.40219613700084184,
     "explanation": [
       "Golos esperados: 2.55 no total (casa 1.35, fora 1.20).",
-      "Casa ligeiramente favorita (1X), prob. 40% para vitória.",
+      "Casa favorita (1X), prob. 40% para vitória.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -35499,7 +35571,8 @@
     "confidence": 0.40213706676087724,
     "explanation": [
       "Golos esperados: 3.10 no total (casa 1.50, fora 1.60).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 62%)."
     ],
@@ -35923,7 +35996,8 @@
     "confidence": 0.3990304798263744,
     "explanation": [
       "Golos esperados: 3.55 no total (casa 1.75, fora 1.80).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 69%)."
     ],
@@ -36509,7 +36583,8 @@
     "confidence": 0.3983021318041885,
     "explanation": [
       "Golos esperados: 2.90 no total (casa 1.40, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
@@ -37095,7 +37170,8 @@
     "confidence": 0.3902726058793836,
     "explanation": [
       "Golos esperados: 3.05 no total (casa 1.55, fora 1.50).",
-      "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
+      "Casa favorita (1X), prob. 39% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -37627,7 +37703,8 @@
     "confidence": 0.38885548723672153,
     "explanation": [
       "Golos esperados: 2.50 no total (casa 1.20, fora 1.30).",
-      "Visitante em vantagem (X2), prob. 39% para não perder.",
+      "Visitante favorito (X2), prob. 39% para não perder.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -38050,7 +38127,8 @@
     "confidence": 0.38885548723672153,
     "explanation": [
       "Golos esperados: 2.50 no total (casa 1.20, fora 1.30).",
-      "Visitante em vantagem (X2), prob. 39% para não perder.",
+      "Visitante favorito (X2), prob. 39% para não perder.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -38635,7 +38713,8 @@
     "confidence": 0.3873917420641454,
     "explanation": [
       "Golos esperados: 2.05 no total (casa 0.95, fora 1.10).",
-      "Visitante em vantagem (X2), prob. 39% para não perder.",
+      "Visitante favorito (X2), prob. 39% para não perder.",
+      "Melhor dupla hipótese: 12 com 70% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -39004,7 +39083,8 @@
     "confidence": 0.38635968810604593,
     "explanation": [
       "Golos esperados: 3.40 no total (casa 1.70, fora 1.70).",
-      "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
+      "Casa favorita (1X), prob. 39% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
     ],
@@ -39428,7 +39508,8 @@
     "confidence": 0.3829736027229771,
     "explanation": [
       "Golos esperados: 2.30 no total (casa 1.10, fora 1.20).",
-      "Visitante em vantagem (X2), prob. 38% para não perder.",
+      "Visitante favorito (X2), prob. 38% para não perder.",
+      "Melhor dupla hipótese: 12 com 72% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -40013,7 +40094,8 @@
     "confidence": 0.3829736027229771,
     "explanation": [
       "Golos esperados: 2.30 no total (casa 1.10, fora 1.20).",
-      "Visitante em vantagem (X2), prob. 38% para não perder.",
+      "Visitante favorito (X2), prob. 38% para não perder.",
+      "Melhor dupla hipótese: 12 com 72% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -40598,7 +40680,8 @@
     "confidence": 0.37077992282620437,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.35, fora 1.35).",
-      "Visitante em vantagem (X2), prob. 37% para não perder.",
+      "Visitante favorito (X2), prob. 37% para não perder.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -41075,7 +41158,8 @@
     "confidence": 0.3687395183577192,
     "explanation": [
       "Golos esperados: 2.25 no total (casa 1.15, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 37% para vitória.",
+      "Casa favorita (1X), prob. 37% para vitória.",
+      "Melhor dupla hipótese: 12 com 71% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -41660,7 +41744,8 @@
     "confidence": 0.3687395183577191,
     "explanation": [
       "Golos esperados: 2.25 no total (casa 1.10, fora 1.15).",
-      "Visitante em vantagem (X2), prob. 37% para não perder.",
+      "Visitante favorito (X2), prob. 37% para não perder.",
+      "Melhor dupla hipótese: 12 com 71% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -41975,7 +42060,8 @@
     "confidence": 0.36101249627504595,
     "explanation": [
       "Golos esperados: 2.05 no total (casa 1.00, fora 1.05).",
-      "Visitante em vantagem (X2), prob. 36% para não perder.",
+      "Visitante favorito (X2), prob. 36% para não perder.",
+      "Melhor dupla hipótese: 12 com 70% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -42235,6 +42321,7 @@
     "explanation": [
       "Golos esperados: 0.10 no total (casa 0.05, fora 0.05).",
       "Jogo equilibrado, prob. de empate 91%.",
+      "Melhor dupla hipótese: 1X com 95% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
     ],
@@ -42603,6 +42690,7 @@
     "explanation": [
       "Golos esperados: 0.10 no total (casa 0.05, fora 0.05).",
       "Jogo equilibrado, prob. de empate 91%.",
+      "Melhor dupla hipótese: 1X com 95% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
     ],
@@ -42971,6 +43059,7 @@
     "explanation": [
       "Golos esperados: 0.10 no total (casa 0.05, fora 0.05).",
       "Jogo equilibrado, prob. de empate 91%.",
+      "Melhor dupla hipótese: 1X com 95% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 100%)."
     ],
@@ -43394,7 +43483,8 @@
     "confidence": 0.6752353854162804,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 2.05, fora 0.75).",
-      "Casa ligeiramente favorita (1X), prob. 68% para vitória.",
+      "Casa favorita (1X), prob. 68% para vitória.",
+      "Melhor dupla hipótese: 1X com 87% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -43979,7 +44069,8 @@
     "confidence": 0.6684195570149171,
     "explanation": [
       "Golos esperados: 2.20 no total (casa 1.70, fora 0.50).",
-      "Casa ligeiramente favorita (1X), prob. 67% para vitória.",
+      "Casa favorita (1X), prob. 67% para vitória.",
+      "Melhor dupla hipótese: 1X com 90% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 68%)."
     ],
@@ -44565,7 +44656,8 @@
     "confidence": 0.660259688146107,
     "explanation": [
       "Golos esperados: 2.95 no total (casa 2.10, fora 0.85).",
-      "Casa ligeiramente favorita (1X), prob. 66% para vitória.",
+      "Casa favorita (1X), prob. 66% para vitória.",
+      "Melhor dupla hipótese: 1X com 86% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -45150,7 +45242,8 @@
     "confidence": 0.6451320672174337,
     "explanation": [
       "Golos esperados: 2.10 no total (casa 1.60, fora 0.50).",
-      "Casa ligeiramente favorita (1X), prob. 65% para vitória.",
+      "Casa favorita (1X), prob. 65% para vitória.",
+      "Melhor dupla hipótese: 1X com 89% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 69%)."
     ],
@@ -45736,7 +45829,8 @@
     "confidence": 0.6426614636155399,
     "explanation": [
       "Golos esperados: 2.75 no total (casa 1.95, fora 0.80).",
-      "Casa ligeiramente favorita (1X), prob. 64% para vitória.",
+      "Casa favorita (1X), prob. 64% para vitória.",
+      "Melhor dupla hipótese: 1X com 85% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -45997,7 +46091,8 @@
     "confidence": 0.6342398547781148,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.85, fora 0.75).",
-      "Casa ligeiramente favorita (1X), prob. 63% para vitória.",
+      "Casa favorita (1X), prob. 63% para vitória.",
+      "Melhor dupla hipótese: 1X com 85% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -46474,7 +46569,8 @@
     "confidence": 0.6259993658847879,
     "explanation": [
       "Golos esperados: 3.55 no total (casa 2.35, fora 1.20).",
-      "Casa ligeiramente favorita (1X), prob. 63% para vitória.",
+      "Casa favorita (1X), prob. 63% para vitória.",
+      "Melhor dupla hipótese: 1X com 82% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
     ],
@@ -46842,7 +46938,8 @@
     "confidence": 0.6214063186228289,
     "explanation": [
       "Golos esperados: 2.65 no total (casa 1.85, fora 0.80).",
-      "Casa ligeiramente favorita (1X), prob. 62% para vitória.",
+      "Casa favorita (1X), prob. 62% para vitória.",
+      "Melhor dupla hipótese: 1X com 84% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -47427,7 +47524,8 @@
     "confidence": 0.6202926692618701,
     "explanation": [
       "Golos esperados: 2.00 no total (casa 0.50, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 62% para não perder.",
+      "Visitante favorito (X2), prob. 62% para não perder.",
+      "Melhor dupla hipótese: X2 com 88% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 69%)."
     ],
@@ -48013,7 +48111,8 @@
     "confidence": 0.6024286612658318,
     "explanation": [
       "Golos esperados: 3.75 no total (casa 2.40, fora 1.35).",
-      "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
+      "Casa favorita (1X), prob. 60% para vitória.",
+      "Melhor dupla hipótese: 12 com 81% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
     ],
@@ -48437,7 +48536,8 @@
     "confidence": 0.5990031751597202,
     "explanation": [
       "Golos esperados: 2.55 no total (casa 1.75, fora 0.80).",
-      "Casa ligeiramente favorita (1X), prob. 60% para vitória.",
+      "Casa favorita (1X), prob. 60% para vitória.",
+      "Melhor dupla hipótese: 1X com 83% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -49022,7 +49122,8 @@
     "confidence": 0.5885082477128951,
     "explanation": [
       "Golos esperados: 2.40 no total (casa 1.65, fora 0.75).",
-      "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
+      "Casa favorita (1X), prob. 59% para vitória.",
+      "Melhor dupla hipótese: 1X com 83% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -49607,7 +49708,8 @@
     "confidence": 0.5850304457585359,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.80, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 59% para vitória.",
+      "Casa favorita (1X), prob. 59% para vitória.",
+      "Melhor dupla hipótese: 1X com 81% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -50138,7 +50240,8 @@
     "confidence": 0.5803119252872349,
     "explanation": [
       "Golos esperados: 3.10 no total (casa 2.00, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 58% para vitória.",
+      "Casa favorita (1X), prob. 58% para vitória.",
+      "Melhor dupla hipótese: 1X com 80% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
     ],
@@ -50562,7 +50665,8 @@
     "confidence": 0.5767504303626961,
     "explanation": [
       "Golos esperados: 3.40 no total (casa 2.15, fora 1.25).",
-      "Casa ligeiramente favorita (1X), prob. 58% para vitória.",
+      "Casa favorita (1X), prob. 58% para vitória.",
+      "Melhor dupla hipótese: 12 com 79% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
     ],
@@ -51148,7 +51252,8 @@
     "confidence": 0.5762968549473462,
     "explanation": [
       "Golos esperados: 2.35 no total (casa 1.60, fora 0.75).",
-      "Casa ligeiramente favorita (1X), prob. 58% para vitória.",
+      "Casa favorita (1X), prob. 58% para vitória.",
+      "Melhor dupla hipótese: 1X com 83% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -51733,7 +51838,8 @@
     "confidence": 0.5643031646687986,
     "explanation": [
       "Golos esperados: 2.20 no total (casa 0.70, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 56% para não perder.",
+      "Visitante favorito (X2), prob. 56% para não perder.",
+      "Melhor dupla hipótese: X2 com 83% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 61%)."
     ],
@@ -52157,7 +52263,8 @@
     "confidence": 0.5618517533459271,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.70, fora 0.90).",
-      "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
+      "Casa favorita (1X), prob. 56% para vitória.",
+      "Melhor dupla hipótese: 1X com 80% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -52742,7 +52849,8 @@
     "confidence": 0.5611414208095141,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.75, fora 0.95).",
-      "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
+      "Casa favorita (1X), prob. 56% para vitória.",
+      "Melhor dupla hipótese: 1X com 80% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -53327,7 +53435,8 @@
     "confidence": 0.5400569315685234,
     "explanation": [
       "Golos esperados: 4.05 no total (casa 2.40, fora 1.65).",
-      "Casa ligeiramente favorita (1X), prob. 54% para vitória.",
+      "Casa favorita (1X), prob. 54% para vitória.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 73%)."
     ],
@@ -53913,7 +54022,8 @@
     "confidence": 0.5371248097710446,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.00, fora 1.70).",
-      "Visitante em vantagem (X2), prob. 54% para não perder.",
+      "Visitante favorito (X2), prob. 54% para não perder.",
+      "Melhor dupla hipótese: X2 com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -54498,7 +54608,8 @@
     "confidence": 0.5248011579529483,
     "explanation": [
       "Golos esperados: 2.95 no total (casa 1.80, fora 1.15).",
-      "Casa ligeiramente favorita (1X), prob. 52% para vitória.",
+      "Casa favorita (1X), prob. 52% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
@@ -54812,7 +54923,8 @@
     "confidence": 0.5131890549644397,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 1.10, fora 1.70).",
-      "Visitante em vantagem (X2), prob. 51% para não perder.",
+      "Visitante favorito (X2), prob. 51% para não perder.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -55343,7 +55455,8 @@
     "confidence": 0.5131890549644397,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 1.70, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
+      "Casa favorita (1X), prob. 51% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -55820,7 +55933,8 @@
     "confidence": 0.513044254945519,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.05, fora 1.65).",
-      "Visitante em vantagem (X2), prob. 51% para não perder.",
+      "Visitante favorito (X2), prob. 51% para não perder.",
+      "Melhor dupla hipótese: X2 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -56351,7 +56465,8 @@
     "confidence": 0.5129262517592726,
     "explanation": [
       "Golos esperados: 3.40 no total (casa 2.00, fora 1.40).",
-      "Casa ligeiramente favorita (1X), prob. 51% para vitória.",
+      "Casa favorita (1X), prob. 51% para vitória.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
@@ -56937,7 +57052,8 @@
     "confidence": 0.5021172360201672,
     "explanation": [
       "Golos esperados: 3.15 no total (casa 1.85, fora 1.30).",
-      "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
+      "Casa favorita (1X), prob. 50% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -57415,7 +57531,8 @@
     "confidence": 0.5015200405602996,
     "explanation": [
       "Golos esperados: 2.85 no total (casa 1.70, fora 1.15).",
-      "Casa ligeiramente favorita (1X), prob. 50% para vitória.",
+      "Casa favorita (1X), prob. 50% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -58001,7 +58118,8 @@
     "confidence": 0.4997136255516785,
     "explanation": [
       "Golos esperados: 2.45 no total (casa 0.95, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 50% para não perder.",
+      "Visitante favorito (X2), prob. 50% para não perder.",
+      "Melhor dupla hipótese: X2 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -58586,7 +58704,8 @@
     "confidence": 0.48896375376497675,
     "explanation": [
       "Golos esperados: 2.70 no total (casa 1.60, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 49% para vitória.",
+      "Casa favorita (1X), prob. 49% para vitória.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -59009,7 +59128,8 @@
     "confidence": 0.4875117312290584,
     "explanation": [
       "Golos esperados: 2.50 no total (casa 1.50, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 49% para vitória.",
+      "Casa favorita (1X), prob. 49% para vitória.",
+      "Melhor dupla hipótese: 1X com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -59270,7 +59390,8 @@
     "confidence": 0.4798245560709188,
     "explanation": [
       "Golos esperados: 1.90 no total (casa 0.70, fora 1.20).",
-      "Visitante em vantagem (X2), prob. 48% para não perder.",
+      "Visitante favorito (X2), prob. 48% para não perder.",
+      "Melhor dupla hipótese: X2 com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 65%)."
     ],
@@ -59856,7 +59977,8 @@
     "confidence": 0.4798245560709188,
     "explanation": [
       "Golos esperados: 1.90 no total (casa 1.20, fora 0.70).",
-      "Casa ligeiramente favorita (1X), prob. 48% para vitória.",
+      "Casa favorita (1X), prob. 48% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 65%)."
     ],
@@ -60442,7 +60564,8 @@
     "confidence": 0.4781129350203926,
     "explanation": [
       "Golos esperados: 2.85 no total (casa 1.65, fora 1.20).",
-      "Casa ligeiramente favorita (1X), prob. 48% para vitória.",
+      "Casa favorita (1X), prob. 48% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -60866,7 +60989,8 @@
     "confidence": 0.4773568580397825,
     "explanation": [
       "Golos esperados: 2.75 no total (casa 1.15, fora 1.60).",
-      "Visitante em vantagem (X2), prob. 48% para não perder.",
+      "Visitante favorito (X2), prob. 48% para não perder.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%)."
     ],
     "model": "bivariate+iso",
@@ -61451,7 +61575,8 @@
     "confidence": 0.4638167652273242,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.50, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
+      "Casa favorita (1X), prob. 46% para vitória.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -61982,7 +62107,8 @@
     "confidence": 0.4638167652273242,
     "explanation": [
       "Golos esperados: 2.60 no total (casa 1.50, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
+      "Casa favorita (1X), prob. 46% para vitória.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -62567,7 +62693,8 @@
     "confidence": 0.4630684580052297,
     "explanation": [
       "Golos esperados: 4.15 no total (casa 2.25, fora 1.90).",
-      "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
+      "Casa favorita (1X), prob. 46% para vitória.",
+      "Melhor dupla hipótese: 12 com 80% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 76%)."
     ],
@@ -63153,7 +63280,8 @@
     "confidence": 0.45996383817788905,
     "explanation": [
       "Golos esperados: 3.45 no total (casa 1.90, fora 1.55).",
-      "Casa ligeiramente favorita (1X), prob. 46% para vitória.",
+      "Casa favorita (1X), prob. 46% para vitória.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
     ],
@@ -63739,7 +63867,8 @@
     "confidence": 0.4523212245290501,
     "explanation": [
       "Golos esperados: 2.65 no total (casa 1.15, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 45% para não perder.",
+      "Visitante favorito (X2), prob. 45% para não perder.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -64324,7 +64453,8 @@
     "confidence": 0.44816441669169593,
     "explanation": [
       "Golos esperados: 3.30 no total (casa 1.50, fora 1.80).",
-      "Visitante em vantagem (X2), prob. 45% para não perder.",
+      "Visitante favorito (X2), prob. 45% para não perder.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
@@ -64910,7 +65040,8 @@
     "confidence": 0.44816441669169593,
     "explanation": [
       "Golos esperados: 3.30 no total (casa 1.80, fora 1.50).",
-      "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
+      "Casa favorita (1X), prob. 45% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
@@ -65496,7 +65627,8 @@
     "confidence": 0.44761603347485773,
     "explanation": [
       "Golos esperados: 2.35 no total (casa 1.35, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
+      "Casa favorita (1X), prob. 45% para vitória.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -66081,7 +66213,8 @@
     "confidence": 0.44250557677039326,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 1.25, fora 1.55).",
-      "Visitante em vantagem (X2), prob. 44% para não perder.",
+      "Visitante favorito (X2), prob. 44% para não perder.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -66667,7 +66800,8 @@
     "confidence": 0.435873521020655,
     "explanation": [
       "Golos esperados: 2.40 no total (casa 1.05, fora 1.35).",
-      "Visitante em vantagem (X2), prob. 44% para não perder.",
+      "Visitante favorito (X2), prob. 44% para não perder.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -67144,7 +67278,8 @@
     "confidence": 0.43445234674347943,
     "explanation": [
       "Golos esperados: 3.05 no total (casa 1.40, fora 1.65).",
-      "Visitante em vantagem (X2), prob. 43% para não perder.",
+      "Visitante favorito (X2), prob. 43% para não perder.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -67730,7 +67865,8 @@
     "confidence": 0.4344523467434793,
     "explanation": [
       "Golos esperados: 3.05 no total (casa 1.65, fora 1.40).",
-      "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
+      "Casa favorita (1X), prob. 43% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
@@ -67992,7 +68128,8 @@
     "confidence": 0.4279494886685598,
     "explanation": [
       "Golos esperados: 3.40 no total (casa 1.80, fora 1.60).",
-      "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
+      "Casa favorita (1X), prob. 43% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
     ],
@@ -68578,7 +68715,8 @@
     "confidence": 0.4248607126674298,
     "explanation": [
       "Golos esperados: 1.55 no total (casa 0.95, fora 0.60).",
-      "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
+      "Casa favorita (1X), prob. 42% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 72%)."
     ],
@@ -69002,7 +69140,8 @@
     "confidence": 0.42321975287503977,
     "explanation": [
       "Golos esperados: 1.90 no total (casa 0.80, fora 1.10).",
-      "Visitante em vantagem (X2), prob. 42% para não perder.",
+      "Visitante favorito (X2), prob. 42% para não perder.",
+      "Melhor dupla hipótese: X2 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 63%)."
     ],
@@ -69372,7 +69511,8 @@
     "confidence": 0.4232197528750397,
     "explanation": [
       "Golos esperados: 1.90 no total (casa 1.10, fora 0.80).",
-      "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
+      "Casa favorita (1X), prob. 42% para vitória.",
+      "Melhor dupla hipótese: 1X com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 63%)."
     ],
@@ -69850,7 +69990,8 @@
     "confidence": 0.42053315731603336,
     "explanation": [
       "Golos esperados: 3.65 no total (casa 1.90, fora 1.75).",
-      "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
+      "Casa favorita (1X), prob. 42% para vitória.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 70%)."
     ],
@@ -70166,7 +70307,8 @@
     "confidence": 0.41922483868957006,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 1.50, fora 1.30).",
-      "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
+      "Casa favorita (1X), prob. 42% para vitória.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -70482,7 +70624,8 @@
     "confidence": 0.41603702631275424,
     "explanation": [
       "Golos esperados: 1.70 no total (casa 1.00, fora 0.70).",
-      "Casa ligeiramente favorita (1X), prob. 42% para vitória.",
+      "Casa favorita (1X), prob. 42% para vitória.",
+      "Melhor dupla hipótese: 1X com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 68%)."
     ],
@@ -71068,7 +71211,8 @@
     "confidence": 0.4108030509524705,
     "explanation": [
       "Golos esperados: 2.40 no total (casa 1.30, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
+      "Casa favorita (1X), prob. 41% para vitória.",
+      "Melhor dupla hipótese: 12 com 72% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -71653,7 +71797,8 @@
     "confidence": 0.40450875510718076,
     "explanation": [
       "Golos esperados: 2.65 no total (casa 1.40, fora 1.25).",
-      "Casa ligeiramente favorita (1X), prob. 40% para vitória.",
+      "Casa favorita (1X), prob. 40% para vitória.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -72238,7 +72383,8 @@
     "confidence": 0.40219613700084184,
     "explanation": [
       "Golos esperados: 2.55 no total (casa 1.20, fora 1.35).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -72823,7 +72969,8 @@
     "confidence": 0.3996988911764021,
     "explanation": [
       "Golos esperados: 2.45 no total (casa 1.30, fora 1.15).",
-      "Casa ligeiramente favorita (1X), prob. 40% para vitória.",
+      "Casa favorita (1X), prob. 40% para vitória.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -73300,7 +73447,8 @@
     "confidence": 0.39903047982637435,
     "explanation": [
       "Golos esperados: 3.55 no total (casa 1.75, fora 1.80).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 78% de probabilidade.",
       "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 69%)."
     ],
@@ -73778,7 +73926,8 @@
     "confidence": 0.3983021318041885,
     "explanation": [
       "Golos esperados: 2.90 no total (casa 1.40, fora 1.50).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
@@ -74202,7 +74351,8 @@
     "confidence": 0.39699603032406194,
     "explanation": [
       "Golos esperados: 2.35 no total (casa 1.10, fora 1.25).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: 12 com 72% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -74625,7 +74775,8 @@
     "confidence": 0.39406331875588635,
     "explanation": [
       "Golos esperados: 2.25 no total (casa 1.20, fora 1.05).",
-      "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
+      "Casa favorita (1X), prob. 39% para vitória.",
+      "Melhor dupla hipótese: 12 com 71% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -74940,7 +75091,8 @@
     "confidence": 0.3881775750744738,
     "explanation": [
       "Golos esperados: 2.95 no total (casa 1.50, fora 1.45).",
-      "Casa ligeiramente favorita (1X), prob. 39% para vitória.",
+      "Casa favorita (1X), prob. 39% para vitória.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
@@ -75308,7 +75460,8 @@
     "confidence": 0.37827479060851077,
     "explanation": [
       "Golos esperados: 3.00 no total (casa 1.50, fora 1.50).",
-      "Casa ligeiramente favorita (1X), prob. 38% para vitória.",
+      "Casa favorita (1X), prob. 38% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 60%)."
     ],
@@ -75894,7 +76047,8 @@
     "confidence": 0.37606447965050294,
     "explanation": [
       "Golos esperados: 2.10 no total (casa 1.10, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 38% para vitória.",
+      "Casa favorita (1X), prob. 38% para vitória.",
+      "Melhor dupla hipótese: 12 com 70% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -76479,7 +76633,8 @@
     "confidence": 0.37532833168486573,
     "explanation": [
       "Golos esperados: 2.45 no total (casa 1.20, fora 1.25).",
-      "Visitante em vantagem (X2), prob. 38% para não perder.",
+      "Visitante favorito (X2), prob. 38% para não perder.",
+      "Melhor dupla hipótese: 12 com 73% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -76902,7 +77057,8 @@
     "confidence": 0.3687395183577191,
     "explanation": [
       "Golos esperados: 2.25 no total (casa 1.10, fora 1.15).",
-      "Visitante em vantagem (X2), prob. 37% para não perder.",
+      "Visitante favorito (X2), prob. 37% para não perder.",
+      "Melhor dupla hipótese: 12 com 71% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -77052,6 +77208,7 @@
     "explanation": [
       "Golos esperados: 1.50 no total (casa 0.75, fora 0.75).",
       "Jogo equilibrado, prob. de empate 37%.",
+      "Melhor dupla hipótese: 1X com 68% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 72%)."
     ],
@@ -77530,6 +77687,7 @@
     "explanation": [
       "Golos esperados: 1.60 no total (casa 0.80, fora 0.80).",
       "Jogo equilibrado, prob. de empate 35%.",
+      "Melhor dupla hipótese: X2 com 68% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 70%)."
     ],
@@ -78061,7 +78219,8 @@
     "confidence": 0.3501848438695556,
     "explanation": [
       "Golos esperados: 2.10 no total (casa 1.05, fora 1.05).",
-      "Casa ligeiramente favorita (1X), prob. 35% para vitória.",
+      "Casa favorita (1X), prob. 35% para vitória.",
+      "Melhor dupla hipótese: 12 com 70% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -78428,7 +78587,8 @@
     "confidence": 0.3457201576354577,
     "explanation": [
       "Golos esperados: 2.00 no total (casa 1.00, fora 1.00).",
-      "Visitante em vantagem (X2), prob. 35% para não perder.",
+      "Visitante favorito (X2), prob. 35% para não perder.",
+      "Melhor dupla hipótese: 12 com 69% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 60%)."
     ],
@@ -79014,7 +79174,8 @@
     "confidence": 0.5631700559367888,
     "explanation": [
       "Golos esperados: 2.40 no total (casa 1.60, fora 0.80).",
-      "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
+      "Casa favorita (1X), prob. 56% para vitória.",
+      "Melhor dupla hipótese: 1X com 81% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -79545,7 +79706,8 @@
     "confidence": 0.5588607487661731,
     "explanation": [
       "Golos esperados: 3.00 no total (casa 1.90, fora 1.10).",
-      "Casa ligeiramente favorita (1X), prob. 56% para vitória.",
+      "Casa favorita (1X), prob. 56% para vitória.",
+      "Melhor dupla hipótese: 1X com 78% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
@@ -80131,7 +80293,8 @@
     "confidence": 0.4844338516292614,
     "explanation": [
       "Golos esperados: 2.20 no total (casa 1.35, fora 0.85).",
-      "Casa ligeiramente favorita (1X), prob. 48% para vitória.",
+      "Casa favorita (1X), prob. 48% para vitória.",
+      "Melhor dupla hipótese: 1X com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -80336,7 +80499,8 @@
     "confidence": 0.46771437048150705,
     "explanation": [
       "Golos esperados: 3.00 no total (casa 1.70, fora 1.30).",
-      "Casa ligeiramente favorita (1X), prob. 47% para vitória.",
+      "Casa favorita (1X), prob. 47% para vitória.",
+      "Melhor dupla hipótese: 12 com 76% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
@@ -80922,7 +81086,8 @@
     "confidence": 0.4481644166916959,
     "explanation": [
       "Golos esperados: 3.30 no total (casa 1.80, fora 1.50).",
-      "Casa ligeiramente favorita (1X), prob. 45% para vitória.",
+      "Casa favorita (1X), prob. 45% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
@@ -81508,7 +81673,8 @@
     "confidence": 0.4379632239735721,
     "explanation": [
       "Golos esperados: 3.35 no total (casa 1.80, fora 1.55).",
-      "Casa ligeiramente favorita (1X), prob. 44% para vitória.",
+      "Casa favorita (1X), prob. 44% para vitória.",
+      "Melhor dupla hipótese: 12 com 77% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 66%)."
     ],
@@ -81878,7 +82044,8 @@
     "confidence": 0.4300268744550497,
     "explanation": [
       "Golos esperados: 2.75 no total (casa 1.50, fora 1.25).",
-      "Casa ligeiramente favorita (1X), prob. 43% para vitória.",
+      "Casa favorita (1X), prob. 43% para vitória.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 55%)."
     ],
@@ -82464,7 +82631,8 @@
     "confidence": 0.40665495281089303,
     "explanation": [
       "Golos esperados: 2.75 no total (casa 1.45, fora 1.30).",
-      "Casa ligeiramente favorita (1X), prob. 41% para vitória.",
+      "Casa favorita (1X), prob. 41% para vitória.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -83050,7 +83218,8 @@
     "confidence": 0.3990227819869087,
     "explanation": [
       "Golos esperados: 2.00 no total (casa 0.90, fora 1.10).",
-      "Visitante em vantagem (X2), prob. 40% para não perder.",
+      "Visitante favorito (X2), prob. 40% para não perder.",
+      "Melhor dupla hipótese: X2 com 71% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 60%)."
     ],
@@ -83636,7 +83805,8 @@
     "confidence": 0.3835584638915766,
     "explanation": [
       "Golos esperados: 2.75 no total (casa 1.35, fora 1.40).",
-      "Visitante em vantagem (X2), prob. 38% para não perder.",
+      "Visitante favorito (X2), prob. 38% para não perder.",
+      "Melhor dupla hipótese: 12 com 74% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
@@ -84222,7 +84392,8 @@
     "confidence": 0.37606447965050294,
     "explanation": [
       "Golos esperados: 2.10 no total (casa 1.10, fora 1.00).",
-      "Casa ligeiramente favorita (1X), prob. 38% para vitória.",
+      "Casa favorita (1X), prob. 38% para vitória.",
+      "Melhor dupla hipótese: 12 com 70% de probabilidade.",
       "Tendência para Under 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
@@ -84807,7 +84978,8 @@
     "confidence": 0.3734398988756962,
     "explanation": [
       "Golos esperados: 2.80 no total (casa 1.40, fora 1.40).",
-      "Visitante em vantagem (X2), prob. 37% para não perder.",
+      "Visitante favorito (X2), prob. 37% para não perder.",
+      "Melhor dupla hipótese: 12 com 75% de probabilidade.",
       "Tendência para Under 2.5 golos (67%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
@@ -85231,7 +85403,8 @@
     "confidence": 0.35798156822268296,
     "explanation": [
       "Golos esperados: 1.70 no total (casa 0.80, fora 0.90).",
-      "Visitante em vantagem (X2), prob. 36% para não perder.",
+      "Visitante favorito (X2), prob. 36% para não perder.",
+      "Melhor dupla hipótese: X2 com 70% de probabilidade.",
       "Tendência para Under 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 67%)."
     ],
