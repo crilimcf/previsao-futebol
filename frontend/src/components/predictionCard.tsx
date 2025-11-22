@@ -136,6 +136,14 @@ export default function PredictionCard({
   const homeProbScorers = probable_scorers?.home ?? [];
   const awayProbScorers = probable_scorers?.away ?? [];
 
+  function displayScorerPct(p?: ProbableScorer) {
+    if (!p) return "—";
+    const pct = typeof p.probability_pct === "number" ? p.probability_pct : typeof p.probability === "number" ? p.probability * 100 : NaN;
+    if (!isFinite(pct)) return "—";
+    if (pct >= 99.9) return "≈100%";
+    return `${Math.round(pct)}%`;
+  }
+
   return (
     <div className="p-5 rounded-2xl border border-gray-800 bg-gray-950 hover:border-green-500 transition flex flex-col gap-4">
       {/* header */}
@@ -300,12 +308,7 @@ export default function PredictionCard({
                         className="flex justify-between"
                       >
                         <span>{p.name}</span>
-                        <span className="text-gray-400">
-                          {Math.round(
-                            prob01(p.probability_pct ?? p.probability) * 1000
-                          ) / 10}
-                          %
-                        </span>
+                        <span className="text-gray-400">{displayScorerPct(p)}</span>
                       </li>
                     ))}
                     {!homeProbScorers.length && (
@@ -322,12 +325,7 @@ export default function PredictionCard({
                         className="flex justify-between"
                       >
                         <span>{p.name}</span>
-                        <span className="text-gray-400">
-                          {Math.round(
-                            prob01(p.probability_pct ?? p.probability) * 1000
-                          ) / 10}
-                          %
-                        </span>
+                        <span className="text-gray-400">{displayScorerPct(p)}</span>
                       </li>
                     ))}
                     {!awayProbScorers.length && (

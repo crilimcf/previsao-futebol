@@ -809,32 +809,52 @@ export default function HomeClient() {
                   )}
 
                   {/* Odds */}
-                  {(odds1x2 || oddsOU25 || oddsBTTS) && (
-                    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
-                      <div className="text-xs text-gray-400 mb-2">Odds</div>
-                      <div className="grid grid-cols-3 gap-2 text-sm">
-                        <div>
-                          <div className="text-gray-400 text-xs mb-1">1X2</div>
-                          <div className="text-white">
-                            {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} /{" "}
-                            {oddFmt(odds1x2?.away)}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
-                          <div className="text-white">
-                            O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-gray-400 text-xs mb-1">BTTS</div>
-                          <div className="text-white">
-                            Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
-                          </div>
+                  {(() => {
+                    // validate odds before showing (avoid showing corrupted/extreme odds)
+                    const isValidOdd = (v?: number | null) =>
+                      typeof v === "number" && isFinite(v) && v >= 1.2 && v <= 100;
+
+                    const show1x2 =
+                      isValidOdd(odds1x2?.home) && isValidOdd(odds1x2?.draw) && isValidOdd(odds1x2?.away);
+
+                    const showOU25 = isValidOdd(oddsOU25?.over) && isValidOdd(oddsOU25?.under);
+
+                    const showBTTS = isValidOdd(oddsBTTS?.yes) && isValidOdd(oddsBTTS?.no);
+
+                    if (!show1x2 && !showOU25 && !showBTTS) return null;
+
+                    return (
+                      <div className="rounded-xl bg-white/5 border border-white/10 p-3">
+                        <div className="text-xs text-gray-400 mb-2">Odds</div>
+                        <div className="grid grid-cols-3 gap-2 text-sm">
+                          {show1x2 && (
+                            <div>
+                              <div className="text-gray-400 text-xs mb-1">1X2</div>
+                              <div className="text-white">
+                                {oddFmt(odds1x2?.home)} / {oddFmt(odds1x2?.draw)} / {oddFmt(odds1x2?.away)}
+                              </div>
+                            </div>
+                          )}
+                          {showOU25 && (
+                            <div>
+                              <div className="text-gray-400 text-xs mb-1">O/U 2.5</div>
+                              <div className="text-white">
+                                O {oddFmt(oddsOU25?.over)} · U {oddFmt(oddsOU25?.under)}
+                              </div>
+                            </div>
+                          )}
+                          {showBTTS && (
+                            <div>
+                              <div className="text-gray-400 text-xs mb-1">BTTS</div>
+                              <div className="text-white">
+                                Sim {oddFmt(oddsBTTS?.yes)} · Não {oddFmt(oddsBTTS?.no)}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                   {/* Detalhes: Correct Score + Marcadores */}
                   <details className="rounded-xl bg-white/5 border border-white/10 p-3">
@@ -870,22 +890,17 @@ export default function HomeClient() {
                           <ul className="text-sm text-white space-y-1">
                             <li className="text-emerald-400">{p.home_team}</li>
                             {homeScorers.slice(0, 3).map((sc: any, idx: number) => {
-                              const name =
-                                sc.name ?? sc.player ?? sc.full_name ?? `Jogador ${idx + 1}`;
-                              const rawProb =
-                                sc.probability_pct ??
-                                sc.probability ??
-                                sc.prob ??
-                                sc.confidence;
-                              return (
+                                            const name = sc.name ?? sc.player ?? sc.full_name ?? `Jogador ${idx + 1}`;
+                                            const rawProb = sc.probability_pct ?? sc.probability ?? sc.prob ?? sc.confidence;
+                                            const pct = typeof sc.probability_pct === "number" ? sc.probability_pct : typeof sc.probability === "number" ? sc.probability * 100 : (typeof rawProb === "number" ? (rawProb > 1 ? rawProb : rawProb * 100) : NaN);
+                                            const pctStr = !isFinite(pct) ? "—" : pct >= 99.9 ? "≈100%" : `${Math.round(pct)}%`;
+                                            return (
                                 <li
                                   key={sc.player_id ?? name ?? idx}
                                   className="flex justify-between"
                                 >
                                   <span>{name}</span>
-                                  <span className="text-gray-400">
-                                    {Math.round(prob01(rawProb) * 100)}%
-                                  </span>
+                                                <span className="text-gray-400">{pctStr}</span>
                                 </li>
                               );
                             })}
@@ -898,22 +913,17 @@ export default function HomeClient() {
                           <ul className="text-sm text-white space-y-1">
                             <li className="text-emerald-400">{p.away_team}</li>
                             {awayScorers.slice(0, 3).map((sc: any, idx: number) => {
-                              const name =
-                                sc.name ?? sc.player ?? sc.full_name ?? `Jogador ${idx + 1}`;
-                              const rawProb =
-                                sc.probability_pct ??
-                                sc.probability ??
-                                sc.prob ??
-                                sc.confidence;
-                              return (
+                                const name = sc.name ?? sc.player ?? sc.full_name ?? `Jogador ${idx + 1}`;
+                                const rawProb = sc.probability_pct ?? sc.probability ?? sc.prob ?? sc.confidence;
+                                const pct = typeof sc.probability_pct === "number" ? sc.probability_pct : typeof sc.probability === "number" ? sc.probability * 100 : (typeof rawProb === "number" ? (rawProb > 1 ? rawProb : rawProb * 100) : NaN);
+                                const pctStr = !isFinite(pct) ? "—" : pct >= 99.9 ? "≈100%" : `${Math.round(pct)}%`;
+                                return (
                                 <li
                                   key={sc.player_id ?? name ?? idx}
                                   className="flex justify-between"
                                 >
                                   <span>{name}</span>
-                                  <span className="text-gray-400">
-                                    {Math.round(prob01(rawProb) * 100)}%
-                                  </span>
+                                    <span className="text-gray-400">{pctStr}</span>
                                 </li>
                               );
                             })}

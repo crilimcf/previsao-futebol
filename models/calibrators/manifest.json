@@ -1,11 +1,21 @@
 {
-  "min_samples": 150,
+  "min_samples": 50,
   "output_dir": "models\\calibrators",
   "files": [
+    "models\\calibrators\\2_1x2.pkl",
+    "models\\calibrators\\2_btts.pkl",
+    "models\\calibrators\\2_over25.pkl",
+    "models\\calibrators\\3_1x2.pkl",
+    "models\\calibrators\\3_btts.pkl",
+    "models\\calibrators\\3_over25.pkl",
     "models\\calibrators\\45_btts.pkl",
     "models\\calibrators\\45_over15.pkl",
+    "models\\calibrators\\48_btts.pkl",
+    "models\\calibrators\\48_over15.pkl",
+    "models\\calibrators\\48_over25.pkl",
     "models\\calibrators\\71_1x2.pkl",
     "models\\calibrators\\71_btts.pkl",
+    "models\\calibrators\\73_btts.pkl",
     "models\\calibrators\\848_btts.pkl"
   ]
 }

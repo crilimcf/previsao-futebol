@@ -266,8 +266,24 @@ def _normalize_probabilities(players: List[Dict[str, Any]]) -> None:
             p["probability_pct"] = 0.0
         return
 
-    for p in players:
-        prob = float(p.get("score") or 0.0) / total_score
+    # Compute raw probabilities
+    raw_probs = [float(p.get("score") or 0.0) / total_score for p in players]
+
+    # Smoothing to avoid exact 0 or 1 probabilities (which break UX and downstream consumers)
+    # Use small EPS (0.5%). For a single candidate, cap below 1.0 explicitly.
+    EPS = 0.005
+    n = len(players)
+    if n <= 1:
+        # single candidate: avoid exact 1.0 — cap to 0.99 to stay under extreme threshold
+        smoothed = [0.99] if n == 1 else []
+    else:
+        smoothed = [(rp * (1.0 - EPS)) + (EPS / n) for rp in raw_probs]
+        # Renormalize to ensure sum == 1.0 (floating point safety)
+        s = sum(smoothed) or 1.0
+        smoothed = [p / s for p in smoothed]
+
+    for idx, p in enumerate(players):
+        prob = smoothed[idx]
         p["probability"] = prob
         p["probability_pct"] = round(prob * 100.0, 1)
 

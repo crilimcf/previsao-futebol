@@ -2,181 +2,181 @@
   {
     "key": "1377974",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.4558306764792922,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.4558306764792922,
+    "tmp_over_final": 0.45616271522789487
   },
   {
     "key": "1377975",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.2961602947887498,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.2961602947887498,
+    "tmp_over_final": 0.2971306943175851
   },
   {
     "key": "1377976",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.42988903764746633,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.42988903764746633,
+    "tmp_over_final": 0.4300951977079917
   },
   {
     "key": "1377977",
     "prod_has_v2": false,
-    "prod_over_raw": 0.999,
+    "prod_over_raw": 0.5414301917770646,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.999,
-    "tmp_over_final": 0.99
+    "tmp_over_raw": 0.5414301917770646,
+    "tmp_over_final": 0.5411503167053779
   },
   {
     "key": "1377978",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.48057395894669563,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.48057395894669563,
+    "tmp_over_final": 0.48077896692629996
   },
   {
     "key": "1377979",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.4036708893209321,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.4036708893209321,
+    "tmp_over_final": 0.40417869310471677
+  },
+  {
+    "key": "1377980",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.5758437337403968,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.5758437337403968,
+    "tmp_over_final": 0.5754295939085015
+  },
+  {
+    "key": "1377981",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.24272821631350572,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.24272821631350572,
+    "tmp_over_final": 0.24400246247655918
   },
   {
     "key": "1377982",
     "prod_has_v2": false,
-    "prod_over_raw": 0.3333333333333333,
+    "prod_over_raw": 0.4935358554088443,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.3333333333333333,
-    "tmp_over_final": 0.3333333333333333
+    "tmp_over_raw": 0.4935358554088443,
+    "tmp_over_final": 0.4934135747120301
   },
   {
     "key": "1377983",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.24270702792067234,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.24270702792067234,
+    "tmp_over_final": 0.2439845423933204
   },
   {
     "key": "1379079",
     "prod_has_v2": false,
-    "prod_over_raw": 0.999,
+    "prod_over_raw": 0.5299214896864441,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.999,
-    "tmp_over_final": 0.99
+    "tmp_over_raw": 0.5299214896864441,
+    "tmp_over_final": 0.5297613237829071
   },
   {
     "key": "1379080",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.4031586414721397,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.4031586414721397,
+    "tmp_over_final": 0.4037454594866006
   },
   {
     "key": "1379081",
     "prod_has_v2": false,
-    "prod_over_raw": 0.999,
+    "prod_over_raw": 0.5748471286743536,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.999,
-    "tmp_over_final": 0.99
+    "tmp_over_raw": 0.5748471286743536,
+    "tmp_over_final": 0.5744318490518847
   },
   {
     "key": "1379082",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.48083378367762686,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.48083378367762686,
+    "tmp_over_final": 0.4809987136924851
   },
   {
     "key": "1379083",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.29599320707295,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.29599320707295,
+    "tmp_over_final": 0.29698937988194746
   },
   {
     "key": "1379084",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.2961602947887496,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.2961602947887496,
+    "tmp_over_final": 0.29713069431758493
   },
   {
     "key": "1379085",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.4797730438839527,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.4797730438839527,
+    "tmp_over_final": 0.47990805186485297
+  },
+  {
+    "key": "1379086",
+    "prod_has_v2": false,
+    "prod_over_raw": 0.5752832937284179,
+    "prod_over_final": null,
+    "tmp_has_v2": true,
+    "tmp_over_raw": 0.5752832937284179,
+    "tmp_over_final": 0.5748007356463595
   },
   {
     "key": "1379087",
     "prod_has_v2": false,
-    "prod_over_raw": 0.001,
+    "prod_over_raw": 0.4558306764792922,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.001,
-    "tmp_over_final": 0.01
+    "tmp_over_raw": 0.4558306764792922,
+    "tmp_over_final": 0.45616271522789487
   },
   {
     "key": "1379088",
     "prod_has_v2": false,
-    "prod_over_raw": 0.999,
+    "prod_over_raw": 0.5748471286743535,
     "prod_over_final": null,
     "tmp_has_v2": true,
-    "tmp_over_raw": 0.999,
-    "tmp_over_final": 0.99
-  },
-  {
-    "key": "1379439",
-    "prod_has_v2": false,
-    "prod_over_raw": 0.3333333333333333,
-    "prod_over_final": null,
-    "tmp_has_v2": true,
-    "tmp_over_raw": 0.3333333333333333,
-    "tmp_over_final": 0.3333333333333333
-  },
-  {
-    "key": "1379440",
-    "prod_has_v2": false,
-    "prod_over_raw": 0.999,
-    "prod_over_final": null,
-    "tmp_has_v2": true,
-    "tmp_over_raw": 0.999,
-    "tmp_over_final": 0.99
-  },
-  {
-    "key": "1379442",
-    "prod_has_v2": false,
-    "prod_over_raw": 0.999,
-    "prod_over_final": null,
-    "tmp_has_v2": true,
-    "tmp_over_raw": 0.999,
-    "tmp_over_final": 0.99
+    "tmp_over_raw": 0.5748471286743535,
+    "tmp_over_final": 0.5744318490518846
   }
 ]
