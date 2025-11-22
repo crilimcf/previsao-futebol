@@ -524,12 +524,32 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             f"(casa {lam_h:.2f}, fora {lam_a:.2f})."
         )
 
+        # Nota: aqui usamos uma regra clara e consistente entre texto e probs:
+        # - Winner: texto fala sempre da probabilidade do resultado mais provável (ph/pd/pa)
+        # - Double Chance: texto usa a combinação 1X/12/X2 com maior probabilidade agregada
+        #   mas se a probabilidade agregada for muito baixa (< 0.6), não forçamos mensagem DC.
+
+        # Probabilidades agregadas de dupla hipótese (1X, 12, X2)
+        dc_probs = {
+            "1X": ph + pd,
+            "12": ph + pa,
+            "X2": pd + pa,
+        }
+        # identifica a chave de DC com maior prob
+        dc_best_label, dc_best_prob = max(dc_probs.items(), key=lambda kv: kv[1])
+
         if winner_class == 0:
-            explanation.append(f"Casa ligeiramente favorita (1X), prob. {ph*100:.0f}% para vitória.")
+            explanation.append(
+                f"Casa ligeiramente favorita (1X), prob. {ph*100:.0f}% para vitória."
+            )
         elif winner_class == 1:
-            explanation.append(f"Jogo equilibrado, prob. de empate {pd*100:.0f}%.")
+            explanation.append(
+                f"Jogo equilibrado, prob. de empate {pd*100:.0f}%."
+            )
         else:
-            explanation.append(f"Visitante em vantagem (X2), prob. {pa*100:.0f}% para não perder.")
+            explanation.append(
+                f"Visitante em vantagem (X2), prob. {pa*100:.0f}% para não perder."
+            )
 
         if p_over25 >= 0.6:
             explanation.append(f"Tendência para Over 2.5 golos ({p_over25*100:.0f}%).")
@@ -561,6 +581,8 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
 
             "odds": odds_map,
             "predictions": {
+                # Winner: sempre baseado diretamente em ph/pd/pa, 
+                # e coerente com a explicação de texto.
                 "winner": {
                     "class": winner_class,
                     "label": winner_label_map.get(winner_class),
@@ -572,6 +594,8 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
                         "away": float(pa),
                     },
                 },
+                # Over 2.5 / Over 1.5: prob é SEMPRE probabilidade de Over (sim),
+                # e o frontend usa 1-p quando o rótulo for "Não"/Under.
                 "over_2_5": {
                     "class": int(p_over25 >= 0.5),
                     "confidence": float(p_over25),
@@ -582,16 +606,21 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
                     "confidence": float(p_over15),
                     "prob": float(p_over15),
                 },
+                # Double Chance: usamos as mesmas probabilidades agregadas da explicação.
+                # guardamos probs detalhadas para 1X/12/X2 e uma "classe" com base na melhor.
                 "double_chance": {
-                    "class": dc_class,
-                    "label": dc_label_map.get(dc_class),
-                    "confidence": float(p_dc),
+                    "class": {"1X": 0, "12": 1, "X2": 2}.get(dc_best_label, dc_class),
+                    "label": dc_best_label,
+                    "confidence": float(dc_best_prob),
+                    "prob": float(dc_best_prob),
                     "probs": {
                         "1X": float(dc_probs["1X"]),
                         "12": float(dc_probs["12"]),
                         "X2": float(dc_probs["X2"]),
                     },
                 },
+                # BTTS: prob é sempre de "Sim" (ambas marcam).
+                # o texto fala de BTTS Não usando 1-p, o frontend também.
                 "btts": {
                     "class": int(p_btts >= 0.5),
                     "confidence": float(p_btts),
