@@ -508,10 +508,60 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             },
         }
 
-        pred_score = top3[0]["score"] if top3 else "1-1"
+        # Escolha do Correct Score principal
+        raw_best_score = top3[0]["score"] if top3 else "1-1"
+
+        def _parse_score(s: str) -> Tuple[Optional[int], Optional[int]]:
+            try:
+                hs, as_ = s.split("-")
+                return int(hs), int(as_)
+            except Exception:
+                return None, None
+
+        # Por omissão usamos o score mais provável
+        best_score = raw_best_score
+        best_h, best_a = _parse_score(raw_best_score)
+
+        # Em casos extremos (ex.: casa muito favorita em 1X2 mas best=0-1),
+        # escolhemos como "Correct Score" principal um resultado alinhado
+        # com o lado favorito, para a UI não ficar contraintuitiva.
         try:
-            hs, as_ = pred_score.split("-")
-            ps_obj = {"home": int(hs), "away": int(as_)}
+            # probs 1X2 já calculadas acima
+            fav_side = winner_class  # 0=home,1=draw,2=away
+            extreme_fav_home = fav_side == 0 and ph >= 0.65
+            extreme_fav_away = fav_side == 2 and pa >= 0.65
+
+            def _score_side(h: Optional[int], a: Optional[int]) -> Optional[int]:
+                if h is None or a is None:
+                    return None
+                if h > a:
+                    return 0
+                if h < a:
+                    return 2
+                return 1
+
+            best_side = _score_side(best_h, best_a)
+
+            if (extreme_fav_home and best_side == 2) or (extreme_fav_away and best_side == 0):
+                # procurar dentro do top3 (ou mais) um score do lado do favorito
+                aligned: Optional[Tuple[str, float, int, int]] = None
+                for item in top3:
+                    s = item.get("score")
+                    prob = float(item.get("prob", 0.0))
+                    h, a = _parse_score(str(s))
+                    side = _score_side(h, a)
+                    if side == fav_side:
+                        if aligned is None or prob > aligned[1]:
+                            aligned = (str(s), prob, h or 0, a or 0)
+                if aligned is not None:
+                    best_score = aligned[0]
+                    best_h, best_a = aligned[2], aligned[3]
+        except Exception:
+            pass
+
+        try:
+            ps_obj = {"home": int(best_h) if best_h is not None else None,
+                      "away": int(best_a) if best_a is not None else None}
         except Exception:
             ps_obj = {"home": None, "away": None}
 
@@ -558,6 +608,32 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             explanation.append(
                 f"Melhor dupla hipótese: {dc_best_label} com {pct(dc_best_prob)}% de probabilidade."
             )
+
+        # Se o Correct Score mais provável estiver contra o favorito forte,
+        # acrescentamos uma frase de aviso sobre esse risco específico.
+        try:
+            fav_side = winner_class
+            extreme_fav_home = fav_side == 0 and ph >= 0.65
+            extreme_fav_away = fav_side == 2 and pa >= 0.65
+            raw_h, raw_a = _parse_score(raw_best_score)
+
+            def _score_side2(h: Optional[int], a: Optional[int]) -> Optional[int]:
+                if h is None or a is None:
+                    return None
+                if h > a:
+                    return 0
+                if h < a:
+                    return 2
+                return 1
+
+            raw_side = _score_side2(raw_h, raw_a)
+            if (extreme_fav_home and raw_side == 2) or (extreme_fav_away and raw_side == 0):
+                explanation.append(
+                    f"Apesar do favoritismo em 1X2, o modelo de resultado exato "
+                    f"vê risco relevante de {raw_best_score}."
+                )
+        except Exception:
+            pass
 
         if p_over25 >= 0.6:
             explanation.append(f"Tendência para Over 2.5 golos ({pct(p_over25)}%).")
