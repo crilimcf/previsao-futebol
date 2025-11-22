@@ -655,15 +655,9 @@ export default function HomeClient() {
                       {(p.league_name ?? p.league) || "Liga"} {p.country ? `(${p.country})` : ""}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-gray-500">
-                      {isAdvancedModel ? (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300">
-                          IA Avançada (v2)
-                        </span>
-                      ) : (
-                        <span className="px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-300">
-                          IA Clássica (v1)
-                        </span>
-                      )}
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300">
+                        IA Bivariada (v2)
+                      </span>
                       <span>
                         {new Date(p.date).toLocaleString("pt-PT", {
                           day: "2-digit",

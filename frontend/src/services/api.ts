@@ -39,28 +39,7 @@ function withTs(params?: Record<string, any>) {
   return { ...(params || {}), _ts: Date.now() };
 }
 
-// ---------------------------
-// Toggle v2 helpers
-// ---------------------------
-function wantV2FromEnv(): boolean {
-  const v = (process.env.NEXT_PUBLIC_PREDICTIONS_VERSION || "").toLowerCase();
-  if (v === "v2") return true;
-  const u2 = (process.env.NEXT_PUBLIC_USE_V2 || "").trim();
-  return u2 === "1" || u2.toLowerCase() === "true";
-}
-
-function wantV2(): boolean {
-  try {
-    if (typeof window !== "undefined") {
-      const ls = window.localStorage.getItem("use_v2");
-      if (ls === "1") return true;
-      if (ls === "0") return false;
-    }
-  } catch {
-    /* ignore */
-  }
-  return wantV2FromEnv();
-}
+// Nota: agora usamos sempre a rota v2 por omissão.
 
 // ---------------------------
 // Tipos úteis (frontend)
@@ -138,8 +117,8 @@ type GetPredOpts = { version?: "v1" | "v2"; allowFallback?: boolean };
 
 /**
  * Obtém previsões.
- * - Por omissão, respeita env/localStorage (v2 se configurado).
- * - Se `version: "v2"`, força v2 (com fallback p/ v1 se allowFallback=true).
+ * - Por omissão, usa sempre a rota v2 (bivariada+iso).
+ * - Se `version: "v1"`, força v1 (com fallback p/ v2 se allowFallback=true).
  */
 export async function getPredictions(
   params?: GetPredParams,
@@ -155,16 +134,16 @@ export async function getPredictions(
       }
     : undefined;
 
-  const preferV2 = opts.version ? opts.version === "v2" : wantV2();
   const allowFallback = opts.allowFallback !== false; // default true
 
-  if (preferV2) {
+  // v2 é sempre a fonte principal
+  if (opts.version !== "v1") {
     try {
       const r2 = await api.get("/predictions/v2", { params: withTs(normalized) });
       return normalizePredArray(r2.data);
     } catch (err) {
       if (!allowFallback) throw err;
-      // cai para v1 silenciosamente
+      // fallback para v1 apenas se permitido
       try {
         const r1 = await api.get("/predictions", { params: withTs(normalized) });
         return normalizePredArray(r1.data);
@@ -172,19 +151,19 @@ export async function getPredictions(
         return [];
       }
     }
-  } else {
+  }
+
+  // ramo explícito v1
+  try {
+    const r1 = await api.get("/predictions", { params: withTs(normalized) });
+    return normalizePredArray(r1.data);
+  } catch (err) {
+    if (!allowFallback) throw err;
     try {
-      const r1 = await api.get("/predictions", { params: withTs(normalized) });
-      return normalizePredArray(r1.data);
-    } catch (err) {
-      if (!allowFallback) throw err;
-      // tenta v2 como fallback
-      try {
-        const r2 = await api.get("/predictions/v2", { params: withTs(normalized) });
-        return normalizePredArray(r2.data);
-      } catch {
-        return [];
-      }
+      const r2 = await api.get("/predictions/v2", { params: withTs(normalized) });
+      return normalizePredArray(r2.data);
+    } catch {
+      return [];
     }
   }
 }
