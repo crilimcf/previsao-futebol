@@ -212,7 +212,13 @@ export default function PredictionCard({
           <div className="text-xs text-gray-400">Over 2.5</div>
           <div className="text-sm text-white">
             {predictions?.over_2_5?.class ? "Sim" : "Não"}{" "}
-            <span className="text-gray-400 ml-1">({toPct(prob(predictions?.over_2_5))})</span>
+            <span className="text-gray-400 ml-1">
+              ({toPct(
+                predictions?.over_2_5?.class
+                  ? prob(predictions?.over_2_5)
+                  : 1 - (prob(predictions?.over_2_5) ?? 0)
+              )})
+            </span>
           </div>
         </div>
 
@@ -220,7 +226,13 @@ export default function PredictionCard({
           <div className="text-xs text-gray-400">Over 1.5</div>
           <div className="text-sm text-white">
             {predictions?.over_1_5?.class ? "Sim" : "Não"}{" "}
-            <span className="text-gray-400 ml-1">({toPct(prob(predictions?.over_1_5))})</span>
+            <span className="text-gray-400 ml-1">
+              ({toPct(
+                predictions?.over_1_5?.class
+                  ? prob(predictions?.over_1_5)
+                  : 1 - (prob(predictions?.over_1_5) ?? 0)
+              )})
+            </span>
           </div>
         </div>
 
@@ -228,7 +240,13 @@ export default function PredictionCard({
           <div className="text-xs text-gray-400">BTTS</div>
           <div className="text-sm text-white">
             {predictions?.btts?.class ? "Sim" : "Não"}{" "}
-            <span className="text-gray-400 ml-1">({toPct(prob(predictions?.btts))})</span>
+            <span className="text-gray-400 ml-1">
+              ({toPct(
+                predictions?.btts?.class
+                  ? prob(predictions?.btts)
+                  : 1 - (prob(predictions?.btts) ?? 0)
+              )})
+            </span>
           </div>
         </div>
       </div>

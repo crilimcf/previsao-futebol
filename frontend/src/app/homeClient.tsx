@@ -598,9 +598,20 @@ export default function HomeClient() {
               const oddsBTTS = p?.odds?.btts ?? {};
 
               const prWinner = prob01(winner?.prob ?? winner?.confidence);
-              const prDC = prob01(dc?.prob ?? dc?.confidence);
-              const prO25 = prob01(over25?.prob ?? over25?.confidence);
-              const prO15 = prob01(over15?.prob ?? over15?.confidence);
+
+              const dcKey = dcLabel(dc?.class as DCClass | undefined);
+              const dcProbRaw =
+                (dc?.probs && typeof dcKey === "string" && dc.probs[dcKey as keyof typeof dc.probs]) ??
+                dc?.prob ??
+                dc?.confidence ??
+                0;
+              const prDC = prob01(dcProbRaw as number);
+
+              const prO25raw = over25?.prob ?? over25?.confidence;
+              const prO25 = prob01(prO25raw);
+
+              const prO15raw = over15?.prob ?? over15?.confidence;
+              const prO15 = prob01(prO15raw);
 
               const marketEntries: [string, number][] = [
                 ["winner", prWinner],
@@ -722,7 +733,7 @@ export default function HomeClient() {
                             isTop("double")
                           )}`}
                         >
-                          {pctStr01(dc?.prob ?? dc?.confidence)}
+                          {pctStr01(dcProbRaw as number)}
                         </span>
                       </div>
                     </div>
@@ -741,11 +752,15 @@ export default function HomeClient() {
                         {over25?.class === 1 ? "Sim" : "Não"}{" "}
                         <span
                           className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
-                            prO25,
+                            over25?.class === 1 ? prO25 : 1 - prO25,
                             isTop("over25")
                           )}`}
                         >
-                          {pctStr01(over25?.prob ?? over25?.confidence)}
+                          {pctStr01(
+                            over25?.class === 1
+                              ? (prO25raw as number)
+                              : 1 - (prO25raw ?? 0)
+                          )}
                         </span>
                       </div>
                     </div>
@@ -764,11 +779,15 @@ export default function HomeClient() {
                         {over15?.class === 1 ? "Sim" : "Não"}{" "}
                         <span
                           className={`ml-1 px-1.5 py-0.5 rounded text-[11px] ${badgeClass(
-                            prO15,
+                            over15?.class === 1 ? prO15 : 1 - prO15,
                             isTop("over15")
                           )}`}
                         >
-                          {pctStr01(over15?.prob ?? over15?.confidence)}
+                          {pctStr01(
+                            over15?.class === 1
+                              ? (prO15raw as number)
+                              : 1 - (prO15raw ?? 0)
+                          )}
                         </span>
                       </div>
                     </div>
@@ -779,7 +798,11 @@ export default function HomeClient() {
                       <div className="text-sm text-white">
                         {btts?.class === 1 ? "Sim" : "Não"}{" "}
                         <span className="text-gray-400 ml-1">
-                          ({toPct(btts?.prob ?? btts?.confidence)})
+                          ({toPct(
+                            btts?.class === 1
+                              ? btts?.prob ?? btts?.confidence
+                              : 1 - (btts?.prob ?? btts?.confidence ?? 0)
+                          )})
                         </span>
                       </div>
                     </div>
