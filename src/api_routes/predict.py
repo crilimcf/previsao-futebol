@@ -7,6 +7,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, Query, HTTPException
 
 from src import config
+from src.predictor_bivar import enrich_from_file_record
 
 router = APIRouter(tags=["predictions"])
 log = logging.getLogger("predict")
@@ -168,6 +169,13 @@ def get_predictions(
     raw: bool = Query(False, description="Se true, não aplica calibração"),
 ):
     data = _load_json(PRED_PATH) or []
+    if isinstance(data, dict):
+        data = (
+            data.get("items")
+            or data.get("data")
+            or data.get("predictions")
+            or []
+        )
     if not isinstance(data, list):
         raise HTTPException(status_code=500, detail="predictions.json mal formatado")
 
@@ -176,6 +184,13 @@ def get_predictions(
 
     out: List[Dict[str, Any]] = []
     for row in _iter_predictions_filtered(data, date, league_id):
+        # garante formato enriquecido/coerente por registo
+        try:
+            row = enrich_from_file_record(row)
+        except Exception:
+            # em caso de falha, segue com o registo original
+            row = dict(row)
+
         preds = row.get("predictions") or {}
 
         # Winner
