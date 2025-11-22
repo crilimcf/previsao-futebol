@@ -25,8 +25,8 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 API_KEY = os.getenv("API_FOOTBALL_KEY")
 BASE_URL = os.getenv("API_FOOTBALL_BASE", "https://v3.football.api-sports.io/").rstrip("/") + "/"
 
-# Season de clubes
-SEASON_CLUBS = os.getenv("API_FOOTBALL_SEASON", "2025")
+# Season de clubes (usar época atual por omissão)
+SEASON_CLUBS = os.getenv("API_FOOTBALL_SEASON", "2024")
 
 # World Cup – Qualification Europe (seleções)
 WCQ_EUROPE_LEAGUE_ID = int(os.getenv("API_FOOTBALL_WCQ_EUROPE_LEAGUE_ID", "32"))
