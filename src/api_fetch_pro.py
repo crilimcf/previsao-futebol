@@ -524,18 +524,12 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             f"(casa {lam_h:.2f}, fora {lam_a:.2f})."
         )
 
-        # Nota: aqui usamos uma regra clara e consistente entre texto e probs:
-        # - Winner: texto fala sempre da probabilidade do resultado mais provável (ph/pd/pa)
-        # - Double Chance: texto usa a combinação 1X/12/X2 com maior probabilidade agregada
-        #   mas se a probabilidade agregada for muito baixa (< 0.6), não forçamos mensagem DC.
-
         # Probabilidades agregadas de dupla hipótese (1X, 12, X2)
         dc_probs = {
             "1X": ph + pd,
             "12": ph + pa,
             "X2": pd + pa,
         }
-        # identifica a chave de DC com maior prob
         dc_best_label, dc_best_prob = max(dc_probs.items(), key=lambda kv: kv[1])
 
         # helper para percentagens consistentes com o frontend (round(prob*100))
@@ -545,17 +539,24 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             except Exception:
                 return 0
 
+        # Winner: mensagem baseada SEMPRE nas probabilidades calibradas ph/pd/pa
         if winner_class == 0:
             explanation.append(
-                f"Casa ligeiramente favorita (1X), prob. {pct(ph)}% para vitória."
+                f"Casa favorita (1X), prob. {pct(ph)}% para vitória."
             )
         elif winner_class == 1:
             explanation.append(
                 f"Jogo equilibrado, prob. de empate {pct(pd)}%."
             )
-        else:
+        elif winner_class == 2:
             explanation.append(
-                f"Visitante em vantagem (X2), prob. {pct(pa)}% para não perder."
+                f"Visitante favorito (X2), prob. {pct(pa)}% para não perder."
+            )
+
+        # Se a melhor dupla hipótese tiver probabilidade decente, reforça na explicação
+        if dc_best_prob >= 0.55:
+            explanation.append(
+                f"Melhor dupla hipótese: {dc_best_label} com {pct(dc_best_prob)}% de probabilidade."
             )
 
         if p_over25 >= 0.6:
