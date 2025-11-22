@@ -432,6 +432,62 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
             )
             probable_scorers = {"home": [], "away": []}
 
+        # Fallback: se a geração de marcadores prováveis por fixture devolver listas
+        # vazias (por falta de plantel/lesões ou erro na API), tentamos popular a
+        # lista com base nos `top_scorers` da liga filtrando por equipa.
+        try:
+            # top_scorers é um ranking geral da liga (player, team, goals)
+            # usamos como fallback apenas quando não temos marcadores prováveis
+            if isinstance(probable_scorers, dict):
+                home_ps = probable_scorers.get("home") or []
+                away_ps = probable_scorers.get("away") or []
+
+                if (not home_ps) and top_scorers:
+                    home_candidates = [t for t in top_scorers if (t.get("team") or "") == (home.get("name") or "")]
+                    if home_candidates:
+                        # criar objects compatíveis com o formato esperado
+                        home_fallback = []
+                        total_goals = sum(int((c.get("goals") or 0)) for c in home_candidates) or len(home_candidates)
+                        for c in home_candidates[:4]:
+                            goals = int(c.get("goals") or 0) or 1
+                            prob = goals / total_goals
+                            home_fallback.append({
+                                "player_id": None,
+                                "name": c.get("player"),
+                                "team_id": home.get("id"),
+                                "team_name": home.get("name"),
+                                "position": None,
+                                "photo": None,
+                                "stats": {"goals": {"total": goals}, "games": {}},
+                                "probability": prob,
+                                "probability_pct": round(prob * 100.0, 1),
+                            })
+                        probable_scorers["home"] = home_fallback
+
+                if (not away_ps) and top_scorers:
+                    away_candidates = [t for t in top_scorers if (t.get("team") or "") == (away.get("name") or "")]
+                    if away_candidates:
+                        away_fallback = []
+                        total_goals = sum(int((c.get("goals") or 0)) for c in away_candidates) or len(away_candidates)
+                        for c in away_candidates[:4]:
+                            goals = int(c.get("goals") or 0) or 1
+                            prob = goals / total_goals
+                            away_fallback.append({
+                                "player_id": None,
+                                "name": c.get("player"),
+                                "team_id": away.get("id"),
+                                "team_name": away.get("name"),
+                                "position": None,
+                                "photo": None,
+                                "stats": {"goals": {"total": goals}, "games": {}},
+                                "probability": prob,
+                                "probability_pct": round(prob * 100.0, 1),
+                            })
+                        probable_scorers["away"] = away_fallback
+        except Exception:
+            # não queremos que um fallback cause falha completa
+            pass
+
         odds_map = {
             "winner": {
                 "home": implied_odds(ph),
