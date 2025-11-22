@@ -1096,7 +1096,7 @@
       "Golos esperados: 3.10 no total (casa 2.60, fora 0.50).",
       "Casa favorita (1X), prob. 82% para vitória.",
       "Melhor dupla hipótese: 1X com 95% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Pouca probabilidade de ambas marcarem (BTTS Não 64%)."
     ],
     "model": "bivariate+iso",
@@ -2270,7 +2270,7 @@
       "Golos esperados: 3.40 no total (casa 2.55, fora 0.85).",
       "Casa favorita (1X), prob. 74% para vitória.",
       "Melhor dupla hipótese: 1X com 90% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -2640,7 +2640,7 @@
       "Golos esperados: 3.00 no total (casa 2.30, fora 0.70).",
       "Casa favorita (1X), prob. 73% para vitória.",
       "Melhor dupla hipótese: 1X com 90% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -3118,7 +3118,7 @@
       "Golos esperados: 3.20 no total (casa 2.35, fora 0.85).",
       "Casa favorita (1X), prob. 71% para vitória.",
       "Melhor dupla hipótese: 1X com 88% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -4129,7 +4129,7 @@
       "Golos esperados: 3.10 no total (casa 2.20, fora 0.90).",
       "Casa favorita (1X), prob. 67% para vitória.",
       "Melhor dupla hipótese: 1X com 86% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -4715,7 +4715,7 @@
       "Golos esperados: 3.10 no total (casa 2.20, fora 0.90).",
       "Casa favorita (1X), prob. 67% para vitória.",
       "Melhor dupla hipótese: 1X com 86% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -5031,7 +5031,7 @@
       "Golos esperados: 3.10 no total (casa 2.20, fora 0.90).",
       "Casa favorita (1X), prob. 67% para vitória.",
       "Melhor dupla hipótese: 1X com 86% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -5933,7 +5933,7 @@
       "Golos esperados: 2.85 no total (casa 2.00, fora 0.85).",
       "Casa favorita (1X), prob. 64% para vitória.",
       "Melhor dupla hipótese: 1X com 85% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -6998,7 +6998,7 @@
       "Golos esperados: 3.00 no total (casa 0.95, fora 2.05).",
       "Visitante favorito (X2), prob. 63% para não perder.",
       "Melhor dupla hipótese: X2 com 83% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -8836,7 +8836,7 @@
       "Golos esperados: 3.00 no total (casa 1.00, fora 2.00).",
       "Visitante favorito (X2), prob. 60% para não perder.",
       "Melhor dupla hipótese: X2 com 82% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -9422,7 +9422,7 @@
       "Golos esperados: 3.00 no total (casa 2.00, fora 1.00).",
       "Casa favorita (1X), prob. 60% para vitória.",
       "Melhor dupla hipótese: 1X com 82% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -12216,7 +12216,7 @@
       "Golos esperados: 2.70 no total (casa 1.80, fora 0.90).",
       "Casa favorita (1X), prob. 59% para vitória.",
       "Melhor dupla hipótese: 1X com 81% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -13280,7 +13280,7 @@
       "Golos esperados: 3.25 no total (casa 2.05, fora 1.20).",
       "Casa favorita (1X), prob. 57% para vitória.",
       "Melhor dupla hipótese: 12 com 79% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
     "model": "bivariate+iso",
@@ -13867,7 +13867,7 @@
       "Golos esperados: 3.35 no total (casa 2.10, fora 1.25).",
       "Casa favorita (1X), prob. 57% para vitória.",
       "Melhor dupla hipótese: 12 com 79% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
     ],
     "model": "bivariate+iso",
@@ -14454,7 +14454,7 @@
       "Golos esperados: 3.00 no total (casa 1.90, fora 1.10).",
       "Casa favorita (1X), prob. 56% para vitória.",
       "Melhor dupla hipótese: 1X com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
     "model": "bivariate+iso",
@@ -15041,7 +15041,7 @@
       "Golos esperados: 3.20 no total (casa 2.00, fora 1.20).",
       "Casa favorita (1X), prob. 56% para vitória.",
       "Melhor dupla hipótese: 12 com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 60%)."
     ],
     "model": "bivariate+iso",
@@ -15574,7 +15574,7 @@
       "Golos esperados: 2.95 no total (casa 1.85, fora 1.10).",
       "Casa favorita (1X), prob. 55% para vitória.",
       "Melhor dupla hipótese: 1X com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
     "model": "bivariate+iso",
@@ -16477,7 +16477,7 @@
       "Golos esperados: 2.70 no total (casa 1.00, fora 1.70).",
       "Visitante favorito (X2), prob. 54% para não perder.",
       "Melhor dupla hipótese: X2 com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -16901,7 +16901,7 @@
       "Golos esperados: 2.70 no total (casa 1.70, fora 1.00).",
       "Casa favorita (1X), prob. 54% para vitória.",
       "Melhor dupla hipótese: 1X com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -18975,7 +18975,7 @@
       "Golos esperados: 2.80 no total (casa 1.70, fora 1.10).",
       "Casa favorita (1X), prob. 51% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -21581,7 +21581,7 @@
       "Golos esperados: 2.70 no total (casa 1.60, fora 1.10).",
       "Casa favorita (1X), prob. 49% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -22005,7 +22005,7 @@
       "Golos esperados: 2.70 no total (casa 1.60, fora 1.10).",
       "Casa favorita (1X), prob. 49% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -23756,7 +23756,7 @@
       "Golos esperados: 3.20 no total (casa 1.80, fora 1.40).",
       "Casa favorita (1X), prob. 47% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
     ],
     "model": "bivariate+iso",
@@ -24125,7 +24125,7 @@
       "Golos esperados: 2.90 no total (casa 1.25, fora 1.65).",
       "Visitante favorito (X2), prob. 47% para não perder.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
     ],
     "model": "bivariate+iso",
@@ -27634,7 +27634,7 @@
       "Golos esperados: 2.85 no total (casa 1.30, fora 1.55).",
       "Visitante favorito (X2), prob. 43% para não perder.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
     "model": "bivariate+iso",
@@ -29178,7 +29178,7 @@
       "Golos esperados: 2.90 no total (casa 1.35, fora 1.55).",
       "Visitante favorito (X2), prob. 42% para não perder.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
     ],
     "model": "bivariate+iso",
@@ -29775,408 +29775,6 @@
     }
   },
   {
-    "match_id": 1419714,
-    "league_id": 136,
-    "league": "Serie B",
-    "country": "Italy",
-    "date": "2025-11-22T14:00:00+00:00",
-    "date_ymd": "2025-11-22",
-    "home_team": "Virtus Entella",
-    "away_team": "Palermo",
-    "home_logo": "https://media.api-sports.io/football/teams/527.png",
-    "away_logo": "https://media.api-sports.io/football/teams/522.png",
-    "lambda_home": 1.15,
-    "lambda_away": 0.9,
-    "odds": {
-      "winner": {
-        "home": 3.67,
-        "draw": 3.13,
-        "away": 2.45
-      },
-      "over_2_5": {
-        "over": 2.97,
-        "under": 1.51
-      },
-      "over_1_5": {
-        "over": 1.68,
-        "under": 2.47
-      },
-      "btts": {
-        "yes": 2.39,
-        "no": 1.72
-      }
-    },
-    "predictions": {
-      "winner": {
-        "class": 2,
-        "prob": 0.40747392393817194,
-        "confidence": 0.40747392393817194,
-        "probs": {
-          "home": 0.27274370257427905,
-          "draw": 0.319782373487549,
-          "away": 0.40747392393817194
-        }
-      },
-      "over_2_5": {
-        "class": 0,
-        "prob": 0.336824954481277,
-        "confidence": 0.336824954481277
-      },
-      "over_1_5": {
-        "class": 1,
-        "prob": 0.5945188780416496
-      },
-      "double_chance": {
-        "class": 2,
-        "prob": 0.727256297425721,
-        "confidence": 0.727256297425721,
-        "probs": {
-          "1X": 0.592526076061828,
-          "12": 0.680217626512451,
-          "X2": 0.727256297425721
-        }
-      },
-      "btts": {
-        "class": 0,
-        "prob": 0.4190676237728259,
-        "confidence": 0.4190676237728259
-      },
-      "correct_score": {
-        "best": "1-0",
-        "top3": [
-          {
-            "score": "1-0",
-            "prob": 0.149387781774129
-          },
-          {
-            "score": "0-0",
-            "prob": 0.1422740778801229
-          },
-          {
-            "score": "1-1",
-            "prob": 0.1337376332073155
-          }
-        ]
-      }
-    },
-    "correct_score_top3": [
-      {
-        "score": "1-0",
-        "prob": 0.14808038130567958
-      },
-      {
-        "score": "1-1",
-        "prob": 0.13327234317511163
-      },
-      {
-        "score": "0-0",
-        "prob": 0.1287655489614605
-      }
-    ],
-    "top_scorers": [
-      {
-        "player": "E. Gliozzi",
-        "team": "Modena",
-        "goals": 7
-      },
-      {
-        "player": "M. Bortolussi",
-        "team": "Padova",
-        "goals": 6
-      },
-      {
-        "player": "A. Cissè",
-        "team": "Catanzaro",
-        "goals": 5
-      },
-      {
-        "player": "A. Tiritiello",
-        "team": "Virtus Entella",
-        "goals": 5
-      },
-      {
-        "player": "B. Popov",
-        "team": "Empoli",
-        "goals": 5
-      }
-    ],
-    "probable_scorers": {
-      "home": [
-        {
-          "player_id": null,
-          "name": "A. Tiritiello",
-          "team_id": 527,
-          "team_name": "Virtus Entella",
-          "position": null,
-          "photo": null,
-          "stats": {
-            "goals": {
-              "total": 5
-            },
-            "games": {}
-          },
-          "probability": 1.0,
-          "probability_pct": 100.0
-        }
-      ],
-      "away": [
-        {
-          "player_id": 31271,
-          "name": "A. Palumbo",
-          "team_id": 522,
-          "team_name": "Palermo",
-          "position": "Midfielder",
-          "photo": "https://media.api-sports.io/football/players/31271.png",
-          "stats": {
-            "goals": {
-              "total": 4,
-              "conceded": 0,
-              "assists": 8,
-              "saves": null
-            },
-            "games": {
-              "appearences": 34,
-              "lineups": 34,
-              "minutes": 2700,
-              "number": null,
-              "position": "Midfielder",
-              "rating": "7.144117",
-              "captain": false
-            }
-          },
-          "probability": 0.35926580977241307,
-          "probability_pct": 35.9
-        },
-        {
-          "player_id": 325388,
-          "name": "N. Pierozzi",
-          "team_id": 522,
-          "team_name": "Palermo",
-          "position": "Defender",
-          "photo": "https://media.api-sports.io/football/players/325388.png",
-          "stats": {
-            "goals": {
-              "total": 4,
-              "conceded": 0,
-              "assists": 2,
-              "saves": null
-            },
-            "games": {
-              "appearences": 35,
-              "lineups": 35,
-              "minutes": 2974,
-              "number": null,
-              "position": "Defender",
-              "rating": "6.871428",
-              "captain": false
-            }
-          },
-          "probability": 0.35820178899147675,
-          "probability_pct": 35.8
-        },
-        {
-          "player_id": 30845,
-          "name": "E. Gyasi",
-          "team_id": 522,
-          "team_name": "Palermo",
-          "position": "Defender",
-          "photo": "https://media.api-sports.io/football/players/30845.png",
-          "stats": {
-            "goals": {
-              "total": 2,
-              "conceded": 0,
-              "assists": null,
-              "saves": null
-            },
-            "games": {
-              "appearences": 35,
-              "lineups": 35,
-              "minutes": 2834,
-              "number": null,
-              "position": "Defender",
-              "rating": "6.497142",
-              "captain": false
-            }
-          },
-          "probability": 0.17998487168049304,
-          "probability_pct": 18.0
-        },
-        {
-          "player_id": 31402,
-          "name": "F. Ranocchia",
-          "team_id": 522,
-          "team_name": "Palermo",
-          "position": "Midfielder",
-          "photo": "https://media.api-sports.io/football/players/31402.png",
-          "stats": {
-            "goals": {
-              "total": 1,
-              "conceded": 0,
-              "assists": null,
-              "saves": null
-            },
-            "games": {
-              "appearences": 34,
-              "lineups": 19,
-              "minutes": 531,
-              "number": null,
-              "position": "Midfielder",
-              "rating": "6.764285",
-              "captain": false
-            }
-          },
-          "probability": 0.10254752955561715,
-          "probability_pct": 10.3
-        }
-      ]
-    },
-    "probable_scorers_home": [
-      {
-        "player_id": null,
-        "name": "A. Tiritiello",
-        "team_id": 527,
-        "team_name": "Virtus Entella",
-        "position": null,
-        "photo": null,
-        "stats": {
-          "goals": {
-            "total": 5
-          },
-          "games": {}
-        },
-        "probability": 1.0,
-        "probability_pct": 100.0
-      }
-    ],
-    "probable_scorers_away": [
-      {
-        "player_id": 31271,
-        "name": "A. Palumbo",
-        "team_id": 522,
-        "team_name": "Palermo",
-        "position": "Midfielder",
-        "photo": "https://media.api-sports.io/football/players/31271.png",
-        "stats": {
-          "goals": {
-            "total": 4,
-            "conceded": 0,
-            "assists": 8,
-            "saves": null
-          },
-          "games": {
-            "appearences": 34,
-            "lineups": 34,
-            "minutes": 2700,
-            "number": null,
-            "position": "Midfielder",
-            "rating": "7.144117",
-            "captain": false
-          }
-        },
-        "probability": 0.35926580977241307,
-        "probability_pct": 35.9
-      },
-      {
-        "player_id": 325388,
-        "name": "N. Pierozzi",
-        "team_id": 522,
-        "team_name": "Palermo",
-        "position": "Defender",
-        "photo": "https://media.api-sports.io/football/players/325388.png",
-        "stats": {
-          "goals": {
-            "total": 4,
-            "conceded": 0,
-            "assists": 2,
-            "saves": null
-          },
-          "games": {
-            "appearences": 35,
-            "lineups": 35,
-            "minutes": 2974,
-            "number": null,
-            "position": "Defender",
-            "rating": "6.871428",
-            "captain": false
-          }
-        },
-        "probability": 0.35820178899147675,
-        "probability_pct": 35.8
-      },
-      {
-        "player_id": 30845,
-        "name": "E. Gyasi",
-        "team_id": 522,
-        "team_name": "Palermo",
-        "position": "Defender",
-        "photo": "https://media.api-sports.io/football/players/30845.png",
-        "stats": {
-          "goals": {
-            "total": 2,
-            "conceded": 0,
-            "assists": null,
-            "saves": null
-          },
-          "games": {
-            "appearences": 35,
-            "lineups": 35,
-            "minutes": 2834,
-            "number": null,
-            "position": "Defender",
-            "rating": "6.497142",
-            "captain": false
-          }
-        },
-        "probability": 0.17998487168049304,
-        "probability_pct": 18.0
-      },
-      {
-        "player_id": 31402,
-        "name": "F. Ranocchia",
-        "team_id": 522,
-        "team_name": "Palermo",
-        "position": "Midfielder",
-        "photo": "https://media.api-sports.io/football/players/31402.png",
-        "stats": {
-          "goals": {
-            "total": 1,
-            "conceded": 0,
-            "assists": null,
-            "saves": null
-          },
-          "games": {
-            "appearences": 34,
-            "lineups": 19,
-            "minutes": 531,
-            "number": null,
-            "position": "Midfielder",
-            "rating": "6.764285",
-            "captain": false
-          }
-        },
-        "probability": 0.10254752955561715,
-        "probability_pct": 10.3
-      }
-    ],
-    "predicted_score": {
-      "home": 1,
-      "away": 0
-    },
-    "confidence": 0.41417500601667356,
-    "explanation": [
-      "Golos esperados: 2.05 no total (casa 1.15, fora 0.90).",
-      "Casa favorita (1X), prob. 41% para vitória.",
-      "Melhor dupla hipótese: 1X com 71% de probabilidade.",
-      "Tendência para Under 2.5 golos (100%)."
-    ],
-    "model": "bivariate+iso",
-    "lambda_used": {
-      "home": 1.15,
-      "away": 0.9,
-      "lambda3": 0.1
-    }
-  },
-  {
     "match_id": 1394544,
     "league_id": 203,
     "league": "Süper Lig",
@@ -30759,593 +30357,6 @@
     "lambda_used": {
       "home": 1.35,
       "away": 1.15,
-      "lambda3": 0.1
-    }
-  },
-  {
-    "match_id": 1396963,
-    "league_id": 141,
-    "league": "Segunda División",
-    "country": "Spain",
-    "date": "2025-11-22T15:15:00+00:00",
-    "date_ymd": "2025-11-22",
-    "home_team": "FC Andorra",
-    "away_team": "Castellón",
-    "home_logo": "https://media.api-sports.io/football/teams/8157.png",
-    "away_logo": "https://media.api-sports.io/football/teams/5254.png",
-    "lambda_home": 1.1,
-    "lambda_away": 0.8500000000000001,
-    "odds": {
-      "winner": {
-        "home": 3.76,
-        "draw": 3.02,
-        "away": 2.48
-      },
-      "over_2_5": {
-        "over": 3.21,
-        "under": 1.45
-      },
-      "over_1_5": {
-        "over": 1.76,
-        "under": 2.31
-      },
-      "btts": {
-        "yes": 2.52,
-        "no": 1.66
-      }
-    },
-    "predictions": {
-      "winner": {
-        "class": 2,
-        "prob": 0.40352889819515986,
-        "confidence": 0.40352889819515986,
-        "probs": {
-          "home": 0.26579493610765714,
-          "draw": 0.33067616569718306,
-          "away": 0.40352889819515986
-        }
-      },
-      "over_2_5": {
-        "class": 0,
-        "prob": 0.3111046457296053,
-        "confidence": 0.3111046457296053
-      },
-      "over_1_5": {
-        "class": 1,
-        "prob": 0.5675977804864858
-      },
-      "double_chance": {
-        "class": 2,
-        "prob": 0.734205063892343,
-        "confidence": 0.734205063892343,
-        "probs": {
-          "1X": 0.5964711018048402,
-          "12": 0.669323834302817,
-          "X2": 0.734205063892343
-        }
-      },
-      "btts": {
-        "class": 0,
-        "prob": 0.39695113819236705,
-        "confidence": 0.39695113819236705
-      },
-      "correct_score": {
-        "best": "0-0",
-        "top3": [
-          {
-            "score": "0-0",
-            "prob": 0.15723717073218713
-          },
-          {
-            "score": "1-0",
-            "prob": 0.15723717073218713
-          },
-          {
-            "score": "1-1",
-            "prob": 0.13365159512235905
-          }
-        ]
-      }
-    },
-    "correct_score_top3": [
-      {
-        "score": "1-0",
-        "prob": 0.15652952836338604
-      },
-      {
-        "score": "0-0",
-        "prob": 0.14229957123944184
-      },
-      {
-        "score": "1-1",
-        "prob": 0.13305009910887816
-      }
-    ],
-    "top_scorers": [
-      {
-        "player": "Adri Embarba",
-        "team": "Almeria",
-        "goals": 8
-      },
-      {
-        "player": "Asier Villalibre",
-        "team": "Racing Santander",
-        "goals": 8
-      },
-      {
-        "player": "Z. Eddahchouri",
-        "team": "Deportivo La Coruna",
-        "goals": 7
-      },
-      {
-        "player": "Jeremy Arévalo",
-        "team": "Racing Santander",
-        "goals": 7
-      },
-      {
-        "player": "Jonathan Dubasin",
-        "team": "Sporting Gijon",
-        "goals": 7
-      }
-    ],
-    "probable_scorers": {
-      "home": [
-        {
-          "player_id": 182719,
-          "name": "Dani Villahermosa",
-          "team_id": 8157,
-          "team_name": "FC Andorra",
-          "position": "Midfielder",
-          "photo": "https://media.api-sports.io/football/players/182719.png",
-          "stats": {
-            "goals": {
-              "total": 4,
-              "conceded": 0,
-              "assists": 2,
-              "saves": null
-            },
-            "games": {
-              "appearences": 14,
-              "lineups": 10,
-              "minutes": 949,
-              "number": 6,
-              "position": "Midfielder",
-              "rating": "6.84",
-              "captain": false
-            }
-          },
-          "probability": 0.3639271719680311,
-          "probability_pct": 36.4
-        },
-        {
-          "player_id": 397941,
-          "name": "Minsu Kim",
-          "team_id": 8157,
-          "team_name": "FC Andorra",
-          "position": "Attacker",
-          "photo": "https://media.api-sports.io/football/players/397941.png",
-          "stats": {
-            "goals": {
-              "total": 3,
-              "conceded": 0,
-              "assists": 3,
-              "saves": null
-            },
-            "games": {
-              "appearences": 14,
-              "lineups": 14,
-              "minutes": 1150,
-              "number": 29,
-              "position": "Attacker",
-              "rating": "6.82",
-              "captain": false
-            }
-          },
-          "probability": 0.26913968629018303,
-          "probability_pct": 26.9
-        },
-        {
-          "player_id": 182480,
-          "name": "L. de León",
-          "team_id": 8157,
-          "team_name": "FC Andorra",
-          "position": "Attacker",
-          "photo": "https://media.api-sports.io/football/players/182480.png",
-          "stats": {
-            "goals": {
-              "total": 2,
-              "conceded": 0,
-              "assists": 0,
-              "saves": null
-            },
-            "games": {
-              "appearences": 14,
-              "lineups": 8,
-              "minutes": 756,
-              "number": 11,
-              "position": "Attacker",
-              "rating": "6.62",
-              "captain": false
-            }
-          },
-          "probability": 0.1865986628774244,
-          "probability_pct": 18.7
-        },
-        {
-          "player_id": 286558,
-          "name": "Gael Alonso",
-          "team_id": 8157,
-          "team_name": "FC Andorra",
-          "position": "Defender",
-          "photo": "https://media.api-sports.io/football/players/286558.png",
-          "stats": {
-            "goals": {
-              "total": 2,
-              "conceded": 0,
-              "assists": 0,
-              "saves": null
-            },
-            "games": {
-              "appearences": 13,
-              "lineups": 13,
-              "minutes": 1108,
-              "number": 4,
-              "position": "Defender",
-              "rating": "7.12",
-              "captain": false
-            }
-          },
-          "probability": 0.18033447886436146,
-          "probability_pct": 18.0
-        }
-      ],
-      "away": [
-        {
-          "player_id": 286038,
-          "name": "Álex Calatrava",
-          "team_id": 5254,
-          "team_name": "Castellón",
-          "position": "Midfielder",
-          "photo": "https://media.api-sports.io/football/players/286038.png",
-          "stats": {
-            "goals": {
-              "total": 4,
-              "conceded": 0,
-              "assists": 3,
-              "saves": null
-            },
-            "games": {
-              "appearences": 14,
-              "lineups": 14,
-              "minutes": 1190,
-              "number": 21,
-              "position": "Midfielder",
-              "rating": "7.04",
-              "captain": false
-            }
-          },
-          "probability": 0.31429339992558375,
-          "probability_pct": 31.4
-        },
-        {
-          "player_id": 191151,
-          "name": "Ousmane Camara",
-          "team_id": 5254,
-          "team_name": "Castellón",
-          "position": "Attacker",
-          "photo": "https://media.api-sports.io/football/players/191151.png",
-          "stats": {
-            "goals": {
-              "total": 3,
-              "conceded": 0,
-              "assists": 0,
-              "saves": null
-            },
-            "games": {
-              "appearences": 9,
-              "lineups": 4,
-              "minutes": 410,
-              "number": 9,
-              "position": "Attacker",
-              "rating": "6.78",
-              "captain": false
-            }
-          },
-          "probability": 0.2674382950015087,
-          "probability_pct": 26.7
-        },
-        {
-          "player_id": 279482,
-          "name": "B. Cipenga",
-          "team_id": 5254,
-          "team_name": "Castellón",
-          "position": "Midfielder",
-          "photo": "https://media.api-sports.io/football/players/279482.png",
-          "stats": {
-            "goals": {
-              "total": 3,
-              "conceded": 0,
-              "assists": 2,
-              "saves": null
-            },
-            "games": {
-              "appearences": 10,
-              "lineups": 10,
-              "minutes": 854,
-              "number": 16,
-              "position": "Midfielder",
-              "rating": "7.29",
-              "captain": false
-            }
-          },
-          "probability": 0.2425275590102668,
-          "probability_pct": 24.3
-        },
-        {
-          "player_id": 25717,
-          "name": "Israel Suero",
-          "team_id": 5254,
-          "team_name": "Castellón",
-          "position": "Midfielder",
-          "photo": "https://media.api-sports.io/football/players/25717.png",
-          "stats": {
-            "goals": {
-              "total": 2,
-              "conceded": 0,
-              "assists": 1,
-              "saves": null
-            },
-            "games": {
-              "appearences": 10,
-              "lineups": 4,
-              "minutes": 452,
-              "number": 10,
-              "position": "Midfielder",
-              "rating": "6.87",
-              "captain": false
-            }
-          },
-          "probability": 0.17574074606264087,
-          "probability_pct": 17.6
-        }
-      ]
-    },
-    "probable_scorers_home": [
-      {
-        "player_id": 182719,
-        "name": "Dani Villahermosa",
-        "team_id": 8157,
-        "team_name": "FC Andorra",
-        "position": "Midfielder",
-        "photo": "https://media.api-sports.io/football/players/182719.png",
-        "stats": {
-          "goals": {
-            "total": 4,
-            "conceded": 0,
-            "assists": 2,
-            "saves": null
-          },
-          "games": {
-            "appearences": 14,
-            "lineups": 10,
-            "minutes": 949,
-            "number": 6,
-            "position": "Midfielder",
-            "rating": "6.84",
-            "captain": false
-          }
-        },
-        "probability": 0.3639271719680311,
-        "probability_pct": 36.4
-      },
-      {
-        "player_id": 397941,
-        "name": "Minsu Kim",
-        "team_id": 8157,
-        "team_name": "FC Andorra",
-        "position": "Attacker",
-        "photo": "https://media.api-sports.io/football/players/397941.png",
-        "stats": {
-          "goals": {
-            "total": 3,
-            "conceded": 0,
-            "assists": 3,
-            "saves": null
-          },
-          "games": {
-            "appearences": 14,
-            "lineups": 14,
-            "minutes": 1150,
-            "number": 29,
-            "position": "Attacker",
-            "rating": "6.82",
-            "captain": false
-          }
-        },
-        "probability": 0.26913968629018303,
-        "probability_pct": 26.9
-      },
-      {
-        "player_id": 182480,
-        "name": "L. de León",
-        "team_id": 8157,
-        "team_name": "FC Andorra",
-        "position": "Attacker",
-        "photo": "https://media.api-sports.io/football/players/182480.png",
-        "stats": {
-          "goals": {
-            "total": 2,
-            "conceded": 0,
-            "assists": 0,
-            "saves": null
-          },
-          "games": {
-            "appearences": 14,
-            "lineups": 8,
-            "minutes": 756,
-            "number": 11,
-            "position": "Attacker",
-            "rating": "6.62",
-            "captain": false
-          }
-        },
-        "probability": 0.1865986628774244,
-        "probability_pct": 18.7
-      },
-      {
-        "player_id": 286558,
-        "name": "Gael Alonso",
-        "team_id": 8157,
-        "team_name": "FC Andorra",
-        "position": "Defender",
-        "photo": "https://media.api-sports.io/football/players/286558.png",
-        "stats": {
-          "goals": {
-            "total": 2,
-            "conceded": 0,
-            "assists": 0,
-            "saves": null
-          },
-          "games": {
-            "appearences": 13,
-            "lineups": 13,
-            "minutes": 1108,
-            "number": 4,
-            "position": "Defender",
-            "rating": "7.12",
-            "captain": false
-          }
-        },
-        "probability": 0.18033447886436146,
-        "probability_pct": 18.0
-      }
-    ],
-    "probable_scorers_away": [
-      {
-        "player_id": 286038,
-        "name": "Álex Calatrava",
-        "team_id": 5254,
-        "team_name": "Castellón",
-        "position": "Midfielder",
-        "photo": "https://media.api-sports.io/football/players/286038.png",
-        "stats": {
-          "goals": {
-            "total": 4,
-            "conceded": 0,
-            "assists": 3,
-            "saves": null
-          },
-          "games": {
-            "appearences": 14,
-            "lineups": 14,
-            "minutes": 1190,
-            "number": 21,
-            "position": "Midfielder",
-            "rating": "7.04",
-            "captain": false
-          }
-        },
-        "probability": 0.31429339992558375,
-        "probability_pct": 31.4
-      },
-      {
-        "player_id": 191151,
-        "name": "Ousmane Camara",
-        "team_id": 5254,
-        "team_name": "Castellón",
-        "position": "Attacker",
-        "photo": "https://media.api-sports.io/football/players/191151.png",
-        "stats": {
-          "goals": {
-            "total": 3,
-            "conceded": 0,
-            "assists": 0,
-            "saves": null
-          },
-          "games": {
-            "appearences": 9,
-            "lineups": 4,
-            "minutes": 410,
-            "number": 9,
-            "position": "Attacker",
-            "rating": "6.78",
-            "captain": false
-          }
-        },
-        "probability": 0.2674382950015087,
-        "probability_pct": 26.7
-      },
-      {
-        "player_id": 279482,
-        "name": "B. Cipenga",
-        "team_id": 5254,
-        "team_name": "Castellón",
-        "position": "Midfielder",
-        "photo": "https://media.api-sports.io/football/players/279482.png",
-        "stats": {
-          "goals": {
-            "total": 3,
-            "conceded": 0,
-            "assists": 2,
-            "saves": null
-          },
-          "games": {
-            "appearences": 10,
-            "lineups": 10,
-            "minutes": 854,
-            "number": 16,
-            "position": "Midfielder",
-            "rating": "7.29",
-            "captain": false
-          }
-        },
-        "probability": 0.2425275590102668,
-        "probability_pct": 24.3
-      },
-      {
-        "player_id": 25717,
-        "name": "Israel Suero",
-        "team_id": 5254,
-        "team_name": "Castellón",
-        "position": "Midfielder",
-        "photo": "https://media.api-sports.io/football/players/25717.png",
-        "stats": {
-          "goals": {
-            "total": 2,
-            "conceded": 0,
-            "assists": 1,
-            "saves": null
-          },
-          "games": {
-            "appearences": 10,
-            "lineups": 4,
-            "minutes": 452,
-            "number": 10,
-            "position": "Midfielder",
-            "rating": "6.87",
-            "captain": false
-          }
-        },
-        "probability": 0.17574074606264087,
-        "probability_pct": 17.6
-      }
-    ],
-    "predicted_score": {
-      "home": 1,
-      "away": 0
-    },
-    "confidence": 0.410963479841442,
-    "explanation": [
-      "Golos esperados: 1.95 no total (casa 1.10, fora 0.85).",
-      "Casa favorita (1X), prob. 41% para vitória.",
-      "Melhor dupla hipótese: 1X com 72% de probabilidade.",
-      "Tendência para Under 2.5 golos (100%).",
-      "Pouca probabilidade de ambas marcarem (BTTS Não 62%)."
-    ],
-    "model": "bivariate+iso",
-    "lambda_used": {
-      "home": 1.1,
-      "away": 0.8500000000000001,
       "lambda3": 0.1
     }
   },
@@ -32187,7 +31198,7 @@
       "Golos esperados: 3.30 no total (casa 1.60, fora 1.70).",
       "Visitante favorito (X2), prob. 41% para não perder.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
     "model": "bivariate+iso",
@@ -32960,7 +31971,7 @@
       "Golos esperados: 3.10 no total (casa 1.50, fora 1.60).",
       "Visitante favorito (X2), prob. 40% para não perder.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 62%)."
     ],
     "model": "bivariate+iso",
@@ -33547,7 +32558,7 @@
       "Golos esperados: 3.10 no total (casa 1.50, fora 1.60).",
       "Visitante favorito (X2), prob. 40% para não perder.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 62%)."
     ],
     "model": "bivariate+iso",
@@ -34559,7 +33570,7 @@
       "Golos esperados: 2.90 no total (casa 1.40, fora 1.50).",
       "Visitante favorito (X2), prob. 40% para não perder.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
     "model": "bivariate+iso",
@@ -35092,7 +34103,7 @@
       "Golos esperados: 3.05 no total (casa 1.55, fora 1.50).",
       "Casa favorita (1X), prob. 39% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
     "model": "bivariate+iso",
@@ -35679,7 +34690,7 @@
       "Golos esperados: 3.05 no total (casa 1.55, fora 1.50).",
       "Casa favorita (1X), prob. 39% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
     "model": "bivariate+iso",
@@ -36636,13 +35647,1001 @@
       "Golos esperados: 2.95 no total (casa 1.50, fora 1.45).",
       "Casa favorita (1X), prob. 39% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
       "home": 1.5,
       "away": 1.4500000000000002,
+      "lambda3": 0.1
+    }
+  },
+  {
+    "match_id": 1419714,
+    "league_id": 136,
+    "league": "Serie B",
+    "country": "Italy",
+    "date": "2025-11-22T14:00:00+00:00",
+    "date_ymd": "2025-11-22",
+    "home_team": "Virtus Entella",
+    "away_team": "Palermo",
+    "home_logo": "https://media.api-sports.io/football/teams/527.png",
+    "away_logo": "https://media.api-sports.io/football/teams/522.png",
+    "lambda_home": 1.1,
+    "lambda_away": 0.95,
+    "odds": {
+      "winner": {
+        "home": 3.35,
+        "draw": 3.1,
+        "away": 2.64
+      },
+      "over_2_5": {
+        "over": 2.97,
+        "under": 1.51
+      },
+      "over_1_5": {
+        "over": 1.68,
+        "under": 2.47
+      },
+      "btts": {
+        "yes": 2.37,
+        "no": 1.73
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "prob": 0.37944175890902226,
+        "confidence": 0.37944175890902226,
+        "probs": {
+          "home": 0.2984387374783415,
+          "draw": 0.3221195036126362,
+          "away": 0.37944175890902226
+        }
+      },
+      "over_2_5": {
+        "class": 0,
+        "prob": 0.33682496249296634,
+        "confidence": 0.33682496249296634
+      },
+      "over_1_5": {
+        "class": 1,
+        "prob": 0.5945188829401882
+      },
+      "double_chance": {
+        "class": 2,
+        "prob": 0.7015612625216585,
+        "confidence": 0.7015612625216585,
+        "probs": {
+          "1X": 0.6205582410909777,
+          "12": 0.6778804963873637,
+          "X2": 0.7015612625216585
+        }
+      },
+      "btts": {
+        "class": 0,
+        "prob": 0.4226619503971529,
+        "confidence": 0.4226619503971529
+      },
+      "correct_score": {
+        "best": "0-0",
+        "top3": [
+          {
+            "score": "0-0",
+            "prob": 0.14227407616133733
+          },
+          {
+            "score": "1-0",
+            "prob": 0.14227407616133733
+          },
+          {
+            "score": "1-1",
+            "prob": 0.13516037235327047
+          }
+        ]
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.14163806866694859
+      },
+      {
+        "score": "1-1",
+        "prob": 0.13455616523360117
+      },
+      {
+        "score": "0-0",
+        "prob": 0.1287618806063169
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "E. Gliozzi",
+        "team": "Modena",
+        "goals": 7
+      },
+      {
+        "player": "M. Bortolussi",
+        "team": "Padova",
+        "goals": 6
+      },
+      {
+        "player": "A. Cissè",
+        "team": "Catanzaro",
+        "goals": 5
+      },
+      {
+        "player": "A. Tiritiello",
+        "team": "Virtus Entella",
+        "goals": 5
+      },
+      {
+        "player": "B. Popov",
+        "team": "Empoli",
+        "goals": 5
+      }
+    ],
+    "probable_scorers": {
+      "home": [
+        {
+          "player_id": null,
+          "name": "A. Tiritiello",
+          "team_id": 527,
+          "team_name": "Virtus Entella",
+          "position": null,
+          "photo": null,
+          "stats": {
+            "goals": {
+              "total": 5
+            },
+            "games": {}
+          },
+          "probability": 1.0,
+          "probability_pct": 100.0
+        }
+      ],
+      "away": [
+        {
+          "player_id": 31271,
+          "name": "A. Palumbo",
+          "team_id": 522,
+          "team_name": "Palermo",
+          "position": "Midfielder",
+          "photo": "https://media.api-sports.io/football/players/31271.png",
+          "stats": {
+            "goals": {
+              "total": 4,
+              "conceded": 0,
+              "assists": 8,
+              "saves": null
+            },
+            "games": {
+              "appearences": 34,
+              "lineups": 34,
+              "minutes": 2700,
+              "number": null,
+              "position": "Midfielder",
+              "rating": "7.144117",
+              "captain": false
+            }
+          },
+          "probability": 0.35926580977241307,
+          "probability_pct": 35.9
+        },
+        {
+          "player_id": 325388,
+          "name": "N. Pierozzi",
+          "team_id": 522,
+          "team_name": "Palermo",
+          "position": "Defender",
+          "photo": "https://media.api-sports.io/football/players/325388.png",
+          "stats": {
+            "goals": {
+              "total": 4,
+              "conceded": 0,
+              "assists": 2,
+              "saves": null
+            },
+            "games": {
+              "appearences": 35,
+              "lineups": 35,
+              "minutes": 2974,
+              "number": null,
+              "position": "Defender",
+              "rating": "6.871428",
+              "captain": false
+            }
+          },
+          "probability": 0.35820178899147675,
+          "probability_pct": 35.8
+        },
+        {
+          "player_id": 30845,
+          "name": "E. Gyasi",
+          "team_id": 522,
+          "team_name": "Palermo",
+          "position": "Defender",
+          "photo": "https://media.api-sports.io/football/players/30845.png",
+          "stats": {
+            "goals": {
+              "total": 2,
+              "conceded": 0,
+              "assists": null,
+              "saves": null
+            },
+            "games": {
+              "appearences": 35,
+              "lineups": 35,
+              "minutes": 2834,
+              "number": null,
+              "position": "Defender",
+              "rating": "6.497142",
+              "captain": false
+            }
+          },
+          "probability": 0.17998487168049304,
+          "probability_pct": 18.0
+        },
+        {
+          "player_id": 31402,
+          "name": "F. Ranocchia",
+          "team_id": 522,
+          "team_name": "Palermo",
+          "position": "Midfielder",
+          "photo": "https://media.api-sports.io/football/players/31402.png",
+          "stats": {
+            "goals": {
+              "total": 1,
+              "conceded": 0,
+              "assists": null,
+              "saves": null
+            },
+            "games": {
+              "appearences": 34,
+              "lineups": 19,
+              "minutes": 531,
+              "number": null,
+              "position": "Midfielder",
+              "rating": "6.764285",
+              "captain": false
+            }
+          },
+          "probability": 0.10254752955561715,
+          "probability_pct": 10.3
+        }
+      ]
+    },
+    "probable_scorers_home": [
+      {
+        "player_id": null,
+        "name": "A. Tiritiello",
+        "team_id": 527,
+        "team_name": "Virtus Entella",
+        "position": null,
+        "photo": null,
+        "stats": {
+          "goals": {
+            "total": 5
+          },
+          "games": {}
+        },
+        "probability": 1.0,
+        "probability_pct": 100.0
+      }
+    ],
+    "probable_scorers_away": [
+      {
+        "player_id": 31271,
+        "name": "A. Palumbo",
+        "team_id": 522,
+        "team_name": "Palermo",
+        "position": "Midfielder",
+        "photo": "https://media.api-sports.io/football/players/31271.png",
+        "stats": {
+          "goals": {
+            "total": 4,
+            "conceded": 0,
+            "assists": 8,
+            "saves": null
+          },
+          "games": {
+            "appearences": 34,
+            "lineups": 34,
+            "minutes": 2700,
+            "number": null,
+            "position": "Midfielder",
+            "rating": "7.144117",
+            "captain": false
+          }
+        },
+        "probability": 0.35926580977241307,
+        "probability_pct": 35.9
+      },
+      {
+        "player_id": 325388,
+        "name": "N. Pierozzi",
+        "team_id": 522,
+        "team_name": "Palermo",
+        "position": "Defender",
+        "photo": "https://media.api-sports.io/football/players/325388.png",
+        "stats": {
+          "goals": {
+            "total": 4,
+            "conceded": 0,
+            "assists": 2,
+            "saves": null
+          },
+          "games": {
+            "appearences": 35,
+            "lineups": 35,
+            "minutes": 2974,
+            "number": null,
+            "position": "Defender",
+            "rating": "6.871428",
+            "captain": false
+          }
+        },
+        "probability": 0.35820178899147675,
+        "probability_pct": 35.8
+      },
+      {
+        "player_id": 30845,
+        "name": "E. Gyasi",
+        "team_id": 522,
+        "team_name": "Palermo",
+        "position": "Defender",
+        "photo": "https://media.api-sports.io/football/players/30845.png",
+        "stats": {
+          "goals": {
+            "total": 2,
+            "conceded": 0,
+            "assists": null,
+            "saves": null
+          },
+          "games": {
+            "appearences": 35,
+            "lineups": 35,
+            "minutes": 2834,
+            "number": null,
+            "position": "Defender",
+            "rating": "6.497142",
+            "captain": false
+          }
+        },
+        "probability": 0.17998487168049304,
+        "probability_pct": 18.0
+      },
+      {
+        "player_id": 31402,
+        "name": "F. Ranocchia",
+        "team_id": 522,
+        "team_name": "Palermo",
+        "position": "Midfielder",
+        "photo": "https://media.api-sports.io/football/players/31402.png",
+        "stats": {
+          "goals": {
+            "total": 1,
+            "conceded": 0,
+            "assists": null,
+            "saves": null
+          },
+          "games": {
+            "appearences": 34,
+            "lineups": 19,
+            "minutes": 531,
+            "number": null,
+            "position": "Midfielder",
+            "rating": "6.764285",
+            "captain": false
+          }
+        },
+        "probability": 0.10254752955561715,
+        "probability_pct": 10.3
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.3873917420641454,
+    "explanation": [
+      "Golos esperados: 2.05 no total (casa 1.10, fora 0.95).",
+      "Casa favorita (1X), prob. 39% para vitória.",
+      "Melhor dupla hipótese: 12 com 70% de probabilidade.",
+      "Tendência para Under 2.5 golos (100%)."
+    ],
+    "model": "bivariate+iso",
+    "lambda_used": {
+      "home": 1.1,
+      "away": 0.95,
+      "lambda3": 0.1
+    }
+  },
+  {
+    "match_id": 1396963,
+    "league_id": 141,
+    "league": "Segunda División",
+    "country": "Spain",
+    "date": "2025-11-22T15:15:00+00:00",
+    "date_ymd": "2025-11-22",
+    "home_team": "FC Andorra",
+    "away_team": "Castellón",
+    "home_logo": "https://media.api-sports.io/football/teams/8157.png",
+    "away_logo": "https://media.api-sports.io/football/teams/5254.png",
+    "lambda_home": 1.1,
+    "lambda_away": 0.9500000000000001,
+    "odds": {
+      "winner": {
+        "home": 3.35,
+        "draw": 3.1,
+        "away": 2.64
+      },
+      "over_2_5": {
+        "over": 2.97,
+        "under": 1.51
+      },
+      "over_1_5": {
+        "over": 1.68,
+        "under": 2.47
+      },
+      "btts": {
+        "yes": 2.37,
+        "no": 1.73
+      }
+    },
+    "predictions": {
+      "winner": {
+        "class": 2,
+        "prob": 0.3794417589090223,
+        "confidence": 0.3794417589090223,
+        "probs": {
+          "home": 0.29843873747834154,
+          "draw": 0.3221195036126362,
+          "away": 0.3794417589090223
+        }
+      },
+      "over_2_5": {
+        "class": 0,
+        "prob": 0.33682496249296634,
+        "confidence": 0.33682496249296634
+      },
+      "over_1_5": {
+        "class": 1,
+        "prob": 0.5945188829401881
+      },
+      "double_chance": {
+        "class": 2,
+        "prob": 0.7015612625216585,
+        "confidence": 0.7015612625216585,
+        "probs": {
+          "1X": 0.6205582410909778,
+          "12": 0.6778804963873639,
+          "X2": 0.7015612625216585
+        }
+      },
+      "btts": {
+        "class": 0,
+        "prob": 0.4226619503971528,
+        "confidence": 0.4226619503971528
+      },
+      "correct_score": {
+        "best": "0-0",
+        "top3": [
+          {
+            "score": "0-0",
+            "prob": 0.1422740761613373
+          },
+          {
+            "score": "1-0",
+            "prob": 0.1422740761613373
+          },
+          {
+            "score": "1-1",
+            "prob": 0.13516037235327044
+          }
+        ]
+      }
+    },
+    "correct_score_top3": [
+      {
+        "score": "1-0",
+        "prob": 0.14163806866694859
+      },
+      {
+        "score": "1-1",
+        "prob": 0.13455616523360117
+      },
+      {
+        "score": "0-0",
+        "prob": 0.12876188060631688
+      }
+    ],
+    "top_scorers": [
+      {
+        "player": "Adri Embarba",
+        "team": "Almeria",
+        "goals": 8
+      },
+      {
+        "player": "Asier Villalibre",
+        "team": "Racing Santander",
+        "goals": 8
+      },
+      {
+        "player": "Z. Eddahchouri",
+        "team": "Deportivo La Coruna",
+        "goals": 7
+      },
+      {
+        "player": "Jeremy Arévalo",
+        "team": "Racing Santander",
+        "goals": 7
+      },
+      {
+        "player": "Jonathan Dubasin",
+        "team": "Sporting Gijon",
+        "goals": 7
+      }
+    ],
+    "probable_scorers": {
+      "home": [
+        {
+          "player_id": 182719,
+          "name": "Dani Villahermosa",
+          "team_id": 8157,
+          "team_name": "FC Andorra",
+          "position": "Midfielder",
+          "photo": "https://media.api-sports.io/football/players/182719.png",
+          "stats": {
+            "goals": {
+              "total": 4,
+              "conceded": 0,
+              "assists": 2,
+              "saves": null
+            },
+            "games": {
+              "appearences": 14,
+              "lineups": 10,
+              "minutes": 949,
+              "number": 6,
+              "position": "Midfielder",
+              "rating": "6.84",
+              "captain": false
+            }
+          },
+          "probability": 0.3639271719680311,
+          "probability_pct": 36.4
+        },
+        {
+          "player_id": 397941,
+          "name": "Minsu Kim",
+          "team_id": 8157,
+          "team_name": "FC Andorra",
+          "position": "Attacker",
+          "photo": "https://media.api-sports.io/football/players/397941.png",
+          "stats": {
+            "goals": {
+              "total": 3,
+              "conceded": 0,
+              "assists": 3,
+              "saves": null
+            },
+            "games": {
+              "appearences": 14,
+              "lineups": 14,
+              "minutes": 1150,
+              "number": 29,
+              "position": "Attacker",
+              "rating": "6.82",
+              "captain": false
+            }
+          },
+          "probability": 0.26913968629018303,
+          "probability_pct": 26.9
+        },
+        {
+          "player_id": 182480,
+          "name": "L. de León",
+          "team_id": 8157,
+          "team_name": "FC Andorra",
+          "position": "Attacker",
+          "photo": "https://media.api-sports.io/football/players/182480.png",
+          "stats": {
+            "goals": {
+              "total": 2,
+              "conceded": 0,
+              "assists": 0,
+              "saves": null
+            },
+            "games": {
+              "appearences": 14,
+              "lineups": 8,
+              "minutes": 756,
+              "number": 11,
+              "position": "Attacker",
+              "rating": "6.62",
+              "captain": false
+            }
+          },
+          "probability": 0.1865986628774244,
+          "probability_pct": 18.7
+        },
+        {
+          "player_id": 286558,
+          "name": "Gael Alonso",
+          "team_id": 8157,
+          "team_name": "FC Andorra",
+          "position": "Defender",
+          "photo": "https://media.api-sports.io/football/players/286558.png",
+          "stats": {
+            "goals": {
+              "total": 2,
+              "conceded": 0,
+              "assists": 0,
+              "saves": null
+            },
+            "games": {
+              "appearences": 13,
+              "lineups": 13,
+              "minutes": 1108,
+              "number": 4,
+              "position": "Defender",
+              "rating": "7.12",
+              "captain": false
+            }
+          },
+          "probability": 0.18033447886436146,
+          "probability_pct": 18.0
+        }
+      ],
+      "away": [
+        {
+          "player_id": 286038,
+          "name": "Álex Calatrava",
+          "team_id": 5254,
+          "team_name": "Castellón",
+          "position": "Midfielder",
+          "photo": "https://media.api-sports.io/football/players/286038.png",
+          "stats": {
+            "goals": {
+              "total": 4,
+              "conceded": 0,
+              "assists": 3,
+              "saves": null
+            },
+            "games": {
+              "appearences": 14,
+              "lineups": 14,
+              "minutes": 1190,
+              "number": 21,
+              "position": "Midfielder",
+              "rating": "7.04",
+              "captain": false
+            }
+          },
+          "probability": 0.31429339992558375,
+          "probability_pct": 31.4
+        },
+        {
+          "player_id": 191151,
+          "name": "Ousmane Camara",
+          "team_id": 5254,
+          "team_name": "Castellón",
+          "position": "Attacker",
+          "photo": "https://media.api-sports.io/football/players/191151.png",
+          "stats": {
+            "goals": {
+              "total": 3,
+              "conceded": 0,
+              "assists": 0,
+              "saves": null
+            },
+            "games": {
+              "appearences": 9,
+              "lineups": 4,
+              "minutes": 410,
+              "number": 9,
+              "position": "Attacker",
+              "rating": "6.78",
+              "captain": false
+            }
+          },
+          "probability": 0.2674382950015087,
+          "probability_pct": 26.7
+        },
+        {
+          "player_id": 279482,
+          "name": "B. Cipenga",
+          "team_id": 5254,
+          "team_name": "Castellón",
+          "position": "Midfielder",
+          "photo": "https://media.api-sports.io/football/players/279482.png",
+          "stats": {
+            "goals": {
+              "total": 3,
+              "conceded": 0,
+              "assists": 2,
+              "saves": null
+            },
+            "games": {
+              "appearences": 10,
+              "lineups": 10,
+              "minutes": 854,
+              "number": 16,
+              "position": "Midfielder",
+              "rating": "7.29",
+              "captain": false
+            }
+          },
+          "probability": 0.2425275590102668,
+          "probability_pct": 24.3
+        },
+        {
+          "player_id": 25717,
+          "name": "Israel Suero",
+          "team_id": 5254,
+          "team_name": "Castellón",
+          "position": "Midfielder",
+          "photo": "https://media.api-sports.io/football/players/25717.png",
+          "stats": {
+            "goals": {
+              "total": 2,
+              "conceded": 0,
+              "assists": 1,
+              "saves": null
+            },
+            "games": {
+              "appearences": 10,
+              "lineups": 4,
+              "minutes": 452,
+              "number": 10,
+              "position": "Midfielder",
+              "rating": "6.87",
+              "captain": false
+            }
+          },
+          "probability": 0.17574074606264087,
+          "probability_pct": 17.6
+        }
+      ]
+    },
+    "probable_scorers_home": [
+      {
+        "player_id": 182719,
+        "name": "Dani Villahermosa",
+        "team_id": 8157,
+        "team_name": "FC Andorra",
+        "position": "Midfielder",
+        "photo": "https://media.api-sports.io/football/players/182719.png",
+        "stats": {
+          "goals": {
+            "total": 4,
+            "conceded": 0,
+            "assists": 2,
+            "saves": null
+          },
+          "games": {
+            "appearences": 14,
+            "lineups": 10,
+            "minutes": 949,
+            "number": 6,
+            "position": "Midfielder",
+            "rating": "6.84",
+            "captain": false
+          }
+        },
+        "probability": 0.3639271719680311,
+        "probability_pct": 36.4
+      },
+      {
+        "player_id": 397941,
+        "name": "Minsu Kim",
+        "team_id": 8157,
+        "team_name": "FC Andorra",
+        "position": "Attacker",
+        "photo": "https://media.api-sports.io/football/players/397941.png",
+        "stats": {
+          "goals": {
+            "total": 3,
+            "conceded": 0,
+            "assists": 3,
+            "saves": null
+          },
+          "games": {
+            "appearences": 14,
+            "lineups": 14,
+            "minutes": 1150,
+            "number": 29,
+            "position": "Attacker",
+            "rating": "6.82",
+            "captain": false
+          }
+        },
+        "probability": 0.26913968629018303,
+        "probability_pct": 26.9
+      },
+      {
+        "player_id": 182480,
+        "name": "L. de León",
+        "team_id": 8157,
+        "team_name": "FC Andorra",
+        "position": "Attacker",
+        "photo": "https://media.api-sports.io/football/players/182480.png",
+        "stats": {
+          "goals": {
+            "total": 2,
+            "conceded": 0,
+            "assists": 0,
+            "saves": null
+          },
+          "games": {
+            "appearences": 14,
+            "lineups": 8,
+            "minutes": 756,
+            "number": 11,
+            "position": "Attacker",
+            "rating": "6.62",
+            "captain": false
+          }
+        },
+        "probability": 0.1865986628774244,
+        "probability_pct": 18.7
+      },
+      {
+        "player_id": 286558,
+        "name": "Gael Alonso",
+        "team_id": 8157,
+        "team_name": "FC Andorra",
+        "position": "Defender",
+        "photo": "https://media.api-sports.io/football/players/286558.png",
+        "stats": {
+          "goals": {
+            "total": 2,
+            "conceded": 0,
+            "assists": 0,
+            "saves": null
+          },
+          "games": {
+            "appearences": 13,
+            "lineups": 13,
+            "minutes": 1108,
+            "number": 4,
+            "position": "Defender",
+            "rating": "7.12",
+            "captain": false
+          }
+        },
+        "probability": 0.18033447886436146,
+        "probability_pct": 18.0
+      }
+    ],
+    "probable_scorers_away": [
+      {
+        "player_id": 286038,
+        "name": "Álex Calatrava",
+        "team_id": 5254,
+        "team_name": "Castellón",
+        "position": "Midfielder",
+        "photo": "https://media.api-sports.io/football/players/286038.png",
+        "stats": {
+          "goals": {
+            "total": 4,
+            "conceded": 0,
+            "assists": 3,
+            "saves": null
+          },
+          "games": {
+            "appearences": 14,
+            "lineups": 14,
+            "minutes": 1190,
+            "number": 21,
+            "position": "Midfielder",
+            "rating": "7.04",
+            "captain": false
+          }
+        },
+        "probability": 0.31429339992558375,
+        "probability_pct": 31.4
+      },
+      {
+        "player_id": 191151,
+        "name": "Ousmane Camara",
+        "team_id": 5254,
+        "team_name": "Castellón",
+        "position": "Attacker",
+        "photo": "https://media.api-sports.io/football/players/191151.png",
+        "stats": {
+          "goals": {
+            "total": 3,
+            "conceded": 0,
+            "assists": 0,
+            "saves": null
+          },
+          "games": {
+            "appearences": 9,
+            "lineups": 4,
+            "minutes": 410,
+            "number": 9,
+            "position": "Attacker",
+            "rating": "6.78",
+            "captain": false
+          }
+        },
+        "probability": 0.2674382950015087,
+        "probability_pct": 26.7
+      },
+      {
+        "player_id": 279482,
+        "name": "B. Cipenga",
+        "team_id": 5254,
+        "team_name": "Castellón",
+        "position": "Midfielder",
+        "photo": "https://media.api-sports.io/football/players/279482.png",
+        "stats": {
+          "goals": {
+            "total": 3,
+            "conceded": 0,
+            "assists": 2,
+            "saves": null
+          },
+          "games": {
+            "appearences": 10,
+            "lineups": 10,
+            "minutes": 854,
+            "number": 16,
+            "position": "Midfielder",
+            "rating": "7.29",
+            "captain": false
+          }
+        },
+        "probability": 0.2425275590102668,
+        "probability_pct": 24.3
+      },
+      {
+        "player_id": 25717,
+        "name": "Israel Suero",
+        "team_id": 5254,
+        "team_name": "Castellón",
+        "position": "Midfielder",
+        "photo": "https://media.api-sports.io/football/players/25717.png",
+        "stats": {
+          "goals": {
+            "total": 2,
+            "conceded": 0,
+            "assists": 1,
+            "saves": null
+          },
+          "games": {
+            "appearences": 10,
+            "lineups": 4,
+            "minutes": 452,
+            "number": 10,
+            "position": "Midfielder",
+            "rating": "6.87",
+            "captain": false
+          }
+        },
+        "probability": 0.17574074606264087,
+        "probability_pct": 17.6
+      }
+    ],
+    "predicted_score": {
+      "home": 1,
+      "away": 0
+    },
+    "confidence": 0.3873917420641454,
+    "explanation": [
+      "Golos esperados: 2.05 no total (casa 1.10, fora 0.95).",
+      "Casa favorita (1X), prob. 39% para vitória.",
+      "Melhor dupla hipótese: 12 com 70% de probabilidade.",
+      "Tendência para Under 2.5 golos (100%)."
+    ],
+    "model": "bivariate+iso",
+    "lambda_used": {
+      "home": 1.1,
+      "away": 0.9500000000000001,
       "lambda3": 0.1
     }
   },
@@ -37809,7 +37808,7 @@
       "Golos esperados: 3.40 no total (casa 1.70, fora 1.70).",
       "Casa favorita (1X), prob. 39% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
     ],
     "model": "bivariate+iso",
@@ -38180,7 +38179,7 @@
       "Golos esperados: 3.40 no total (casa 1.70, fora 1.70).",
       "Casa favorita (1X), prob. 39% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
     ],
     "model": "bivariate+iso",
@@ -40679,7 +40678,7 @@
       "Golos esperados: 2.70 no total (casa 1.35, fora 1.35).",
       "Visitante favorito (X2), prob. 37% para não perder.",
       "Melhor dupla hipótese: 12 com 74% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -43483,7 +43482,7 @@
       "Golos esperados: 2.80 no total (casa 2.05, fora 0.75).",
       "Casa favorita (1X), prob. 68% para vitória.",
       "Melhor dupla hipótese: 1X com 87% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -44656,7 +44655,7 @@
       "Golos esperados: 2.95 no total (casa 2.10, fora 0.85).",
       "Casa favorita (1X), prob. 66% para vitória.",
       "Melhor dupla hipótese: 1X com 86% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -45829,7 +45828,7 @@
       "Golos esperados: 2.75 no total (casa 1.95, fora 0.80).",
       "Casa favorita (1X), prob. 64% para vitória.",
       "Melhor dupla hipótese: 1X com 85% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -49708,7 +49707,7 @@
       "Golos esperados: 2.70 no total (casa 1.80, fora 0.90).",
       "Casa favorita (1X), prob. 59% para vitória.",
       "Melhor dupla hipótese: 1X com 81% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -50240,7 +50239,7 @@
       "Golos esperados: 3.10 no total (casa 2.00, fora 1.10).",
       "Casa favorita (1X), prob. 58% para vitória.",
       "Melhor dupla hipótese: 1X com 80% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 58%)."
     ],
     "model": "bivariate+iso",
@@ -50665,7 +50664,7 @@
       "Golos esperados: 3.40 no total (casa 2.15, fora 1.25).",
       "Casa favorita (1X), prob. 58% para vitória.",
       "Melhor dupla hipótese: 12 com 79% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 63%)."
     ],
     "model": "bivariate+iso",
@@ -52849,7 +52848,7 @@
       "Golos esperados: 2.70 no total (casa 1.75, fora 0.95).",
       "Casa favorita (1X), prob. 56% para vitória.",
       "Melhor dupla hipótese: 1X com 80% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -54022,7 +54021,7 @@
       "Golos esperados: 2.70 no total (casa 1.00, fora 1.70).",
       "Visitante favorito (X2), prob. 54% para não perder.",
       "Melhor dupla hipótese: X2 com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -54608,7 +54607,7 @@
       "Golos esperados: 2.95 no total (casa 1.80, fora 1.15).",
       "Casa favorita (1X), prob. 52% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
     "model": "bivariate+iso",
@@ -54923,7 +54922,7 @@
       "Golos esperados: 2.80 no total (casa 1.10, fora 1.70).",
       "Visitante favorito (X2), prob. 51% para não perder.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -55455,7 +55454,7 @@
       "Golos esperados: 2.80 no total (casa 1.70, fora 1.10).",
       "Casa favorita (1X), prob. 51% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -55933,7 +55932,7 @@
       "Golos esperados: 2.70 no total (casa 1.05, fora 1.65).",
       "Visitante favorito (X2), prob. 51% para não perder.",
       "Melhor dupla hipótese: X2 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -56465,7 +56464,7 @@
       "Golos esperados: 3.40 no total (casa 2.00, fora 1.40).",
       "Casa favorita (1X), prob. 51% para vitória.",
       "Melhor dupla hipótese: 12 com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
     "model": "bivariate+iso",
@@ -57052,7 +57051,7 @@
       "Golos esperados: 3.15 no total (casa 1.85, fora 1.30).",
       "Casa favorita (1X), prob. 50% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
     "model": "bivariate+iso",
@@ -57531,7 +57530,7 @@
       "Golos esperados: 2.85 no total (casa 1.70, fora 1.15).",
       "Casa favorita (1X), prob. 50% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
     "model": "bivariate+iso",
@@ -58704,7 +58703,7 @@
       "Golos esperados: 2.70 no total (casa 1.60, fora 1.10).",
       "Casa favorita (1X), prob. 49% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -60564,7 +60563,7 @@
       "Golos esperados: 2.85 no total (casa 1.65, fora 1.20).",
       "Casa favorita (1X), prob. 48% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
     "model": "bivariate+iso",
@@ -60989,7 +60988,7 @@
       "Golos esperados: 2.75 no total (casa 1.15, fora 1.60).",
       "Visitante favorito (X2), prob. 48% para não perder.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%)."
+      "Tendência para Over 2.5 golos (100%)."
     ],
     "model": "bivariate+iso",
     "lambda_used": {
@@ -64453,7 +64452,7 @@
       "Golos esperados: 3.30 no total (casa 1.50, fora 1.80).",
       "Visitante favorito (X2), prob. 45% para não perder.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
     "model": "bivariate+iso",
@@ -65040,7 +65039,7 @@
       "Golos esperados: 3.30 no total (casa 1.80, fora 1.50).",
       "Casa favorita (1X), prob. 45% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
     "model": "bivariate+iso",
@@ -66213,7 +66212,7 @@
       "Golos esperados: 2.80 no total (casa 1.25, fora 1.55).",
       "Visitante favorito (X2), prob. 44% para não perder.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
     "model": "bivariate+iso",
@@ -67278,7 +67277,7 @@
       "Golos esperados: 3.05 no total (casa 1.40, fora 1.65).",
       "Visitante favorito (X2), prob. 43% para não perder.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
     "model": "bivariate+iso",
@@ -67865,7 +67864,7 @@
       "Golos esperados: 3.05 no total (casa 1.65, fora 1.40).",
       "Casa favorita (1X), prob. 43% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 61%)."
     ],
     "model": "bivariate+iso",
@@ -68128,7 +68127,7 @@
       "Golos esperados: 3.40 no total (casa 1.80, fora 1.60).",
       "Casa favorita (1X), prob. 43% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 67%)."
     ],
     "model": "bivariate+iso",
@@ -70307,7 +70306,7 @@
       "Golos esperados: 2.80 no total (casa 1.50, fora 1.30).",
       "Casa favorita (1X), prob. 42% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
     "model": "bivariate+iso",
@@ -73926,7 +73925,7 @@
       "Golos esperados: 2.90 no total (casa 1.40, fora 1.50).",
       "Visitante favorito (X2), prob. 40% para não perder.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
     "model": "bivariate+iso",
@@ -75091,7 +75090,7 @@
       "Golos esperados: 2.95 no total (casa 1.50, fora 1.45).",
       "Casa favorita (1X), prob. 39% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
     "model": "bivariate+iso",
@@ -75460,7 +75459,7 @@
       "Golos esperados: 3.00 no total (casa 1.50, fora 1.50).",
       "Casa favorita (1X), prob. 38% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 60%)."
     ],
     "model": "bivariate+iso",
@@ -79706,7 +79705,7 @@
       "Golos esperados: 3.00 no total (casa 1.90, fora 1.10).",
       "Casa favorita (1X), prob. 56% para vitória.",
       "Melhor dupla hipótese: 1X com 78% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
     "model": "bivariate+iso",
@@ -80499,7 +80498,7 @@
       "Golos esperados: 3.00 no total (casa 1.70, fora 1.30).",
       "Casa favorita (1X), prob. 47% para vitória.",
       "Melhor dupla hipótese: 12 com 76% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 59%)."
     ],
     "model": "bivariate+iso",
@@ -81086,7 +81085,7 @@
       "Golos esperados: 3.30 no total (casa 1.80, fora 1.50).",
       "Casa favorita (1X), prob. 45% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 65%)."
     ],
     "model": "bivariate+iso",
@@ -81673,7 +81672,7 @@
       "Golos esperados: 3.35 no total (casa 1.80, fora 1.55).",
       "Casa favorita (1X), prob. 44% para vitória.",
       "Melhor dupla hipótese: 12 com 77% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 66%)."
     ],
     "model": "bivariate+iso",
@@ -82044,7 +82043,7 @@
       "Golos esperados: 2.75 no total (casa 1.50, fora 1.25).",
       "Casa favorita (1X), prob. 43% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 55%)."
     ],
     "model": "bivariate+iso",
@@ -82631,7 +82630,7 @@
       "Golos esperados: 2.75 no total (casa 1.45, fora 1.30).",
       "Casa favorita (1X), prob. 41% para vitória.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
     "model": "bivariate+iso",
@@ -83805,7 +83804,7 @@
       "Golos esperados: 2.75 no total (casa 1.35, fora 1.40).",
       "Visitante favorito (X2), prob. 38% para não perder.",
       "Melhor dupla hipótese: 12 com 74% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 56%)."
     ],
     "model": "bivariate+iso",
@@ -84978,7 +84977,7 @@
       "Golos esperados: 2.80 no total (casa 1.40, fora 1.40).",
       "Visitante favorito (X2), prob. 37% para não perder.",
       "Melhor dupla hipótese: 12 com 75% de probabilidade.",
-      "Tendência para Under 2.5 golos (67%).",
+      "Tendência para Over 2.5 golos (100%).",
       "Boa probabilidade de ambas marcarem (BTTS Sim 57%)."
     ],
     "model": "bivariate+iso",
