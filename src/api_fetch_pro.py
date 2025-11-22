@@ -538,28 +538,35 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         # identifica a chave de DC com maior prob
         dc_best_label, dc_best_prob = max(dc_probs.items(), key=lambda kv: kv[1])
 
+        # helper para percentagens consistentes com o frontend (round(prob*100))
+        def pct(p: float) -> int:
+            try:
+                return int(round(float(p) * 100))
+            except Exception:
+                return 0
+
         if winner_class == 0:
             explanation.append(
-                f"Casa ligeiramente favorita (1X), prob. {ph*100:.0f}% para vitória."
+                f"Casa ligeiramente favorita (1X), prob. {pct(ph)}% para vitória."
             )
         elif winner_class == 1:
             explanation.append(
-                f"Jogo equilibrado, prob. de empate {pd*100:.0f}%."
+                f"Jogo equilibrado, prob. de empate {pct(pd)}%."
             )
         else:
             explanation.append(
-                f"Visitante em vantagem (X2), prob. {pa*100:.0f}% para não perder."
+                f"Visitante em vantagem (X2), prob. {pct(pa)}% para não perder."
             )
 
         if p_over25 >= 0.6:
-            explanation.append(f"Tendência para Over 2.5 golos ({p_over25*100:.0f}%).")
+            explanation.append(f"Tendência para Over 2.5 golos ({pct(p_over25)}%).")
         elif p_over25 <= 0.4:
-            explanation.append(f"Tendência para Under 2.5 golos ({(1-p_over25)*100:.0f}%).")
+            explanation.append(f"Tendência para Under 2.5 golos ({pct(1 - p_over25)}%).")
 
         if p_btts >= 0.55:
-            explanation.append(f"Boa probabilidade de ambas marcarem (BTTS Sim {p_btts*100:.0f}%).")
+            explanation.append(f"Boa probabilidade de ambas marcarem (BTTS Sim {pct(p_btts)}%).")
         elif p_btts <= 0.40:
-            explanation.append(f"Pouca probabilidade de ambas marcarem (BTTS Não {(1-p_btts)*100:.0f}%).")
+            explanation.append(f"Pouca probabilidade de ambas marcarem (BTTS Não {pct(1 - p_btts)}%).")
 
         winner_label_map = {0: "home", 1: "draw", 2: "away"}
         dc_label_map = {0: "1X", 1: "12", 2: "X2"}

@@ -96,18 +96,38 @@ def enrich_from_file_record(rec: Dict[str, Any]) -> Dict[str, Any]:
     out = dict(rec)
     out.setdefault("predictions", {})
 
+    # winner & DC totalmente consistentes com ph/pd/pa
+    winner_probs = {
+        "home": float(ph),
+        "draw": float(pd),
+        "away": float(pa),
+    }
+    winner_class = int(np.argmax([ph, pd, pa]))
+    winner_conf = float(max(ph, pd, pa))
+
+    dc_probs = {
+        "1X": float(ph + pd),
+        "12": float(ph + pa),
+        "X2": float(pd + pa),
+    }
+    dc_label, dc_prob = max(dc_probs.items(), key=lambda kv: kv[1])
+    dc_class = {"1X": 0, "12": 1, "X2": 2}[dc_label]
+
     out["predictions"]["winner"] = {
-        "class": int(np.argmax([ph, pd, pa])),
-        "prob": max(ph, pd, pa),
-        "confidence": max(ph, pd, pa),
+        "class": winner_class,
+        "prob": winner_conf,
+        "confidence": winner_conf,
+        "probs": winner_probs,
     }
     out["predictions"]["double_chance"] = {
-        "class": int(np.argmax([ph+pd, ph+pa, pd+pa])),
-        "prob": max(ph+pd, ph+pa, pd+pa),
+        "class": dc_class,
+        "prob": float(dc_prob),
+        "confidence": float(dc_prob),
+        "probs": dc_probs,
     }
-    out["predictions"]["over_2_5"] = {"class": int(p_ou25 >= 0.5), "prob": p_ou25}
-    out["predictions"]["over_1_5"] = {"class": int(p_ou15 >= 0.5), "prob": p_ou15}
-    out["predictions"]["btts"]     = {"class": int(p_btts >= 0.5), "prob": p_btts}
+    out["predictions"]["over_2_5"] = {"class": int(p_ou25 >= 0.5), "prob": float(p_ou25)}
+    out["predictions"]["over_1_5"] = {"class": int(p_ou15 >= 0.5), "prob": float(p_ou15)}
+    out["predictions"]["btts"]     = {"class": int(p_btts >= 0.5), "prob": float(p_btts)}
     out["predictions"]["correct_score"] = {
         "best": top3[0]["score"] if top3 else None,
         "top3": top3,
