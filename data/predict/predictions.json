@@ -14,20 +14,20 @@
     "lambda_away": 0.05,
     "odds": {
       "winner": {
-        "home": 21.53,
+        "home": 50.0,
         "draw": 1.2,
-        "away": 21.53
+        "away": 50.0
       },
       "over_2_5": {
         "over": 50.0,
         "under": 1.2
       },
       "over_1_5": {
-        "over": 50.0,
+        "over": 10.51,
         "under": 1.2
       },
       "btts": {
-        "yes": 50.0,
+        "yes": 10.51,
         "no": 1.2
       }
     },
@@ -382,21 +382,21 @@
     "lambda_away": 3.5,
     "odds": {
       "winner": {
-        "home": 14.02,
-        "draw": 9.29,
-        "away": 1.22
+        "home": 1.2,
+        "draw": 9.99,
+        "away": 16.33
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.22,
+        "under": 5.56
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 15.3
+        "under": 15.35
       },
       "btts": {
         "yes": 1.63,
-        "no": 2.58
+        "no": 2.59
       }
     },
     "predictions": {
@@ -532,21 +532,21 @@
     "lambda_away": 0.5,
     "odds": {
       "winner": {
-        "home": 1.22,
-        "draw": 7.82,
-        "away": 19.4
+        "home": 23.86,
+        "draw": 7.97,
+        "away": 1.2
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.69,
+        "under": 2.45
       },
       "over_1_5": {
-        "over": 1.23,
-        "under": 5.32
+        "over": 1.24,
+        "under": 5.15
       },
       "btts": {
-        "yes": 2.75,
-        "no": 1.57
+        "yes": 2.71,
+        "no": 1.58
       }
     },
     "predictions": {
@@ -1118,20 +1118,20 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 50.0,
-        "draw": 4.37,
-        "away": 1.32
+        "home": 1.33,
+        "draw": 4.06,
+        "away": 50.0
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 4.47,
+        "under": 1.29
       },
       "over_1_5": {
-        "over": 2.18,
-        "under": 1.85
+        "over": 2.15,
+        "under": 1.87
       },
       "btts": {
-        "yes": 26.4,
+        "yes": 10.51,
         "no": 1.2
       }
     },
@@ -1650,20 +1650,20 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 50.0,
-        "draw": 4.37,
-        "away": 1.32
+        "home": 1.33,
+        "draw": 4.06,
+        "away": 50.0
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 4.47,
+        "under": 1.29
       },
       "over_1_5": {
-        "over": 2.18,
-        "under": 1.85
+        "over": 2.15,
+        "under": 1.87
       },
       "btts": {
-        "yes": 26.4,
+        "yes": 10.51,
         "no": 1.2
       }
     },
@@ -2236,21 +2236,21 @@
     "lambda_away": 0.85,
     "odds": {
       "winner": {
-        "home": 1.36,
-        "draw": 6.32,
-        "away": 9.56
+        "home": 10.6,
+        "draw": 6.33,
+        "away": 1.34
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.53,
+        "under": 2.88
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.7
+        "under": 6.45
       },
       "btts": {
-        "yes": 1.9,
-        "no": 2.11
+        "yes": 1.88,
+        "no": 2.13
       }
     },
     "predictions": {
@@ -2821,21 +2821,21 @@
     "lambda_away": 0.7,
     "odds": {
       "winner": {
-        "home": 1.37,
-        "draw": 5.88,
-        "away": 10.24
+        "home": 11.55,
+        "draw": 5.82,
+        "away": 1.35
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.76,
+        "under": 2.32
       },
       "over_1_5": {
-        "over": 1.25,
-        "under": 4.97
+        "over": 1.26,
+        "under": 4.78
       },
       "btts": {
-        "yes": 2.21,
-        "no": 1.83
+        "yes": 2.18,
+        "no": 1.85
       }
     },
     "predictions": {
@@ -3190,21 +3190,21 @@
     "lambda_away": 0.85,
     "odds": {
       "winner": {
-        "home": 1.42,
-        "draw": 5.72,
-        "away": 8.35
+        "home": 9.16,
+        "draw": 5.66,
+        "away": 1.4
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.63,
+        "under": 2.58
       },
       "over_1_5": {
-        "over": 1.21,
-        "under": 5.78
+        "over": 1.22,
+        "under": 5.55
       },
       "btts": {
-        "yes": 1.93,
-        "no": 2.07
+        "yes": 1.91,
+        "no": 2.09
       }
     },
     "predictions": {
@@ -3667,21 +3667,21 @@
     "lambda_away": 0.5,
     "odds": {
       "winner": {
-        "home": 1.45,
-        "draw": 4.68,
-        "away": 10.39
+        "home": 12.26,
+        "draw": 4.52,
+        "away": 1.43
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.49,
+        "under": 1.67
       },
       "over_1_5": {
-        "over": 1.5,
-        "under": 3.01
+        "over": 1.52,
+        "under": 2.91
       },
       "btts": {
-        "yes": 3.05,
-        "no": 1.49
+        "yes": 2.95,
+        "no": 1.51
       }
     },
     "predictions": {
@@ -4253,21 +4253,21 @@
     "lambda_away": 0.9,
     "odds": {
       "winner": {
-        "home": 1.48,
-        "draw": 5.37,
-        "away": 7.28
+        "home": 7.89,
+        "draw": 5.28,
+        "away": 1.46
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.66,
+        "under": 2.51
       },
       "over_1_5": {
-        "over": 1.22,
-        "under": 5.58
+        "over": 1.23,
+        "under": 5.35
       },
       "btts": {
-        "yes": 1.89,
-        "no": 2.13
+        "yes": 1.87,
+        "no": 2.15
       }
     },
     "predictions": {
@@ -4838,21 +4838,21 @@
     "lambda_away": 0.75,
     "odds": {
       "winner": {
-        "home": 1.48,
-        "draw": 5.05,
-        "away": 7.89
+        "home": 8.7,
+        "draw": 4.93,
+        "away": 1.47
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.31
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 2.18,
-        "no": 1.85
+        "yes": 2.15,
+        "no": 1.87
       }
     },
     "predictions": {
@@ -5261,21 +5261,21 @@
     "lambda_away": 0.9,
     "odds": {
       "winner": {
-        "home": 1.5,
-        "draw": 5.24,
-        "away": 7.04
+        "home": 7.62,
+        "draw": 5.15,
+        "away": 1.48
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.69,
+        "under": 2.45
       },
       "over_1_5": {
-        "over": 1.23,
-        "under": 5.37
+        "over": 1.24,
+        "under": 5.15
       },
       "btts": {
-        "yes": 1.9,
-        "no": 2.11
+        "yes": 1.88,
+        "no": 2.14
       }
     },
     "predictions": {
@@ -5576,21 +5576,21 @@
     "lambda_away": 0.7,
     "odds": {
       "winner": {
-        "home": 1.52,
-        "draw": 4.72,
-        "away": 7.68
+        "home": 8.5,
+        "draw": 4.58,
+        "away": 1.51
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.73
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 2.34,
-        "no": 1.75
+        "yes": 2.29,
+        "no": 1.77
       }
     },
     "predictions": {
@@ -5891,21 +5891,21 @@
     "lambda_away": 0.85,
     "odds": {
       "winner": {
-        "home": 1.56,
-        "draw": 4.81,
-        "away": 6.59
+        "home": 7.12,
+        "draw": 4.69,
+        "away": 1.55
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.87,
+        "under": 2.15
       },
       "over_1_5": {
-        "over": 1.29,
-        "under": 4.47
+        "over": 1.3,
+        "under": 4.29
       },
       "btts": {
-        "yes": 2.02,
-        "no": 1.98
+        "yes": 2.0,
+        "no": 2.0
       }
     },
     "predictions": {
@@ -6476,21 +6476,21 @@
     "lambda_away": 0.6499999999999999,
     "odds": {
       "winner": {
-        "home": 1.57,
-        "draw": 4.39,
-        "away": 7.48
+        "home": 8.34,
+        "draw": 4.23,
+        "away": 1.55
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.34,
+        "under": 1.74
       },
       "over_1_5": {
-        "over": 1.45,
-        "under": 3.23
+        "over": 1.47,
+        "under": 3.12
       },
       "btts": {
-        "yes": 2.53,
-        "no": 1.65
+        "yes": 2.47,
+        "no": 1.68
       }
     },
     "predictions": {
@@ -6954,21 +6954,21 @@
     "lambda_away": 2.35,
     "odds": {
       "winner": {
-        "home": 5.18,
-        "draw": 5.21,
-        "away": 1.63
+        "home": 1.61,
+        "draw": 5.14,
+        "away": 5.44
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.45,
+        "under": 3.22
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 7.87
+        "under": 7.53
       },
       "btts": {
-        "yes": 1.55,
-        "no": 2.81
+        "yes": 1.54,
+        "no": 2.84
       }
     },
     "predictions": {
@@ -7270,21 +7270,21 @@
     "lambda_away": 0.75,
     "odds": {
       "winner": {
-        "home": 1.63,
-        "draw": 4.32,
-        "away": 6.38
+        "home": 6.95,
+        "draw": 4.16,
+        "away": 1.62
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.21,
+        "under": 1.82
       },
       "over_1_5": {
-        "over": 1.4,
-        "under": 3.47
+        "over": 1.43,
+        "under": 3.34
       },
       "btts": {
-        "yes": 2.29,
-        "no": 1.77
+        "yes": 2.25,
+        "no": 1.8
       }
     },
     "predictions": {
@@ -7671,21 +7671,21 @@
     "lambda_away": 1.3,
     "odds": {
       "winner": {
-        "home": 1.66,
-        "draw": 5.18,
-        "away": 4.93
+        "home": 5.17,
+        "draw": 5.1,
+        "away": 1.64
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.43,
+        "under": 3.32
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 8.18
+        "under": 7.82
       },
       "btts": {
-        "yes": 1.52,
-        "no": 2.92
+        "yes": 1.51,
+        "no": 2.95
       }
     },
     "predictions": {
@@ -8257,21 +8257,21 @@
     "lambda_away": 2.0,
     "odds": {
       "winner": {
-        "home": 5.45,
-        "draw": 4.7,
-        "away": 1.66
+        "home": 1.64,
+        "draw": 4.57,
+        "away": 5.78
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.76,
+        "under": 2.32
       },
       "over_1_5": {
-        "over": 1.25,
-        "under": 5.0
+        "over": 1.26,
+        "under": 4.78
       },
       "btts": {
-        "yes": 1.83,
-        "no": 2.2
+        "yes": 1.81,
+        "no": 2.23
       }
     },
     "predictions": {
@@ -8788,21 +8788,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 1.66,
-        "draw": 4.7,
-        "away": 5.45
+        "home": 5.78,
+        "draw": 4.57,
+        "away": 1.64
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.76,
+        "under": 2.32
       },
       "over_1_5": {
-        "over": 1.25,
-        "under": 5.0
+        "over": 1.26,
+        "under": 4.78
       },
       "btts": {
-        "yes": 1.83,
-        "no": 2.2
+        "yes": 1.81,
+        "no": 2.23
       }
     },
     "predictions": {
@@ -9373,21 +9373,21 @@
     "lambda_away": 0.6499999999999999,
     "odds": {
       "winner": {
-        "home": 1.66,
-        "draw": 4.04,
-        "away": 6.69
+        "home": 7.42,
+        "draw": 3.86,
+        "away": 1.65
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.58,
+        "under": 1.63
       },
       "over_1_5": {
-        "over": 1.52,
-        "under": 2.92
+        "over": 1.55,
+        "under": 2.81
       },
       "btts": {
-        "yes": 2.62,
-        "no": 1.62
+        "yes": 2.55,
+        "no": 1.65
       }
     },
     "predictions": {
@@ -9959,21 +9959,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 1.68,
-        "draw": 5.03,
-        "away": 4.88
+        "home": 5.11,
+        "draw": 4.94,
+        "away": 1.66
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.49,
+        "under": 3.04
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 7.3
+        "under": 6.97
       },
       "btts": {
-        "yes": 1.57,
-        "no": 2.76
+        "yes": 1.56,
+        "no": 2.79
       }
     },
     "predictions": {
@@ -10545,21 +10545,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 1.68,
-        "draw": 5.03,
-        "away": 4.88
+        "home": 5.11,
+        "draw": 4.94,
+        "away": 1.66
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.49,
+        "under": 3.04
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 7.3
+        "under": 6.97
       },
       "btts": {
-        "yes": 1.57,
-        "no": 2.76
+        "yes": 1.56,
+        "no": 2.79
       }
     },
     "predictions": {
@@ -11023,20 +11023,20 @@
     "lambda_away": 0.5,
     "odds": {
       "winner": {
-        "home": 33.39,
-        "draw": 1.69,
-        "away": 2.64
+        "home": 3.03,
+        "draw": 1.49,
+        "away": 50.0
       },
       "over_2_5": {
-        "over": 50.0,
+        "over": 23.99,
         "under": 1.2
       },
       "over_1_5": {
-        "over": 9.46,
+        "over": 6.63,
         "under": 1.2
       },
       "btts": {
-        "yes": 50.0,
+        "yes": 10.51,
         "no": 1.2
       }
     },
@@ -11391,21 +11391,21 @@
     "lambda_away": 0.7,
     "odds": {
       "winner": {
-        "home": 1.7,
-        "draw": 4.02,
-        "away": 6.18
+        "home": 6.77,
+        "draw": 3.84,
+        "away": 1.69
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.49,
+        "under": 1.67
       },
       "over_1_5": {
-        "over": 1.5,
-        "under": 3.02
+        "over": 1.52,
+        "under": 2.91
       },
       "btts": {
-        "yes": 2.49,
-        "no": 1.67
+        "yes": 2.43,
+        "no": 1.7
       }
     },
     "predictions": {
@@ -11738,21 +11738,21 @@
     "lambda_away": 0.8999999999999999,
     "odds": {
       "winner": {
-        "home": 1.71,
-        "draw": 4.36,
-        "away": 5.39
+        "home": 5.75,
+        "draw": 4.2,
+        "away": 1.7
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.01
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 2.02,
-        "no": 1.98
+        "yes": 1.99,
+        "no": 2.01
       }
     },
     "predictions": {
@@ -12161,21 +12161,21 @@
     "lambda_away": 1.2,
     "odds": {
       "winner": {
-        "home": 1.76,
-        "draw": 4.7,
-        "away": 4.55
+        "home": 4.75,
+        "draw": 4.58,
+        "away": 1.75
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.61,
+        "under": 2.65
       },
       "over_1_5": {
-        "over": 1.2,
-        "under": 6.04
+        "over": 1.21,
+        "under": 5.76
       },
       "btts": {
-        "yes": 1.64,
-        "no": 2.55
+        "yes": 1.63,
+        "no": 2.58
       }
     },
     "predictions": {
@@ -12639,21 +12639,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 1.76,
-        "draw": 4.77,
-        "away": 4.47
+        "home": 4.66,
+        "draw": 4.65,
+        "away": 1.75
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.56,
+        "under": 2.8
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.51
+        "under": 6.21
       },
       "btts": {
-        "yes": 1.6,
-        "no": 2.67
+        "yes": 1.59,
+        "no": 2.7
       }
     },
     "predictions": {
@@ -13225,21 +13225,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 1.79,
-        "draw": 4.48,
-        "away": 4.59
+        "home": 4.81,
+        "draw": 4.34,
+        "away": 1.78
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.76,
+        "under": 2.32
       },
       "over_1_5": {
-        "over": 1.25,
-        "under": 5.0
+        "over": 1.26,
+        "under": 4.78
       },
       "btts": {
-        "yes": 1.76,
-        "no": 2.31
+        "yes": 1.75,
+        "no": 2.34
       }
     },
     "predictions": {
@@ -13811,21 +13811,21 @@
     "lambda_away": 1.2,
     "odds": {
       "winner": {
-        "home": 1.79,
-        "draw": 4.62,
-        "away": 4.42
+        "home": 4.61,
+        "draw": 4.49,
+        "away": 1.78
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.63,
+        "under": 2.58
       },
       "over_1_5": {
-        "over": 1.21,
-        "under": 5.81
+        "over": 1.22,
+        "under": 5.55
       },
       "btts": {
-        "yes": 1.66,
-        "no": 2.52
+        "yes": 1.64,
+        "no": 2.55
       }
     },
     "predictions": {
@@ -14397,21 +14397,21 @@
     "lambda_away": 1.85,
     "odds": {
       "winner": {
-        "home": 4.45,
-        "draw": 4.39,
-        "away": 1.83
+        "home": 1.82,
+        "draw": 4.25,
+        "away": 4.66
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.79,
+        "under": 2.27
       },
       "over_1_5": {
-        "over": 1.26,
-        "under": 4.82
+        "over": 1.28,
+        "under": 4.61
       },
       "btts": {
-        "yes": 1.78,
-        "no": 2.28
+        "yes": 1.76,
+        "no": 2.31
       }
     },
     "predictions": {
@@ -14983,21 +14983,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 1.83,
-        "draw": 4.39,
-        "away": 4.45
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.79,
+        "under": 2.27
       },
       "over_1_5": {
-        "over": 1.26,
-        "under": 4.82
+        "over": 1.28,
+        "under": 4.61
       },
       "btts": {
-        "yes": 1.78,
-        "no": 2.28
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -15515,21 +15515,21 @@
     "lambda_away": 0.9500000000000001,
     "odds": {
       "winner": {
-        "home": 1.86,
-        "draw": 4.07,
-        "away": 4.61
+        "home": 4.86,
+        "draw": 3.91,
+        "away": 1.86
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.73
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 2.02,
-        "no": 1.98
+        "yes": 1.99,
+        "no": 2.01
       }
     },
     "predictions": {
@@ -15938,21 +15938,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 1.86,
-        "draw": 4.15,
-        "away": 4.5
+        "home": 4.73,
+        "draw": 4.0,
+        "away": 1.86
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.01
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 1.94,
-        "no": 2.07
+        "yes": 1.91,
+        "no": 2.1
       }
     },
     "predictions": {
@@ -16361,21 +16361,21 @@
     "lambda_away": 0.6,
     "odds": {
       "winner": {
-        "home": 1.86,
-        "draw": 3.43,
-        "away": 5.82
+        "home": 6.48,
+        "draw": 3.23,
+        "away": 1.87
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.35,
+        "under": 1.43
       },
       "over_1_5": {
-        "over": 1.77,
-        "under": 2.3
+        "over": 1.81,
+        "under": 2.24
       },
       "btts": {
-        "yes": 3.05,
-        "no": 1.49
+        "yes": 2.91,
+        "no": 1.52
       }
     },
     "predictions": {
@@ -16893,21 +16893,21 @@
     "lambda_away": 1.2000000000000002,
     "odds": {
       "winner": {
-        "home": 1.87,
-        "draw": 4.46,
-        "away": 4.17
+        "home": 4.33,
+        "draw": 4.32,
+        "away": 1.86
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.69,
+        "under": 2.45
       },
       "over_1_5": {
-        "over": 1.23,
-        "under": 5.39
+        "over": 1.24,
+        "under": 5.15
       },
       "btts": {
-        "yes": 1.68,
-        "no": 2.46
+        "yes": 1.67,
+        "no": 2.49
       }
     },
     "predictions": {
@@ -17425,21 +17425,21 @@
     "lambda_away": 0.9,
     "odds": {
       "winner": {
-        "home": 1.9,
-        "draw": 3.91,
-        "away": 4.57
+        "home": 4.83,
+        "draw": 3.73,
+        "away": 1.91
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.28,
+        "under": 1.78
       },
       "over_1_5": {
-        "over": 1.42,
-        "under": 3.36
+        "over": 1.45,
+        "under": 3.23
       },
       "btts": {
-        "yes": 2.14,
-        "no": 1.88
+        "yes": 2.1,
+        "no": 1.91
       }
     },
     "predictions": {
@@ -18010,21 +18010,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 1.95,
-        "draw": 4.16,
-        "away": 4.06
+        "home": 4.23,
+        "draw": 4.0,
+        "away": 1.95
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.32
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 1.83,
-        "no": 2.2
+        "yes": 1.81,
+        "no": 2.23
       }
     },
     "predictions": {
@@ -18595,21 +18595,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 1.95,
-        "draw": 4.59,
-        "away": 3.71
+        "home": 3.82,
+        "draw": 4.47,
+        "away": 1.94
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.53,
+        "under": 2.88
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.77
+        "under": 6.46
       },
       "btts": {
-        "yes": 1.54,
-        "no": 2.86
+        "yes": 1.53,
+        "no": 2.9
       }
     },
     "predictions": {
@@ -19181,21 +19181,21 @@
     "lambda_away": 1.6,
     "odds": {
       "winner": {
-        "home": 4.22,
-        "draw": 3.99,
-        "away": 1.95
+        "home": 1.95,
+        "draw": 3.83,
+        "away": 4.42
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.73
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 1.98,
-        "no": 2.02
+        "yes": 1.95,
+        "no": 2.05
       }
     },
     "predictions": {
@@ -19766,21 +19766,21 @@
     "lambda_away": 1.6,
     "odds": {
       "winner": {
-        "home": 4.22,
-        "draw": 3.99,
-        "away": 1.95
+        "home": 1.95,
+        "draw": 3.83,
+        "away": 4.42
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.73
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 1.98,
-        "no": 2.02
+        "yes": 1.95,
+        "no": 2.05
       }
     },
     "predictions": {
@@ -20243,21 +20243,21 @@
     "lambda_away": 1.3,
     "odds": {
       "winner": {
-        "home": 1.99,
-        "draw": 4.39,
-        "away": 3.7
+        "home": 3.82,
+        "draw": 4.25,
+        "away": 1.99
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.66,
+        "under": 2.51
       },
       "over_1_5": {
-        "over": 1.22,
-        "under": 5.6
+        "over": 1.23,
+        "under": 5.35
       },
       "btts": {
-        "yes": 1.63,
-        "no": 2.58
+        "yes": 1.62,
+        "no": 2.61
       }
     },
     "predictions": {
@@ -20667,21 +20667,21 @@
     "lambda_away": 1.7,
     "odds": {
       "winner": {
-        "home": 1.99,
-        "draw": 4.91,
-        "away": 3.39
+        "home": 3.47,
+        "draw": 4.83,
+        "away": 1.98
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.34,
+        "under": 3.96
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 10.38
+        "under": 9.89
       },
       "btts": {
-        "yes": 1.37,
-        "no": 3.71
+        "yes": 1.36,
+        "no": 3.75
       }
     },
     "predictions": {
@@ -21253,21 +21253,21 @@
     "lambda_away": 1.05,
     "odds": {
       "winner": {
-        "home": 2.0,
-        "draw": 4.0,
-        "away": 4.01
+        "home": 4.18,
+        "draw": 3.84,
+        "away": 2.0
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.05,
+        "under": 1.95
       },
       "over_1_5": {
-        "over": 1.35,
-        "under": 3.87
+        "over": 1.37,
+        "under": 3.71
       },
       "btts": {
-        "yes": 1.93,
-        "no": 2.08
+        "yes": 1.9,
+        "no": 2.11
       }
     },
     "predictions": {
@@ -21838,21 +21838,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.0,
-        "draw": 3.92,
-        "away": 4.09
+        "home": 4.28,
+        "draw": 3.75,
+        "away": 2.0
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.16,
+        "under": 1.87
       },
       "over_1_5": {
-        "over": 1.38,
-        "under": 3.6
+        "over": 1.41,
+        "under": 3.46
       },
       "btts": {
-        "yes": 2.01,
-        "no": 1.99
+        "yes": 1.98,
+        "no": 2.02
       }
     },
     "predictions": {
@@ -22369,21 +22369,21 @@
     "lambda_away": 2.0,
     "odds": {
       "winner": {
-        "home": 2.04,
-        "draw": 5.18,
-        "away": 3.16
+        "home": 3.22,
+        "draw": 5.15,
+        "away": 2.02
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.22,
+        "under": 5.56
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 16.06
+        "under": 15.37
       },
       "btts": {
         "yes": 1.26,
-        "no": 4.81
+        "no": 4.87
       }
     },
     "predictions": {
@@ -22737,21 +22737,21 @@
     "lambda_away": 2.5,
     "odds": {
       "winner": {
-        "home": 3.16,
-        "draw": 5.18,
-        "away": 2.04
+        "home": 2.02,
+        "draw": 5.15,
+        "away": 3.22
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.22,
+        "under": 5.56
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 16.06
+        "under": 15.37
       },
       "btts": {
         "yes": 1.26,
-        "no": 4.81
+        "no": 4.87
       }
     },
     "predictions": {
@@ -23105,21 +23105,21 @@
     "lambda_away": 1.9500000000000002,
     "odds": {
       "winner": {
-        "home": 2.12,
-        "draw": 5.03,
-        "away": 3.04
+        "home": 3.09,
+        "draw": 4.98,
+        "away": 2.1
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.26,
+        "under": 4.9
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 13.71
+        "under": 13.08
       },
       "btts": {
         "yes": 1.29,
-        "no": 4.44
+        "no": 4.49
       }
     },
     "predictions": {
@@ -23637,21 +23637,21 @@
     "lambda_away": 2.25,
     "odds": {
       "winner": {
-        "home": 3.08,
-        "draw": 4.92,
-        "away": 2.12
+        "home": 2.11,
+        "draw": 4.85,
+        "away": 3.13
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.3,
+        "under": 4.33
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 11.7
+        "under": 11.14
       },
       "btts": {
-        "yes": 1.33,
-        "no": 4.04
+        "yes": 1.32,
+        "no": 4.09
       }
     },
     "predictions": {
@@ -24007,21 +24007,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 5.53,
-        "draw": 2.86,
-        "away": 2.13
+        "home": 2.16,
+        "draw": 2.63,
+        "away": 6.33
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 5.01,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 2.26,
-        "under": 1.79
+        "over": 2.31,
+        "under": 1.76
       },
       "btts": {
-        "yes": 4.02,
-        "no": 1.33
+        "yes": 3.67,
+        "no": 1.37
       }
     },
     "predictions": {
@@ -24375,21 +24375,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 2.13,
-        "draw": 4.34,
-        "away": 3.33
+        "home": 3.4,
+        "draw": 4.21,
+        "away": 2.13
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.63,
+        "under": 2.58
       },
       "over_1_5": {
-        "over": 1.21,
-        "under": 5.82
+        "over": 1.22,
+        "under": 5.55
       },
       "btts": {
-        "yes": 1.59,
-        "no": 2.69
+        "yes": 1.58,
+        "no": 2.73
       }
     },
     "predictions": {
@@ -24853,21 +24853,21 @@
     "lambda_away": 1.65,
     "odds": {
       "winner": {
-        "home": 3.44,
-        "draw": 4.12,
-        "away": 2.14
+        "home": 2.15,
+        "draw": 3.96,
+        "away": 3.54
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.83,
+        "under": 2.21
       },
       "over_1_5": {
-        "over": 1.27,
-        "under": 4.65
+        "over": 1.29,
+        "under": 4.44
       },
       "btts": {
-        "yes": 1.74,
-        "no": 2.36
+        "yes": 1.72,
+        "no": 2.39
       }
     },
     "predictions": {
@@ -25221,21 +25221,21 @@
     "lambda_away": 1.4500000000000002,
     "odds": {
       "winner": {
-        "home": 3.65,
-        "draw": 3.79,
-        "away": 2.16
+        "home": 2.17,
+        "draw": 3.62,
+        "away": 3.79
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.21,
+        "under": 1.82
       },
       "over_1_5": {
-        "over": 1.4,
-        "under": 3.48
+        "over": 1.43,
+        "under": 3.34
       },
       "btts": {
-        "yes": 2.01,
-        "no": 1.99
+        "yes": 1.98,
+        "no": 2.03
       }
     },
     "predictions": {
@@ -25698,21 +25698,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 3.72,
-        "draw": 3.7,
-        "away": 2.17
+        "home": 2.18,
+        "draw": 3.53,
+        "away": 3.87
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.34,
+        "under": 1.74
       },
       "over_1_5": {
-        "over": 1.45,
-        "under": 3.24
+        "over": 1.47,
+        "under": 3.12
       },
       "btts": {
-        "yes": 2.1,
-        "no": 1.91
+        "yes": 2.06,
+        "no": 1.94
       }
     },
     "predictions": {
@@ -26283,21 +26283,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 2.22,
-        "draw": 3.81,
-        "away": 3.49
+        "home": 3.6,
+        "draw": 3.64,
+        "away": 2.23
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.16,
+        "under": 1.87
       },
       "over_1_5": {
-        "over": 1.38,
-        "under": 3.6
+        "over": 1.41,
+        "under": 3.46
       },
       "btts": {
-        "yes": 1.96,
-        "no": 2.04
+        "yes": 1.93,
+        "no": 2.08
       }
     },
     "predictions": {
@@ -26814,21 +26814,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.23,
-        "draw": 3.64,
-        "away": 3.6
+        "home": 3.75,
+        "draw": 3.46,
+        "away": 2.25
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.42,
+        "under": 1.71
       },
       "over_1_5": {
-        "over": 1.47,
-        "under": 3.13
+        "over": 1.5,
+        "under": 3.01
       },
       "btts": {
-        "yes": 2.14,
-        "no": 1.88
+        "yes": 2.09,
+        "no": 1.92
       }
     },
     "predictions": {
@@ -27291,21 +27291,21 @@
     "lambda_away": 1.65,
     "odds": {
       "winner": {
-        "home": 3.06,
-        "draw": 4.18,
-        "away": 2.3
+        "home": 2.31,
+        "draw": 4.03,
+        "away": 3.13
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.72,
+        "under": 2.38
       },
       "over_1_5": {
-        "over": 1.24,
-        "under": 5.2
+        "over": 1.25,
+        "under": 4.96
       },
       "btts": {
-        "yes": 1.64,
-        "no": 2.55
+        "yes": 1.63,
+        "no": 2.59
       }
     },
     "predictions": {
@@ -27877,21 +27877,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.31,
-        "draw": 3.57,
-        "away": 3.49
+        "home": 3.63,
+        "draw": 3.39,
+        "away": 2.33
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.49,
+        "under": 1.67
       },
       "over_1_5": {
-        "over": 1.49,
-        "under": 3.02
+        "over": 1.52,
+        "under": 2.91
       },
       "btts": {
-        "yes": 2.18,
-        "no": 1.85
+        "yes": 2.13,
+        "no": 1.89
       }
     },
     "predictions": {
@@ -28246,21 +28246,21 @@
     "lambda_away": 1.45,
     "odds": {
       "winner": {
-        "home": 3.2,
-        "draw": 3.86,
-        "away": 2.33
+        "home": 2.36,
+        "draw": 3.69,
+        "away": 3.28
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.05,
+        "under": 1.95
       },
       "over_1_5": {
-        "over": 1.35,
-        "under": 3.87
+        "over": 1.37,
+        "under": 3.71
       },
       "btts": {
-        "yes": 1.87,
-        "no": 2.15
+        "yes": 1.84,
+        "no": 2.18
       }
     },
     "predictions": {
@@ -28723,21 +28723,21 @@
     "lambda_away": 1.15,
     "odds": {
       "winner": {
-        "home": 2.35,
-        "draw": 3.78,
-        "away": 3.24
+        "home": 3.33,
+        "draw": 3.61,
+        "away": 2.37
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.16,
+        "under": 1.87
       },
       "over_1_5": {
-        "over": 1.38,
-        "under": 3.6
+        "over": 1.41,
+        "under": 3.46
       },
       "btts": {
-        "yes": 1.94,
-        "no": 2.06
+        "yes": 1.91,
+        "no": 2.1
       }
     },
     "predictions": {
@@ -29308,21 +29308,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 3.24,
-        "draw": 3.78,
-        "away": 2.35
+        "home": 2.37,
+        "draw": 3.61,
+        "away": 3.33
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.16,
+        "under": 1.87
       },
       "over_1_5": {
-        "over": 1.38,
-        "under": 3.6
+        "over": 1.41,
+        "under": 3.46
       },
       "btts": {
-        "yes": 1.94,
-        "no": 2.06
+        "yes": 1.91,
+        "no": 2.1
       }
     },
     "predictions": {
@@ -29893,21 +29893,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 3.79,
-        "draw": 3.19,
-        "away": 2.36
+        "home": 2.4,
+        "draw": 2.99,
+        "away": 4.01
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.35,
+        "under": 1.43
       },
       "over_1_5": {
-        "over": 1.77,
-        "under": 2.31
+        "over": 1.81,
+        "under": 2.24
       },
       "btts": {
-        "yes": 2.72,
-        "no": 1.58
+        "yes": 2.61,
+        "no": 1.62
       }
     },
     "predictions": {
@@ -30371,21 +30371,21 @@
     "lambda_away": 1.55,
     "odds": {
       "winner": {
-        "home": 3.01,
-        "draw": 4.05,
-        "away": 2.38
+        "home": 2.39,
+        "draw": 3.9,
+        "away": 3.07
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.83,
+        "under": 2.21
       },
       "over_1_5": {
-        "over": 1.27,
-        "under": 4.65
+        "over": 1.29,
+        "under": 4.44
       },
       "btts": {
-        "yes": 1.71,
-        "no": 2.4
+        "yes": 1.7,
+        "no": 2.43
       }
     },
     "predictions": {
@@ -30849,21 +30849,21 @@
     "lambda_away": 0.9,
     "odds": {
       "winner": {
-        "home": 2.41,
-        "draw": 3.32,
-        "away": 3.51
+        "home": 3.67,
+        "draw": 3.13,
+        "away": 2.45
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.97,
+        "under": 1.51
       },
       "over_1_5": {
-        "over": 1.65,
-        "under": 2.55
+        "over": 1.68,
+        "under": 2.47
       },
       "btts": {
-        "yes": 2.47,
-        "no": 1.68
+        "yes": 2.39,
+        "no": 1.72
       }
     },
     "predictions": {
@@ -31250,21 +31250,21 @@
     "lambda_away": 0.8500000000000001,
     "odds": {
       "winner": {
-        "home": 2.43,
-        "draw": 3.23,
-        "away": 3.58
+        "home": 3.76,
+        "draw": 3.02,
+        "away": 2.48
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.21,
+        "under": 1.45
       },
       "over_1_5": {
-        "over": 1.72,
-        "under": 2.38
+        "over": 1.76,
+        "under": 2.31
       },
       "btts": {
-        "yes": 2.62,
-        "no": 1.62
+        "yes": 2.52,
+        "no": 1.66
       }
     },
     "predictions": {
@@ -31836,21 +31836,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 2.43,
-        "draw": 3.64,
-        "away": 3.18
+        "home": 3.28,
+        "draw": 3.46,
+        "away": 2.47
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.34,
+        "under": 1.74
       },
       "over_1_5": {
-        "over": 1.45,
-        "under": 3.24
+        "over": 1.47,
+        "under": 3.12
       },
       "btts": {
-        "yes": 2.06,
-        "no": 1.94
+        "yes": 2.02,
+        "no": 1.98
       }
     },
     "predictions": {
@@ -32421,21 +32421,21 @@
     "lambda_away": 2.25,
     "odds": {
       "winner": {
-        "home": 2.55,
-        "draw": 5.04,
-        "away": 2.44
+        "home": 2.44,
+        "draw": 4.99,
+        "away": 2.56
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.23,
+        "under": 5.39
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 15.46
+        "under": 14.76
       },
       "btts": {
         "yes": 1.26,
-        "no": 4.85
+        "no": 4.92
       }
     },
     "predictions": {
@@ -32953,21 +32953,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 2.93,
-        "draw": 4.0,
-        "away": 2.45
+        "home": 2.47,
+        "draw": 3.84,
+        "away": 2.98
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.87,
+        "under": 2.15
       },
       "over_1_5": {
-        "over": 1.29,
-        "under": 4.48
+        "over": 1.3,
+        "under": 4.29
       },
       "btts": {
-        "yes": 1.74,
-        "no": 2.35
+        "yes": 1.72,
+        "no": 2.39
       }
     },
     "predictions": {
@@ -33539,21 +33539,21 @@
     "lambda_away": 1.3,
     "odds": {
       "winner": {
-        "home": 2.46,
-        "draw": 3.92,
-        "away": 2.95
+        "home": 3.02,
+        "draw": 3.76,
+        "away": 2.49
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.95,
+        "under": 2.05
       },
       "over_1_5": {
-        "over": 1.32,
-        "under": 4.17
+        "over": 1.33,
+        "under": 3.99
       },
       "btts": {
-        "yes": 1.8,
-        "no": 2.26
+        "yes": 1.77,
+        "no": 2.29
       }
     },
     "predictions": {
@@ -34071,21 +34071,21 @@
     "lambda_away": 1.7000000000000002,
     "odds": {
       "winner": {
-        "home": 2.75,
-        "draw": 4.33,
-        "away": 2.47
+        "home": 2.48,
+        "draw": 4.2,
+        "away": 2.78
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.58,
+        "under": 2.72
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.29
+        "under": 5.98
       },
       "btts": {
-        "yes": 1.53,
-        "no": 2.87
+        "yes": 1.52,
+        "no": 2.91
       }
     },
     "predictions": {
@@ -34385,21 +34385,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 2.98,
-        "draw": 3.84,
-        "away": 2.47
+        "home": 2.5,
+        "draw": 3.67,
+        "away": 3.05
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.05,
+        "under": 1.95
       },
       "over_1_5": {
-        "over": 1.35,
-        "under": 3.87
+        "over": 1.37,
+        "under": 3.71
       },
       "btts": {
-        "yes": 1.86,
-        "no": 2.16
+        "yes": 1.83,
+        "no": 2.2
       }
     },
     "predictions": {
@@ -34700,21 +34700,21 @@
     "lambda_away": 1.2,
     "odds": {
       "winner": {
-        "home": 2.49,
-        "draw": 3.76,
-        "away": 3.02
+        "home": 3.09,
+        "draw": 3.58,
+        "away": 2.52
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.16,
+        "under": 1.87
       },
       "over_1_5": {
-        "over": 1.38,
-        "under": 3.6
+        "over": 1.41,
+        "under": 3.46
       },
       "btts": {
-        "yes": 1.93,
-        "no": 2.07
+        "yes": 1.9,
+        "no": 2.11
       }
     },
     "predictions": {
@@ -34939,21 +34939,21 @@
     "lambda_away": 1.6,
     "odds": {
       "winner": {
-        "home": 2.78,
-        "draw": 4.19,
-        "away": 2.49
+        "home": 2.51,
+        "draw": 4.04,
+        "away": 2.83
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.69,
+        "under": 2.45
       },
       "over_1_5": {
-        "over": 1.23,
-        "under": 5.4
+        "over": 1.24,
+        "under": 5.15
       },
       "btts": {
-        "yes": 1.61,
-        "no": 2.63
+        "yes": 1.6,
+        "no": 2.66
       }
     },
     "predictions": {
@@ -35525,21 +35525,21 @@
     "lambda_away": 1.7999999999999998,
     "odds": {
       "winner": {
-        "home": 2.64,
-        "draw": 4.5,
-        "away": 2.51
+        "home": 2.52,
+        "draw": 4.38,
+        "away": 2.66
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.47,
+        "under": 3.13
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 7.61
+        "under": 7.24
       },
       "btts": {
-        "yes": 1.45,
-        "no": 3.22
+        "yes": 1.44,
+        "no": 3.25
       }
     },
     "predictions": {
@@ -35949,21 +35949,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 2.83,
-        "draw": 4.04,
-        "away": 2.51
+        "home": 2.54,
+        "draw": 3.88,
+        "away": 2.87
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.83,
+        "under": 2.21
       },
       "over_1_5": {
-        "over": 1.27,
-        "under": 4.65
+        "over": 1.29,
+        "under": 4.44
       },
       "btts": {
-        "yes": 1.71,
-        "no": 2.41
+        "yes": 1.69,
+        "no": 2.45
       }
     },
     "predictions": {
@@ -36535,21 +36535,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 2.56,
-        "draw": 4.15,
-        "away": 2.71
+        "home": 2.75,
+        "draw": 4.0,
+        "away": 2.59
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.72,
+        "under": 2.38
       },
       "over_1_5": {
-        "over": 1.24,
-        "under": 5.2
+        "over": 1.25,
+        "under": 4.96
       },
       "btts": {
-        "yes": 1.63,
-        "no": 2.57
+        "yes": 1.62,
+        "no": 2.61
       }
     },
     "predictions": {
@@ -37121,21 +37121,21 @@
     "lambda_away": 1.2999999999999998,
     "odds": {
       "winner": {
-        "home": 2.93,
-        "draw": 3.71,
-        "away": 2.57
+        "home": 2.61,
+        "draw": 3.53,
+        "away": 3.0
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.21,
+        "under": 1.82
       },
       "over_1_5": {
-        "over": 1.4,
-        "under": 3.48
+        "over": 1.43,
+        "under": 3.34
       },
       "btts": {
-        "yes": 1.97,
-        "no": 2.03
+        "yes": 1.93,
+        "no": 2.07
       }
     },
     "predictions": {
@@ -37652,21 +37652,21 @@
     "lambda_away": 1.2999999999999998,
     "odds": {
       "winner": {
-        "home": 2.93,
-        "draw": 3.71,
-        "away": 2.57
+        "home": 2.61,
+        "draw": 3.53,
+        "away": 3.0
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.21,
+        "under": 1.82
       },
       "over_1_5": {
-        "over": 1.4,
-        "under": 3.48
+        "over": 1.43,
+        "under": 3.34
       },
       "btts": {
-        "yes": 1.97,
-        "no": 2.03
+        "yes": 1.93,
+        "no": 2.07
       }
     },
     "predictions": {
@@ -38075,21 +38075,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 3.23,
-        "draw": 3.3,
-        "away": 2.58
+        "home": 2.64,
+        "draw": 3.1,
+        "away": 3.35
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.97,
+        "under": 1.51
       },
       "over_1_5": {
-        "over": 1.65,
-        "under": 2.55
+        "over": 1.68,
+        "under": 2.47
       },
       "btts": {
-        "yes": 2.44,
-        "no": 1.69
+        "yes": 2.37,
+        "no": 1.73
       }
     },
     "predictions": {
@@ -38660,21 +38660,21 @@
     "lambda_away": 1.7,
     "odds": {
       "winner": {
-        "home": 2.59,
-        "draw": 4.4,
-        "away": 2.59
+        "home": 2.61,
+        "draw": 4.27,
+        "away": 2.61
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.53,
+        "under": 2.88
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.78
+        "under": 6.46
       },
       "btts": {
-        "yes": 1.5,
-        "no": 3.01
+        "yes": 1.49,
+        "no": 3.04
       }
     },
     "predictions": {
@@ -39030,21 +39030,21 @@
     "lambda_away": 1.2000000000000002,
     "odds": {
       "winner": {
-        "home": 3.0,
-        "draw": 3.53,
-        "away": 2.61
+        "home": 2.66,
+        "draw": 3.34,
+        "away": 3.08
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.49,
+        "under": 1.67
       },
       "over_1_5": {
-        "over": 1.49,
-        "under": 3.02
+        "over": 1.52,
+        "under": 2.91
       },
       "btts": {
-        "yes": 2.15,
-        "no": 1.87
+        "yes": 2.1,
+        "no": 1.91
       }
     },
     "predictions": {
@@ -39453,21 +39453,21 @@
     "lambda_away": 1.2,
     "odds": {
       "winner": {
-        "home": 3.0,
-        "draw": 3.53,
-        "away": 2.61
+        "home": 2.66,
+        "draw": 3.34,
+        "away": 3.08
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.49,
+        "under": 1.67
       },
       "over_1_5": {
-        "over": 1.49,
-        "under": 3.02
+        "over": 1.52,
+        "under": 2.91
       },
       "btts": {
-        "yes": 2.15,
-        "no": 1.87
+        "yes": 2.1,
+        "no": 1.91
       }
     },
     "predictions": {
@@ -40038,21 +40038,21 @@
     "lambda_away": 1.35,
     "odds": {
       "winner": {
-        "home": 2.7,
-        "draw": 3.87,
-        "away": 2.7
+        "home": 2.74,
+        "draw": 3.7,
+        "away": 2.74
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.02
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 1.82,
-        "no": 2.21
+        "yes": 1.8,
+        "no": 2.25
       }
     },
     "predictions": {
@@ -40623,21 +40623,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 2.71,
-        "draw": 3.48,
-        "away": 2.91
+        "home": 2.98,
+        "draw": 3.29,
+        "away": 2.77
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.58,
+        "under": 1.63
       },
       "over_1_5": {
-        "over": 1.52,
-        "under": 2.92
+        "over": 1.55,
+        "under": 2.81
       },
       "btts": {
-        "yes": 2.19,
-        "no": 1.84
+        "yes": 2.14,
+        "no": 1.88
       }
     },
     "predictions": {
@@ -41100,21 +41100,21 @@
     "lambda_away": 1.15,
     "odds": {
       "winner": {
-        "home": 2.91,
-        "draw": 3.48,
-        "away": 2.71
+        "home": 2.77,
+        "draw": 3.29,
+        "away": 2.98
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.58,
+        "under": 1.63
       },
       "over_1_5": {
-        "over": 1.52,
-        "under": 2.92
+        "over": 1.55,
+        "under": 2.81
       },
       "btts": {
-        "yes": 2.19,
-        "no": 1.84
+        "yes": 2.14,
+        "no": 1.88
       }
     },
     "predictions": {
@@ -41685,21 +41685,21 @@
     "lambda_away": 1.05,
     "odds": {
       "winner": {
-        "home": 2.98,
-        "draw": 3.29,
-        "away": 2.77
+        "home": 2.84,
+        "draw": 3.09,
+        "away": 3.08
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.97,
+        "under": 1.51
       },
       "over_1_5": {
-        "over": 1.65,
-        "under": 2.55
+        "over": 1.68,
+        "under": 2.47
       },
       "btts": {
-        "yes": 2.43,
-        "no": 1.7
+        "yes": 2.36,
+        "no": 1.74
       }
     },
     "predictions": {
@@ -42000,20 +42000,20 @@
     "lambda_away": 0.05,
     "odds": {
       "winner": {
-        "home": 21.53,
+        "home": 50.0,
         "draw": 1.2,
-        "away": 21.53
+        "away": 50.0
       },
       "over_2_5": {
         "over": 50.0,
         "under": 1.2
       },
       "over_1_5": {
-        "over": 50.0,
+        "over": 10.51,
         "under": 1.2
       },
       "btts": {
-        "yes": 50.0,
+        "yes": 10.51,
         "no": 1.2
       }
     },
@@ -42260,20 +42260,20 @@
     "lambda_away": 0.05,
     "odds": {
       "winner": {
-        "home": 21.53,
+        "home": 50.0,
         "draw": 1.2,
-        "away": 21.53
+        "away": 50.0
       },
       "over_2_5": {
         "over": 50.0,
         "under": 1.2
       },
       "over_1_5": {
-        "over": 50.0,
+        "over": 10.51,
         "under": 1.2
       },
       "btts": {
-        "yes": 50.0,
+        "yes": 10.51,
         "no": 1.2
       }
     },
@@ -42628,20 +42628,20 @@
     "lambda_away": 0.05,
     "odds": {
       "winner": {
-        "home": 21.53,
+        "home": 50.0,
         "draw": 1.2,
-        "away": 21.53
+        "away": 50.0
       },
       "over_2_5": {
         "over": 50.0,
         "under": 1.2
       },
       "over_1_5": {
-        "over": 50.0,
+        "over": 10.51,
         "under": 1.2
       },
       "btts": {
-        "yes": 50.0,
+        "yes": 10.51,
         "no": 1.2
       }
     },
@@ -42996,21 +42996,21 @@
     "lambda_away": 0.75,
     "odds": {
       "winner": {
-        "home": 1.48,
-        "draw": 5.05,
-        "away": 7.89
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.31
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 2.18,
-        "no": 1.85
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -43419,21 +43419,21 @@
     "lambda_away": 0.5,
     "odds": {
       "winner": {
-        "home": 1.5,
-        "draw": 4.4,
-        "away": 9.6
+        "home": 11.29,
+        "draw": 4.22,
+        "away": 1.48
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.66,
+        "under": 1.6
       },
       "over_1_5": {
-        "over": 1.55,
-        "under": 2.82
+        "over": 1.58,
+        "under": 2.72
       },
       "btts": {
-        "yes": 3.11,
-        "no": 1.47
+        "yes": 3.0,
+        "no": 1.5
       }
     },
     "predictions": {
@@ -44005,21 +44005,21 @@
     "lambda_away": 0.8500000000000001,
     "odds": {
       "winner": {
-        "home": 1.51,
-        "draw": 5.05,
-        "away": 7.05
+        "home": 7.65,
+        "draw": 4.94,
+        "away": 1.5
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.79,
+        "under": 2.27
       },
       "over_1_5": {
-        "over": 1.26,
-        "under": 4.81
+        "over": 1.28,
+        "under": 4.61
       },
       "btts": {
-        "yes": 1.99,
-        "no": 2.01
+        "yes": 1.97,
+        "no": 2.03
       }
     },
     "predictions": {
@@ -44590,21 +44590,21 @@
     "lambda_away": 0.5,
     "odds": {
       "winner": {
-        "home": 1.55,
-        "draw": 4.13,
-        "away": 8.87
+        "home": 10.39,
+        "draw": 3.94,
+        "away": 1.54
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.86,
+        "under": 1.54
       },
       "over_1_5": {
-        "over": 1.61,
-        "under": 2.63
+        "over": 1.65,
+        "under": 2.55
       },
       "btts": {
-        "yes": 3.19,
-        "no": 1.46
+        "yes": 3.06,
+        "no": 1.49
       }
     },
     "predictions": {
@@ -45176,21 +45176,21 @@
     "lambda_away": 0.8,
     "odds": {
       "winner": {
-        "home": 1.56,
-        "draw": 4.74,
-        "away": 6.83
+        "home": 7.42,
+        "draw": 4.61,
+        "away": 1.54
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.95,
+        "under": 2.05
       },
       "over_1_5": {
-        "over": 1.32,
-        "under": 4.15
+        "over": 1.33,
+        "under": 3.99
       },
       "btts": {
-        "yes": 2.12,
-        "no": 1.89
+        "yes": 2.09,
+        "no": 1.92
       }
     },
     "predictions": {
@@ -45761,21 +45761,21 @@
     "lambda_away": 0.75,
     "odds": {
       "winner": {
-        "home": 1.58,
-        "draw": 4.55,
-        "away": 6.85
+        "home": 7.49,
+        "draw": 4.4,
+        "away": 1.56
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.73
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 2.25,
-        "no": 1.8
+        "yes": 2.21,
+        "no": 1.83
       }
     },
     "predictions": {
@@ -46022,21 +46022,21 @@
     "lambda_away": 1.2000000000000002,
     "odds": {
       "winner": {
-        "home": 1.6,
-        "draw": 5.25,
-        "away": 5.44
+        "home": 5.74,
+        "draw": 5.18,
+        "away": 1.58
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.47,
+        "under": 3.13
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 7.57
+        "under": 7.24
       },
       "btts": {
-        "yes": 1.58,
-        "no": 2.71
+        "yes": 1.57,
+        "no": 2.74
       }
     },
     "predictions": {
@@ -46500,21 +46500,21 @@
     "lambda_away": 0.8,
     "odds": {
       "winner": {
-        "home": 1.61,
-        "draw": 4.51,
-        "away": 6.37
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.05,
+        "under": 1.95
       },
       "over_1_5": {
-        "over": 1.35,
-        "under": 3.87
+        "over": 1.37,
+        "under": 3.71
       },
       "btts": {
-        "yes": 2.16,
-        "no": 1.87
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -46867,21 +46867,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 8.2,
-        "draw": 3.88,
-        "away": 1.61
+        "home": 1.6,
+        "draw": 3.68,
+        "away": 9.56
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.09,
+        "under": 1.48
       },
       "over_1_5": {
-        "over": 1.68,
-        "under": 2.46
+        "over": 1.72,
+        "under": 2.39
       },
       "btts": {
-        "yes": 3.27,
-        "no": 1.44
+        "yes": 3.13,
+        "no": 1.47
       }
     },
     "predictions": {
@@ -47453,21 +47453,21 @@
     "lambda_away": 1.35,
     "odds": {
       "winner": {
-        "home": 1.66,
-        "draw": 5.23,
-        "away": 4.84
+        "home": 5.07,
+        "draw": 5.17,
+        "away": 1.64
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.4,
+        "under": 3.51
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 8.84
+        "under": 8.46
       },
       "btts": {
-        "yes": 1.49,
-        "no": 3.05
+        "yes": 1.48,
+        "no": 3.09
       }
     },
     "predictions": {
@@ -48039,21 +48039,21 @@
     "lambda_away": 0.8,
     "odds": {
       "winner": {
-        "home": 1.67,
-        "draw": 4.3,
-        "away": 5.94
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.16,
+        "under": 1.87
       },
       "over_1_5": {
-        "over": 1.38,
-        "under": 3.6
+        "over": 1.41,
+        "under": 3.46
       },
       "btts": {
-        "yes": 2.2,
-        "no": 1.83
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -48462,21 +48462,21 @@
     "lambda_away": 0.75,
     "odds": {
       "winner": {
-        "home": 1.7,
-        "draw": 4.11,
-        "away": 5.94
+        "home": 6.46,
+        "draw": 3.94,
+        "away": 1.69
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.34,
+        "under": 1.74
       },
       "over_1_5": {
-        "over": 1.45,
-        "under": 3.24
+        "over": 1.47,
+        "under": 3.12
       },
       "btts": {
-        "yes": 2.35,
-        "no": 1.74
+        "yes": 2.29,
+        "no": 1.77
       }
     },
     "predictions": {
@@ -49047,21 +49047,21 @@
     "lambda_away": 0.9,
     "odds": {
       "winner": {
-        "home": 1.71,
-        "draw": 4.36,
-        "away": 5.39
+        "home": 5.75,
+        "draw": 4.2,
+        "away": 1.7
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.01
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 2.02,
-        "no": 1.98
+        "yes": 1.99,
+        "no": 2.01
       }
     },
     "predictions": {
@@ -49632,21 +49632,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 1.72,
-        "draw": 4.65,
-        "away": 4.89
+        "home": 5.13,
+        "draw": 4.52,
+        "away": 1.71
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.69,
+        "under": 2.45
       },
       "over_1_5": {
-        "over": 1.23,
-        "under": 5.39
+        "over": 1.24,
+        "under": 5.15
       },
       "btts": {
-        "yes": 1.73,
-        "no": 2.36
+        "yes": 1.72,
+        "no": 2.39
       }
     },
     "predictions": {
@@ -50164,21 +50164,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 1.73,
-        "draw": 4.85,
-        "away": 4.61
+        "home": 4.81,
+        "draw": 4.75,
+        "away": 1.72
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.53,
+        "under": 2.88
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.76
+        "under": 6.46
       },
       "btts": {
-        "yes": 1.59,
-        "no": 2.7
+        "yes": 1.58,
+        "no": 2.73
       }
     },
     "predictions": {
@@ -50588,21 +50588,21 @@
     "lambda_away": 0.75,
     "odds": {
       "winner": {
-        "home": 1.74,
-        "draw": 4.01,
-        "away": 5.74
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.42,
+        "under": 1.71
       },
       "over_1_5": {
-        "over": 1.47,
-        "under": 3.13
+        "over": 1.5,
+        "under": 3.01
       },
       "btts": {
-        "yes": 2.38,
-        "no": 1.73
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -51173,21 +51173,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 5.75,
-        "draw": 3.82,
-        "away": 1.77
+        "home": 1.77,
+        "draw": 3.63,
+        "away": 6.28
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.66,
+        "under": 1.6
       },
       "over_1_5": {
-        "over": 1.55,
-        "under": 2.82
+        "over": 1.58,
+        "under": 2.72
       },
       "btts": {
-        "yes": 2.56,
-        "no": 1.64
+        "yes": 2.48,
+        "no": 1.67
       }
     },
     "predictions": {
@@ -51759,21 +51759,21 @@
     "lambda_away": 0.9,
     "odds": {
       "winner": {
-        "home": 1.78,
-        "draw": 4.17,
-        "away": 5.05
+        "home": 5.36,
+        "draw": 4.0,
+        "away": 1.77
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.73
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 2.06,
-        "no": 1.94
+        "yes": 2.03,
+        "no": 1.97
       }
     },
     "predictions": {
@@ -52182,21 +52182,21 @@
     "lambda_away": 0.95,
     "odds": {
       "winner": {
-        "home": 1.78,
-        "draw": 4.25,
-        "away": 4.92
+        "home": 5.2,
+        "draw": 4.09,
+        "away": 1.78
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.01
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 1.97,
-        "no": 2.03
+        "yes": 1.95,
+        "no": 2.06
       }
     },
     "predictions": {
@@ -52767,21 +52767,21 @@
     "lambda_away": 1.65,
     "odds": {
       "winner": {
-        "home": 1.85,
-        "draw": 5.1,
-        "away": 3.79
+        "home": 3.9,
+        "draw": 5.04,
+        "away": 1.83
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.31,
+        "under": 4.2
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 11.22
+        "under": 10.71
       },
       "btts": {
         "yes": 1.36,
-        "no": 3.75
+        "no": 3.79
       }
     },
     "predictions": {
@@ -53353,21 +53353,21 @@
     "lambda_away": 1.7,
     "odds": {
       "winner": {
-        "home": 4.5,
-        "draw": 4.15,
-        "away": 1.86
+        "home": 1.86,
+        "draw": 4.0,
+        "away": 4.73
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.01
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 1.94,
-        "no": 2.07
+        "yes": 1.91,
+        "no": 2.1
       }
     },
     "predictions": {
@@ -53938,21 +53938,21 @@
     "lambda_away": 1.15,
     "odds": {
       "winner": {
-        "home": 1.91,
-        "draw": 4.31,
-        "away": 4.11
+        "home": 4.28,
+        "draw": 4.16,
+        "away": 1.9
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.79,
+        "under": 2.27
       },
       "over_1_5": {
-        "over": 1.26,
-        "under": 4.82
+        "over": 1.28,
+        "under": 4.61
       },
       "btts": {
-        "yes": 1.75,
-        "no": 2.33
+        "yes": 1.74,
+        "no": 2.36
       }
     },
     "predictions": {
@@ -54524,21 +54524,21 @@
     "lambda_away": 1.7000000000000002,
     "odds": {
       "winner": {
-        "home": 4.06,
-        "draw": 4.16,
-        "away": 1.95
+        "home": 1.95,
+        "draw": 4.0,
+        "away": 4.23
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.32
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 1.83,
-        "no": 2.2
+        "yes": 1.81,
+        "no": 2.23
       }
     },
     "predictions": {
@@ -54837,21 +54837,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 1.95,
-        "draw": 4.16,
-        "away": 4.06
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.32
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 1.83,
-        "no": 2.2
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -55368,21 +55368,21 @@
     "lambda_away": 1.65,
     "odds": {
       "winner": {
-        "home": 4.14,
-        "draw": 4.08,
-        "away": 1.95
+        "home": 1.95,
+        "draw": 3.91,
+        "away": 4.32
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.01
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 1.9,
-        "no": 2.11
+        "yes": 1.88,
+        "no": 2.14
       }
     },
     "predictions": {
@@ -55845,21 +55845,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 1.95,
-        "draw": 4.59,
-        "away": 3.71
+        "home": 3.82,
+        "draw": 4.47,
+        "away": 1.94
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.53,
+        "under": 2.88
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.77
+        "under": 6.46
       },
       "btts": {
-        "yes": 1.54,
-        "no": 2.86
+        "yes": 1.53,
+        "no": 2.9
       }
     },
     "predictions": {
@@ -56377,21 +56377,21 @@
     "lambda_away": 1.2999999999999998,
     "odds": {
       "winner": {
-        "home": 1.99,
-        "draw": 4.39,
-        "away": 3.7
+        "home": 3.82,
+        "draw": 4.25,
+        "away": 1.99
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.66,
+        "under": 2.51
       },
       "over_1_5": {
-        "over": 1.22,
-        "under": 5.6
+        "over": 1.23,
+        "under": 5.35
       },
       "btts": {
-        "yes": 1.63,
-        "no": 2.58
+        "yes": 1.62,
+        "no": 2.61
       }
     },
     "predictions": {
@@ -56963,21 +56963,21 @@
     "lambda_away": 1.15,
     "odds": {
       "winner": {
-        "home": 1.99,
-        "draw": 4.16,
-        "away": 3.87
+        "home": 4.02,
+        "draw": 4.01,
+        "away": 1.99
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.87,
+        "under": 2.15
       },
       "over_1_5": {
-        "over": 1.29,
-        "under": 4.48
+        "over": 1.3,
+        "under": 4.29
       },
       "btts": {
-        "yes": 1.79,
-        "no": 2.26
+        "yes": 1.77,
+        "no": 2.3
       }
     },
     "predictions": {
@@ -57441,21 +57441,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 4.18,
-        "draw": 3.83,
-        "away": 2.0
+        "home": 2.01,
+        "draw": 3.66,
+        "away": 4.39
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.28,
+        "under": 1.78
       },
       "over_1_5": {
-        "over": 1.42,
-        "under": 3.36
+        "over": 1.45,
+        "under": 3.23
       },
       "btts": {
-        "yes": 2.1,
-        "no": 1.91
+        "yes": 2.06,
+        "no": 1.94
       }
     },
     "predictions": {
@@ -58026,21 +58026,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 2.05,
-        "draw": 4.01,
-        "away": 3.82
+        "home": 3.96,
+        "draw": 3.85,
+        "away": 2.05
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 2.0,
+        "under": 2.0
       },
       "over_1_5": {
-        "over": 1.33,
-        "under": 4.02
+        "over": 1.35,
+        "under": 3.85
       },
       "btts": {
-        "yes": 1.88,
-        "no": 2.14
+        "yes": 1.85,
+        "no": 2.17
       }
     },
     "predictions": {
@@ -58611,21 +58611,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.05,
-        "draw": 3.84,
-        "away": 3.96
+        "home": 4.14,
+        "draw": 3.67,
+        "away": 2.06
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.21,
+        "under": 1.82
       },
       "over_1_5": {
-        "over": 1.4,
-        "under": 3.48
+        "over": 1.43,
+        "under": 3.34
       },
       "btts": {
-        "yes": 2.04,
-        "no": 1.96
+        "yes": 2.0,
+        "no": 2.0
       }
     },
     "predictions": {
@@ -59034,21 +59034,21 @@
     "lambda_away": 1.2000000000000002,
     "odds": {
       "winner": {
-        "home": 4.63,
-        "draw": 3.29,
-        "away": 2.08
+        "home": 2.1,
+        "draw": 3.08,
+        "away": 5.01
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.35,
+        "under": 1.43
       },
       "over_1_5": {
-        "over": 1.77,
-        "under": 2.3
+        "over": 1.81,
+        "under": 2.24
       },
       "btts": {
-        "yes": 2.84,
-        "no": 1.54
+        "yes": 2.72,
+        "no": 1.58
       }
     },
     "predictions": {
@@ -59296,21 +59296,21 @@
     "lambda_away": 0.7,
     "odds": {
       "winner": {
-        "home": 2.08,
-        "draw": 3.29,
-        "away": 4.63
+        "home": 5.01,
+        "draw": 3.08,
+        "away": 2.1
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.35,
+        "under": 1.43
       },
       "over_1_5": {
-        "over": 1.77,
-        "under": 2.3
+        "over": 1.81,
+        "under": 2.24
       },
       "btts": {
-        "yes": 2.84,
-        "no": 1.54
+        "yes": 2.72,
+        "no": 1.58
       }
     },
     "predictions": {
@@ -59882,21 +59882,21 @@
     "lambda_away": 1.2,
     "odds": {
       "winner": {
-        "home": 2.09,
-        "draw": 4.1,
-        "away": 3.59
+        "home": 3.71,
+        "draw": 3.95,
+        "away": 2.1
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.87,
+        "under": 2.15
       },
       "over_1_5": {
-        "over": 1.29,
-        "under": 4.48
+        "over": 1.3,
+        "under": 4.29
       },
       "btts": {
-        "yes": 1.77,
-        "no": 2.3
+        "yes": 1.75,
+        "no": 2.33
       }
     },
     "predictions": {
@@ -60468,21 +60468,21 @@
     "lambda_away": 1.5999999999999999,
     "odds": {
       "winner": {
-        "home": 3.65,
-        "draw": 4.02,
-        "away": 2.09
+        "home": 2.1,
+        "draw": 3.86,
+        "away": 3.77
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.95,
+        "under": 2.05
       },
       "over_1_5": {
-        "over": 1.32,
-        "under": 4.16
+        "over": 1.33,
+        "under": 3.99
       },
       "btts": {
-        "yes": 1.83,
-        "no": 2.2
+        "yes": 1.81,
+        "no": 2.23
       }
     },
     "predictions": {
@@ -60891,21 +60891,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 2.16,
-        "draw": 3.88,
-        "away": 3.59
+        "home": 3.72,
+        "draw": 3.71,
+        "away": 2.17
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.74
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 1.93,
-        "no": 2.08
+        "yes": 1.9,
+        "no": 2.11
       }
     },
     "predictions": {
@@ -61476,21 +61476,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 2.16,
-        "draw": 3.88,
-        "away": 3.59
+        "home": 3.72,
+        "draw": 3.71,
+        "away": 2.17
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.1,
+        "under": 1.91
       },
       "over_1_5": {
-        "over": 1.37,
-        "under": 3.74
+        "over": 1.39,
+        "under": 3.58
       },
       "btts": {
-        "yes": 1.93,
-        "no": 2.08
+        "yes": 1.9,
+        "no": 2.11
       }
     },
     "predictions": {
@@ -62007,21 +62007,21 @@
     "lambda_away": 1.9,
     "odds": {
       "winner": {
-        "home": 2.16,
-        "draw": 4.93,
-        "away": 2.99
+        "home": 3.03,
+        "draw": 4.86,
+        "away": 2.15
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.29,
+        "under": 4.47
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 12.17
+        "under": 11.6
       },
       "btts": {
-        "yes": 1.32,
-        "no": 4.16
+        "yes": 1.31,
+        "no": 4.21
       }
     },
     "predictions": {
@@ -62593,21 +62593,21 @@
     "lambda_away": 1.5499999999999998,
     "odds": {
       "winner": {
-        "home": 2.17,
-        "draw": 4.5,
-        "away": 3.15
+        "home": 3.21,
+        "draw": 4.37,
+        "away": 2.18
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.51,
+        "under": 2.96
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 7.05
+        "under": 6.71
       },
       "btts": {
         "yes": 1.49,
-        "no": 3.02
+        "no": 3.06
       }
     },
     "predictions": {
@@ -63179,21 +63179,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 3.44,
-        "draw": 3.9,
-        "away": 2.21
+        "home": 2.22,
+        "draw": 3.73,
+        "away": 3.54
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.05,
+        "under": 1.95
       },
       "over_1_5": {
-        "over": 1.35,
-        "under": 3.87
+        "over": 1.37,
+        "under": 3.71
       },
       "btts": {
-        "yes": 1.88,
-        "no": 2.13
+        "yes": 1.86,
+        "no": 2.17
       }
     },
     "predictions": {
@@ -63764,21 +63764,21 @@
     "lambda_away": 1.8,
     "odds": {
       "winner": {
-        "home": 3.09,
-        "draw": 4.38,
-        "away": 2.23
+        "home": 2.24,
+        "draw": 4.24,
+        "away": 3.15
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.58,
+        "under": 2.72
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.28
+        "under": 5.98
       },
       "btts": {
-        "yes": 1.54,
-        "no": 2.84
+        "yes": 1.53,
+        "no": 2.88
       }
     },
     "predictions": {
@@ -64350,21 +64350,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 2.23,
-        "draw": 4.38,
-        "away": 3.09
+        "home": 3.15,
+        "draw": 4.24,
+        "away": 2.24
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.58,
+        "under": 2.72
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.28
+        "under": 5.98
       },
       "btts": {
-        "yes": 1.54,
-        "no": 2.84
+        "yes": 1.53,
+        "no": 2.88
       }
     },
     "predictions": {
@@ -64936,21 +64936,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.23,
-        "draw": 3.64,
-        "away": 3.6
+        "home": 3.75,
+        "draw": 3.46,
+        "away": 2.25
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.42,
+        "under": 1.71
       },
       "over_1_5": {
-        "over": 1.47,
-        "under": 3.13
+        "over": 1.5,
+        "under": 3.01
       },
       "btts": {
-        "yes": 2.14,
-        "no": 1.88
+        "yes": 2.09,
+        "no": 1.92
       }
     },
     "predictions": {
@@ -65521,21 +65521,21 @@
     "lambda_away": 1.5499999999999998,
     "odds": {
       "winner": {
-        "home": 3.25,
-        "draw": 4.0,
-        "away": 2.26
+        "home": 2.27,
+        "draw": 3.84,
+        "away": 3.34
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.32
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 1.78,
-        "no": 2.28
+        "yes": 1.76,
+        "no": 2.32
       }
     },
     "predictions": {
@@ -66107,21 +66107,21 @@
     "lambda_away": 1.35,
     "odds": {
       "winner": {
-        "home": 3.43,
-        "draw": 3.66,
-        "away": 2.29
+        "home": 2.32,
+        "draw": 3.48,
+        "away": 3.55
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.34,
+        "under": 1.74
       },
       "over_1_5": {
-        "over": 1.45,
-        "under": 3.24
+        "over": 1.47,
+        "under": 3.12
       },
       "btts": {
-        "yes": 2.08,
-        "no": 1.93
+        "yes": 2.04,
+        "no": 1.96
       }
     },
     "predictions": {
@@ -66692,21 +66692,21 @@
     "lambda_away": 1.65,
     "odds": {
       "winner": {
-        "home": 3.06,
-        "draw": 4.18,
-        "away": 2.3
+        "home": 2.31,
+        "draw": 4.03,
+        "away": 3.13
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.72,
+        "under": 2.38
       },
       "over_1_5": {
-        "over": 1.24,
-        "under": 5.2
+        "over": 1.25,
+        "under": 4.96
       },
       "btts": {
-        "yes": 1.64,
-        "no": 2.55
+        "yes": 1.63,
+        "no": 2.59
       }
     },
     "predictions": {
@@ -67170,21 +67170,21 @@
     "lambda_away": 1.4000000000000001,
     "odds": {
       "winner": {
-        "home": 2.3,
-        "draw": 4.18,
-        "away": 3.06
+        "home": 3.13,
+        "draw": 4.03,
+        "away": 2.31
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.72,
+        "under": 2.38
       },
       "over_1_5": {
-        "over": 1.24,
-        "under": 5.2
+        "over": 1.25,
+        "under": 4.96
       },
       "btts": {
-        "yes": 1.64,
-        "no": 2.55
+        "yes": 1.63,
+        "no": 2.59
       }
     },
     "predictions": {
@@ -67756,21 +67756,21 @@
     "lambda_away": 1.6,
     "odds": {
       "winner": {
-        "home": 2.34,
-        "draw": 4.42,
-        "away": 2.89
+        "home": 2.93,
+        "draw": 4.29,
+        "away": 2.35
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.53,
+        "under": 2.88
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.78
+        "under": 6.46
       },
       "btts": {
-        "yes": 1.5,
-        "no": 2.99
+        "yes": 1.49,
+        "no": 3.03
       }
     },
     "predictions": {
@@ -68018,21 +68018,21 @@
     "lambda_away": 0.6,
     "odds": {
       "winner": {
-        "home": 2.35,
-        "draw": 2.84,
-        "away": 4.47
+        "home": 4.92,
+        "draw": 2.62,
+        "away": 2.41
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 4.73,
+        "under": 1.27
       },
       "over_1_5": {
-        "over": 2.18,
-        "under": 1.85
+        "over": 2.23,
+        "under": 1.81
       },
       "btts": {
-        "yes": 3.61,
-        "no": 1.38
+        "yes": 3.34,
+        "no": 1.43
       }
     },
     "predictions": {
@@ -68604,21 +68604,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 3.79,
-        "draw": 3.19,
-        "away": 2.36
+        "home": 2.4,
+        "draw": 2.99,
+        "away": 4.01
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.35,
+        "under": 1.43
       },
       "over_1_5": {
-        "over": 1.77,
-        "under": 2.31
+        "over": 1.81,
+        "under": 2.24
       },
       "btts": {
-        "yes": 2.72,
-        "no": 1.58
+        "yes": 2.61,
+        "no": 1.62
       }
     },
     "predictions": {
@@ -69028,21 +69028,21 @@
     "lambda_away": 0.8,
     "odds": {
       "winner": {
-        "home": 2.36,
-        "draw": 3.19,
-        "away": 3.79
+        "home": 4.01,
+        "draw": 2.99,
+        "away": 2.4
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.35,
+        "under": 1.43
       },
       "over_1_5": {
-        "over": 1.77,
-        "under": 2.31
+        "over": 1.81,
+        "under": 2.24
       },
       "btts": {
-        "yes": 2.72,
-        "no": 1.58
+        "yes": 2.61,
+        "no": 1.62
       }
     },
     "predictions": {
@@ -69398,21 +69398,21 @@
     "lambda_away": 1.75,
     "odds": {
       "winner": {
-        "home": 2.38,
-        "draw": 4.58,
-        "away": 2.77
+        "home": 2.8,
+        "draw": 4.46,
+        "away": 2.39
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.43,
+        "under": 3.32
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 8.23
+        "under": 7.82
       },
       "btts": {
         "yes": 1.42,
-        "no": 3.35
+        "no": 3.39
       }
     },
     "predictions": {
@@ -69876,21 +69876,21 @@
     "lambda_away": 1.3,
     "odds": {
       "winner": {
-        "home": 2.39,
-        "draw": 3.97,
-        "away": 3.04
+        "home": 3.11,
+        "draw": 3.81,
+        "away": 2.41
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.32
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 1.77,
-        "no": 2.3
+        "yes": 1.75,
+        "no": 2.33
       }
     },
     "predictions": {
@@ -70192,21 +70192,21 @@
     "lambda_away": 0.7,
     "odds": {
       "winner": {
-        "home": 2.4,
-        "draw": 2.99,
-        "away": 4.01
+        "home": 4.31,
+        "draw": 2.77,
+        "away": 2.46
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 4.03,
+        "under": 1.33
       },
       "over_1_5": {
-        "over": 1.97,
-        "under": 2.03
+        "over": 2.02,
+        "under": 1.98
       },
       "btts": {
-        "yes": 3.14,
-        "no": 1.47
+        "yes": 2.96,
+        "no": 1.51
       }
     },
     "predictions": {
@@ -70508,21 +70508,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 2.43,
-        "draw": 3.64,
-        "away": 3.18
+        "home": 3.28,
+        "draw": 3.46,
+        "away": 2.47
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.34,
+        "under": 1.74
       },
       "over_1_5": {
-        "over": 1.45,
-        "under": 3.24
+        "over": 1.47,
+        "under": 3.12
       },
       "btts": {
-        "yes": 2.06,
-        "no": 1.94
+        "yes": 2.02,
+        "no": 1.98
       }
     },
     "predictions": {
@@ -71093,21 +71093,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 2.47,
-        "draw": 3.84,
-        "away": 2.98
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.05,
+        "under": 1.95
       },
       "over_1_5": {
-        "over": 1.35,
-        "under": 3.87
+        "over": 1.37,
+        "under": 3.71
       },
       "btts": {
-        "yes": 1.86,
-        "no": 2.16
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -71678,21 +71678,21 @@
     "lambda_away": 1.35,
     "odds": {
       "winner": {
-        "home": 3.02,
-        "draw": 3.76,
-        "away": 2.49
+        "home": 2.52,
+        "draw": 3.58,
+        "away": 3.09
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.16,
+        "under": 1.87
       },
       "over_1_5": {
-        "over": 1.38,
-        "under": 3.6
+        "over": 1.41,
+        "under": 3.46
       },
       "btts": {
-        "yes": 1.93,
-        "no": 2.07
+        "yes": 1.9,
+        "no": 2.11
       }
     },
     "predictions": {
@@ -72263,21 +72263,21 @@
     "lambda_away": 1.15,
     "odds": {
       "winner": {
-        "home": 2.5,
-        "draw": 3.67,
-        "away": 3.05
+        "home": 3.13,
+        "draw": 3.49,
+        "away": 2.54
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.28,
+        "under": 1.78
       },
       "over_1_5": {
-        "over": 1.42,
-        "under": 3.36
+        "over": 1.45,
+        "under": 3.23
       },
       "btts": {
-        "yes": 2.01,
-        "no": 1.99
+        "yes": 1.98,
+        "no": 2.03
       }
     },
     "predictions": {
@@ -72848,21 +72848,21 @@
     "lambda_away": 1.8,
     "odds": {
       "winner": {
-        "home": 2.64,
-        "draw": 4.5,
-        "away": 2.51
+        "home": 2.52,
+        "draw": 4.38,
+        "away": 2.66
       },
       "over_2_5": {
-        "over": 1.2,
-        "under": 50.0
+        "over": 1.47,
+        "under": 3.13
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 7.61
+        "under": 7.24
       },
       "btts": {
-        "yes": 1.45,
-        "no": 3.22
+        "yes": 1.44,
+        "no": 3.25
       }
     },
     "predictions": {
@@ -73326,21 +73326,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 2.83,
-        "draw": 4.04,
-        "away": 2.51
+        "home": 2.54,
+        "draw": 3.88,
+        "away": 2.87
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.83,
+        "under": 2.21
       },
       "over_1_5": {
-        "over": 1.27,
-        "under": 4.65
+        "over": 1.29,
+        "under": 4.44
       },
       "btts": {
-        "yes": 1.71,
-        "no": 2.41
+        "yes": 1.69,
+        "no": 2.45
       }
     },
     "predictions": {
@@ -73804,21 +73804,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 3.09,
-        "draw": 3.58,
-        "away": 2.52
+        "home": 2.56,
+        "draw": 3.4,
+        "away": 3.18
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.42,
+        "under": 1.71
       },
       "over_1_5": {
-        "over": 1.47,
-        "under": 3.13
+        "over": 1.5,
+        "under": 3.01
       },
       "btts": {
-        "yes": 2.1,
-        "no": 1.91
+        "yes": 2.06,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -74227,21 +74227,21 @@
     "lambda_away": 1.05,
     "odds": {
       "winner": {
-        "home": 2.54,
-        "draw": 3.49,
-        "away": 3.13
+        "home": 3.23,
+        "draw": 3.3,
+        "away": 2.58
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.58,
+        "under": 1.63
       },
       "over_1_5": {
-        "over": 1.52,
-        "under": 2.92
+        "over": 1.55,
+        "under": 2.81
       },
       "btts": {
-        "yes": 2.2,
-        "no": 1.83
+        "yes": 2.15,
+        "no": 1.87
       }
     },
     "predictions": {
@@ -74650,21 +74650,21 @@
     "lambda_away": 1.45,
     "odds": {
       "winner": {
-        "home": 2.58,
-        "draw": 4.07,
-        "away": 2.73
+        "home": 2.77,
+        "draw": 3.92,
+        "away": 2.61
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.79,
+        "under": 2.27
       },
       "over_1_5": {
-        "over": 1.26,
-        "under": 4.83
+        "over": 1.28,
+        "under": 4.61
       },
       "btts": {
-        "yes": 1.68,
-        "no": 2.47
+        "yes": 1.67,
+        "no": 2.5
       }
     },
     "predictions": {
@@ -74966,21 +74966,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 2.64,
-        "draw": 4.11,
-        "away": 2.64
+        "home": 2.68,
+        "draw": 3.96,
+        "away": 2.68
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.76,
+        "under": 2.32
       },
       "over_1_5": {
-        "over": 1.25,
-        "under": 5.01
+        "over": 1.26,
+        "under": 4.78
       },
       "btts": {
-        "yes": 1.66,
-        "no": 2.52
+        "yes": 1.64,
+        "no": 2.56
       }
     },
     "predictions": {
@@ -75334,21 +75334,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.66,
-        "draw": 3.34,
-        "away": 3.08
+        "home": 3.18,
+        "draw": 3.15,
+        "away": 2.72
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.86,
+        "under": 1.54
       },
       "over_1_5": {
-        "over": 1.61,
-        "under": 2.63
+        "over": 1.65,
+        "under": 2.55
       },
       "btts": {
-        "yes": 2.37,
-        "no": 1.73
+        "yes": 2.3,
+        "no": 1.77
       }
     },
     "predictions": {
@@ -75919,21 +75919,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 2.85,
-        "draw": 3.66,
-        "away": 2.66
+        "home": 2.71,
+        "draw": 3.48,
+        "away": 2.91
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.28,
+        "under": 1.78
       },
       "over_1_5": {
-        "over": 1.42,
-        "under": 3.36
+        "over": 1.45,
+        "under": 3.23
       },
       "btts": {
-        "yes": 2.01,
-        "no": 1.99
+        "yes": 1.97,
+        "no": 2.03
       }
     },
     "predictions": {
@@ -76504,21 +76504,21 @@
     "lambda_away": 1.15,
     "odds": {
       "winner": {
-        "home": 2.91,
-        "draw": 3.48,
-        "away": 2.71
+        "home": 2.77,
+        "draw": 3.29,
+        "away": 2.98
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.58,
+        "under": 1.63
       },
       "over_1_5": {
-        "over": 1.52,
-        "under": 2.92
+        "over": 1.55,
+        "under": 2.81
       },
       "btts": {
-        "yes": 2.19,
-        "no": 1.84
+        "yes": 2.14,
+        "no": 1.88
       }
     },
     "predictions": {
@@ -76927,21 +76927,21 @@
     "lambda_away": 0.75,
     "odds": {
       "winner": {
-        "home": 3.16,
-        "draw": 2.72,
-        "away": 3.16
+        "home": 3.34,
+        "draw": 2.5,
+        "away": 3.34
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 5.01,
+        "under": 1.25
       },
       "over_1_5": {
-        "over": 2.26,
-        "under": 1.79
+        "over": 2.31,
+        "under": 1.76
       },
       "btts": {
-        "yes": 3.59,
-        "no": 1.39
+        "yes": 3.31,
+        "no": 1.43
       }
     },
     "predictions": {
@@ -77077,21 +77077,21 @@
     "lambda_away": 0.8,
     "odds": {
       "winner": {
-        "home": 3.09,
-        "draw": 2.83,
-        "away": 3.09
+        "home": 3.24,
+        "draw": 2.61,
+        "away": 3.24
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 4.47,
+        "under": 1.29
       },
       "over_1_5": {
-        "over": 2.11,
-        "under": 1.9
+        "over": 2.15,
+        "under": 1.87
       },
       "btts": {
-        "yes": 3.3,
-        "no": 1.44
+        "yes": 3.08,
+        "no": 1.48
       }
     },
     "predictions": {
@@ -77555,21 +77555,21 @@
     "lambda_away": 1.0499999999999998,
     "odds": {
       "winner": {
-        "home": 2.86,
-        "draw": 3.34,
-        "away": 2.86
+        "home": 2.93,
+        "draw": 3.14,
+        "away": 2.93
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.86,
+        "under": 1.54
       },
       "over_1_5": {
-        "over": 1.61,
-        "under": 2.63
+        "over": 1.65,
+        "under": 2.55
       },
       "btts": {
-        "yes": 2.37,
-        "no": 1.73
+        "yes": 2.3,
+        "no": 1.77
       }
     },
     "predictions": {
@@ -78086,21 +78086,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.89,
-        "draw": 3.24,
-        "away": 2.89
+        "home": 2.98,
+        "draw": 3.04,
+        "away": 2.98
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.09,
+        "under": 1.48
       },
       "over_1_5": {
-        "over": 1.68,
-        "under": 2.46
+        "over": 1.72,
+        "under": 2.39
       },
       "btts": {
-        "yes": 2.5,
-        "no": 1.67
+        "yes": 2.42,
+        "no": 1.71
       }
     },
     "predictions": {
@@ -78454,21 +78454,21 @@
     "lambda_away": 0.8,
     "odds": {
       "winner": {
-        "home": 1.78,
-        "draw": 4.0,
-        "away": 5.35
+        "home": 2.11,
+        "draw": 3.67,
+        "away": 3.94
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.34,
+        "under": 1.74
       },
       "over_1_5": {
-        "over": 1.45,
-        "under": 3.24
+        "over": 1.47,
+        "under": 3.12
       },
       "btts": {
-        "yes": 2.28,
-        "no": 1.78
+        "yes": 2.05,
+        "no": 1.95
       }
     },
     "predictions": {
@@ -79039,21 +79039,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 1.79,
-        "draw": 4.48,
-        "away": 4.59
+        "home": 4.81,
+        "draw": 4.34,
+        "away": 1.78
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.76,
+        "under": 2.32
       },
       "over_1_5": {
-        "over": 1.25,
-        "under": 5.0
+        "over": 1.26,
+        "under": 4.78
       },
       "btts": {
-        "yes": 1.76,
-        "no": 2.31
+        "yes": 1.75,
+        "no": 2.34
       }
     },
     "predictions": {
@@ -79571,21 +79571,21 @@
     "lambda_away": 0.85,
     "odds": {
       "winner": {
-        "home": 2.06,
-        "draw": 3.58,
-        "away": 4.24
+        "home": 4.48,
+        "draw": 3.39,
+        "away": 2.08
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.66,
+        "under": 1.6
       },
       "over_1_5": {
-        "over": 1.55,
-        "under": 2.82
+        "over": 1.58,
+        "under": 2.72
       },
       "btts": {
-        "yes": 2.36,
-        "no": 1.74
+        "yes": 2.29,
+        "no": 1.77
       }
     },
     "predictions": {
@@ -80156,21 +80156,21 @@
     "lambda_away": 1.2999999999999998,
     "odds": {
       "winner": {
-        "home": 2.14,
-        "draw": 4.2,
-        "away": 3.4
+        "home": 3.49,
+        "draw": 4.05,
+        "away": 2.14
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.76,
+        "under": 2.32
       },
       "over_1_5": {
-        "over": 1.25,
-        "under": 5.01
+        "over": 1.26,
+        "under": 4.78
       },
       "btts": {
-        "yes": 1.68,
-        "no": 2.46
+        "yes": 1.67,
+        "no": 2.5
       }
     },
     "predictions": {
@@ -80362,21 +80362,21 @@
     "lambda_away": 1.5,
     "odds": {
       "winner": {
-        "home": 2.23,
-        "draw": 4.38,
-        "away": 3.09
+        "home": 3.15,
+        "draw": 4.24,
+        "away": 2.24
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.58,
+        "under": 2.72
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.28
+        "under": 5.98
       },
       "btts": {
-        "yes": 1.54,
-        "no": 2.84
+        "yes": 1.53,
+        "no": 2.88
       }
     },
     "predictions": {
@@ -80948,21 +80948,21 @@
     "lambda_away": 1.5499999999999998,
     "odds": {
       "winner": {
-        "home": 2.28,
-        "draw": 4.4,
-        "away": 2.99
+        "home": 3.04,
+        "draw": 4.27,
+        "away": 2.29
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.56,
+        "under": 2.8
       },
       "over_1_5": {
         "over": 1.2,
-        "under": 6.53
+        "under": 6.21
       },
       "btts": {
-        "yes": 1.52,
-        "no": 2.92
+        "yes": 1.51,
+        "no": 2.95
       }
     },
     "predictions": {
@@ -81534,21 +81534,21 @@
     "lambda_away": 1.25,
     "odds": {
       "winner": {
-        "home": 2.33,
-        "draw": 3.95,
-        "away": 3.16
+        "home": 3.24,
+        "draw": 3.78,
+        "away": 2.34
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.95,
+        "under": 2.05
       },
       "over_1_5": {
-        "over": 1.32,
-        "under": 4.17
+        "over": 1.33,
+        "under": 3.99
       },
       "btts": {
-        "yes": 1.8,
-        "no": 2.24
+        "yes": 1.78,
+        "no": 2.28
       }
     },
     "predictions": {
@@ -81904,21 +81904,21 @@
     "lambda_away": 1.3,
     "odds": {
       "winner": {
-        "home": 2.46,
-        "draw": 3.92,
-        "away": 2.95
+        "home": 3.02,
+        "draw": 3.76,
+        "away": 2.49
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.95,
+        "under": 2.05
       },
       "over_1_5": {
-        "over": 1.32,
-        "under": 4.17
+        "over": 1.33,
+        "under": 3.99
       },
       "btts": {
-        "yes": 1.8,
-        "no": 2.26
+        "yes": 1.77,
+        "no": 2.29
       }
     },
     "predictions": {
@@ -82490,21 +82490,21 @@
     "lambda_away": 1.1,
     "odds": {
       "winner": {
-        "home": 3.39,
-        "draw": 3.26,
-        "away": 2.51
+        "home": 2.56,
+        "draw": 3.06,
+        "away": 3.54
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 3.09,
+        "under": 1.48
       },
       "over_1_5": {
-        "over": 1.68,
-        "under": 2.46
+        "over": 1.72,
+        "under": 2.39
       },
       "btts": {
-        "yes": 2.53,
-        "no": 1.66
+        "yes": 2.44,
+        "no": 1.7
       }
     },
     "predictions": {
@@ -83076,21 +83076,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 2.77,
-        "draw": 3.91,
-        "away": 2.61
+        "home": 2.64,
+        "draw": 3.75,
+        "away": 2.82
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.95,
+        "under": 2.05
       },
       "over_1_5": {
-        "over": 1.32,
-        "under": 4.17
+        "over": 1.33,
+        "under": 3.99
       },
       "btts": {
-        "yes": 1.79,
-        "no": 2.26
+        "yes": 1.77,
+        "no": 2.3
       }
     },
     "predictions": {
@@ -83662,21 +83662,21 @@
     "lambda_away": 1.0,
     "odds": {
       "winner": {
-        "home": 2.66,
-        "draw": 3.34,
-        "away": 3.08
+        "home": 3.18,
+        "draw": 3.15,
+        "away": 2.72
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 2.86,
+        "under": 1.54
       },
       "over_1_5": {
-        "over": 1.61,
-        "under": 2.63
+        "over": 1.65,
+        "under": 2.55
       },
       "btts": {
-        "yes": 2.37,
-        "no": 1.73
+        "yes": 2.3,
+        "no": 1.77
       }
     },
     "predictions": {
@@ -84247,21 +84247,21 @@
     "lambda_away": 1.4,
     "odds": {
       "winner": {
-        "home": 2.68,
-        "draw": 3.95,
-        "away": 2.68
+        "home": 2.72,
+        "draw": 3.79,
+        "away": 2.72
       },
       "over_2_5": {
-        "over": 3.0,
-        "under": 1.5
+        "over": 1.91,
+        "under": 2.1
       },
       "over_1_5": {
-        "over": 1.3,
-        "under": 4.32
+        "over": 1.32,
+        "under": 4.13
       },
       "btts": {
-        "yes": 1.76,
-        "no": 2.31
+        "yes": 1.74,
+        "no": 2.35
       }
     },
     "predictions": {
@@ -84833,21 +84833,21 @@
     "lambda_away": 0.8999999999999999,
     "odds": {
       "winner": {
-        "home": 3.31,
-        "draw": 2.94,
-        "away": 2.79
+        "home": 2.89,
+        "draw": 2.73,
+        "away": 3.48
       },
       "over_2_5": {
-        "over": 50.0,
-        "under": 1.2
+        "over": 4.03,
+        "under": 1.33
       },
       "over_1_5": {
-        "over": 1.97,
-        "under": 2.03
+        "over": 2.02,
+        "under": 1.98
       },
       "btts": {
-        "yes": 3.06,
-        "no": 1.49
+        "yes": 2.89,
+        "no": 1.53
       }
     },
     "predictions": {
