@@ -128,8 +128,12 @@ export default function PredictionCard({
   const oddsOU25 = odds?.over_2_5 ?? (odds?.over_under?.["2.5"] ?? {});
   const oddsBTTS = odds?.btts ?? {};
 
+  // Só consideramos odds quando a fonte é explicitamente "market"
   const show1x2 =
-    isValidOdd(odds1x2?.home) && isValidOdd(odds1x2?.draw) && isValidOdd(odds1x2?.away);
+    odds_source === "market" &&
+    isValidOdd(odds1x2?.home) &&
+    isValidOdd(odds1x2?.draw) &&
+    isValidOdd(odds1x2?.away);
 
   // Só mostra OU 2.5 se vier de mercado E for válido
   const showOU25 =
@@ -138,6 +142,7 @@ export default function PredictionCard({
     isValidOdd(oddsOU25?.under);
 
   const showBTTS =
+    odds_source === "market" &&
     isValidOdd(oddsBTTS?.yes) && isValidOdd(oddsBTTS?.no);
 
   const showAnyOdds = show1x2 || showOU25 || showBTTS;
