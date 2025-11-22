@@ -590,6 +590,7 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
                 return 0
 
         # Winner: mensagem baseada SEMPRE nas probabilidades calibradas ph/pd/pa
+        # Regra extra: nunca falar em "X2" como favorito se a casa for claramente favorita.
         if winner_class == 0:
             explanation.append(
                 f"Casa favorita (1X), prob. {pct(ph)}% para vitória."
@@ -599,9 +600,18 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
                 f"Jogo equilibrado, prob. de empate {pct(pd)}%."
             )
         elif winner_class == 2:
-            explanation.append(
-                f"Visitante favorito (X2), prob. {pct(pa)}% para não perder."
-            )
+            # Apenas chamamos explicitamente "X2" se o lado visitante
+            # for claramente favorito e a prob. casa não for muito alta.
+            if ph <= 0.55:
+                explanation.append(
+                    f"Visitante favorito (X2), prob. {pct(pa)}% para não perder."
+                )
+            else:
+                # Situações estranhas onde o modelo dá ligeira vantagem ao visitante
+                # mas a prob. da casa ainda é alta: descrevemos como jogo aberto.
+                explanation.append(
+                    f"Jogo aberto, visitante ligeiramente por cima (X2), prob. {pct(pa)}%."
+                )
 
         # Se a melhor dupla hipótese tiver probabilidade decente, reforça na explicação
         if dc_best_prob >= 0.55:
