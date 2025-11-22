@@ -100,11 +100,29 @@ export default function PredictionCard({
   odds_source,
   probable_scorers, // NOVO
 }: PredictionCardProps) {
-  const winnerClass = predictions?.winner?.class;
+  // Winner baseado SEMPRE nas probabilidades calibradas (bivariado+iso ou ficheiro)
+  const winnerProbs = (predictions as any)?.winner?.probs as
+    | { home?: number; draw?: number; away?: number }
+    | undefined;
+
+  let winnerSide: 0 | 1 | 2 | null = predictions?.winner?.class ?? null;
+  if (winnerProbs) {
+    const ph = typeof winnerProbs.home === "number" ? winnerProbs.home : 0;
+    const pd = typeof winnerProbs.draw === "number" ? winnerProbs.draw : 0;
+    const pa = typeof winnerProbs.away === "number" ? winnerProbs.away : 0;
+    const arr: Array<{ idx: 0 | 1 | 2; p: number }> = [
+      { idx: 0, p: ph },
+      { idx: 1, p: pd },
+      { idx: 2, p: pa },
+    ];
+    arr.sort((a, b) => b.p - a.p);
+    winnerSide = arr[0]?.idx ?? winnerSide;
+  }
+
   const winnerLabel =
-    winnerClass === 0 ? home_team :
-    winnerClass === 1 ? "Empate" :
-    winnerClass === 2 ? away_team : "—";
+    winnerSide === 0 ? home_team :
+    winnerSide === 1 ? "Empate" :
+    winnerSide === 2 ? away_team : "—";
 
   const odds1x2 = odds?.winner ?? odds?.["1x2"] ?? {};
   const oddsOU25 = odds?.over_2_5 ?? (odds?.over_under?.["2.5"] ?? {});
