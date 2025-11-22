@@ -161,6 +161,93 @@ def _iter_predictions_filtered(
         yield row
 
 
+def _rebuild_from_probs(row: Dict[str, Any]) -> Dict[str, Any]:
+    """Reconstrói winner/double_chance/odds a partir das probs calibradas.
+
+    Usa apenas os campos de probabilidade atuais (incluindo bivariado+iso),
+    ignorando quaisquer valores antigos gravados no ficheiro.
+    """
+    preds = row.get("predictions") or {}
+
+    w = preds.get("winner") or {}
+    probs = w.get("probs") or {}
+    ph = float(probs.get("home", 0.0))
+    pd = float(probs.get("draw", 0.0))
+    pa = float(probs.get("away", 0.0))
+
+    if ph + pd + pa > 0:
+        # winner
+        best = max([(0, ph), (1, pd), (2, pa)], key=lambda t: t[1])
+        w_class = int(best[0])
+        w_conf = float(best[1])
+        preds["winner"] = {
+            "class": w_class,
+            "prob": w_conf,
+            "confidence": w_conf,
+            "probs": {
+                "home": ph,
+                "draw": pd,
+                "away": pa,
+            },
+        }
+
+        # double chance a partir das mesmas probs
+        p_1x = ph + pd
+        p_12 = ph + pa
+        p_x2 = pd + pa
+        dc_opts = {"1X": p_1x, "12": p_12, "X2": p_x2}
+        dc_label, dc_prob = max(dc_opts.items(), key=lambda kv: kv[1])
+        dc_class = {"1X": 0, "12": 1, "X2": 2}[dc_label]
+        preds["double_chance"] = {
+            "class": dc_class,
+            "prob": float(dc_prob),
+            "confidence": float(dc_prob),
+            "probs": {
+                "1X": float(p_1x),
+                "12": float(p_12),
+                "X2": float(p_x2),
+            },
+        }
+
+        # odds coerentes com as mesmas probs (mantendo min/max de implied_odds)
+        try:
+            from src.api_fetch_pro import implied_odds
+
+            odds = row.get("odds") or {}
+            odds["winner"] = {
+                "home": implied_odds(ph),
+                "draw": implied_odds(pd),
+                "away": implied_odds(pa),
+            }
+
+            # Over/Under e BTTS usam prob de "Sim" já presente
+            o25 = preds.get("over_2_5") or {}
+            p_over25 = float(o25.get("prob") or 0.0)
+            odds.setdefault("over_2_5", {})
+            odds["over_2_5"]["over"] = implied_odds(p_over25)
+            odds["over_2_5"]["under"] = implied_odds(1.0 - p_over25)
+
+            o15 = preds.get("over_1_5") or {}
+            p_over15 = float(o15.get("prob") or 0.0)
+            odds.setdefault("over_1_5", {})
+            odds["over_1_5"]["over"] = implied_odds(p_over15)
+            odds["over_1_5"]["under"] = implied_odds(1.0 - p_over15)
+
+            b = preds.get("btts") or {}
+            p_btts = float(b.get("prob") or 0.0)
+            odds.setdefault("btts", {})
+            odds["btts"]["yes"] = implied_odds(p_btts)
+            odds["btts"]["no"] = implied_odds(1.0 - p_btts)
+
+            row["odds"] = odds
+        except Exception:
+            # se falhar import ou cálculo, mantemos odds antigas
+            pass
+
+    row["predictions"] = preds
+    return row
+
+
 # ------------------ /predictions ------------------
 @router.get("/predictions")
 def get_predictions(
@@ -191,6 +278,8 @@ def get_predictions(
             # em caso de falha, segue com o registo original
             row = dict(row)
 
+        # reconstrói winner/DC/odds a partir das probs atuais (bivariado+iso ou ficheiro)
+        row = _rebuild_from_probs(row)
         preds = row.get("predictions") or {}
 
         # Winner
