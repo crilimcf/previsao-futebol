@@ -16,7 +16,7 @@ def brier_score(y_prob, y_true):
     for (ph, pdraw, pa), y in zip(y_prob, y_true):
         onehot = np.array([0.0, 0.0, 0.0])
         onehot[int(y)] = 1.0
-        p = np.array([ph, pd, pa], dtype=float)
+        p = np.array([ph, pdraw, pa], dtype=float)
         s += np.sum((p - onehot) ** 2)
         n += 1
     return float(s / max(1, n))
@@ -25,7 +25,7 @@ def log_loss(y_prob, y_true, eps=1e-12):
     s = 0.0
     n = 0
     for (ph, pdraw, pa), y in zip(y_prob, y_true):
-        p = [ph, pd, pa][int(y)]
+        p = [ph, pdraw, pa][int(y)]
         p = max(eps, min(1.0, p))
         s += -math.log(p)
         n += 1

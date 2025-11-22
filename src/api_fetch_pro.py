@@ -575,12 +575,27 @@ def build_prediction_from_fixture(fix: Dict[str, Any]) -> Optional[Dict[str, Any
         )
 
         # Probabilidades agregadas de dupla hipótese (1X, 12, X2)
-        dc_probs = {
-            "1X": ph + pd,
-            "12": ph + pa,
-            "X2": pd + pa,
-        }
-        dc_best_label, dc_best_prob = max(dc_probs.items(), key=lambda kv: kv[1])
+        # IMPORTANTE: alinhar com predictions.double_chance gerado a jusante
+        try:
+            dc_obj = preds.get("double_chance") or {}
+        except Exception:
+            dc_obj = {}
+
+        if isinstance(dc_obj, dict) and "best" in dc_obj and "probs" in dc_obj:
+            # usa sempre o melhor rótulo e probabilidade já calculados em predictions
+            dc_best_label = str(dc_obj.get("best"))
+            dc_probs_map = dc_obj.get("probs") or {}
+            try:
+                dc_best_prob = float(dc_probs_map.get(dc_best_label, 0.0))
+            except Exception:
+                dc_best_prob = 0.0
+        else:
+            dc_probs = {
+                "1X": ph + pd,
+                "12": ph + pa,
+                "X2": pd + pa,
+            }
+            dc_best_label, dc_best_prob = max(dc_probs.items(), key=lambda kv: kv[1])
 
         # helper para percentagens consistentes com o frontend (round(prob*100))
         def pct(p: float) -> int:
