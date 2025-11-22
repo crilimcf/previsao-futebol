@@ -1,7 +1,8 @@
 {
-  "status": "missing_history",
-  "updated_at": "2025-11-21T02:55:26.517451",
-  "brier": null,
-  "logloss": null,
-  "accuracy_1x2": null
+  "status": "ok",
+  "updated_at": "2025-11-22T18:22:25.147414",
+  "brier": 0.6547121666249628,
+  "logloss": 1.0804966056287753,
+  "accuracy_1x2": 0.4387755102040816,
+  "n": 2058
 }
