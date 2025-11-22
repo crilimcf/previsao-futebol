@@ -35,3 +35,8 @@ dist/
 artifacts/
 *.yml_old
 frontend/public/*_old
+# Ignorar calibradores binários e modelos pesados
+models/calibrators/*.pkl
+# Ignorar backups e tmp gerados durante processamento local
+backups/
+tmp/
