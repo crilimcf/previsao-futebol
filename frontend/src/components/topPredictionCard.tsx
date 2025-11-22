@@ -14,12 +14,19 @@ function prob01(v?: number | null): number {
   if (typeof v !== "number" || !isFinite(v)) return 0;
   return v > 1 ? Math.max(0, Math.min(1, v / 100)) : Math.max(0, Math.min(1, v));
 }
-const pct = (v?: number | null) => `${Math.round(prob01(v) * 100)}%`;
+function pct(v?: number | null) {
+  const p = prob01(v) * 100;
+  if (!isFinite(p) || p <= 0) return "0%";
+  if (p >= 99.9) return "≈100%";
+  return `${Math.round(p)}%`;
+}
 const oddFmt = (v?: number | null) =>
   typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
 
-const dcLabel = (dc: DCClass | undefined) =>
-  dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+const dcLabel = (dc: DCClass | string | undefined) => {
+  if (typeof dc === "string") return dc.toUpperCase();
+  return dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+};
 
 const isValidOdd = (v?: number | null) =>
   typeof v === "number" && isFinite(v) && v >= 1.2 && v <= 100;
@@ -84,11 +91,34 @@ export default function TopPredictionCard(props: TopPredictionCardProps) {
     odds_source,
   } = props;
 
-  const winnerClass = predictions?.winner?.class;
-  const winnerLabel =
-    winnerClass === 0 ? home_team :
-    winnerClass === 1 ? "Empate" :
-    winnerClass === 2 ? away_team : "—";
+  function deriveWinnerLabel(pred: any) {
+    try {
+      const w = pred?.winner;
+      if (w) {
+        if (w.probs && typeof w.probs === "object") {
+          const probs = w.probs as Record<string, number>;
+          const keys = Object.keys(probs).filter((k) => k);
+          if (keys.length) {
+            const best = keys.reduce((a, b) => (probs[b] > probs[a] ? b : a), keys[0]);
+            if (best === "home") return home_team;
+            if (best === "draw") return "Empate";
+            if (best === "away") return away_team;
+          }
+        }
+        const label = (w.label || w.side || w.winner || "").toString().toLowerCase();
+        if (label === "home") return home_team;
+        if (label === "draw" || label === "empate") return "Empate";
+        if (label === "away") return away_team;
+        const cls = typeof w.class === "number" ? w.class : parseInt(w.class, 10);
+        if (cls === 0) return home_team;
+        if (cls === 1) return "Empate";
+        if (cls === 2) return away_team;
+      }
+    } catch (e) {}
+    return "—";
+  }
+
+  const winnerLabel = deriveWinnerLabel(predictions);
 
   const odds1x2 = odds?.winner ?? odds?.["1x2"] ?? {};
   const oddsOU25 = odds?.over_2_5 ?? (odds?.over_under?.["2.5"] ?? {});

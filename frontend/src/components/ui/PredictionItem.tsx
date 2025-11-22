@@ -31,7 +31,10 @@ const FIELDS: Array<{ key: keyof PredictionBlock; label: string }> = [
 
 const pct = (f?: PredictionField) => {
   const v = f?.confidence ?? f?.prob ?? 0;
-  return `${Math.round((Number.isFinite(v) ? v : 0) * 100)}%`;
+  const p = Number.isFinite(v) ? v * 100 : 0;
+  if (!isFinite(p) || p <= 0) return "0%";
+  if (p >= 99.9) return "≈100%";
+  return `${Math.round(p)}%`;
 };
 
 const dcLabel = (v: number | string) => {
@@ -42,8 +45,30 @@ const dcLabel = (v: number | string) => {
   return "-";
 };
 
-const winnerLabel = (v: number, home: string, away: string) =>
-  v === 0 ? home : v === 1 ? "Empate" : away;
+const winnerLabel = (v: number | string | any, home: string, away: string) => {
+  // If v is a number/class
+  if (typeof v === "number") return v === 0 ? home : v === 1 ? "Empate" : away;
+  // If v is an object with probs/label
+  try {
+    if (v && typeof v === "object") {
+      if (v.probs && typeof v.probs === "object") {
+        const probs = v.probs as Record<string, number>;
+        const keys = Object.keys(probs).filter((k) => k);
+        if (keys.length) {
+          const best = keys.reduce((a, b) => (probs[b] > probs[a] ? b : a), keys[0]);
+          if (best === "home") return home;
+          if (best === "draw") return "Empate";
+          if (best === "away") return away;
+        }
+      }
+      const label = (v.label || v.side || v.winner || "").toString().toLowerCase();
+      if (label === "home") return home;
+      if (label === "draw" || label === "empate") return "Empate";
+      if (label === "away") return away;
+    }
+  } catch (e) {}
+  return "—";
+};
 
 const boolLabel = (v: number) => (v === 1 ? "Sim" : "Não");
 
@@ -62,7 +87,7 @@ export function PredictionItem({ match }: { match: Match }) {
 
           switch (key) {
             case "winner":
-              txt = winnerLabel(Number(field.class), home_team, away_team);
+              txt = winnerLabel(field, home_team, away_team);
               break;
             case "double_chance":
               txt = dcLabel(field.class);

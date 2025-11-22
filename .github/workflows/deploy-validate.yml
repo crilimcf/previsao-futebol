@@ -1,0 +1,121 @@
+name: Deploy and Validate
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy-and-validate:
+    runs-on: ubuntu-latest
+    env:
+      RENDER_API: https://api.render.com/v1
+      PUBLIC_URL: https://previsao-futebol.onrender.com
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests jq
+
+      - name: Trigger Render deploy
+        if: secrets.RENDER_API_KEY != '' && secrets.RENDER_SERVICE_ID != ''
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          set -e
+          echo "Triggering Render deploy for $RENDER_SERVICE_ID"
+          HTTP_CODE=$(curl -sS -o /tmp/render_deploy_resp.json -w "%{http_code}" -X POST \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{}' \
+            "$RENDER_API/services/$RENDER_SERVICE_ID/deploys")
+          echo "Render API HTTP status: $HTTP_CODE"
+          cat /tmp/render_deploy_resp.json || true
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "Render deploy request failed with status $HTTP_CODE"
+            exit 1
+          fi
+          DEPLOY_ID=$(jq -r '.id' /tmp/render_deploy_resp.json)
+          echo "deploy_id=$DEPLOY_ID" > /tmp/deploy_id.txt
+
+      - name: Upload initial deploy response
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: render-deploy-response
+          path: /tmp/render_deploy_resp.json
+
+      - name: Poll deploy status until terminal
+        if: secrets.RENDER_API_KEY != '' && secrets.RENDER_SERVICE_ID != ''
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+          RENDER_API: ${{ env.RENDER_API }}
+        run: |
+          set -e
+          DEPLOY_ID=$(cat /tmp/deploy_id.txt | sed 's/deploy_id=//')
+          echo "Polling deploy $DEPLOY_ID"
+          END_AT=$((SECONDS + 15*60))
+          while [ $SECONDS -lt $END_AT ]; do
+            curl -sS -H "Authorization: Bearer $RENDER_API_KEY" "$RENDER_API/services/$RENDER_SERVICE_ID/deploys?limit=50" -o /tmp/deploys_list.json || true
+            jq -r --arg id "$DEPLOY_ID" '.[] | select(.id==$id) | @json' /tmp/deploys_list.json > /tmp/deploy_item.json || true
+            if [ -s /tmp/deploy_item.json ]; then
+              cat /tmp/deploy_item.json | jq '.' > /tmp/deploy_final.json
+              STATE=$(jq -r '.state' /tmp/deploy_final.json)
+              echo "state=$STATE"
+              if [ "$STATE" = "live" ] || [ "$STATE" = "failed" ] || [ "$STATE" = "cancelled" ]; then
+                break
+              fi
+            else
+              echo "deploy not found yet, sleeping..."
+            fi
+            sleep 8
+          done
+          if [ -f /tmp/deploy_final.json ]; then
+            cat /tmp/deploy_final.json
+          else
+            echo "No final deploy JSON captured"
+            exit 1
+          fi
+
+      - name: Upload final deploy JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: render-deploy-final
+          path: /tmp/deploy_final.json
+
+      - name: If live - fetch production predictions and compare
+        if: success() && secrets.RENDER_API_KEY != '' && secrets.RENDER_SERVICE_ID != ''
+        run: |
+          set -e
+          STATE=$(jq -r '.state' /tmp/deploy_final.json)
+          echo "Final deploy state: $STATE"
+          mkdir -p tmp
+          if [ "$STATE" = "live" ]; then
+            echo "Fetching sample predictions from production"
+            curl -sS "$PUBLIC_URL/predictions?date=$(date +%F)&limit=200" -o tmp/prod_predictions_v1.json || true
+            curl -sS "$PUBLIC_URL/predictions/v2?date=$(date +%F)&limit=200" -o tmp/prod_predictions_v2.json || true
+            python3 scripts/compare_predictions.py --local data/predict/predictions.json --prod tmp/prod_predictions_v2.json --out tmp/compare_report.json || true
+            ls -la tmp || true
+          else
+            echo "Deploy state is not live; skipping production fetch"
+          fi
+
+      - name: Upload compare report and prod samples
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-validation-artifacts
+          path: |
+            tmp/prod_predictions_v1.json
+            tmp/prod_predictions_v2.json
+            tmp/compare_report.json

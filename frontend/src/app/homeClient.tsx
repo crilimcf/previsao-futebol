@@ -387,10 +387,27 @@ export default function HomeClient() {
 /* ----------------------------- */
 
   const dcLabel = (dc: DCClass | undefined) =>
-    dc === 0 ? "1X" : dc === 1 ? "12" : dc === 2 ? "X2" : "—";
+    (typeof dc === "string" ? dc.toUpperCase() : dc) === "1X"
+      ? "1X"
+      : (typeof dc === "string" ? dc.toUpperCase() : dc) === "12"
+      ? "12"
+      : (typeof dc === "string" ? dc.toUpperCase() : dc) === "X2"
+      ? "X2"
+      : dc === 0
+      ? "1X"
+      : dc === 1
+      ? "12"
+      : dc === 2
+      ? "X2"
+      : "—";
 
-  const toPct = (v?: number | null) =>
-    typeof v === "number" ? `${Math.round(prob01(v) * 100)}%` : "—";
+  function toPct(v?: number | null) {
+    if (typeof v !== "number") return "—";
+    const p = prob01(v) * 100;
+    if (!isFinite(p) || p <= 0) return "0%";
+    if (p >= 99.9) return "≈100%";
+    return `${Math.round(p)}%`;
+  }
 
   const oddFmt = (v?: number | null) =>
     typeof v === "number" && isFinite(v) ? v.toFixed(2) : "—";
@@ -584,14 +601,36 @@ export default function HomeClient() {
               const over15 = preds.over_1_5 as any | undefined;
               const btts = preds.btts as any | undefined;
 
-              const winnerLabel =
-                winner?.class === 0
-                  ? p.home_team
-                  : winner?.class === 1
-                  ? "Empate"
-                  : winner?.class === 2
-                  ? p.away_team
-                  : "—";
+              function deriveWinnerLabel(pred: any) {
+                try {
+                  const w = pred?.winner;
+                  if (w) {
+                    if (w.probs && typeof w.probs === "object") {
+                      const probs = w.probs as Record<string, number>;
+                      const keys = Object.keys(probs).filter((k) => k);
+                      if (keys.length) {
+                        const best = keys.reduce((a, b) => (probs[b] > probs[a] ? b : a), keys[0]);
+                        if (best === "home") return p.home_team;
+                        if (best === "draw") return "Empate";
+                        if (best === "away") return p.away_team;
+                      }
+                    }
+                    const label = (w.label || w.side || w.winner || "").toString().toLowerCase();
+                    if (label === "home") return p.home_team;
+                    if (label === "draw" || label === "empate") return "Empate";
+                    if (label === "away") return p.away_team;
+                    const cls = typeof w.class === "number" ? w.class : parseInt(w.class, 10);
+                    if (cls === 0) return p.home_team;
+                    if (cls === 1) return "Empate";
+                    if (cls === 2) return p.away_team;
+                  }
+                } catch (e) {
+                  /* ignore */
+                }
+                return "—";
+              }
+
+              const winnerLabel = deriveWinnerLabel(p);
 
               const odds1x2 = p?.odds?.winner ?? p?.odds?.["1x2"] ?? {};
               const oddsOU25 = p?.odds?.over_2_5 ?? (p?.odds?.over_under?.["2.5"] ?? {});
