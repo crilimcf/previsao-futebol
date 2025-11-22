@@ -285,7 +285,7 @@ def clamp_prob(p: float, eps: float = 1e-3) -> float:
     return max(eps, min(1.0 - eps, p))
 
 
-def implied_odds(p: float, min_odds: float = 1.01, max_odds: float = 50.0) -> float:
+def implied_odds(p: float, min_odds: float = 1.2, max_odds: float = 50.0) -> float:
     p = clamp_prob(p, 1e-3)
     odds = 1.0 / p
     odds = max(min_odds, min(max_odds, odds))

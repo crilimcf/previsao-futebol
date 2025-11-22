@@ -1,9 +1,9 @@
 {
-  "total_keys": 180,
-  "prod_count": 180,
-  "tmp_count": 180,
+  "total_keys": 173,
+  "prod_count": 173,
+  "tmp_count": 173,
   "prod_v2_count": 0,
-  "tmp_v2_count": 180,
+  "tmp_v2_count": 173,
   "prod_extreme_count": 0,
-  "tmp_extreme_count": 175
+  "tmp_extreme_count": 4
 }
